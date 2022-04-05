@@ -488,35 +488,33 @@ div.tocify {
 <p><br></p>
 <div id="metric-construction" class="section level1">
 <h1>Metric Construction</h1>
-<div id="definition" class="section level2">
-<h2>Definition</h2>
+<div id="definition-interpretation" class="section level2">
+<h2>Definition &amp; Interpretation</h2>
 <p><br /><span class="math display">$$Current \: Asset \: Ratio = \frac{Current \: Assets}{Current \: Liabilities}$$</span><br /></p>
-<p>Notes: This data is only available for organizations that file a full 990, not for EZ filers.</p>
+<p>The current ratio is used to measure the overall liquidity of a nonprofit organization.</p>
+<p>In its simplest form, it shows how many dollars of current assets an organization has to cover its current obligations. The higher the ratio, the more liquid the organization.</p>
+<p>As a rule of thumb, organizations should strive for a current ratio of 1.0 or higher. An organization with a ratio of 1.0 would have one dollar of assets to pay for every dollar of current liabilities.</p>
 </div>
 <div id="variables" class="section level2">
 <h2>Variables</h2>
+<p>Notes: This data is only available for organizations that file a full 990, not for EZ filers.</p>
 <p><strong>Numerator:</strong> (Cash + short-term investments + current receivables + inventories + prepaid expenses) * On 990: (Part X, line 1B) + (Part X, line 2B) + (Part X, line 3B) + (Part X, line 4B) + (Part X, line 8B) + (Part X, line 9B) - SOI PC EXTRACTS: nonintcashend, svngstempinvend,pldgegrntrcvblend, accntsrcvblend, invntriesalesend, prepaidexpnsend * On EZ: Part I, line 22 [cash and short-term investments only]</p>
 <p><strong>Denominator:</strong> (Accounts payable + grants payable) * On 990: (Part X, line 17B) + (Part X, line 18B) -SOI PC EXTRACTS: accntspayableend+grntspayableend * On EZ: Not available</p>
 <p>|<strong>Note:</strong> The EZ form only asks filers to report on cash, savings and investments; all receivable accounts, inventories, and prepaid expenses are reported in the line item “other assets” (Part II, line 24), and details are reported in Schedule O. Similarly, the EZ form asks filers to report on total liabilities, with details about payable accounts reported in Schedule O</p>
 </div>
 <div id="tabulation" class="section level2">
 <h2>Tabulation</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="co"># can&#39;t divide by zero</span></a>
-<a class="sourceLine" id="cb1-2" title="2">zero.these &lt;-<span class="st"> </span>core<span class="op">$</span>totassetsend <span class="op">==</span><span class="st"> </span><span class="dv">0</span> </a>
-<a class="sourceLine" id="cb1-3" title="3">core<span class="op">$</span>totassetsend[ core<span class="op">$</span>totassetsend <span class="op">==</span><span class="st"> </span><span class="dv">0</span> ] &lt;-<span class="st"> </span><span class="ot">NA</span> </a>
-<a class="sourceLine" id="cb1-4" title="4"></a>
-<a class="sourceLine" id="cb1-5" title="5">core<span class="op">$</span>currentratio &lt;-<span class="st"> </span>(core<span class="op">$</span>nonintcashend <span class="op">+</span><span class="st"> </span>core<span class="op">$</span>svngstempinvend <span class="op">+</span><span class="st"> </span>core<span class="op">$</span>pldgegrntrcvblend <span class="op">+</span><span class="st"> </span>core<span class="op">$</span>accntsrcvblend <span class="op">+</span><span class="st"> </span>core<span class="op">$</span>invntriesalesend <span class="op">+</span><span class="st"> </span>core<span class="op">$</span>prepaidexpnsend)<span class="op">/</span><span class="st"> </span>(core<span class="op">$</span>accntspayableend<span class="op">+</span><span class="st"> </span>core<span class="op">$</span>grntspayableend)</a>
-<a class="sourceLine" id="cb1-6" title="6"><span class="co">## Error in `$&lt;-.data.frame`(`*tmp*`, currentratio, value = numeric(0)): replacement has 0 rows, data has 6168</span></a></code></pre></div>
+<pre><code>## Error in `$&lt;-.data.frame`(`*tmp*`, currentratio, value = numeric(0)): replacement has 0 rows, data has 6168</code></pre>
 </div>
 <div id="standardize-scales" class="section level2">
 <h2>Standardize Scales</h2>
 <p>Check high and low values to see what makes sense.</p>
 <p>A ratio below 0 is odd because it means assets are negative and liabilities are positive.</p>
 <p>A ratio above 1 might be realistic, but not more meaningful than knowing the ratio is at least one, which means the org has liabilities that as as large or larger than assets. Practically, a ratio of 1 or 2 probably mean the same thing for an organization (they are in trouble).</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw">ggplot</span>( core, <span class="kw">aes</span>(<span class="dt">x =</span> core<span class="op">$</span>currentratio )) <span class="op">+</span><span class="st">  </span></a>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw">ggplot</span>( core, <span class="kw">aes</span>(<span class="dt">x =</span> currentratio )) <span class="op">+</span><span class="st">  </span></a>
 <a class="sourceLine" id="cb2-2" title="2"><span class="st">  </span><span class="kw">geom_density</span>( <span class="dt">alpha =</span> <span class="fl">0.5</span>, <span class="dt">fill=</span><span class="st">&quot;blue&quot;</span> ) <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb2-3" title="3"><span class="st">  </span><span class="kw">xlim</span>( <span class="dv">-1</span>, <span class="dv">2</span> ) </a>
-<a class="sourceLine" id="cb2-4" title="4"><span class="co">## Error: stat_density() requires an x or y aesthetic.</span></a></code></pre></div>
+<a class="sourceLine" id="cb2-4" title="4"><span class="co">## Error in FUN(X[[i]], ...): object &#39;currentratio&#39; not found</span></a></code></pre></div>
 <p><img src="metric-02-current-ratio_files/figure-html/unnamed-chunk-3-1.png" width="960" /></p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"></a>
 <a class="sourceLine" id="cb3-2" title="2">core<span class="op">$</span>currentratio[ core<span class="op">$</span>currentratio <span class="op">&lt;</span><span class="st"> </span><span class="dv">0</span> ] &lt;-<span class="st"> </span><span class="dv">0</span></a>
