@@ -1,3 +1,7 @@
+### Local Only Files
+
+See the [.gitignore file](https://github.com/lecy/fiscal-health/blob/main/.gitignore) to see which files are not synced by GitHub. 
+
 ### Data files in DropBox and Box:
 
 ec2_group_2_combined_2_11_22.csv     
