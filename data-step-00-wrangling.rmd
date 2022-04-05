@@ -101,24 +101,51 @@ bmf <- merge( bmf, census, by.x="STATE", by.y="State.Code", all.x=TRUE )
 url.soi.pc <- "https://www.dropbox.com/s/88y9sup4d3mwoo5/irs-990-pc-soi-extract-2019.csv?dl=1"
 core.2019.pc <- read.csv( url.soi.pc )
 
-core.2019.pc <- select( core.2019.pc, ein, tax_pd, 
-                accntspayableend,
-                accntsrcvblend,
-                deprcatndepletn,
-                grntspayableend,
-                invntriesalesend,
-                lndbldgsequipend,
-                nonintcashend,
-                pldgegrntrcvblend,
-                prepaidexpnsend,
-                svngstempinvend,
-                totassetsend,
-                totfuncexpns,
-                totliabend,
-                totnetassetend,
-                totprgmrevnue,
-                totrevenue,
-                unrstrctnetasstsend)  
+core.2019.pc <- 
+  core.2019.pc %>% 
+  select( ein,
+          tax_pd,  
+          accntspayableend,
+          accntsrcvblend,
+          deprcatndepletn,
+          grntspayableend,
+          invntriesalesend,
+          lndbldgsequipend,
+          nonintcashend,
+          pldgegrntrcvblend,
+          prepaidexpnsend,
+          svngstempinvend,
+          totassetsend,
+          totfuncexpns,
+          totliabend,
+          totnetassetend,
+          totprgmrevnue,
+          totrevenue,
+          unrstrctnetasstsend )  
+
+
+
+
+# F9_01_EXP_REV_LESS_EXP_CY
+# F9_01_EXP_TOT_CY
+# F9_01_REV_TOT_CY
+# F9_08_REV_CONTR_GOVT_GRANT
+# F9_08_REV_TOT_TOT
+# F9_09_EXP_DEPREC_TOT
+# F9_09_EXP_INT_TOT
+# F9_09_EXP_TOT_MGMT
+# F9_09_EXP_TOT_PROG
+# F9_09_EXP_TOT_TOT
+# F9_09_EXP_TOT_TOT-F9_09_EXP_DEPREC_TOT
+# F9_10_ASSET_INV_SALE_EOY
+# F9_10_ASSET_LAND_BLDG_NET_EOY
+# F9_10_LIAB_MTG_NOTE_EOY
+# F9_10_NAFB_UNRESTRICT_EOY
+# F9_10_NAFB_UNRESTRICT_BOY (edited) 
+
+
+
+
 
 
 ###
@@ -247,6 +274,14 @@ head(core) %>% pander()
 
 
 ## Save Wrangled Data
+
+
+The output file has `r nrow(core)` rows and `r ncol(core)` variables: 
+
+```{r, echo=F}
+names(core)
+```
+
 
 ```{r}
 saveRDS( core, "02-data-wrangled/core.rds" )

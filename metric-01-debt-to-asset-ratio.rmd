@@ -8,7 +8,6 @@ output:
     self_contained: TRUE
     toc: TRUE
     toc_float: TRUE
-    mathjax: null
     css: www/web_report.css
     output_dir: "."
 editor_options:

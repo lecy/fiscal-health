@@ -8,7 +8,6 @@ output:
     self_contained: TRUE
     toc: TRUE
     toc_float: TRUE
-    mathjax: null
     css: www/web_report.css
     output_dir: "."
 editor_options:
@@ -31,7 +30,7 @@ knitr::opts_chunk$set( echo = TRUE,
 ```{r, echo=F}
 
 ## Packages
-library(urbnthemes)     # setting the color scheme to Urban's
+
 library( haven )        # importing data files 
 library( tidyr )        # data wrangling
 library( dplyr )        # data wrangling 
@@ -43,10 +42,12 @@ library( pander )       # format tables for HTML
 library( knitr )        # formatting functions 
 library( DT )           # embed datasets in HTML docs
 
+library( urbnthemes )   # setting the color scheme to Urban's
 set_urbn_defaults(style = "print")
+
 source( "r-functions.R" )
 
-variable.label="current Ratio"
+variable.label <- "current Ratio"
 
 # stargazer table print type
 # run chunk for live RMD sessions
@@ -129,8 +130,16 @@ Notes: This data is only available for organizations that file a full 990, not f
 zero.these <- core$totassetsend == 0 
 core$totassetsend[ core$totassetsend == 0 ] <- NA 
 
-core$currentratio <- (core$nonintcashend + core$svngstempinvend + core$pldgegrntrcvblend + core$accntsrcvblend + core$invntriesalesend + core$prepaidexpnsend)/ (core$accntspayableend+ core$grntspayableend)
+liquidity <- ( core$nonintcashend + core$svngstempinvend + 
+                         core$pldgegrntrcvblend + core$accntsrcvblend + 
+                         core$invntriesalesend + core$prepaidexpnsend )
 
+payables <- ( core$accntspayableend + core$grntspayableend )
+payables[ payables == 0 ] <- NA
+
+core$currentratio <-  liquidity / payables
+                     
+summary( core$currentratio )
 ```
 
 
@@ -138,16 +147,27 @@ core$currentratio <- (core$nonintcashend + core$svngstempinvend + core$pldgegrnt
 
 Check high and low values to see what makes sense. 
 
-A ratio below 0 is odd because it means liabilities are negative and assets are positive. Negative liabilities only happen when an organization overpays for a liability, and don't count towards the organization's assets. Consequently, we'll cap them at 0.
+```{r, fig.height=4}
+x.05 <- quantile( core$currentratio, 0.05, na.rm=T )
+x.95 <- quantile( core$currentratio, 0.95, na.rm=T )
+
+ggplot( core, aes(x = currentratio ) ) +  
+  geom_density( alpha = 0.5, fill="blue" ) + 
+  xlim( x.05, x.95 ) 
+```
+
+
+A ratio below 0 is not very meaningful. Create an upper limit of 200%. 
  
 
-```{r, fig.height=4}
-ggplot( core, aes(x = currentratio )) +  
-  geom_density( alpha = 0.5, fill="blue" ) + 
-  xlim( -1, 2 ) 
-
+```{r}
+# proportion of values that are negative
+mean( core$currentratio < 0, na.rm=T ) 
 core$currentratio[ core$currentratio < 0 ] <- 0
 
+# proption of values above 200% 
+mean( core$currentratio > 200, na.rm=T ) 
+core$currentratio[ core$currentratio > 200 ] <- 200
 ```
 
 
@@ -157,12 +177,6 @@ core$currentratio[ core$currentratio < 0 ] <- 0
 Score describes whether the metric applies to all 990 filers, or only the full 990 filers (if the variable is not included on the 990-EZ form). 
 
 Tax data is available for both full 990 and 990-EZ filers, so this metric describes all orgs.
-
-*Scope codes:*
-
-* PZ: *Both 990 and 990-EZ filers*   
-* PC: *Only full 990 (public charity or PC) filers only*  
-* EZ: *Only 990-EZ filers*  
 
 
 
@@ -187,24 +201,30 @@ Put Debt to Asset Ratio on a scale of -10,000 to +20,000.
 Convert everything else to thousands of dollars. 
 
 ```{r, results="asis"}
-# rescale Current Ratio where 1 = 10,000 
 
 core %>%
-  mutate( currentratio = currentratio * 10000,
+  mutate( # currentratio = currentratio * 10000,
     totrevenue = totrevenue / 1000,
     totfuncexpns = totfuncexpns / 1000, 
     lndbldgsequipend = lndbldgsequipend / 1000,
     totassetsend = totassetsend / 1000,
     totliabend = totliabend / 1000,
     totnetassetend = totnetassetend / 1000 ) %>% 
-  select( STATE, AGE, NTEE1, NTMAJ12, 
-          currentratio, totrevenue, totfuncexpns, lndbldgsequipend, 
-          totassetsend, totliabend, totnetassetend   ) %>%
+  select( STATE,  NTEE1, NTMAJ12, 
+          currentratio, 
+          AGE, 
+          totrevenue, totfuncexpns, 
+          lndbldgsequipend, totassetsend, 
+          totnetassetend, totliabend ) %>%
 
   stargazer( type = s.type, 
              digits=0, 
              summary.stat = c("min","p25","median",
-                              "mean","p75","max", "sd") )
+                              "mean","p75","max", "sd"),
+             covariate.labels = c("Current Ratio", "Age", 
+                                  "Revenue ($1k)", "Expenses($1k)", 
+                                  "Buildings ($1k)", "Total Assets ($1k)",
+                                  "Net Assets ($1k)", "Liabiliies ($1k)"))
 ```
 
 
@@ -250,9 +270,12 @@ core2$age.q   <- create_quantiles( var=core2$AGE,            n.groups=5 )
 ## Current Ratio Density 
 
 ```{r, fig.height=4}
+min.x <- min( core$currentratio, na.rm=T )
+max.x <- max( core$currentratio, na.rm=T )
+
 ggplot( core2, aes(x = currentratio )) +  
   geom_density( alpha = 0.5, fill="darkorange" ) + 
-  xlim( -0.1, 1 ) +
+  xlim( min.x, max.x  ) +
   xlab( variable.label ) +
   theme( axis.title.y=element_blank(),
          axis.text.y=element_blank(), 
@@ -280,7 +303,7 @@ df <- data.frame( x=Inf, y=Inf,
 
 ggplot( core3, aes( x=currentratio ) ) + 
   geom_density( alpha = 0.5, fill="blue" ) + 
-  xlim( -0.1, 1 ) +
+  # xlim( -0.1, 1 ) +
   labs( title="Nonprofit Subsectors" ) + 
   xlab( variable.label ) + 
   facet_wrap( ~ NTMAJ12, nrow=3 ) + 
