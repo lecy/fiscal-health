@@ -1,5 +1,18 @@
 ---
 title: "Metric 01 - Debt to Asset Ratio"
+author: ""
+date: "April 8, 2022"
+font: Lato
+output:
+  html_document:
+    self_contained: TRUE
+    toc: TRUE
+    toc_float: TRUE
+    mathjax: null
+    css: www/web_report.css
+    output_dir: "."
+editor_options:
+    chunk_output_type: console
 ---
 
 
