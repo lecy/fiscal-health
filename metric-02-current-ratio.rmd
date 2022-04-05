@@ -5,16 +5,18 @@ title: "Metric 01 - Debt to Asset Ratio"
 
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, message=F, warning=F, fig.width = 10)
+knitr::opts_chunk$set( echo = TRUE, message=F, warning=F, 
+                       fig.width = 10, fig.height = 10, 
+                       collapse = TRUE )
 ```
 
 
 
 # Setup
 
-## Packages
+```{r, echo=F}
 
-```{r}
+## Packages
 
 library( haven )        # importing data files 
 library( tidyr )        # data wrangling
@@ -28,10 +30,9 @@ library( knitr )        # formatting functions
 library( DT )           # embed datasets in HTML docs
 
 source( "r-functions.R" )
-```
 
+variable.label="Debt to Asset Ratio"
 
-```{r, echo=F}
 # stargazer table print type
 # run chunk for live RMD sessions
 s.type <- "text"
@@ -39,25 +40,25 @@ s.type <- "text"
 # stargazer table print type
 # resets to html when knitting
 s.type <- "html"
+
+
+## Load Data
+
+# local: 
+# core <- readRDS( "02-data-wrangled/core.rds" )
+
+# from github: 
+URL <- "https://github.com/lecy/fiscal-health/raw/main/02-data-wrangled/core.rds"
+core <- readRDS(gzcon(url( URL )))
+
+
+
+# Preview the data: 
+# table( core$NTMAJ12 ) %>% kable()
+# head(core) %>% pander()
 ```
 
 
-## Data
-
-```{r}
-core <- readRDS( "02-data-wrangled/core.rds" )
-```
-
-
-Preview the data: 
-
-```{r}
-table( core$NTMAJ12 ) %>% kable()
-```
-
-```{r}
-head(core) %>% pander()
-```
 
 
 
@@ -116,7 +117,7 @@ A ratio below 0 is odd because it means assets are negative and liabilities are 
 
 A ratio above 1 might be realistic, but not more meaningful than knowing the ratio is at least one, which means the org has liabilities that as as large or larger than assets. Practically, a ratio of 1 or 2 probably mean the same thing for an organization (they are in trouble). 
 
-```{r}
+```{r, fig.height=4}
 ggplot( core, aes(x = dar )) +  
   geom_density( alpha = 0.5, fill="blue" ) + 
   xlim( -1, 2 ) 
@@ -224,25 +225,50 @@ core2$age.q   <- create_quantiles( var=core2$AGE,            n.groups=5 )
 
 ## DAR Density 
 
-```{r}
+```{r, fig.height=4}
 ggplot( core2, aes(x = dar )) +  
   geom_density( alpha = 0.5, fill="darkorange" ) + 
-  xlim( -0.1, 1 ) 
+  xlim( -0.1, 1 ) +
+  xlab( variable.label ) +
+  theme( axis.title.y=element_blank(),
+         axis.text.y=element_blank(), 
+         axis.ticks.y=element_blank() )
 ```
 
 
 
 ## DAR by NTEE Major Code
 
-```{r}
-core2 <- core2 %>% filter( ! is.na(NTMAJ12) )
 
-ggplot( core2, aes( x=dar ) ) + 
+
+```{r}
+core3 <- core2 %>% filter( ! is.na(NTMAJ12) )
+table( core3$NTMAJ12) %>% sort(decreasing=TRUE) %>% kable()
+```
+
+
+```{r}
+
+t <- table( factor(core3$NTMAJ12) ) 
+df <- data.frame( x=Inf, y=Inf, 
+                  N=paste0( "N=", as.character(t) ), 
+                  NTMAJ12=names(t) )
+
+ggplot( core3, aes( x=dar ) ) + 
   geom_density( alpha = 0.5, fill="blue" ) + 
   xlim( -0.1, 1 ) +
-  xlab( "Debt to Asset Ratio" ) + 
+  labs( title="Nonprofit Subsectors" ) + 
+  xlab( variable.label ) + 
   facet_wrap( ~ NTMAJ12, nrow=3 ) + 
-  theme_minimal()
+    theme_minimal( base_size = 15 )  + 
+    theme( axis.title.y=element_blank(),
+           axis.text.y=element_blank(), 
+           axis.ticks.y=element_blank(),
+           strip.text = element_text( face="bold") ) +  # size=20 
+  geom_text( data=df, 
+             aes(x, y, label=N ), 
+             hjust=2, vjust=3, 
+             color="gray60", size=6 )
 ```
 
 
@@ -256,14 +282,26 @@ table( core$Region) %>% kable()
 
 
 ```{r}
+t <- table( factor(core3$Region) ) 
+df <- data.frame( x=Inf, y=Inf, 
+                  N=paste0( "N=", as.character(t) ), 
+                  Region=names(t) )
+
 core2 %>% 
   filter( ! is.na(Region) ) %>% 
   ggplot( aes(dar) )  + 
     geom_density( alpha = 0.5, fill="blue" ) + 
     xlab( "Census Regions" ) + 
-    ylab( "Debt to Asset Ratio" ) +
+    ylab( variable.label ) +
     facet_wrap( ~ Region, nrow=3 ) + 
-    theme_minimal()
+    theme_minimal( base_size = 22 )  + 
+    theme( axis.title.y=element_blank(),
+           axis.text.y=element_blank(), 
+           axis.ticks.y=element_blank() ) + 
+    geom_text( data=df, 
+             aes(x, y, label=N ), 
+             hjust=2, vjust=3, 
+             color="gray60", size=6 )
 ```
 
 
@@ -272,14 +310,26 @@ table( core$Division ) %>% kable()
 ```
 
 ```{r}
+t <- table( factor(core3$Division) ) 
+df <- data.frame( x=Inf, y=Inf, 
+                  N=paste0( "N=", as.character(t) ), 
+                  Division=names(t) )
+
 core2 %>% 
   filter( ! is.na(Division) ) %>% 
   ggplot( aes(dar) )  + 
     geom_density( alpha = 0.5, fill="blue" ) + 
     xlab( "Census Sub-Regions (10)" ) + 
-    ylab( "Debt to Asset Ratio" ) +
+    ylab( variable.label ) +
     facet_wrap( ~ Division, nrow=3 ) + 
-    theme_minimal()
+    theme_minimal( base_size = 22 )  + 
+    theme( axis.title.y=element_blank(),
+           axis.text.y=element_blank(), 
+           axis.ticks.y=element_blank() ) + 
+    geom_text( data=df, 
+             aes(x, y, label=N ), 
+             hjust=2, vjust=3, 
+             color="gray60", size=6 ) 
 ```
 
 
@@ -288,14 +338,14 @@ core2 %>%
 ## DAR by Nonprofit Size (Expenses)
 
 
-```{r}
+```{r, fig.height=4}
 ggplot( core2, aes(x = totfuncexpns )) +  
   geom_density( alpha = 0.5, fill="darkorange" ) + 
   xlim( quantile(core2$totfuncexpns, c(0.02,0.98), na.rm=T ) )
 ```
 
 
-```{r}
+```{r, fig.height=5}
 core2$totfuncexpns[ core2$totfuncexpns < 1 ] <- 1
 # core2$totfuncexpns[ is.na(core2$totfuncexpns) ] <- 1
 
@@ -309,7 +359,7 @@ if( nrow(core2) > 10000 )
 
 jplot( log10(core3$totfuncexpns), core3$dar, 
        xlab="Nonprofit Size (logged Expenses)", 
-       ylab="Debt to Asset Ratio",
+       ylab=variable.label,
        xaxt="n", xlim=c(3,10) )
 axis( side=1, 
       at=c(3,4,5,6,7,8,9,10), 
@@ -324,10 +374,13 @@ core2 %>%
   filter( ! is.na(exp.q) ) %>% 
   ggplot( aes(dar) )  + 
     geom_density( alpha = 0.5, fill="blue" ) + 
-    xlab( "Nonprofit Size (logged expenses)" ) + 
-    ylab( "Debt to Asset Ratio" ) +
+    labs( title="Nonprofit Size (logged expenses)" ) + 
+    xlab( variable.label ) +
     facet_wrap( ~ exp.q, nrow=3 ) + 
-    theme_minimal()
+    theme_minimal( base_size = 22 )  + 
+    theme( axis.title.y=element_blank(),
+           axis.text.y=element_blank(), 
+           axis.ticks.y=element_blank() )
 ```
 
 
@@ -336,14 +389,17 @@ core2 %>%
 ## DAR by Nonprofit Size (Revenue)
 
 
-```{r}
+```{r, fig.height=4}
 ggplot( core2, aes(x = totrevenue )) +  
   geom_density( alpha = 0.5, fill="darkorange" ) + 
-  xlim( quantile(core2$totrevenue, c(0.02,0.98), na.rm=T ) )
+  xlim( quantile(core2$totrevenue, c(0.02,0.98), na.rm=T ) ) + 
+  theme( axis.title.y=element_blank(),
+           axis.text.y=element_blank(), 
+           axis.ticks.y=element_blank() )
 ```
 
 
-```{r}
+```{r, fig.height=5}
 core2$totrevenue[ core2$totrevenue < 1 ] <- 1
 
 if( nrow(core2) > 10000 )
@@ -356,7 +412,7 @@ if( nrow(core2) > 10000 )
 
 jplot( log10(core3$totrevenue), core3$dar, 
        xlab="Nonprofit Size (logged Revenue)", 
-       ylab="Debt to Asset Ratio",
+       ylab=variable.label,
        xaxt="n", xlim=c(3,10) )
 axis( side=1, 
       at=c(3,4,5,6,7,8,9,10), 
@@ -371,23 +427,30 @@ core2 %>%
   filter( ! is.na(rev.q) ) %>% 
   ggplot( aes(dar) )  + 
     geom_density( alpha = 0.5, fill="blue" ) + 
-    xlab( "Nonprofit Size (logged revenues)" ) + 
-    ylab( "Debt to Asset Ratio" ) +
+    labs( title="Nonprofit Size (logged revenues)" ) + 
+    xlab( variable.label ) +
     facet_wrap( ~ rev.q, nrow=3 ) + 
-    theme_minimal()
+    theme_minimal( base_size = 22 )  + 
+    theme( axis.title.y=element_blank(),
+           axis.text.y=element_blank(), 
+           axis.ticks.y=element_blank() )
 ```
 
 
 
 ## DAR by Nonprofit Size (Net Assets)
 
-```{r}
+```{r, fig.height=4}
 ggplot( core2, aes(x = totnetassetend )) +  
   geom_density( alpha = 0.5, fill="darkorange" ) + 
-  xlim( quantile(core2$totnetassetend, c(0.02,0.98), na.rm=T ) )
+  xlim( quantile(core2$totnetassetend, c(0.02,0.98), na.rm=T ) ) + 
+  xlab( "Net Assets" ) +
+    theme( axis.title.y=element_blank(),
+           axis.text.y=element_blank(), 
+           axis.ticks.y=element_blank() )
 ```
 
-```{r}
+```{r, fig.height=5}
 core2$totnetassetend[ core2$totnetassetend < 1 ] <- NA
 
 if( nrow(core2) > 10000 )
@@ -400,7 +463,7 @@ if( nrow(core2) > 10000 )
 
 jplot( log10(core3$totnetassetend), core3$dar, 
        xlab="Nonprofit Size (logged Net Assets)", 
-       ylab="Debt to Asset Ratio",
+       ylab=variable.label,
        xaxt="n", xlim=c(3,10) )
 axis( side=1, 
       at=c(3,4,5,6,7,8,9,10), 
@@ -411,14 +474,21 @@ axis( side=1,
 
 
 ```{r}
+core2$totnetassetend[ core2$totnetassetend < 1 ] <- NA
+core2$asset.q <- create_quantiles( var=core2$totnetassetend, n.groups=5 )
+
 core2 %>% 
   filter( ! is.na(asset.q) ) %>% 
   ggplot( aes(dar) )  + 
     geom_density( alpha = 0.5, fill="blue" ) + 
-    xlab( "Nonprofit Size (logged net assets, if assets > 0)" ) + 
-    ylab( "Debt to Asset Ratio" ) +
+    labs( title="Nonprofit Size (logged net assets, if assets > 0)" ) + 
+    xlab( variable.label ) + 
+    ylab( "" ) + 
     facet_wrap( ~ asset.q, nrow=3 ) + 
-    theme_minimal()
+    theme_minimal( base_size = 22 )  + 
+    theme( axis.title.y=element_blank(),
+           axis.text.y=element_blank(), 
+           axis.ticks.y=element_blank() )
 ```
 
 
@@ -426,7 +496,8 @@ core2 %>%
 
 Total Assets for Comparison 
 
-```{r}
+```{r, fig.height=5}
+core2$totassetsend[ core2$totassetsend < 1 ] <- NA
 core2$tot.asset.q <- create_quantiles( var=core2$totassetsend, n.groups=5 )
 
 if( nrow(core2) > 10000 )
@@ -439,36 +510,51 @@ if( nrow(core2) > 10000 )
 
 jplot( log10(core3$totassetsend), core3$dar, 
        xlab="Nonprofit Size (logged Total Assets)", 
-       ylab="Debt to Asset Ratio",
+       ylab=variable.label,
        xaxt="n", xlim=c(3,10) )
 axis( side=1, 
       at=c(3,4,5,6,7,8,9,10), 
       labels=c("1k","10k","100k","1m","10m","100m","1b","10b") )
 
+```
+
+
+```{r, fig.height=4}
 ggplot( core2, aes(x = totassetsend )) +  
   geom_density( alpha = 0.5, fill="darkorange" ) + 
-  xlim( quantile(core2$totassetsend, c(0.02,0.98), na.rm=T ) ) 
+  xlim( quantile(core2$totassetsend, c(0.02,0.98), na.rm=T ) ) + 
+  xlab( "Net Assets" ) +
+    theme( axis.title.y=element_blank(),
+           axis.text.y=element_blank(), 
+           axis.ticks.y=element_blank() )
 
+```
+
+
+```{r}
 core2 %>% 
   filter( ! is.na(tot.asset.q) ) %>% 
   ggplot( aes(dar) )  + 
     geom_density( alpha = 0.5, fill="blue" ) + 
     xlab( "Nonprofit Size (logged total assets, if assets > 0)" ) + 
-    ylab( "Debt to Asset Ratio" ) +
+    ylab( variable.label ) +
     facet_wrap( ~ tot.asset.q, nrow=3 ) + 
-    theme_minimal()
+    theme_minimal( base_size = 22 )  + 
+    theme( axis.title.y=element_blank(),
+           axis.text.y=element_blank(), 
+           axis.ticks.y=element_blank() )
 ```
 
 
 ## DAR by Nonprofit Age
 
-```{r}
+```{r, fig.height=4}
 ggplot( core2, aes(x = AGE )) +  
   geom_density( alpha = 0.5, fill="darkorange" )  
 ```
 
 
-```{r}
+```{r, fig.height=5}
 core2$AGE[ core2$AGE < 1 ] <- NA
 
 if( nrow(core2) > 10000 )
@@ -481,7 +567,7 @@ if( nrow(core2) > 10000 )
 
 jplot( core3$AGE, core3$dar, 
        xlab="Nonprofit Age", 
-       ylab="Debt to Asset Ratio" ) 
+       ylab=variable.label ) 
 
 ```
 
@@ -493,10 +579,14 @@ core2 %>%
   filter( ! is.na(age.q) ) %>% 
   ggplot( aes(dar) )  + 
     geom_density( alpha = 0.5, fill="blue" ) + 
-    xlab( "Nonprofit Age" ) + 
-    ylab( "Debt to Asset Ratio" ) +
+    labs( title="Nonprofit Age" ) + 
+    xlab( variable.label ) +
+    ylab( "" ) +
     facet_wrap( ~ age.q, nrow=3 ) + 
-    theme_minimal()
+    theme_minimal( base_size = 22 )  + 
+    theme( axis.title.y=element_blank(),
+           axis.text.y=element_blank(), 
+           axis.ticks.y=element_blank() )
 ```
 
 

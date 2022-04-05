@@ -42,8 +42,15 @@ s.type <- "text"
 s.type <- "html"
 
 
-## Data
-core <- readRDS( "02-data-wrangled/core.rds" )
+## Load Data
+
+# local: 
+# core <- readRDS( "02-data-wrangled/core.rds" )
+
+# from github: 
+URL <- "https://github.com/lecy/fiscal-health/raw/main/02-data-wrangled/core.rds"
+core <- readRDS(gzcon(url( URL )))
+
 
 
 # Preview the data: 
