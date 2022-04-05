@@ -13,7 +13,6 @@ output:
     output_dir: "."
 editor_options:
     chunk_output_type: console
-
 ---
 
 
@@ -139,9 +138,8 @@ core$currentratio <- (core$nonintcashend + core$svngstempinvend + core$pldgegrnt
 
 Check high and low values to see what makes sense. 
 
-A ratio below 0 is odd because it means assets are negative and liabilities are positive. 
-
-A ratio above 1 might be realistic, but not more meaningful than knowing the ratio is at least one, which means the org has liabilities that as as large or larger than assets. Practically, a ratio of 1 or 2 probably mean the same thing for an organization (they are in trouble). 
+A ratio below 0 is odd because it means liabilities are negative and assets are positive. Negative liabilities only happen when an organization overpays for a liability, and don't count towards the organization's assets. Consequently, we'll cap them at 0. 
+ 
 
 ```{r, fig.height=4}
 ggplot( core, aes(x = currentratio )) +  
@@ -149,7 +147,7 @@ ggplot( core, aes(x = currentratio )) +
   xlim( -1, 2 ) 
 
 core$currentratio[ core$currentratio < 0 ] <- 0
-core$currentratio[ core$currentratio >  1 ] <-  1
+
 ```
 
 

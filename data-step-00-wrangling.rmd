@@ -102,11 +102,23 @@ url.soi.pc <- "https://www.dropbox.com/s/88y9sup4d3mwoo5/irs-990-pc-soi-extract-
 core.2019.pc <- read.csv( url.soi.pc )
 
 core.2019.pc <- select( core.2019.pc, ein, tax_pd, 
-                totrevenue, totfuncexpns, totnetassetend, 
-                lndbldgsequipend, totassetsend, totliabend )  
-
-
-
+                accntspayableend,
+                accntsrcvblend,
+                deprcatndepletn,
+                grntspayableend,
+                invntriesalesend,
+                lndbldgsequipend,
+                nonintcashend,
+                pldgegrntrcvblend,
+                prepaidexpnsend,
+                svngstempinvend,
+                totassetsend,
+                totfuncexpns,
+                totliabend,
+                totnetassetend,
+                totprgmrevnue,
+                totrevenue,
+                unrstrctnetasstsend)  
 
 
 ###
