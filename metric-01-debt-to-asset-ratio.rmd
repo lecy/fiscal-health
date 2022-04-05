@@ -237,6 +237,18 @@ ggplot( core2, aes(x = dar )) +
 
 
 
+<br>
+<hr>
+<br>
+
+![](img/debt-asset-ratio-low-v-high.png)
+
+<br>
+<hr>
+<br>
+
+
+
 ## DAR by NTEE Major Code
 
 
