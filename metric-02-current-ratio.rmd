@@ -1,23 +1,38 @@
 ---
-title: "Metric 01 - Debt to Asset Ratio"
+title: "Metric 02 - Current Ratio"
+author: ""
+date: "April 8, 2022"
+font: Lato
+output:
+  html_document:
+    self_contained: TRUE
+    toc: TRUE
+    toc_float: TRUE
+    mathjax: null
+    css: www/web_report.css
+    output_dir: "."
+editor_options:
+    chunk_output_type: console
+
 ---
 
 
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set( echo = TRUE, message=F, warning=F, 
-                       fig.width = 10, fig.height = 10, 
+knitr::opts_chunk$set( echo = TRUE, 
+                       message=F, 
+                       warning=F, 
+                       error = TRUE,
+                       fig.width = 10, 
+                       fig.height = 6, 
                        collapse = TRUE )
 ```
 
 
-
-# Setup
-
 ```{r, echo=F}
 
 ## Packages
-
+library(urbnthemes)     # setting the color scheme to Urban's
 library( haven )        # importing data files 
 library( tidyr )        # data wrangling
 library( dplyr )        # data wrangling 
@@ -29,9 +44,10 @@ library( pander )       # format tables for HTML
 library( knitr )        # formatting functions 
 library( DT )           # embed datasets in HTML docs
 
+set_urbn_defaults(style = "print")
 source( "r-functions.R" )
 
-variable.label="Debt to Asset Ratio"
+variable.label="current Ratio"
 
 # stargazer table print type
 # run chunk for live RMD sessions
@@ -59,7 +75,10 @@ core <- readRDS(gzcon(url( URL )))
 ```
 
 
-
+```{r header-image, fig.width = 3.5, fig.height = 1, echo = FALSE}
+# All defaults
+knitr::include_graphics(here::here("img", "logo.png"))
+```
 
 
 <br>
@@ -72,39 +91,46 @@ core <- readRDS(gzcon(url( URL )))
 # Metric Construction
 
 
-## Definition
+## Definition & Interpretation
 
 
-$$DAR = \frac{Total \: Liabilities}{Total \: Assets}$$
+$$Current \: Asset \: Ratio = \frac{Current \: Assets}{Current \: Liabilities}$$
 
-Notes: Variables should be equivalent for 990 and EZ filers in the IRS data. 
+The current ratio is used to measure the overall liquidity of a nonprofit organization.
+
+In its simplest form, it shows how many dollars of current assets an organization has to cover its current obligations. The higher the ratio, the more liquid the organization.
+
+As a rule of thumb, organizations should strive for a current ratio of 1.0 or higher.  An organization with a ratio of 1.0 would have one dollar of assets to pay for every dollar of current liabilities.
 
 
 ## Variables 
 
-Total liabilities, EOY 
+Notes: This data is only available for organizations that file a full 990, not for EZ filers. 
 
-* On 990: Part X, line 26B  
-  - SOI PC EXTRACTS: totliabend  
-  - NCCS Core:  
-* On EZ: Part II, line 26B  
+**Numerator:** (Cash + short-term investments + current receivables + inventories + prepaid expenses)
+*	On 990: (Part X, line 1B) + (Part X, line 2B) + (Part X, line 3B) + (Part X, line 4B) + (Part X, line 8B) + (Part X, line 9B)
+  - SOI PC EXTRACTS: nonintcashend, svngstempinvend,pldgegrntrcvblend, accntsrcvblend, invntriesalesend, prepaidexpnsend 
+*	On EZ: Part I, line 22 [cash and short-term investments only]
 
-Denominator: Total assets, EOY
+**Denominator:** (Accounts payable + grants payable)
+*	On 990: (Part X, line 17B) + (Part X, line 18B) 
+  -SOI PC EXTRACTS: accntspayableend+grntspayableend
+*	On EZ: Not available
 
-*	On 990: Part X, line 16B  
-*	On EZ: Part II, line 25B  
+|**Note:** The EZ form only asks filers to report on cash, savings and investments; all receivable accounts, inventories, and prepaid expenses are reported in the line item “other assets” (Part II, line 24), and details are reported in Schedule O. Similarly, the EZ form asks filers to report on total liabilities, with details about payable accounts reported in Schedule O
+
 
 
 
 ## Tabulation 
 
 
-```{r, eval=T}
+```{r, eval=T, echo=FALSE}
 # can't divide by zero
 zero.these <- core$totassetsend == 0 
 core$totassetsend[ core$totassetsend == 0 ] <- NA 
 
-core$dar <- core$totliabend / core$totassetsend
+core$currentratio <- (core$nonintcashend + core$svngstempinvend + core$pldgegrntrcvblend + core$accntsrcvblend + core$invntriesalesend + core$prepaidexpnsend)/ (core$accntspayableend+ core$grntspayableend)
 
 ```
 
@@ -118,12 +144,12 @@ A ratio below 0 is odd because it means assets are negative and liabilities are 
 A ratio above 1 might be realistic, but not more meaningful than knowing the ratio is at least one, which means the org has liabilities that as as large or larger than assets. Practically, a ratio of 1 or 2 probably mean the same thing for an organization (they are in trouble). 
 
 ```{r, fig.height=4}
-ggplot( core, aes(x = dar )) +  
+ggplot( core, aes(x = currentratio )) +  
   geom_density( alpha = 0.5, fill="blue" ) + 
   xlim( -1, 2 ) 
 
-core$dar[ core$dar < 0 ] <- 0
-core$dar[ core$dar >  1 ] <-  1
+core$currentratio[ core$currentratio < 0 ] <- 0
+core$currentratio[ core$currentratio >  1 ] <-  1
 ```
 
 
@@ -163,10 +189,10 @@ Put Debt to Asset Ratio on a scale of -10,000 to +20,000.
 Convert everything else to thousands of dollars. 
 
 ```{r, results="asis"}
-# rescale DAR where 1 = 10,000 
+# rescale Current Ratio where 1 = 10,000 
 
 core %>%
-  mutate( dar = dar * 10000,
+  mutate( currentratio = currentratio * 10000,
     totrevenue = totrevenue / 1000,
     totfuncexpns = totfuncexpns / 1000, 
     lndbldgsequipend = lndbldgsequipend / 1000,
@@ -174,7 +200,7 @@ core %>%
     totliabend = totliabend / 1000,
     totnetassetend = totnetassetend / 1000 ) %>% 
   select( STATE, AGE, NTEE1, NTMAJ12, 
-          dar, totrevenue, totfuncexpns, lndbldgsequipend, 
+          currentratio, totrevenue, totfuncexpns, lndbldgsequipend, 
           totassetsend, totliabend, totnetassetend   ) %>%
 
   stargazer( type = s.type, 
@@ -185,22 +211,22 @@ core %>%
 
 
 
-What proportion of orgs have a DAR of zero (no outstanding liabilities)?
+What proportion of orgs have a Current Ratio of zero (no outstanding liabilities)?
 
 
 ```{r}
-prop.zero <- mean( core$dar == 0, na.rm=T )
+prop.zero <- mean( core$currentratio == 0, na.rm=T )
 ```
 
 
-In the sample, `r 100*round(prop.zero,2)` percent of the organizations have a DAR of zero, meaning they carried no debt. These organizations are dropped from subsequent graphs to keep the visualizations clean. The interpretation of the graphics should be the distributions of Debt to Asset Ratio for organizations that carry debt. 
+In the sample, `r 100*round(prop.zero,2)` percent of the organizations have a Current Ratio of zero, meaning they carried no debt. These organizations are dropped from subsequent graphs to keep the visualizations clean. The interpretation of the graphics should be the distributions of Debt to Asset Ratio for organizations that carry debt. 
 
-Filter out cases with DAR=0 because they dominate the graphics otherwise.  
+Filter out cases with Current Ratio=0 because they dominate the graphics otherwise.  
 
 ```{r}
-# drop cases where DAR=0
+# drop cases where Current Ratio=0
 core2 <-  core 
-core2$dar[ core2$dar == 0 ] <- NA
+core2$currentratio[ core2$currentratio == 0 ] <- NA
 ```
 
 Create quantile groups: 
@@ -223,10 +249,10 @@ core2$age.q   <- create_quantiles( var=core2$AGE,            n.groups=5 )
 
 
 
-## DAR Density 
+## Current Ratio Density 
 
 ```{r, fig.height=4}
-ggplot( core2, aes(x = dar )) +  
+ggplot( core2, aes(x = currentratio )) +  
   geom_density( alpha = 0.5, fill="darkorange" ) + 
   xlim( -0.1, 1 ) +
   xlab( variable.label ) +
@@ -237,7 +263,7 @@ ggplot( core2, aes(x = dar )) +
 
 
 
-## DAR by NTEE Major Code
+## Current Ratio by NTEE Major Code
 
 
 
@@ -254,7 +280,7 @@ df <- data.frame( x=Inf, y=Inf,
                   N=paste0( "N=", as.character(t) ), 
                   NTMAJ12=names(t) )
 
-ggplot( core3, aes( x=dar ) ) + 
+ggplot( core3, aes( x=currentratio ) ) + 
   geom_density( alpha = 0.5, fill="blue" ) + 
   xlim( -0.1, 1 ) +
   labs( title="Nonprofit Subsectors" ) + 
@@ -274,7 +300,7 @@ ggplot( core3, aes( x=dar ) ) +
 
 
 
-## DAR by Region 
+## Current Ratio by Region 
 
 ```{r}
 table( core$Region) %>% kable()
@@ -289,7 +315,7 @@ df <- data.frame( x=Inf, y=Inf,
 
 core2 %>% 
   filter( ! is.na(Region) ) %>% 
-  ggplot( aes(dar) )  + 
+  ggplot( aes(currentratio) )  + 
     geom_density( alpha = 0.5, fill="blue" ) + 
     xlab( "Census Regions" ) + 
     ylab( variable.label ) +
@@ -317,7 +343,7 @@ df <- data.frame( x=Inf, y=Inf,
 
 core2 %>% 
   filter( ! is.na(Division) ) %>% 
-  ggplot( aes(dar) )  + 
+  ggplot( aes(currentratio) )  + 
     geom_density( alpha = 0.5, fill="blue" ) + 
     xlab( "Census Sub-Regions (10)" ) + 
     ylab( variable.label ) +
@@ -335,7 +361,7 @@ core2 %>%
 
 
 
-## DAR by Nonprofit Size (Expenses)
+## Current Ratio by Nonprofit Size (Expenses)
 
 
 ```{r, fig.height=4}
@@ -357,7 +383,7 @@ if( nrow(core2) > 10000 )
   core3 <- core2
 }
 
-jplot( log10(core3$totfuncexpns), core3$dar, 
+jplot( log10(core3$totfuncexpns), core3$currentratio, 
        xlab="Nonprofit Size (logged Expenses)", 
        ylab=variable.label,
        xaxt="n", xlim=c(3,10) )
@@ -372,7 +398,7 @@ axis( side=1,
 ```{r}
 core2 %>% 
   filter( ! is.na(exp.q) ) %>% 
-  ggplot( aes(dar) )  + 
+  ggplot( aes(currentratio) )  + 
     geom_density( alpha = 0.5, fill="blue" ) + 
     labs( title="Nonprofit Size (logged expenses)" ) + 
     xlab( variable.label ) +
@@ -386,7 +412,7 @@ core2 %>%
 
 
 
-## DAR by Nonprofit Size (Revenue)
+## Current Ratio by Nonprofit Size (Revenue)
 
 
 ```{r, fig.height=4}
@@ -410,7 +436,7 @@ if( nrow(core2) > 10000 )
   core3 <- core2
 }
 
-jplot( log10(core3$totrevenue), core3$dar, 
+jplot( log10(core3$totrevenue), core3$currentratio, 
        xlab="Nonprofit Size (logged Revenue)", 
        ylab=variable.label,
        xaxt="n", xlim=c(3,10) )
@@ -425,7 +451,7 @@ axis( side=1,
 ```{r}
 core2 %>% 
   filter( ! is.na(rev.q) ) %>% 
-  ggplot( aes(dar) )  + 
+  ggplot( aes(currentratio) )  + 
     geom_density( alpha = 0.5, fill="blue" ) + 
     labs( title="Nonprofit Size (logged revenues)" ) + 
     xlab( variable.label ) +
@@ -438,7 +464,7 @@ core2 %>%
 
 
 
-## DAR by Nonprofit Size (Net Assets)
+## Current Ratio by Nonprofit Size (Net Assets)
 
 ```{r, fig.height=4}
 ggplot( core2, aes(x = totnetassetend )) +  
@@ -461,7 +487,7 @@ if( nrow(core2) > 10000 )
   core3 <- core2
 }
 
-jplot( log10(core3$totnetassetend), core3$dar, 
+jplot( log10(core3$totnetassetend), core3$currentratio, 
        xlab="Nonprofit Size (logged Net Assets)", 
        ylab=variable.label,
        xaxt="n", xlim=c(3,10) )
@@ -479,7 +505,7 @@ core2$asset.q <- create_quantiles( var=core2$totnetassetend, n.groups=5 )
 
 core2 %>% 
   filter( ! is.na(asset.q) ) %>% 
-  ggplot( aes(dar) )  + 
+  ggplot( aes(currentratio) )  + 
     geom_density( alpha = 0.5, fill="blue" ) + 
     labs( title="Nonprofit Size (logged net assets, if assets > 0)" ) + 
     xlab( variable.label ) + 
@@ -508,7 +534,7 @@ if( nrow(core2) > 10000 )
   core3 <- core2
 }
 
-jplot( log10(core3$totassetsend), core3$dar, 
+jplot( log10(core3$totassetsend), core3$currentratio, 
        xlab="Nonprofit Size (logged Total Assets)", 
        ylab=variable.label,
        xaxt="n", xlim=c(3,10) )
@@ -534,7 +560,7 @@ ggplot( core2, aes(x = totassetsend )) +
 ```{r}
 core2 %>% 
   filter( ! is.na(tot.asset.q) ) %>% 
-  ggplot( aes(dar) )  + 
+  ggplot( aes(currentratio) )  + 
     geom_density( alpha = 0.5, fill="blue" ) + 
     xlab( "Nonprofit Size (logged total assets, if assets > 0)" ) + 
     ylab( variable.label ) +
@@ -546,7 +572,7 @@ core2 %>%
 ```
 
 
-## DAR by Nonprofit Age
+## Current Ratio by Nonprofit Age
 
 ```{r, fig.height=4}
 ggplot( core2, aes(x = AGE )) +  
@@ -565,7 +591,7 @@ if( nrow(core2) > 10000 )
   core3 <- core2
 }
 
-jplot( core3$AGE, core3$dar, 
+jplot( core3$AGE, core3$currentratio, 
        xlab="Nonprofit Age", 
        ylab=variable.label ) 
 
@@ -577,7 +603,7 @@ jplot( core3$AGE, core3$dar,
 ```{r}
 core2 %>% 
   filter( ! is.na(age.q) ) %>% 
-  ggplot( aes(dar) )  + 
+  ggplot( aes(currentratio) )  + 
     geom_density( alpha = 0.5, fill="blue" ) + 
     labs( title="Nonprofit Age" ) + 
     xlab( variable.label ) +
@@ -595,9 +621,9 @@ core2 %>%
 # Save Metrics 
 
 ```{r, eval=F}
-core.dar <- select( core, ein, tax_pd, dar )
-saveRDS( core.dar, "03-data-ratios/m-01-dept-to-asset-ratio.rds" )
-write.csv( core.dar, "03-data-ratios/m-01-dept-to-asset-ratio.csv" )
+core.currentratio <- select( core, ein, tax_pd, currentratio )
+saveRDS( core.currentratio, "03-data-ratios/m-02-current-ratio.rds" )
+write.csv( core.currentratio, "03-data-ratios/m-02-current-ratio.csv" )
 ```
 
 
