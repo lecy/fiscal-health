@@ -125,21 +125,18 @@ Notes: This data is only available for organizations that file a full 990, not f
 ## Tabulation 
 
 
-```{r, eval=T, echo=FALSE}
-# can't divide by zero
-zero.these <- core$totassetsend == 0 
-core$totassetsend[ core$totassetsend == 0 ] <- NA 
-
+```{r, eval=T}
 liquidity <- ( core$nonintcashend + core$svngstempinvend + 
                          core$pldgegrntrcvblend + core$accntsrcvblend + 
                          core$invntriesalesend + core$prepaidexpnsend )
 
+# can't divide by zero
 payables <- ( core$accntspayableend + core$grntspayableend )
 payables[ payables == 0 ] <- NA
 
 core$currentratio <-  liquidity / payables
                      
-summary( core$currentratio )
+# summary( core$currentratio )
 ```
 
 
@@ -157,17 +154,19 @@ ggplot( core, aes(x = currentratio ) ) +
 ```
 
 
-A ratio below 0 is not very meaningful. Create an upper limit of 200%. 
+A ratio below 0 is not very meaningful. May need to truncate the long right tail.  
  
 
 ```{r}
+core2 <- core
+
 # proportion of values that are negative
-mean( core$currentratio < 0, na.rm=T ) 
-core$currentratio[ core$currentratio < 0 ] <- 0
+mean( core2$currentratio < 0, na.rm=T ) 
+core2$currentratio[ core2$currentratio < 0 ] <- 0
 
 # proption of values above 200% 
-mean( core$currentratio > 200, na.rm=T ) 
-core$currentratio[ core$currentratio > 200 ] <- 200
+mean( core2$currentratio > 200, na.rm=T ) 
+core2$currentratio[ core2$currentratio > 200 ] <- 200
 ```
 
 
@@ -196,13 +195,11 @@ Any cited works here...
 # Descriptive Statistics
 
 
-Put Debt to Asset Ratio on a scale of -10,000 to +20,000. 
-
-Convert everything else to thousands of dollars. 
+Convert all monetary variables to thousands of dollars. 
 
 ```{r, results="asis"}
 
-core %>%
+core2 %>%
   mutate( # currentratio = currentratio * 10000,
     totrevenue = totrevenue / 1000,
     totfuncexpns = totfuncexpns / 1000, 
@@ -233,19 +230,12 @@ What proportion of orgs have a Current Ratio of zero (no outstanding liabilities
 
 
 ```{r}
-prop.zero <- mean( core$currentratio == 0, na.rm=T )
+prop.zero <- mean( core2$currentratio == 0, na.rm=T )
 ```
 
 
 In the sample, `r 100*round(prop.zero,2)` percent of the organizations have a Current Ratio of zero, meaning they carried no debt. These organizations are dropped from subsequent graphs to keep the visualizations clean. The interpretation of the graphics should be the distributions of Debt to Asset Ratio for organizations that carry debt. 
 
-Filter out cases with Current Ratio=0 because they dominate the graphics otherwise.  
-
-```{r}
-# drop cases where Current Ratio=0
-core2 <-  core 
-core2$currentratio[ core2$currentratio == 0 ] <- NA
-```
 
 Create quantile groups: 
 
@@ -270,8 +260,8 @@ core2$age.q   <- create_quantiles( var=core2$AGE,            n.groups=5 )
 ## Current Ratio Density 
 
 ```{r, fig.height=4}
-min.x <- min( core$currentratio, na.rm=T )
-max.x <- max( core$currentratio, na.rm=T )
+min.x <- min( core2$currentratio, na.rm=T )
+max.x <- max( core2$currentratio, na.rm=T )
 
 ggplot( core2, aes(x = currentratio )) +  
   geom_density( alpha = 0.5, fill="darkorange" ) + 
@@ -324,12 +314,12 @@ ggplot( core3, aes( x=currentratio ) ) +
 ## Current Ratio by Region 
 
 ```{r}
-table( core$Region) %>% kable()
+table( core2$Region) %>% kable()
 ```
 
 
 ```{r}
-t <- table( factor(core3$Region) ) 
+t <- table( factor(core2$Region) ) 
 df <- data.frame( x=Inf, y=Inf, 
                   N=paste0( "N=", as.character(t) ), 
                   Region=names(t) )
@@ -353,11 +343,11 @@ core2 %>%
 
 
 ```{r}
-table( core$Division ) %>% kable()
+table( core2$Division ) %>% kable()
 ```
 
 ```{r}
-t <- table( factor(core3$Division) ) 
+t <- table( factor(core2$Division) ) 
 df <- data.frame( x=Inf, y=Inf, 
                   N=paste0( "N=", as.character(t) ), 
                   Division=names(t) )
