@@ -1,0 +1,19 @@
+# Ignore all large data files
+
+ec2_group_2_combined_2_11_22.csv           
+irs-990-ez-soi-extract-2017.csv          
+irs-990-ez-soi-extract-2018.xlsx          
+irs-990-ez-soi-extract-2019.csv           
+irs-990-ez-soi-extract-2019.xlsx
+irs-990-ez-soi-extract-2020.xlsx         
+irs-990-pc-soi-extract-2017.csv
+irs-990-pc-soi-extract-2018.xlsx         
+irs-990-pc-soi-extract-2019.csv
+irs-990-pc-soi-extract-2019.xlsx         
+irs-990-pc-soi-extract-2020.xlsx
+
+nccs-bmf-2019.csv
+
+org-sample.csv                         
+org-sample.xls  
+

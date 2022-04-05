@@ -1,0 +1,1339 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Metric 01 - Debt to Asset Ratio</title>
+
+<script src="site_libs/header-attrs-2.9/header-attrs.js"></script>
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  background-color: #f8f8f8; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #c4a000; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #000000; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #000000; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #000000; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+
+.sourceCode .row {
+  width: 100%;
+}
+.sourceCode {
+  overflow-x: auto;
+}
+.code-folding-btn {
+  margin-right: -30px;
+}
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<link rel="stylesheet" href="simple.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Fiscal Health Indicators</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="data-step-00-wrangling.html">Data Wrangling</a>
+</li>
+<li>
+  <a href="metric-01-debt-to-asset-ratio.html">Metric 01</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">Metric 01 - Debt to Asset Ratio</h1>
+
+</div>
+
+<div id="TOC">
+<ul>
+<li><a href="#setup">Setup</a></li>
+<li><a href="#metric-construction">Metric Construction</a>
+<ul>
+<li><a href="#definition">Definition</a></li>
+<li><a href="#variables">Variables</a></li>
+<li><a href="#tabulation">Tabulation</a></li>
+<li><a href="#standardize-scales">Standardize Scales</a></li>
+<li><a href="#metric-scope">Metric Scope</a></li>
+<li><a href="#reference">Reference</a></li>
+</ul></li>
+<li><a href="#descriptive-statistics">Descriptive Statistics</a>
+<ul>
+<li><a href="#dar-density">DAR Density</a></li>
+<li><a href="#dar-by-ntee-major-code">DAR by NTEE Major Code</a></li>
+<li><a href="#dar-by-region">DAR by Region</a></li>
+<li><a href="#dar-by-nonprofit-size-expenses">DAR by Nonprofit Size (Expenses)</a></li>
+<li><a href="#dar-by-nonprofit-size-revenue">DAR by Nonprofit Size (Revenue)</a></li>
+<li><a href="#dar-by-nonprofit-size-net-assets">DAR by Nonprofit Size (Net Assets)</a></li>
+<li><a href="#dar-by-nonprofit-age">DAR by Nonprofit Age</a></li>
+</ul></li>
+<li><a href="#save-metrics">Save Metrics</a></li>
+</ul>
+</div>
+
+<div id="setup" class="section level1">
+<h1>Setup</h1>
+<br>
+<hr>
+<p><br></p>
+</div>
+<div id="metric-construction" class="section level1">
+<h1>Metric Construction</h1>
+<div id="definition" class="section level2">
+<h2>Definition</h2>
+<p><span class="math display">\[DAR = \frac{Total \: Liabilities}{Total \: Assets}\]</span></p>
+<p>Notes: Variables should be equivalent for 990 and EZ filers in the IRS data.</p>
+</div>
+<div id="variables" class="section level2">
+<h2>Variables</h2>
+<p>Total liabilities, EOY</p>
+<ul>
+<li>On 990: Part X, line 26B
+<ul>
+<li>SOI PC EXTRACTS: totliabend<br />
+</li>
+<li>NCCS Core:<br />
+</li>
+</ul></li>
+<li>On EZ: Part II, line 26B</li>
+</ul>
+<p>Denominator: Total assets, EOY</p>
+<ul>
+<li>On 990: Part X, line 16B<br />
+</li>
+<li>On EZ: Part II, line 25B</li>
+</ul>
+</div>
+<div id="tabulation" class="section level2">
+<h2>Tabulation</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># can&#39;t divide by zero</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>zero.these <span class="ot">&lt;-</span> core<span class="sc">$</span>totassetsend <span class="sc">==</span> <span class="dv">0</span> </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>core<span class="sc">$</span>totassetsend[ core<span class="sc">$</span>totassetsend <span class="sc">==</span> <span class="dv">0</span> ] <span class="ot">&lt;-</span> <span class="cn">NA</span> </span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>core<span class="sc">$</span>dar <span class="ot">&lt;-</span> core<span class="sc">$</span>totliabend <span class="sc">/</span> core<span class="sc">$</span>totassetsend</span></code></pre></div>
+</div>
+<div id="standardize-scales" class="section level2">
+<h2>Standardize Scales</h2>
+<p>Check high and low values to see what makes sense.</p>
+<p>A ratio below 0 is odd because it means assets are negative and liabilities are positive.</p>
+<p>A ratio above 1 might be realistic, but not more meaningful than knowing the ratio is at least one, which means the org has liabilities that as as large or larger than assets. Practically, a ratio of 1 or 2 probably mean the same thing for an organization (they are in trouble).</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>( core, <span class="fu">aes</span>(<span class="at">x =</span> dar )) <span class="sc">+</span>  </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>( <span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">fill=</span><span class="st">&quot;blue&quot;</span> ) <span class="sc">+</span> </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>( <span class="sc">-</span><span class="dv">1</span>, <span class="dv">2</span> ) </span></code></pre></div>
+<p><img src="metric-01-debt-to-asset-ratio_files/figure-html/unnamed-chunk-3-1.png" width="960" /></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>core<span class="sc">$</span>dar[ core<span class="sc">$</span>dar <span class="sc">&lt;</span> <span class="dv">0</span> ] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>core<span class="sc">$</span>dar[ core<span class="sc">$</span>dar <span class="sc">&gt;</span>  <span class="dv">1</span> ] <span class="ot">&lt;-</span>  <span class="dv">1</span></span></code></pre></div>
+</div>
+<div id="metric-scope" class="section level2">
+<h2>Metric Scope</h2>
+<p>Score describes whether the metric applies to all 990 filers, or only the full 990 filers (if the variable is not included on the 990-EZ form).</p>
+<p>Tax data is available for both full 990 and 990-EZ filers, so this metric describes all orgs.</p>
+<p><em>Scope codes:</em></p>
+<ul>
+<li>PZ: <em>Both 990 and 990-EZ filers</em><br />
+</li>
+<li>PC: <em>Only full 990 (public charity or PC) filers only</em><br />
+</li>
+<li>EZ: <em>Only 990-EZ filers</em></li>
+</ul>
+</div>
+<div id="reference" class="section level2">
+<h2>Reference</h2>
+<p>Any cited works here…</p>
+</div>
+</div>
+<div id="descriptive-statistics" class="section level1">
+<h1>Descriptive Statistics</h1>
+<p>Put Debt to Asset Ratio on a scale of -10,000 to +20,000.</p>
+<p>Convert everything else to thousands of dollars.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># rescale DAR where 1 = 10,000 </span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>core <span class="sc">%&gt;%</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>( <span class="at">dar =</span> dar <span class="sc">*</span> <span class="dv">10000</span>,</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">totrevenue =</span> totrevenue <span class="sc">/</span> <span class="dv">1000</span>,</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">totfuncexpns =</span> totfuncexpns <span class="sc">/</span> <span class="dv">1000</span>, </span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">lndbldgsequipend =</span> lndbldgsequipend <span class="sc">/</span> <span class="dv">1000</span>,</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">totassetsend =</span> totassetsend <span class="sc">/</span> <span class="dv">1000</span>,</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">totliabend =</span> totliabend <span class="sc">/</span> <span class="dv">1000</span>,</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">totnetassetend =</span> totnetassetend <span class="sc">/</span> <span class="dv">1000</span> ) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>( STATE, AGE, NTEE1, NTMAJ12, </span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>          dar, totrevenue, totfuncexpns, lndbldgsequipend, </span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>          totassetsend, totliabend, totnetassetend   ) <span class="sc">%&gt;%</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stargazer</span>( <span class="at">type =</span> s.type, </span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>             <span class="at">digits=</span><span class="dv">0</span>, </span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>             <span class="at">summary.stat =</span> <span class="fu">c</span>(<span class="st">&quot;min&quot;</span>,<span class="st">&quot;p25&quot;</span>,<span class="st">&quot;median&quot;</span>,</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>                              <span class="st">&quot;mean&quot;</span>,<span class="st">&quot;p75&quot;</span>,<span class="st">&quot;max&quot;</span>, <span class="st">&quot;sd&quot;</span>) )</span></code></pre></div>
+<table style="text-align:center">
+<tr>
+<td colspan="8" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Statistic
+</td>
+<td>
+Min
+</td>
+<td>
+Pctl(25)
+</td>
+<td>
+Median
+</td>
+<td>
+Mean
+</td>
+<td>
+Pctl(75)
+</td>
+<td>
+Max
+</td>
+<td>
+St. Dev.
+</td>
+</tr>
+<tr>
+<td colspan="8" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+AGE
+</td>
+<td>
+3
+</td>
+<td>
+22
+</td>
+<td>
+30
+</td>
+<td>
+32
+</td>
+<td>
+41
+</td>
+<td>
+101
+</td>
+<td>
+15
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+dar
+</td>
+<td>
+0
+</td>
+<td>
+893
+</td>
+<td>
+3,279
+</td>
+<td>
+4,054
+</td>
+<td>
+6,813
+</td>
+<td>
+10,000
+</td>
+<td>
+3,438
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+totrevenue
+</td>
+<td>
+-5,377
+</td>
+<td>
+263
+</td>
+<td>
+973
+</td>
+<td>
+5,038
+</td>
+<td>
+3,818
+</td>
+<td>
+1,046,853
+</td>
+<td>
+20,454
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+totfuncexpns
+</td>
+<td>
+0
+</td>
+<td>
+263
+</td>
+<td>
+890
+</td>
+<td>
+4,679
+</td>
+<td>
+3,453
+</td>
+<td>
+1,052,673
+</td>
+<td>
+19,771
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+lndbldgsequipend
+</td>
+<td>
+-4
+</td>
+<td>
+66
+</td>
+<td>
+782
+</td>
+<td>
+3,701
+</td>
+<td>
+2,898
+</td>
+<td>
+985,507
+</td>
+<td>
+18,175
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+totassetsend
+</td>
+<td>
+-7,552
+</td>
+<td>
+748
+</td>
+<td>
+2,487
+</td>
+<td>
+10,555
+</td>
+<td>
+7,730
+</td>
+<td>
+1,606,273
+</td>
+<td>
+44,359
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+totliabend
+</td>
+<td>
+-2,707
+</td>
+<td>
+102
+</td>
+<td>
+739
+</td>
+<td>
+5,231
+</td>
+<td>
+3,051
+</td>
+<td>
+981,223
+</td>
+<td>
+27,684
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+totnetassetend
+</td>
+<td>
+-178,870
+</td>
+<td>
+198
+</td>
+<td>
+1,155
+</td>
+<td>
+5,293
+</td>
+<td>
+4,334
+</td>
+<td>
+876,442
+</td>
+<td>
+23,074
+</td>
+</tr>
+<tr>
+<td colspan="8" style="border-bottom: 1px solid black">
+</td>
+</tr>
+</table>
+<p>What proportion of orgs have a DAR of zero (no outstanding liabilities)?</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>prop.zero <span class="ot">&lt;-</span> <span class="fu">mean</span>( core<span class="sc">$</span>dar <span class="sc">==</span> <span class="dv">0</span>, <span class="at">na.rm=</span>T )</span></code></pre></div>
+<p>In the sample, 6 percent of the organizations have a DAR of zero, meaning they carried no debt. These organizations are dropped from subsequent graphs to keep the visualizations clean. The interpretation of the graphics should be the distributions of Debt to Asset Ratio for organizations that carry debt.</p>
+<p>Filter out cases with DAR=0 because they dominate the graphics otherwise.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># drop cases where DAR=0</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>core2 <span class="ot">&lt;-</span>  core </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>core2<span class="sc">$</span>dar[ core2<span class="sc">$</span>dar <span class="sc">==</span> <span class="dv">0</span> ] <span class="ot">&lt;-</span> <span class="cn">NA</span></span></code></pre></div>
+<p>Create quantile groups:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="do">###</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="do">### ADD QUANTILES</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="do">###</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="do">###   function create_quantiles() defined in r-functions.R</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>core2<span class="sc">$</span>exp.q   <span class="ot">&lt;-</span> <span class="fu">create_quantiles</span>( <span class="at">var=</span>core2<span class="sc">$</span>totfuncexpns,   <span class="at">n.groups=</span><span class="dv">5</span> )</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>core2<span class="sc">$</span>rev.q   <span class="ot">&lt;-</span> <span class="fu">create_quantiles</span>( <span class="at">var=</span>core2<span class="sc">$</span>totrevenue,     <span class="at">n.groups=</span><span class="dv">5</span> )</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>core2<span class="sc">$</span>asset.q <span class="ot">&lt;-</span> <span class="fu">create_quantiles</span>( <span class="at">var=</span>core2<span class="sc">$</span>totnetassetend, <span class="at">n.groups=</span><span class="dv">5</span> )</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>core2<span class="sc">$</span>age.q   <span class="ot">&lt;-</span> <span class="fu">create_quantiles</span>( <span class="at">var=</span>core2<span class="sc">$</span>AGE,            <span class="at">n.groups=</span><span class="dv">5</span> )</span></code></pre></div>
+<div id="dar-density" class="section level2">
+<h2>DAR Density</h2>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>( core2, <span class="fu">aes</span>(<span class="at">x =</span> dar )) <span class="sc">+</span>  </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>( <span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">fill=</span><span class="st">&quot;darkorange&quot;</span> ) <span class="sc">+</span> </span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>( <span class="sc">-</span><span class="fl">0.1</span>, <span class="dv">1</span> ) <span class="sc">+</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>( variable.label ) <span class="sc">+</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>( <span class="at">axis.title.y=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">axis.text.y=</span><span class="fu">element_blank</span>(), </span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">axis.ticks.y=</span><span class="fu">element_blank</span>() )</span></code></pre></div>
+<p><img src="metric-01-debt-to-asset-ratio_files/figure-html/unnamed-chunk-8-1.png" width="960" /></p>
+</div>
+<div id="dar-by-ntee-major-code" class="section level2">
+<h2>DAR by NTEE Major Code</h2>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>core3 <span class="ot">&lt;-</span> core2 <span class="sc">%&gt;%</span> <span class="fu">filter</span>( <span class="sc">!</span> <span class="fu">is.na</span>(NTMAJ12) )</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>( core3<span class="sc">$</span>NTMAJ12) <span class="sc">%&gt;%</span> <span class="fu">sort</span>(<span class="at">decreasing=</span><span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> <span class="fu">kable</span>()</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Var1</th>
+<th align="right">Freq</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Human Services</td>
+<td align="right">4007</td>
+</tr>
+<tr class="even">
+<td align="left">Public Benefit</td>
+<td align="right">1718</td>
+</tr>
+<tr class="odd">
+<td align="left">Health</td>
+<td align="right">165</td>
+</tr>
+<tr class="even">
+<td align="left">Environmental</td>
+<td align="right">94</td>
+</tr>
+<tr class="odd">
+<td align="left">Arts</td>
+<td align="right">85</td>
+</tr>
+<tr class="even">
+<td align="left">Religion</td>
+<td align="right">65</td>
+</tr>
+<tr class="odd">
+<td align="left">Education</td>
+<td align="right">6</td>
+</tr>
+<tr class="even">
+<td align="left">Hospitals</td>
+<td align="right">4</td>
+</tr>
+<tr class="odd">
+<td align="left">Mutual Benefit</td>
+<td align="right">3</td>
+</tr>
+<tr class="even">
+<td align="left">Unknown</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">International</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">Universities</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>t <span class="ot">&lt;-</span> <span class="fu">table</span>( <span class="fu">factor</span>(core3<span class="sc">$</span>NTMAJ12) ) </span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>( <span class="at">x=</span><span class="cn">Inf</span>, <span class="at">y=</span><span class="cn">Inf</span>, </span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">N=</span><span class="fu">paste0</span>( <span class="st">&quot;N=&quot;</span>, <span class="fu">as.character</span>(t) ), </span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>                  <span class="at">NTMAJ12=</span><span class="fu">names</span>(t) )</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>( core3, <span class="fu">aes</span>( <span class="at">x=</span>dar ) ) <span class="sc">+</span> </span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>( <span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">fill=</span><span class="st">&quot;blue&quot;</span> ) <span class="sc">+</span> </span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>( <span class="sc">-</span><span class="fl">0.1</span>, <span class="dv">1</span> ) <span class="sc">+</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>( <span class="at">title=</span><span class="st">&quot;Nonprofit Subsectors&quot;</span> ) <span class="sc">+</span> </span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>( variable.label ) <span class="sc">+</span> </span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>( <span class="sc">~</span> NTMAJ12, <span class="at">nrow=</span><span class="dv">3</span> ) <span class="sc">+</span> </span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>( <span class="at">base_size =</span> <span class="dv">15</span> )  <span class="sc">+</span> </span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>( <span class="at">axis.title.y=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.text.y=</span><span class="fu">element_blank</span>(), </span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.ticks.y=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>           <span class="at">strip.text =</span> <span class="fu">element_text</span>( <span class="at">face=</span><span class="st">&quot;bold&quot;</span>) ) <span class="sc">+</span>  <span class="co"># size=20 </span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>( <span class="at">data=</span>df, </span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(x, y, <span class="at">label=</span>N ), </span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>             <span class="at">hjust=</span><span class="dv">2</span>, <span class="at">vjust=</span><span class="dv">3</span>, </span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>             <span class="at">color=</span><span class="st">&quot;gray60&quot;</span>, <span class="at">size=</span><span class="dv">6</span> )</span></code></pre></div>
+<p><img src="metric-01-debt-to-asset-ratio_files/figure-html/unnamed-chunk-10-1.png" width="960" /></p>
+</div>
+<div id="dar-by-region" class="section level2">
+<h2>DAR by Region</h2>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>( core<span class="sc">$</span>Region) <span class="sc">%&gt;%</span> <span class="fu">kable</span>()</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Var1</th>
+<th align="right">Freq</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Midwest</td>
+<td align="right">1582</td>
+</tr>
+<tr class="even">
+<td align="left">Northeast</td>
+<td align="right">1501</td>
+</tr>
+<tr class="odd">
+<td align="left">South</td>
+<td align="right">1815</td>
+</tr>
+<tr class="even">
+<td align="left">West</td>
+<td align="right">1233</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>t <span class="ot">&lt;-</span> <span class="fu">table</span>( <span class="fu">factor</span>(core3<span class="sc">$</span>Region) ) </span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>( <span class="at">x=</span><span class="cn">Inf</span>, <span class="at">y=</span><span class="cn">Inf</span>, </span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">N=</span><span class="fu">paste0</span>( <span class="st">&quot;N=&quot;</span>, <span class="fu">as.character</span>(t) ), </span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">Region=</span><span class="fu">names</span>(t) )</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>core2 <span class="sc">%&gt;%</span> </span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>( <span class="sc">!</span> <span class="fu">is.na</span>(Region) ) <span class="sc">%&gt;%</span> </span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>( <span class="fu">aes</span>(dar) )  <span class="sc">+</span> </span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_density</span>( <span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">fill=</span><span class="st">&quot;blue&quot;</span> ) <span class="sc">+</span> </span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>( <span class="st">&quot;Census Regions&quot;</span> ) <span class="sc">+</span> </span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ylab</span>( variable.label ) <span class="sc">+</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>( <span class="sc">~</span> Region, <span class="at">nrow=</span><span class="dv">3</span> ) <span class="sc">+</span> </span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>( <span class="at">base_size =</span> <span class="dv">22</span> )  <span class="sc">+</span> </span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>( <span class="at">axis.title.y=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.text.y=</span><span class="fu">element_blank</span>(), </span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.ticks.y=</span><span class="fu">element_blank</span>() ) <span class="sc">+</span> </span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_text</span>( <span class="at">data=</span>df, </span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(x, y, <span class="at">label=</span>N ), </span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>             <span class="at">hjust=</span><span class="dv">2</span>, <span class="at">vjust=</span><span class="dv">3</span>, </span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>             <span class="at">color=</span><span class="st">&quot;gray60&quot;</span>, <span class="at">size=</span><span class="dv">6</span> )</span></code></pre></div>
+<p><img src="metric-01-debt-to-asset-ratio_files/figure-html/unnamed-chunk-12-1.png" width="960" /></p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>( core<span class="sc">$</span>Division ) <span class="sc">%&gt;%</span> <span class="fu">kable</span>()</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Var1</th>
+<th align="right">Freq</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">East North Central</td>
+<td align="right">1081</td>
+</tr>
+<tr class="even">
+<td align="left">East South Central</td>
+<td align="right">331</td>
+</tr>
+<tr class="odd">
+<td align="left">Middle Atlantic</td>
+<td align="right">998</td>
+</tr>
+<tr class="even">
+<td align="left">Mountain</td>
+<td align="right">340</td>
+</tr>
+<tr class="odd">
+<td align="left">New England</td>
+<td align="right">503</td>
+</tr>
+<tr class="even">
+<td align="left">Pacific</td>
+<td align="right">893</td>
+</tr>
+<tr class="odd">
+<td align="left">South Atlantic</td>
+<td align="right">1011</td>
+</tr>
+<tr class="even">
+<td align="left">West North Central</td>
+<td align="right">501</td>
+</tr>
+<tr class="odd">
+<td align="left">West South Central</td>
+<td align="right">473</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>t <span class="ot">&lt;-</span> <span class="fu">table</span>( <span class="fu">factor</span>(core3<span class="sc">$</span>Division) ) </span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>( <span class="at">x=</span><span class="cn">Inf</span>, <span class="at">y=</span><span class="cn">Inf</span>, </span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">N=</span><span class="fu">paste0</span>( <span class="st">&quot;N=&quot;</span>, <span class="fu">as.character</span>(t) ), </span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">Division=</span><span class="fu">names</span>(t) )</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>core2 <span class="sc">%&gt;%</span> </span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>( <span class="sc">!</span> <span class="fu">is.na</span>(Division) ) <span class="sc">%&gt;%</span> </span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>( <span class="fu">aes</span>(dar) )  <span class="sc">+</span> </span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_density</span>( <span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">fill=</span><span class="st">&quot;blue&quot;</span> ) <span class="sc">+</span> </span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>( <span class="st">&quot;Census Sub-Regions (10)&quot;</span> ) <span class="sc">+</span> </span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ylab</span>( variable.label ) <span class="sc">+</span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>( <span class="sc">~</span> Division, <span class="at">nrow=</span><span class="dv">3</span> ) <span class="sc">+</span> </span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>( <span class="at">base_size =</span> <span class="dv">22</span> )  <span class="sc">+</span> </span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>( <span class="at">axis.title.y=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.text.y=</span><span class="fu">element_blank</span>(), </span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.ticks.y=</span><span class="fu">element_blank</span>() ) <span class="sc">+</span> </span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_text</span>( <span class="at">data=</span>df, </span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(x, y, <span class="at">label=</span>N ), </span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>             <span class="at">hjust=</span><span class="dv">2</span>, <span class="at">vjust=</span><span class="dv">3</span>, </span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>             <span class="at">color=</span><span class="st">&quot;gray60&quot;</span>, <span class="at">size=</span><span class="dv">6</span> ) </span></code></pre></div>
+<p><img src="metric-01-debt-to-asset-ratio_files/figure-html/unnamed-chunk-14-1.png" width="960" /></p>
+</div>
+<div id="dar-by-nonprofit-size-expenses" class="section level2">
+<h2>DAR by Nonprofit Size (Expenses)</h2>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>( core2, <span class="fu">aes</span>(<span class="at">x =</span> totfuncexpns )) <span class="sc">+</span>  </span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>( <span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">fill=</span><span class="st">&quot;darkorange&quot;</span> ) <span class="sc">+</span> </span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>( <span class="fu">quantile</span>(core2<span class="sc">$</span>totfuncexpns, <span class="fu">c</span>(<span class="fl">0.02</span>,<span class="fl">0.98</span>), <span class="at">na.rm=</span>T ) )</span></code></pre></div>
+<p><img src="metric-01-debt-to-asset-ratio_files/figure-html/unnamed-chunk-15-1.png" width="960" /></p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>core2<span class="sc">$</span>totfuncexpns[ core2<span class="sc">$</span>totfuncexpns <span class="sc">&lt;</span> <span class="dv">1</span> ] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co"># core2$totfuncexpns[ is.na(core2$totfuncexpns) ] &lt;- 1</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>( <span class="fu">nrow</span>(core2) <span class="sc">&gt;</span> <span class="dv">10000</span> )</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  core3 <span class="ot">&lt;-</span> <span class="fu">sample_n</span>( core2, <span class="dv">10000</span> )</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>  core3 <span class="ot">&lt;-</span> core2</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="fu">jplot</span>( <span class="fu">log10</span>(core3<span class="sc">$</span>totfuncexpns), core3<span class="sc">$</span>dar, </span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">xlab=</span><span class="st">&quot;Nonprofit Size (logged Expenses)&quot;</span>, </span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">ylab=</span>variable.label,</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>       <span class="at">xaxt=</span><span class="st">&quot;n&quot;</span>, <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">10</span>) )</span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a><span class="fu">axis</span>( <span class="at">side=</span><span class="dv">1</span>, </span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>      <span class="at">at=</span><span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">10</span>), </span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>      <span class="at">labels=</span><span class="fu">c</span>(<span class="st">&quot;1k&quot;</span>,<span class="st">&quot;10k&quot;</span>,<span class="st">&quot;100k&quot;</span>,<span class="st">&quot;1m&quot;</span>,<span class="st">&quot;10m&quot;</span>,<span class="st">&quot;100m&quot;</span>,<span class="st">&quot;1b&quot;</span>,<span class="st">&quot;10b&quot;</span>) )</span></code></pre></div>
+<p><img src="metric-01-debt-to-asset-ratio_files/figure-html/unnamed-chunk-16-1.png" width="960" /></p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>core2 <span class="sc">%&gt;%</span> </span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>( <span class="sc">!</span> <span class="fu">is.na</span>(exp.q) ) <span class="sc">%&gt;%</span> </span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>( <span class="fu">aes</span>(dar) )  <span class="sc">+</span> </span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_density</span>( <span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">fill=</span><span class="st">&quot;blue&quot;</span> ) <span class="sc">+</span> </span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>( <span class="at">title=</span><span class="st">&quot;Nonprofit Size (logged expenses)&quot;</span> ) <span class="sc">+</span> </span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>( variable.label ) <span class="sc">+</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>( <span class="sc">~</span> exp.q, <span class="at">nrow=</span><span class="dv">3</span> ) <span class="sc">+</span> </span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>( <span class="at">base_size =</span> <span class="dv">22</span> )  <span class="sc">+</span> </span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>( <span class="at">axis.title.y=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.text.y=</span><span class="fu">element_blank</span>(), </span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.ticks.y=</span><span class="fu">element_blank</span>() )</span></code></pre></div>
+<p><img src="metric-01-debt-to-asset-ratio_files/figure-html/unnamed-chunk-17-1.png" width="960" /></p>
+</div>
+<div id="dar-by-nonprofit-size-revenue" class="section level2">
+<h2>DAR by Nonprofit Size (Revenue)</h2>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>( core2, <span class="fu">aes</span>(<span class="at">x =</span> totrevenue )) <span class="sc">+</span>  </span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>( <span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">fill=</span><span class="st">&quot;darkorange&quot;</span> ) <span class="sc">+</span> </span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>( <span class="fu">quantile</span>(core2<span class="sc">$</span>totrevenue, <span class="fu">c</span>(<span class="fl">0.02</span>,<span class="fl">0.98</span>), <span class="at">na.rm=</span>T ) ) <span class="sc">+</span> </span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>( <span class="at">axis.title.y=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.text.y=</span><span class="fu">element_blank</span>(), </span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.ticks.y=</span><span class="fu">element_blank</span>() )</span></code></pre></div>
+<p><img src="metric-01-debt-to-asset-ratio_files/figure-html/unnamed-chunk-18-1.png" width="960" /></p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>core2<span class="sc">$</span>totrevenue[ core2<span class="sc">$</span>totrevenue <span class="sc">&lt;</span> <span class="dv">1</span> ] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>( <span class="fu">nrow</span>(core2) <span class="sc">&gt;</span> <span class="dv">10000</span> )</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  core3 <span class="ot">&lt;-</span> <span class="fu">sample_n</span>( core2, <span class="dv">10000</span> )</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>  core3 <span class="ot">&lt;-</span> core2</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="fu">jplot</span>( <span class="fu">log10</span>(core3<span class="sc">$</span>totrevenue), core3<span class="sc">$</span>dar, </span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">xlab=</span><span class="st">&quot;Nonprofit Size (logged Revenue)&quot;</span>, </span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">ylab=</span>variable.label,</span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">xaxt=</span><span class="st">&quot;n&quot;</span>, <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">10</span>) )</span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a><span class="fu">axis</span>( <span class="at">side=</span><span class="dv">1</span>, </span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>      <span class="at">at=</span><span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">10</span>), </span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>      <span class="at">labels=</span><span class="fu">c</span>(<span class="st">&quot;1k&quot;</span>,<span class="st">&quot;10k&quot;</span>,<span class="st">&quot;100k&quot;</span>,<span class="st">&quot;1m&quot;</span>,<span class="st">&quot;10m&quot;</span>,<span class="st">&quot;100m&quot;</span>,<span class="st">&quot;1b&quot;</span>,<span class="st">&quot;10b&quot;</span>) )</span></code></pre></div>
+<p><img src="metric-01-debt-to-asset-ratio_files/figure-html/unnamed-chunk-19-1.png" width="960" /></p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>core2 <span class="sc">%&gt;%</span> </span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>( <span class="sc">!</span> <span class="fu">is.na</span>(rev.q) ) <span class="sc">%&gt;%</span> </span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>( <span class="fu">aes</span>(dar) )  <span class="sc">+</span> </span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_density</span>( <span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">fill=</span><span class="st">&quot;blue&quot;</span> ) <span class="sc">+</span> </span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>( <span class="at">title=</span><span class="st">&quot;Nonprofit Size (logged revenues)&quot;</span> ) <span class="sc">+</span> </span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>( variable.label ) <span class="sc">+</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>( <span class="sc">~</span> rev.q, <span class="at">nrow=</span><span class="dv">3</span> ) <span class="sc">+</span> </span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>( <span class="at">base_size =</span> <span class="dv">22</span> )  <span class="sc">+</span> </span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>( <span class="at">axis.title.y=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.text.y=</span><span class="fu">element_blank</span>(), </span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.ticks.y=</span><span class="fu">element_blank</span>() )</span></code></pre></div>
+<p><img src="metric-01-debt-to-asset-ratio_files/figure-html/unnamed-chunk-20-1.png" width="960" /></p>
+</div>
+<div id="dar-by-nonprofit-size-net-assets" class="section level2">
+<h2>DAR by Nonprofit Size (Net Assets)</h2>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>( core2, <span class="fu">aes</span>(<span class="at">x =</span> totnetassetend )) <span class="sc">+</span>  </span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>( <span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">fill=</span><span class="st">&quot;darkorange&quot;</span> ) <span class="sc">+</span> </span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>( <span class="fu">quantile</span>(core2<span class="sc">$</span>totnetassetend, <span class="fu">c</span>(<span class="fl">0.02</span>,<span class="fl">0.98</span>), <span class="at">na.rm=</span>T ) ) <span class="sc">+</span> </span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>( <span class="st">&quot;Net Assets&quot;</span> ) <span class="sc">+</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>( <span class="at">axis.title.y=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.text.y=</span><span class="fu">element_blank</span>(), </span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.ticks.y=</span><span class="fu">element_blank</span>() )</span></code></pre></div>
+<p><img src="metric-01-debt-to-asset-ratio_files/figure-html/unnamed-chunk-21-1.png" width="960" /></p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>core2<span class="sc">$</span>totnetassetend[ core2<span class="sc">$</span>totnetassetend <span class="sc">&lt;</span> <span class="dv">1</span> ] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>( <span class="fu">nrow</span>(core2) <span class="sc">&gt;</span> <span class="dv">10000</span> )</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  core3 <span class="ot">&lt;-</span> <span class="fu">sample_n</span>( core2, <span class="dv">10000</span> )</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>  core3 <span class="ot">&lt;-</span> core2</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a><span class="fu">jplot</span>( <span class="fu">log10</span>(core3<span class="sc">$</span>totnetassetend), core3<span class="sc">$</span>dar, </span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">xlab=</span><span class="st">&quot;Nonprofit Size (logged Net Assets)&quot;</span>, </span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">ylab=</span>variable.label,</span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">xaxt=</span><span class="st">&quot;n&quot;</span>, <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">10</span>) )</span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a><span class="fu">axis</span>( <span class="at">side=</span><span class="dv">1</span>, </span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>      <span class="at">at=</span><span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">10</span>), </span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>      <span class="at">labels=</span><span class="fu">c</span>(<span class="st">&quot;1k&quot;</span>,<span class="st">&quot;10k&quot;</span>,<span class="st">&quot;100k&quot;</span>,<span class="st">&quot;1m&quot;</span>,<span class="st">&quot;10m&quot;</span>,<span class="st">&quot;100m&quot;</span>,<span class="st">&quot;1b&quot;</span>,<span class="st">&quot;10b&quot;</span>) )</span></code></pre></div>
+<p><img src="metric-01-debt-to-asset-ratio_files/figure-html/unnamed-chunk-22-1.png" width="960" /></p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>core2<span class="sc">$</span>totnetassetend[ core2<span class="sc">$</span>totnetassetend <span class="sc">&lt;</span> <span class="dv">1</span> ] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>core2<span class="sc">$</span>asset.q <span class="ot">&lt;-</span> <span class="fu">create_quantiles</span>( <span class="at">var=</span>core2<span class="sc">$</span>totnetassetend, <span class="at">n.groups=</span><span class="dv">5</span> )</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>core2 <span class="sc">%&gt;%</span> </span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>( <span class="sc">!</span> <span class="fu">is.na</span>(asset.q) ) <span class="sc">%&gt;%</span> </span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>( <span class="fu">aes</span>(dar) )  <span class="sc">+</span> </span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_density</span>( <span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">fill=</span><span class="st">&quot;blue&quot;</span> ) <span class="sc">+</span> </span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>( <span class="at">title=</span><span class="st">&quot;Nonprofit Size (logged net assets, if assets &gt; 0)&quot;</span> ) <span class="sc">+</span> </span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>( variable.label ) <span class="sc">+</span> </span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ylab</span>( <span class="st">&quot;&quot;</span> ) <span class="sc">+</span> </span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>( <span class="sc">~</span> asset.q, <span class="at">nrow=</span><span class="dv">3</span> ) <span class="sc">+</span> </span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>( <span class="at">base_size =</span> <span class="dv">22</span> )  <span class="sc">+</span> </span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>( <span class="at">axis.title.y=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.text.y=</span><span class="fu">element_blank</span>(), </span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.ticks.y=</span><span class="fu">element_blank</span>() )</span></code></pre></div>
+<p><img src="metric-01-debt-to-asset-ratio_files/figure-html/unnamed-chunk-23-1.png" width="960" /></p>
+<p>Total Assets for Comparison</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>core2<span class="sc">$</span>totassetsend[ core2<span class="sc">$</span>totassetsend <span class="sc">&lt;</span> <span class="dv">1</span> ] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>core2<span class="sc">$</span>tot.asset.q <span class="ot">&lt;-</span> <span class="fu">create_quantiles</span>( <span class="at">var=</span>core2<span class="sc">$</span>totassetsend, <span class="at">n.groups=</span><span class="dv">5</span> )</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>( <span class="fu">nrow</span>(core2) <span class="sc">&gt;</span> <span class="dv">10000</span> )</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>  core3 <span class="ot">&lt;-</span> <span class="fu">sample_n</span>( core2, <span class="dv">10000</span> )</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>  core3 <span class="ot">&lt;-</span> core2</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a><span class="fu">jplot</span>( <span class="fu">log10</span>(core3<span class="sc">$</span>totassetsend), core3<span class="sc">$</span>dar, </span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">xlab=</span><span class="st">&quot;Nonprofit Size (logged Total Assets)&quot;</span>, </span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">ylab=</span>variable.label,</span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>       <span class="at">xaxt=</span><span class="st">&quot;n&quot;</span>, <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">10</span>) )</span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a><span class="fu">axis</span>( <span class="at">side=</span><span class="dv">1</span>, </span>
+<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>      <span class="at">at=</span><span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">10</span>), </span>
+<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a>      <span class="at">labels=</span><span class="fu">c</span>(<span class="st">&quot;1k&quot;</span>,<span class="st">&quot;10k&quot;</span>,<span class="st">&quot;100k&quot;</span>,<span class="st">&quot;1m&quot;</span>,<span class="st">&quot;10m&quot;</span>,<span class="st">&quot;100m&quot;</span>,<span class="st">&quot;1b&quot;</span>,<span class="st">&quot;10b&quot;</span>) )</span></code></pre></div>
+<p><img src="metric-01-debt-to-asset-ratio_files/figure-html/unnamed-chunk-24-1.png" width="960" /></p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>( core2, <span class="fu">aes</span>(<span class="at">x =</span> totassetsend )) <span class="sc">+</span>  </span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>( <span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">fill=</span><span class="st">&quot;darkorange&quot;</span> ) <span class="sc">+</span> </span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>( <span class="fu">quantile</span>(core2<span class="sc">$</span>totassetsend, <span class="fu">c</span>(<span class="fl">0.02</span>,<span class="fl">0.98</span>), <span class="at">na.rm=</span>T ) ) <span class="sc">+</span> </span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>( <span class="st">&quot;Net Assets&quot;</span> ) <span class="sc">+</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>( <span class="at">axis.title.y=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.text.y=</span><span class="fu">element_blank</span>(), </span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.ticks.y=</span><span class="fu">element_blank</span>() )</span></code></pre></div>
+<p><img src="metric-01-debt-to-asset-ratio_files/figure-html/unnamed-chunk-25-1.png" width="960" /></p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>core2 <span class="sc">%&gt;%</span> </span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>( <span class="sc">!</span> <span class="fu">is.na</span>(tot.asset.q) ) <span class="sc">%&gt;%</span> </span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>( <span class="fu">aes</span>(dar) )  <span class="sc">+</span> </span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_density</span>( <span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">fill=</span><span class="st">&quot;blue&quot;</span> ) <span class="sc">+</span> </span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>( <span class="st">&quot;Nonprofit Size (logged total assets, if assets &gt; 0)&quot;</span> ) <span class="sc">+</span> </span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ylab</span>( variable.label ) <span class="sc">+</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>( <span class="sc">~</span> tot.asset.q, <span class="at">nrow=</span><span class="dv">3</span> ) <span class="sc">+</span> </span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>( <span class="at">base_size =</span> <span class="dv">22</span> )  <span class="sc">+</span> </span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>( <span class="at">axis.title.y=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.text.y=</span><span class="fu">element_blank</span>(), </span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.ticks.y=</span><span class="fu">element_blank</span>() )</span></code></pre></div>
+<p><img src="metric-01-debt-to-asset-ratio_files/figure-html/unnamed-chunk-26-1.png" width="960" /></p>
+</div>
+<div id="dar-by-nonprofit-age" class="section level2">
+<h2>DAR by Nonprofit Age</h2>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>( core2, <span class="fu">aes</span>(<span class="at">x =</span> AGE )) <span class="sc">+</span>  </span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>( <span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">fill=</span><span class="st">&quot;darkorange&quot;</span> )  </span></code></pre></div>
+<p><img src="metric-01-debt-to-asset-ratio_files/figure-html/unnamed-chunk-27-1.png" width="960" /></p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>core2<span class="sc">$</span>AGE[ core2<span class="sc">$</span>AGE <span class="sc">&lt;</span> <span class="dv">1</span> ] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>( <span class="fu">nrow</span>(core2) <span class="sc">&gt;</span> <span class="dv">10000</span> )</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>  core3 <span class="ot">&lt;-</span> <span class="fu">sample_n</span>( core2, <span class="dv">10000</span> )</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>  core3 <span class="ot">&lt;-</span> core2</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a><span class="fu">jplot</span>( core3<span class="sc">$</span>AGE, core3<span class="sc">$</span>dar, </span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">xlab=</span><span class="st">&quot;Nonprofit Age&quot;</span>, </span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">ylab=</span>variable.label ) </span></code></pre></div>
+<p><img src="metric-01-debt-to-asset-ratio_files/figure-html/unnamed-chunk-28-1.png" width="960" /></p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>core2 <span class="sc">%&gt;%</span> </span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>( <span class="sc">!</span> <span class="fu">is.na</span>(age.q) ) <span class="sc">%&gt;%</span> </span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>( <span class="fu">aes</span>(dar) )  <span class="sc">+</span> </span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_density</span>( <span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">fill=</span><span class="st">&quot;blue&quot;</span> ) <span class="sc">+</span> </span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>( <span class="at">title=</span><span class="st">&quot;Nonprofit Age&quot;</span> ) <span class="sc">+</span> </span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>( variable.label ) <span class="sc">+</span></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ylab</span>( <span class="st">&quot;&quot;</span> ) <span class="sc">+</span></span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>( <span class="sc">~</span> age.q, <span class="at">nrow=</span><span class="dv">3</span> ) <span class="sc">+</span> </span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>( <span class="at">base_size =</span> <span class="dv">22</span> )  <span class="sc">+</span> </span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>( <span class="at">axis.title.y=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.text.y=</span><span class="fu">element_blank</span>(), </span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.ticks.y=</span><span class="fu">element_blank</span>() )</span></code></pre></div>
+<p><img src="metric-01-debt-to-asset-ratio_files/figure-html/unnamed-chunk-29-1.png" width="960" /></p>
+</div>
+</div>
+<div id="save-metrics" class="section level1">
+<h1>Save Metrics</h1>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>core.dar <span class="ot">&lt;-</span> <span class="fu">select</span>( core, ein, tax_pd, dar )</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>( core.dar, <span class="st">&quot;03-data-ratios/m-01-dept-to-asset-ratio.rds&quot;</span> )</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>( core.dar, <span class="st">&quot;03-data-ratios/m-01-dept-to-asset-ratio.csv&quot;</span> )</span></code></pre></div>
+<br> <br>
+<hr>
+<p><br> <br></p>
+<style type="text/css">
+
+div#TOC{ margin-top: 42px; }
+</style>
+</div>
+
+
+<div class="footer">
+<div class="row"  align="center">
+
+  <br>
+  Metrics generated by <a href=https:lecy.info target="_blank">Jesse Lecy</a> and <a href=https://dogood.umd.edu/our-community/faculty-staff/nathan-dietz target="_blank">Nathan Dietz</a> <br>
+  Content licensed under Creative Commons: <a href=https://creativecommons.org/licenses/by-nc-sa/4.0/ target="_blank"> (CC BY-NC-SA 4.0)</a><br>
+  Source code is available on <a href=https://github.com/Nonprofit-Open-Data-Collective/ target="_blank">GitHub</a><br>
+  <br>
+  The work is supported by the <br>
+  <a href="" target="_blank">National Center for Charitable Statistics</a><br>
+  at the Urban Institute
+  <br>
+  <br>
+
+
+<br>
+<br>
+<br>
+<br>
+
+</div>
+</div>
+
+
+
+
+<style>
+
+blockquote {
+    padding: 11px 22px;
+    margin: 0 0 22px;
+    font-size: 18px;
+    border-left: 5px solid lightgray;
+}
+
+.footer {
+  color: white;
+  min-height: 450px !important;
+  background-color: black;
+  width:100%;
+}
+
+.footer a {
+  color: orange;
+}
+
+.footer body{
+     font-family:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+     font-size:calc(1.5em + 0.25vw);
+     font-weight:300;line-height:1.65;
+     -webkit-font-smoothing:antialiased;
+     -moz-osx-font-smoothing:grayscale;
+     margin-left:20%;
+     margin-right:20%
+}
+
+footer.body{
+     font-family:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+     font-size:calc(1.5em + 0.25vw);
+     font-weight:300;line-height:1.65;
+     -webkit-font-smoothing:antialiased;
+     -moz-osx-font-smoothing:grayscale;
+     margin-left:20%;
+     margin-right:20%
+}
+
+
+
+
+.footer ul li {
+	font-family:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  font-size:calc(0.55em + 0.25vw) !important;
+  font-weight:300;
+  line-height:1.2 !important;
+  color: #FFF;
+	text-transform: uppercase;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.footerFloatOuter {
+	width: 25%;
+	float: left;
+}
+
+.footerFloatInner1 {
+	width: 20%;
+	float: left;
+	align: left;
+	margin-left: 0px;
+}
+
+.footerFloatInner2 {
+	width: 50%;
+	float: left;
+	text-align: left;
+}
+
+
+</style>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

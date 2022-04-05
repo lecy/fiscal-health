@@ -1,0 +1,19 @@
+name: "fiscal-health"
+navbar:
+  title: "Fiscal Health Indicators"
+  left:
+    - text: "Data Wrangling"
+      href: data-step-00-wrangling.html
+    - text: "Metric 01"
+      href: metric-01-debt-to-asset-ratio.html
+output:
+  html_document:
+    theme: cosmo
+    highlight: tango
+    toc: yes
+    toc_float: no
+    code_folding: hide
+    css: simple.css
+    include:
+      after_body: footer.html
+output_dir: "."

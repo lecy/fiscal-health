@@ -1,0 +1,257 @@
+---
+title: "Data Wrangling"
+---
+
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message=F, warning=F, fig.width = 10)
+```
+
+
+
+
+
+
+## R Packages
+
+```{r}
+
+library( haven )        # importing data files 
+library( tidyr )        # data wrangling
+library( dplyr )        # data wrangling 
+library( ggplot2 )      # fancy plots 
+library( ggthemes )     # fancy plots
+library( scales )       # re-scaling numbers
+library( stargazer )    # nice tables 
+library( pander )       # format tables for HTML 
+library( DT )           # embed datasets in HTML docs
+
+source( "r-functions.R" )
+```
+
+
+
+## Data Wrangling
+
+
+```{r, cache=TRUE}
+
+###
+### BUSINESS MASTER FILES 
+###
+
+# bmf <- read.csv( "01-data-raw/nccs-bmf-2019.csv" )
+
+bmf.2019 <- "https://www.dropbox.com/s/2wglkd7pn57w0hm/irs-990-ez-soi-extract-2017.csv?dl=1"
+
+d <- read.csv( bmf.2019 )
+
+bmf <- select( bmf, EIN, NAME, ADDRESS, CITY, STATE, FIPS,  
+               RULEDATE, NTEEFINAL, NTEECC,
+               NTEE1, NTMAJ5, NTMAJ10, NTMAJ12,	
+               LEVEL1,	LEVEL2, LEVEL3, LEVEL4 )	
+
+bmf$RULEDATE <- substr( bmf$RULEDATE, 1, 4 ) %>% as.numeric()
+bmf$RULEDATE[ bmf$RULEDATE < 1900 ] <- NA
+
+bmf$AGE <- 2022 - bmf$RULEDATE 
+
+
+# Coverage of 2019 BMF file is over 99%
+#
+# > nrow( core.2019.pc )
+# [1] 304441
+# > sum( core.2019.pc$ein %in% bmf$EIN )
+# [1] 301855
+
+
+
+### 
+### ADD CENSUS REGIONS
+### 
+
+census <- read.csv( "01-data-raw/us-census-bureau-regions-and-divisions.csv" )
+bmf <- merge( bmf, census, by.x="STATE", by.y="State.Code", all.x=TRUE )
+
+
+
+
+###
+### CORE PC
+###
+
+# COMMON VARIABLES FOR DESCRIPTIVES
+# 
+# totrevenue - total revenue 
+# totfuncexpns - total functional expenses 
+# lndbldgsequipend - land, buildings, equipment net assets
+# totnetassetend - net assets
+
+# VARIABLES USED FOR METRICS
+# 
+# totassetsend - total assets end of year
+# totliabend - total liabilities end of year
+
+core.2019.pc <- read.csv( "01-data-raw/irs-990-pc-soi-extract-2019.csv" )
+
+core.2019.pc <- select( core.2019.pc, ein, tax_pd, 
+                totrevenue, totfuncexpns, totnetassetend, 
+                lndbldgsequipend, totassetsend, totliabend )  
+
+
+
+
+
+###
+### CORE EZ 
+###
+
+# COMMON VARIABLES FOR DESCRIPTIVES
+#
+#  totrevnue - total revenue 
+#  totexpns - total functional expenses 
+#  NA - land, buildings, equipment net assets
+#  networthend - net assets
+
+# VARIABLES USED FOR METRICS
+#
+# totassetsend - total assets end of year
+# totliabend - total liabilities end of year
+
+core.2019.ez <- read.csv( "01-data-raw/irs-990-ez-soi-extract-2019.csv" )
+
+core.2019.ez <- select( core.2019.ez, EIN, tax_pd, 
+                totrevnue, totexpns, networthend,
+                totassetsend, totliabend ) 
+
+core.2019.ez <- rename( core.2019.ez,
+                        ein = EIN,
+                        totrevenue = totrevnue,
+                        totfuncexpns = totexpns,
+                        totnetassetend = networthend,
+                        totassetsend = totassetsend,
+                        totliabend = totliabend  )
+
+
+
+###
+###  STACK PC AND EZ FILES 
+
+core <- bind_rows( core.2019.pc, core.2019.ez )
+
+core$taxyr <- substr( core$tax_pd, 1, 4 )
+
+
+
+
+### 
+###  ADD BMF META-DATA GEO, NTEE, AND AGE FIELDS
+### 
+
+# check for leading zeros problem
+# class( core.2019.pc$ein )
+# [1] "integer"
+# class( bmf$EIN )
+# [1] "integer"
+
+core <- merge( core, bmf, by.x="ein", by.y="EIN", all.x=TRUE )
+
+
+
+
+###
+### ADD NTEE CODES LABELS 
+### 
+
+core$NTMAJ12v1 <- core$NTMAJ12
+
+core$NTMAJ12[ core$NTMAJ12 == "AR" ] <- "Arts"
+core$NTMAJ12[ core$NTMAJ12 == "BH" ] <- "Universities"
+core$NTMAJ12[ core$NTMAJ12 == "ED" ] <- "Education"
+core$NTMAJ12[ core$NTMAJ12 == "EH" ] <- "Hospitals"
+core$NTMAJ12[ core$NTMAJ12 == "EN" ] <- "Environmental"
+core$NTMAJ12[ core$NTMAJ12 == "HE" ] <- "Health"
+core$NTMAJ12[ core$NTMAJ12 == "HU" ] <- "Human Services"
+core$NTMAJ12[ core$NTMAJ12 == "IN" ] <- "International"
+core$NTMAJ12[ core$NTMAJ12 == "MU" ] <- "Mutual Benefit"
+core$NTMAJ12[ core$NTMAJ12 == "PU" ] <- "Public Benefit"
+core$NTMAJ12[ core$NTMAJ12 == "RE" ] <- "Religion"
+core$NTMAJ12[ core$NTMAJ12 == "UN" ] <- "Unknown"
+
+core$NTMAJ12 <- factor( core$NTMAJ12 )
+
+# table( core$NTMAJ12 )
+
+```
+
+
+## Filter by Study Sample
+
+```{r}
+###
+### STUDY SAMPLE
+### 
+
+orgs <- read.csv( "01-data-raw/org-sample.csv" )
+
+orgs <- dplyr::select( orgs, orgname, ein )
+
+# convert to integer to avoid leading zeros problem 
+orgs$ein <- as.numeric( orgs$ein )
+
+# Check how many orgs from the study sample are in the core file?
+
+intersect( orgs$ein, core$ein ) %>% length()
+setdiff(   orgs$ein, core$ein ) %>% length()
+```
+
+
+Use only sample orgs:  
+
+```{r}
+core <- filter( core, ein %in% orgs$ein )
+
+table( core$NTMAJ12 )
+```
+
+
+```{r}
+# preview dataset
+head(core) %>% pander()
+```
+
+
+
+## Save Wrangled Data
+
+```{r}
+saveRDS( core, "02-data-wrangled/core.rds" )
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
