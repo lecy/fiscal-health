@@ -138,7 +138,7 @@ core$currentratio <- (core$nonintcashend + core$svngstempinvend + core$pldgegrnt
 
 Check high and low values to see what makes sense. 
 
-A ratio below 0 is odd because it means liabilities are negative and assets are positive. Negative liabilities only happen when an organization overpays for a liability, and don't count towards the organization's assets. Consequently, we'll cap them at 0. 
+A ratio below 0 is odd because it means liabilities are negative and assets are positive. Negative liabilities only happen when an organization overpays for a liability, and don't count towards the organization's assets. Consequently, we'll cap them at 0.
  
 
 ```{r, fig.height=4}
