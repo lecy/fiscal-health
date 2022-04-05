@@ -272,6 +272,18 @@ ggplot( core3, aes( x=dar ) ) +
 ```
 
 
+<br>
+<hr>
+<br>
+
+![](img/debt-asset-ratio-explanation.png)
+
+
+<br>
+<hr>
+<br>
+
+
 
 
 ## DAR by Region 
