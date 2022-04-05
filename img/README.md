@@ -1,5 +1,7 @@
 Add image files to RMD by: 
 
 ```
-![](img/file-name.png) 
+![](img/debt-asset-ratio-explanation.png) 
 ```
+
+![](debt-asset-ratio-explanation.png)
