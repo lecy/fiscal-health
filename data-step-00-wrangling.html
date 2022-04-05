@@ -29,10 +29,8 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
-<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
-<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
-<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -116,6 +114,15 @@ code span.va { color: #000000; } /* Variable */
 code span.vs { color: #4e9a06; } /* VerbatimString */
 code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
 
+.sourceCode .row {
+  width: 100%;
+}
+.sourceCode {
+  overflow-x: auto;
+}
+.code-folding-btn {
+  margin-right: -30px;
+}
 </style>
 <script>
 // apply pandoc div.sourceCode style to pre.sourceCode instead
@@ -301,70 +308,10 @@ $(document).ready(function () {
 </style>
 
 <!-- code folding -->
-
-
-
 <style type="text/css">
-
-#TOC {
-  margin: 25px 0px 20px 0px;
-}
-@media (max-width: 768px) {
-#TOC {
-  position: relative;
-  width: 100%;
-}
-}
-
-@media print {
-.toc-content {
-  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
-  float: right;
-}
-}
-
-.toc-content {
-  padding-left: 30px;
-  padding-right: 40px;
-}
-
-div.main-container {
-  max-width: 1200px;
-}
-
-div.tocify {
-  width: 20%;
-  max-width: 260px;
-  max-height: 85%;
-}
-
-@media (min-width: 768px) and (max-width: 991px) {
-  div.tocify {
-    width: 25%;
-  }
-}
-
-@media (max-width: 767px) {
-  div.tocify {
-    width: 100%;
-    max-width: none;
-  }
-}
-
-.tocify ul, .tocify li {
-  line-height: 20px;
-}
-
-.tocify-subheader .tocify-item {
-  font-size: 0.90em;
-}
-
-.tocify .list-group-item {
-  border-radius: 0px;
-}
-
-
+.code-folding-btn { margin-bottom: 4px; }
 </style>
+
 
 
 
@@ -374,16 +321,6 @@ div.tocify {
 
 
 <div class="container-fluid main-container">
-
-
-<!-- setup 3col/9col grid for toc_float and main content  -->
-<div class="row">
-<div class="col-xs-12 col-sm-4 col-md-3">
-<div id="TOC" class="tocify">
-</div>
-</div>
-
-<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -404,7 +341,10 @@ div.tocify {
   <a href="data-step-00-wrangling.html">Data Wrangling</a>
 </li>
 <li>
-  <a href="metric-01-debt-to-asset-ratio.html">Metric 01</a>
+  <a href="metric-01-debt-to-asset-ratio.html">M1-DAR</a>
+</li>
+<li>
+  <a href="metric-02-current-ratio.html">M2-CR</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -416,12 +356,28 @@ div.tocify {
 
 <div id="header">
 
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
 
 
 <h1 class="title toc-ignore">Data Wrangling</h1>
 
 </div>
 
+<div id="TOC">
+<ul>
+<li><a href="#r-packages">R Packages</a></li>
+<li><a href="#data-wrangling">Data Wrangling</a></li>
+<li><a href="#filter-by-study-sample">Filter by Study Sample</a></li>
+<li><a href="#save-wrangled-data">Save Wrangled Data</a></li>
+</ul>
+</div>
 
 <div id="r-packages" class="section level2">
 <h2>R Packages</h2>
@@ -443,142 +399,157 @@ div.tocify {
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="do">### BUSINESS MASTER FILES </span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="do">###</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>bmf <span class="ot">&lt;-</span> <span class="fu">read.csv</span>( <span class="st">&quot;01-data-raw/nccs-bmf-2019.csv&quot;</span> )</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>bmf <span class="ot">&lt;-</span> <span class="fu">select</span>( bmf, EIN, NAME, ADDRESS, CITY, STATE, FIPS,  </span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>               RULEDATE, NTEEFINAL, NTEECC,</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>               NTEE1, NTMAJ5, NTMAJ10, NTMAJ12, </span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>               LEVEL1,  LEVEL2, LEVEL3, LEVEL4 )    </span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>bmf<span class="sc">$</span>RULEDATE <span class="ot">&lt;-</span> <span class="fu">substr</span>( bmf<span class="sc">$</span>RULEDATE, <span class="dv">1</span>, <span class="dv">4</span> ) <span class="sc">%&gt;%</span> <span class="fu">as.numeric</span>()</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>bmf<span class="sc">$</span>RULEDATE[ bmf<span class="sc">$</span>RULEDATE <span class="sc">&lt;</span> <span class="dv">1900</span> ] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>bmf<span class="sc">$</span>AGE <span class="ot">&lt;-</span> <span class="dv">2022</span> <span class="sc">-</span> bmf<span class="sc">$</span>RULEDATE </span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Coverage of 2019 BMF file is over 99%</span></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="co"># &gt; nrow( core.2019.pc )</span></span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="co"># [1] 304441</span></span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="co"># &gt; sum( core.2019.pc$ein %in% bmf$EIN )</span></span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="co"># [1] 301855</span></span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a><span class="do">### </span></span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="do">### ADD CENSUS REGIONS</span></span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="do">### </span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># bmf &lt;- read.csv( &quot;01-data-raw/nccs-bmf-2019.csv&quot; )</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>bmf<span class="fl">.2019</span> <span class="ot">&lt;-</span> <span class="st">&quot;https://www.dropbox.com/s/bi9ii23bo8l521h/nccs-bmf-2019.csv?dl=1&quot;</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>bmf <span class="ot">&lt;-</span> <span class="fu">read.csv</span>( bmf<span class="fl">.2019</span> )</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>bmf <span class="ot">&lt;-</span> <span class="fu">select</span>( bmf, EIN, NAME, ADDRESS, CITY, STATE, FIPS,  </span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>               RULEDATE, NTEEFINAL, NTEECC,</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>               NTEE1, NTMAJ5, NTMAJ10, NTMAJ12, </span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>               LEVEL1,  LEVEL2, LEVEL3, LEVEL4 )    </span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>bmf<span class="sc">$</span>RULEDATE <span class="ot">&lt;-</span> <span class="fu">substr</span>( bmf<span class="sc">$</span>RULEDATE, <span class="dv">1</span>, <span class="dv">4</span> ) <span class="sc">%&gt;%</span> <span class="fu">as.numeric</span>()</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>bmf<span class="sc">$</span>RULEDATE[ bmf<span class="sc">$</span>RULEDATE <span class="sc">&lt;</span> <span class="dv">1900</span> ] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>bmf<span class="sc">$</span>AGE <span class="ot">&lt;-</span> <span class="dv">2022</span> <span class="sc">-</span> bmf<span class="sc">$</span>RULEDATE </span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Coverage of 2019 BMF file is over 99%</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="co"># &gt; nrow( core.2019.pc )</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="co"># [1] 304441</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="co"># &gt; sum( core.2019.pc$ein %in% bmf$EIN )</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a><span class="co"># [1] 301855</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>census <span class="ot">&lt;-</span> <span class="fu">read.csv</span>( <span class="st">&quot;01-data-raw/us-census-bureau-regions-and-divisions.csv&quot;</span> )</span>
-<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>bmf <span class="ot">&lt;-</span> <span class="fu">merge</span>( bmf, census, <span class="at">by.x=</span><span class="st">&quot;STATE&quot;</span>, <span class="at">by.y=</span><span class="st">&quot;State.Code&quot;</span>, <span class="at">all.x=</span><span class="cn">TRUE</span> )</span>
-<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a><span class="do">### </span></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a><span class="do">### ADD CENSUS REGIONS</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a><span class="do">### </span></span>
 <span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a><span class="co"># census &lt;- read.csv( &quot;01-data-raw/us-census-bureau-regions-and-divisions.csv&quot; )</span></span>
 <span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a><span class="do">###</span></span>
-<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a><span class="do">### CORE PC</span></span>
-<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a><span class="do">###</span></span>
-<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a><span class="co"># COMMON VARIABLES FOR DESCRIPTIVES</span></span>
-<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a><span class="co"># totrevenue - total revenue </span></span>
-<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a><span class="co"># totfuncexpns - total functional expenses </span></span>
-<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a><span class="co"># lndbldgsequipend - land, buildings, equipment net assets</span></span>
-<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a><span class="co"># totnetassetend - net assets</span></span>
-<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a><span class="co"># VARIABLES USED FOR METRICS</span></span>
-<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a><span class="co"># totassetsend - total assets end of year</span></span>
-<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a><span class="co"># totliabend - total liabilities end of year</span></span>
-<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>core.<span class="fl">2019.</span>pc <span class="ot">&lt;-</span> <span class="fu">read.csv</span>( <span class="st">&quot;01-data-raw/irs-990-pc-soi-extract-2019.csv&quot;</span> )</span>
-<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a>core.<span class="fl">2019.</span>pc <span class="ot">&lt;-</span> <span class="fu">select</span>( core.<span class="fl">2019.</span>pc, ein, tax_pd, </span>
-<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a>                totrevenue, totfuncexpns, totnetassetend, </span>
-<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a>                lndbldgsequipend, totassetsend, totliabend )  </span>
-<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>url.census <span class="ot">&lt;-</span> <span class="st">&quot;https://raw.githubusercontent.com/lecy/fiscal-health/main/01-data-raw/us-census-bureau-regions-and-divisions.csv&quot;</span></span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>census <span class="ot">&lt;-</span> <span class="fu">read.csv</span>( url.census )</span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>bmf <span class="ot">&lt;-</span> <span class="fu">merge</span>( bmf, census, <span class="at">by.x=</span><span class="st">&quot;STATE&quot;</span>, <span class="at">by.y=</span><span class="st">&quot;State.Code&quot;</span>, <span class="at">all.x=</span><span class="cn">TRUE</span> )</span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a><span class="do">###</span></span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a><span class="do">### CORE PC</span></span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a><span class="do">###</span></span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a><span class="co"># COMMON VARIABLES FOR DESCRIPTIVES</span></span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a><span class="co"># totrevenue - total revenue </span></span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a><span class="co"># totfuncexpns - total functional expenses </span></span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a><span class="co"># lndbldgsequipend - land, buildings, equipment net assets</span></span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a><span class="co"># totnetassetend - net assets</span></span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a><span class="co"># VARIABLES USED FOR METRICS</span></span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a><span class="co"># totassetsend - total assets end of year</span></span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a><span class="co"># totliabend - total liabilities end of year</span></span>
 <span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a><span class="co"># core.2019.pc &lt;- read.csv( &quot;01-data-raw/irs-990-pc-soi-extract-2019.csv&quot; )</span></span>
 <span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a><span class="do">###</span></span>
-<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a><span class="do">### CORE EZ </span></span>
-<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a><span class="do">###</span></span>
-<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a><span class="co"># COMMON VARIABLES FOR DESCRIPTIVES</span></span>
-<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
-<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a><span class="co">#  totrevnue - total revenue </span></span>
-<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a><span class="co">#  totexpns - total functional expenses </span></span>
-<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a><span class="co">#  NA - land, buildings, equipment net assets</span></span>
-<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a><span class="co">#  networthend - net assets</span></span>
+<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a>url.soi.pc <span class="ot">&lt;-</span> <span class="st">&quot;https://www.dropbox.com/s/88y9sup4d3mwoo5/irs-990-pc-soi-extract-2019.csv?dl=1&quot;</span></span>
+<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a>core.<span class="fl">2019.</span>pc <span class="ot">&lt;-</span> <span class="fu">read.csv</span>( url.soi.pc )</span>
+<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a>core.<span class="fl">2019.</span>pc <span class="ot">&lt;-</span> <span class="fu">select</span>( core.<span class="fl">2019.</span>pc, ein, tax_pd, </span>
+<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a>                totrevenue, totfuncexpns, totnetassetend, </span>
+<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a>                lndbldgsequipend, totassetsend, totliabend )  </span>
+<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a><span class="co"># VARIABLES USED FOR METRICS</span></span>
-<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
-<span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a><span class="co"># totassetsend - total assets end of year</span></span>
-<span id="cb2-76"><a href="#cb2-76" aria-hidden="true" tabindex="-1"></a><span class="co"># totliabend - total liabilities end of year</span></span>
-<span id="cb2-77"><a href="#cb2-77" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-78"><a href="#cb2-78" aria-hidden="true" tabindex="-1"></a>core.<span class="fl">2019.</span>ez <span class="ot">&lt;-</span> <span class="fu">read.csv</span>( <span class="st">&quot;01-data-raw/irs-990-ez-soi-extract-2019.csv&quot;</span> )</span>
-<span id="cb2-79"><a href="#cb2-79" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-80"><a href="#cb2-80" aria-hidden="true" tabindex="-1"></a>core.<span class="fl">2019.</span>ez <span class="ot">&lt;-</span> <span class="fu">select</span>( core.<span class="fl">2019.</span>ez, EIN, tax_pd, </span>
-<span id="cb2-81"><a href="#cb2-81" aria-hidden="true" tabindex="-1"></a>                totrevnue, totexpns, networthend,</span>
-<span id="cb2-82"><a href="#cb2-82" aria-hidden="true" tabindex="-1"></a>                totassetsend, totliabend ) </span>
+<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a><span class="do">###</span></span>
+<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a><span class="do">### CORE EZ </span></span>
+<span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a><span class="do">###</span></span>
+<span id="cb2-76"><a href="#cb2-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-77"><a href="#cb2-77" aria-hidden="true" tabindex="-1"></a><span class="co"># COMMON VARIABLES FOR DESCRIPTIVES</span></span>
+<span id="cb2-78"><a href="#cb2-78" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb2-79"><a href="#cb2-79" aria-hidden="true" tabindex="-1"></a><span class="co">#  totrevnue - total revenue </span></span>
+<span id="cb2-80"><a href="#cb2-80" aria-hidden="true" tabindex="-1"></a><span class="co">#  totexpns - total functional expenses </span></span>
+<span id="cb2-81"><a href="#cb2-81" aria-hidden="true" tabindex="-1"></a><span class="co">#  NA - land, buildings, equipment net assets</span></span>
+<span id="cb2-82"><a href="#cb2-82" aria-hidden="true" tabindex="-1"></a><span class="co">#  networthend - net assets</span></span>
 <span id="cb2-83"><a href="#cb2-83" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-84"><a href="#cb2-84" aria-hidden="true" tabindex="-1"></a>core.<span class="fl">2019.</span>ez <span class="ot">&lt;-</span> <span class="fu">rename</span>( core.<span class="fl">2019.</span>ez,</span>
-<span id="cb2-85"><a href="#cb2-85" aria-hidden="true" tabindex="-1"></a>                        <span class="at">ein =</span> EIN,</span>
-<span id="cb2-86"><a href="#cb2-86" aria-hidden="true" tabindex="-1"></a>                        <span class="at">totrevenue =</span> totrevnue,</span>
-<span id="cb2-87"><a href="#cb2-87" aria-hidden="true" tabindex="-1"></a>                        <span class="at">totfuncexpns =</span> totexpns,</span>
-<span id="cb2-88"><a href="#cb2-88" aria-hidden="true" tabindex="-1"></a>                        <span class="at">totnetassetend =</span> networthend,</span>
-<span id="cb2-89"><a href="#cb2-89" aria-hidden="true" tabindex="-1"></a>                        <span class="at">totassetsend =</span> totassetsend,</span>
-<span id="cb2-90"><a href="#cb2-90" aria-hidden="true" tabindex="-1"></a>                        <span class="at">totliabend =</span> totliabend  )</span>
-<span id="cb2-91"><a href="#cb2-91" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-92"><a href="#cb2-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-84"><a href="#cb2-84" aria-hidden="true" tabindex="-1"></a><span class="co"># VARIABLES USED FOR METRICS</span></span>
+<span id="cb2-85"><a href="#cb2-85" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb2-86"><a href="#cb2-86" aria-hidden="true" tabindex="-1"></a><span class="co"># totassetsend - total assets end of year</span></span>
+<span id="cb2-87"><a href="#cb2-87" aria-hidden="true" tabindex="-1"></a><span class="co"># totliabend - total liabilities end of year</span></span>
+<span id="cb2-88"><a href="#cb2-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-89"><a href="#cb2-89" aria-hidden="true" tabindex="-1"></a><span class="co"># core.2019.ez &lt;- read.csv( &quot;01-data-raw/irs-990-ez-soi-extract-2019.csv&quot; )</span></span>
+<span id="cb2-90"><a href="#cb2-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-91"><a href="#cb2-91" aria-hidden="true" tabindex="-1"></a>url.soi.ez <span class="ot">&lt;-</span> <span class="st">&quot;https://www.dropbox.com/s/2amoe8woboyxpza/irs-990-ez-soi-extract-2019.csv?dl=1&quot;</span></span>
+<span id="cb2-92"><a href="#cb2-92" aria-hidden="true" tabindex="-1"></a>core.<span class="fl">2019.</span>ez <span class="ot">&lt;-</span> <span class="fu">read.csv</span>( url.soi.ez )</span>
 <span id="cb2-93"><a href="#cb2-93" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-94"><a href="#cb2-94" aria-hidden="true" tabindex="-1"></a><span class="do">###</span></span>
-<span id="cb2-95"><a href="#cb2-95" aria-hidden="true" tabindex="-1"></a><span class="do">###  STACK PC AND EZ FILES </span></span>
-<span id="cb2-96"><a href="#cb2-96" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-97"><a href="#cb2-97" aria-hidden="true" tabindex="-1"></a>core <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>( core.<span class="fl">2019.</span>pc, core.<span class="fl">2019.</span>ez )</span>
-<span id="cb2-98"><a href="#cb2-98" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-99"><a href="#cb2-99" aria-hidden="true" tabindex="-1"></a>core<span class="sc">$</span>taxyr <span class="ot">&lt;-</span> <span class="fu">substr</span>( core<span class="sc">$</span>tax_pd, <span class="dv">1</span>, <span class="dv">4</span> )</span>
-<span id="cb2-100"><a href="#cb2-100" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-101"><a href="#cb2-101" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-102"><a href="#cb2-102" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-103"><a href="#cb2-103" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-104"><a href="#cb2-104" aria-hidden="true" tabindex="-1"></a><span class="do">### </span></span>
-<span id="cb2-105"><a href="#cb2-105" aria-hidden="true" tabindex="-1"></a><span class="do">###  ADD BMF META-DATA GEO, NTEE, AND AGE FIELDS</span></span>
-<span id="cb2-106"><a href="#cb2-106" aria-hidden="true" tabindex="-1"></a><span class="do">### </span></span>
+<span id="cb2-94"><a href="#cb2-94" aria-hidden="true" tabindex="-1"></a>core.<span class="fl">2019.</span>ez <span class="ot">&lt;-</span> <span class="fu">select</span>( core.<span class="fl">2019.</span>ez, EIN, tax_pd, </span>
+<span id="cb2-95"><a href="#cb2-95" aria-hidden="true" tabindex="-1"></a>                totrevnue, totexpns, networthend,</span>
+<span id="cb2-96"><a href="#cb2-96" aria-hidden="true" tabindex="-1"></a>                totassetsend, totliabend ) </span>
+<span id="cb2-97"><a href="#cb2-97" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-98"><a href="#cb2-98" aria-hidden="true" tabindex="-1"></a>core.<span class="fl">2019.</span>ez <span class="ot">&lt;-</span> <span class="fu">rename</span>( core.<span class="fl">2019.</span>ez,</span>
+<span id="cb2-99"><a href="#cb2-99" aria-hidden="true" tabindex="-1"></a>                        <span class="at">ein =</span> EIN,</span>
+<span id="cb2-100"><a href="#cb2-100" aria-hidden="true" tabindex="-1"></a>                        <span class="at">totrevenue =</span> totrevnue,</span>
+<span id="cb2-101"><a href="#cb2-101" aria-hidden="true" tabindex="-1"></a>                        <span class="at">totfuncexpns =</span> totexpns,</span>
+<span id="cb2-102"><a href="#cb2-102" aria-hidden="true" tabindex="-1"></a>                        <span class="at">totnetassetend =</span> networthend,</span>
+<span id="cb2-103"><a href="#cb2-103" aria-hidden="true" tabindex="-1"></a>                        <span class="at">totassetsend =</span> totassetsend,</span>
+<span id="cb2-104"><a href="#cb2-104" aria-hidden="true" tabindex="-1"></a>                        <span class="at">totliabend =</span> totliabend  )</span>
+<span id="cb2-105"><a href="#cb2-105" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-106"><a href="#cb2-106" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-107"><a href="#cb2-107" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-108"><a href="#cb2-108" aria-hidden="true" tabindex="-1"></a><span class="co"># check for leading zeros problem</span></span>
-<span id="cb2-109"><a href="#cb2-109" aria-hidden="true" tabindex="-1"></a><span class="co"># class( core.2019.pc$ein )</span></span>
-<span id="cb2-110"><a href="#cb2-110" aria-hidden="true" tabindex="-1"></a><span class="co"># [1] &quot;integer&quot;</span></span>
-<span id="cb2-111"><a href="#cb2-111" aria-hidden="true" tabindex="-1"></a><span class="co"># class( bmf$EIN )</span></span>
-<span id="cb2-112"><a href="#cb2-112" aria-hidden="true" tabindex="-1"></a><span class="co"># [1] &quot;integer&quot;</span></span>
+<span id="cb2-108"><a href="#cb2-108" aria-hidden="true" tabindex="-1"></a><span class="do">###</span></span>
+<span id="cb2-109"><a href="#cb2-109" aria-hidden="true" tabindex="-1"></a><span class="do">###  STACK PC AND EZ FILES </span></span>
+<span id="cb2-110"><a href="#cb2-110" aria-hidden="true" tabindex="-1"></a><span class="do">###  </span></span>
+<span id="cb2-111"><a href="#cb2-111" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-112"><a href="#cb2-112" aria-hidden="true" tabindex="-1"></a>core <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>( core.<span class="fl">2019.</span>pc, core.<span class="fl">2019.</span>ez )</span>
 <span id="cb2-113"><a href="#cb2-113" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-114"><a href="#cb2-114" aria-hidden="true" tabindex="-1"></a>core <span class="ot">&lt;-</span> <span class="fu">merge</span>( core, bmf, <span class="at">by.x=</span><span class="st">&quot;ein&quot;</span>, <span class="at">by.y=</span><span class="st">&quot;EIN&quot;</span>, <span class="at">all.x=</span><span class="cn">TRUE</span> )</span>
+<span id="cb2-114"><a href="#cb2-114" aria-hidden="true" tabindex="-1"></a>core<span class="sc">$</span>taxyr <span class="ot">&lt;-</span> <span class="fu">substr</span>( core<span class="sc">$</span>tax_pd, <span class="dv">1</span>, <span class="dv">4</span> )</span>
 <span id="cb2-115"><a href="#cb2-115" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-116"><a href="#cb2-116" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-117"><a href="#cb2-117" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-118"><a href="#cb2-118" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-119"><a href="#cb2-119" aria-hidden="true" tabindex="-1"></a><span class="do">###</span></span>
-<span id="cb2-120"><a href="#cb2-120" aria-hidden="true" tabindex="-1"></a><span class="do">### ADD NTEE CODES LABELS </span></span>
+<span id="cb2-119"><a href="#cb2-119" aria-hidden="true" tabindex="-1"></a><span class="do">### </span></span>
+<span id="cb2-120"><a href="#cb2-120" aria-hidden="true" tabindex="-1"></a><span class="do">###  ADD BMF META-DATA GEO, NTEE, AND AGE FIELDS</span></span>
 <span id="cb2-121"><a href="#cb2-121" aria-hidden="true" tabindex="-1"></a><span class="do">### </span></span>
 <span id="cb2-122"><a href="#cb2-122" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-123"><a href="#cb2-123" aria-hidden="true" tabindex="-1"></a>core<span class="sc">$</span>NTMAJ12v1 <span class="ot">&lt;-</span> core<span class="sc">$</span>NTMAJ12</span>
-<span id="cb2-124"><a href="#cb2-124" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-125"><a href="#cb2-125" aria-hidden="true" tabindex="-1"></a>core<span class="sc">$</span>NTMAJ12[ core<span class="sc">$</span>NTMAJ12 <span class="sc">==</span> <span class="st">&quot;AR&quot;</span> ] <span class="ot">&lt;-</span> <span class="st">&quot;Arts&quot;</span></span>
-<span id="cb2-126"><a href="#cb2-126" aria-hidden="true" tabindex="-1"></a>core<span class="sc">$</span>NTMAJ12[ core<span class="sc">$</span>NTMAJ12 <span class="sc">==</span> <span class="st">&quot;BH&quot;</span> ] <span class="ot">&lt;-</span> <span class="st">&quot;Universities&quot;</span></span>
-<span id="cb2-127"><a href="#cb2-127" aria-hidden="true" tabindex="-1"></a>core<span class="sc">$</span>NTMAJ12[ core<span class="sc">$</span>NTMAJ12 <span class="sc">==</span> <span class="st">&quot;ED&quot;</span> ] <span class="ot">&lt;-</span> <span class="st">&quot;Education&quot;</span></span>
-<span id="cb2-128"><a href="#cb2-128" aria-hidden="true" tabindex="-1"></a>core<span class="sc">$</span>NTMAJ12[ core<span class="sc">$</span>NTMAJ12 <span class="sc">==</span> <span class="st">&quot;EH&quot;</span> ] <span class="ot">&lt;-</span> <span class="st">&quot;Hospitals&quot;</span></span>
-<span id="cb2-129"><a href="#cb2-129" aria-hidden="true" tabindex="-1"></a>core<span class="sc">$</span>NTMAJ12[ core<span class="sc">$</span>NTMAJ12 <span class="sc">==</span> <span class="st">&quot;EN&quot;</span> ] <span class="ot">&lt;-</span> <span class="st">&quot;Environmental&quot;</span></span>
-<span id="cb2-130"><a href="#cb2-130" aria-hidden="true" tabindex="-1"></a>core<span class="sc">$</span>NTMAJ12[ core<span class="sc">$</span>NTMAJ12 <span class="sc">==</span> <span class="st">&quot;HE&quot;</span> ] <span class="ot">&lt;-</span> <span class="st">&quot;Health&quot;</span></span>
-<span id="cb2-131"><a href="#cb2-131" aria-hidden="true" tabindex="-1"></a>core<span class="sc">$</span>NTMAJ12[ core<span class="sc">$</span>NTMAJ12 <span class="sc">==</span> <span class="st">&quot;HU&quot;</span> ] <span class="ot">&lt;-</span> <span class="st">&quot;Human Services&quot;</span></span>
-<span id="cb2-132"><a href="#cb2-132" aria-hidden="true" tabindex="-1"></a>core<span class="sc">$</span>NTMAJ12[ core<span class="sc">$</span>NTMAJ12 <span class="sc">==</span> <span class="st">&quot;IN&quot;</span> ] <span class="ot">&lt;-</span> <span class="st">&quot;International&quot;</span></span>
-<span id="cb2-133"><a href="#cb2-133" aria-hidden="true" tabindex="-1"></a>core<span class="sc">$</span>NTMAJ12[ core<span class="sc">$</span>NTMAJ12 <span class="sc">==</span> <span class="st">&quot;MU&quot;</span> ] <span class="ot">&lt;-</span> <span class="st">&quot;Mutual Benefit&quot;</span></span>
-<span id="cb2-134"><a href="#cb2-134" aria-hidden="true" tabindex="-1"></a>core<span class="sc">$</span>NTMAJ12[ core<span class="sc">$</span>NTMAJ12 <span class="sc">==</span> <span class="st">&quot;PU&quot;</span> ] <span class="ot">&lt;-</span> <span class="st">&quot;Public Benefit&quot;</span></span>
-<span id="cb2-135"><a href="#cb2-135" aria-hidden="true" tabindex="-1"></a>core<span class="sc">$</span>NTMAJ12[ core<span class="sc">$</span>NTMAJ12 <span class="sc">==</span> <span class="st">&quot;RE&quot;</span> ] <span class="ot">&lt;-</span> <span class="st">&quot;Religion&quot;</span></span>
-<span id="cb2-136"><a href="#cb2-136" aria-hidden="true" tabindex="-1"></a>core<span class="sc">$</span>NTMAJ12[ core<span class="sc">$</span>NTMAJ12 <span class="sc">==</span> <span class="st">&quot;UN&quot;</span> ] <span class="ot">&lt;-</span> <span class="st">&quot;Unknown&quot;</span></span>
+<span id="cb2-123"><a href="#cb2-123" aria-hidden="true" tabindex="-1"></a><span class="co"># check for leading zeros problem</span></span>
+<span id="cb2-124"><a href="#cb2-124" aria-hidden="true" tabindex="-1"></a><span class="co"># class( core.2019.pc$ein )</span></span>
+<span id="cb2-125"><a href="#cb2-125" aria-hidden="true" tabindex="-1"></a><span class="co"># [1] &quot;integer&quot;</span></span>
+<span id="cb2-126"><a href="#cb2-126" aria-hidden="true" tabindex="-1"></a><span class="co"># class( bmf$EIN )</span></span>
+<span id="cb2-127"><a href="#cb2-127" aria-hidden="true" tabindex="-1"></a><span class="co"># [1] &quot;integer&quot;</span></span>
+<span id="cb2-128"><a href="#cb2-128" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-129"><a href="#cb2-129" aria-hidden="true" tabindex="-1"></a>core <span class="ot">&lt;-</span> <span class="fu">merge</span>( core, bmf, <span class="at">by.x=</span><span class="st">&quot;ein&quot;</span>, <span class="at">by.y=</span><span class="st">&quot;EIN&quot;</span>, <span class="at">all.x=</span><span class="cn">TRUE</span> )</span>
+<span id="cb2-130"><a href="#cb2-130" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-131"><a href="#cb2-131" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-132"><a href="#cb2-132" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-133"><a href="#cb2-133" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-134"><a href="#cb2-134" aria-hidden="true" tabindex="-1"></a><span class="do">###</span></span>
+<span id="cb2-135"><a href="#cb2-135" aria-hidden="true" tabindex="-1"></a><span class="do">### ADD NTEE CODES LABELS </span></span>
+<span id="cb2-136"><a href="#cb2-136" aria-hidden="true" tabindex="-1"></a><span class="do">### </span></span>
 <span id="cb2-137"><a href="#cb2-137" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-138"><a href="#cb2-138" aria-hidden="true" tabindex="-1"></a>core<span class="sc">$</span>NTMAJ12 <span class="ot">&lt;-</span> <span class="fu">factor</span>( core<span class="sc">$</span>NTMAJ12 )</span>
+<span id="cb2-138"><a href="#cb2-138" aria-hidden="true" tabindex="-1"></a>core<span class="sc">$</span>NTMAJ12v1 <span class="ot">&lt;-</span> core<span class="sc">$</span>NTMAJ12</span>
 <span id="cb2-139"><a href="#cb2-139" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-140"><a href="#cb2-140" aria-hidden="true" tabindex="-1"></a><span class="co"># table( core$NTMAJ12 )</span></span></code></pre></div>
+<span id="cb2-140"><a href="#cb2-140" aria-hidden="true" tabindex="-1"></a>core<span class="sc">$</span>NTMAJ12[ core<span class="sc">$</span>NTMAJ12 <span class="sc">==</span> <span class="st">&quot;AR&quot;</span> ] <span class="ot">&lt;-</span> <span class="st">&quot;Arts&quot;</span></span>
+<span id="cb2-141"><a href="#cb2-141" aria-hidden="true" tabindex="-1"></a>core<span class="sc">$</span>NTMAJ12[ core<span class="sc">$</span>NTMAJ12 <span class="sc">==</span> <span class="st">&quot;BH&quot;</span> ] <span class="ot">&lt;-</span> <span class="st">&quot;Universities&quot;</span></span>
+<span id="cb2-142"><a href="#cb2-142" aria-hidden="true" tabindex="-1"></a>core<span class="sc">$</span>NTMAJ12[ core<span class="sc">$</span>NTMAJ12 <span class="sc">==</span> <span class="st">&quot;ED&quot;</span> ] <span class="ot">&lt;-</span> <span class="st">&quot;Education&quot;</span></span>
+<span id="cb2-143"><a href="#cb2-143" aria-hidden="true" tabindex="-1"></a>core<span class="sc">$</span>NTMAJ12[ core<span class="sc">$</span>NTMAJ12 <span class="sc">==</span> <span class="st">&quot;EH&quot;</span> ] <span class="ot">&lt;-</span> <span class="st">&quot;Hospitals&quot;</span></span>
+<span id="cb2-144"><a href="#cb2-144" aria-hidden="true" tabindex="-1"></a>core<span class="sc">$</span>NTMAJ12[ core<span class="sc">$</span>NTMAJ12 <span class="sc">==</span> <span class="st">&quot;EN&quot;</span> ] <span class="ot">&lt;-</span> <span class="st">&quot;Environmental&quot;</span></span>
+<span id="cb2-145"><a href="#cb2-145" aria-hidden="true" tabindex="-1"></a>core<span class="sc">$</span>NTMAJ12[ core<span class="sc">$</span>NTMAJ12 <span class="sc">==</span> <span class="st">&quot;HE&quot;</span> ] <span class="ot">&lt;-</span> <span class="st">&quot;Health&quot;</span></span>
+<span id="cb2-146"><a href="#cb2-146" aria-hidden="true" tabindex="-1"></a>core<span class="sc">$</span>NTMAJ12[ core<span class="sc">$</span>NTMAJ12 <span class="sc">==</span> <span class="st">&quot;HU&quot;</span> ] <span class="ot">&lt;-</span> <span class="st">&quot;Human Services&quot;</span></span>
+<span id="cb2-147"><a href="#cb2-147" aria-hidden="true" tabindex="-1"></a>core<span class="sc">$</span>NTMAJ12[ core<span class="sc">$</span>NTMAJ12 <span class="sc">==</span> <span class="st">&quot;IN&quot;</span> ] <span class="ot">&lt;-</span> <span class="st">&quot;International&quot;</span></span>
+<span id="cb2-148"><a href="#cb2-148" aria-hidden="true" tabindex="-1"></a>core<span class="sc">$</span>NTMAJ12[ core<span class="sc">$</span>NTMAJ12 <span class="sc">==</span> <span class="st">&quot;MU&quot;</span> ] <span class="ot">&lt;-</span> <span class="st">&quot;Mutual Benefit&quot;</span></span>
+<span id="cb2-149"><a href="#cb2-149" aria-hidden="true" tabindex="-1"></a>core<span class="sc">$</span>NTMAJ12[ core<span class="sc">$</span>NTMAJ12 <span class="sc">==</span> <span class="st">&quot;PU&quot;</span> ] <span class="ot">&lt;-</span> <span class="st">&quot;Public Benefit&quot;</span></span>
+<span id="cb2-150"><a href="#cb2-150" aria-hidden="true" tabindex="-1"></a>core<span class="sc">$</span>NTMAJ12[ core<span class="sc">$</span>NTMAJ12 <span class="sc">==</span> <span class="st">&quot;RE&quot;</span> ] <span class="ot">&lt;-</span> <span class="st">&quot;Religion&quot;</span></span>
+<span id="cb2-151"><a href="#cb2-151" aria-hidden="true" tabindex="-1"></a>core<span class="sc">$</span>NTMAJ12[ core<span class="sc">$</span>NTMAJ12 <span class="sc">==</span> <span class="st">&quot;UN&quot;</span> ] <span class="ot">&lt;-</span> <span class="st">&quot;Unknown&quot;</span></span>
+<span id="cb2-152"><a href="#cb2-152" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-153"><a href="#cb2-153" aria-hidden="true" tabindex="-1"></a>core<span class="sc">$</span>NTMAJ12 <span class="ot">&lt;-</span> <span class="fu">factor</span>( core<span class="sc">$</span>NTMAJ12 )</span>
+<span id="cb2-154"><a href="#cb2-154" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-155"><a href="#cb2-155" aria-hidden="true" tabindex="-1"></a><span class="co"># table( core$NTMAJ12 )</span></span></code></pre></div>
 </div>
 <div id="filter-by-study-sample" class="section level2">
 <h2>Filter by Study Sample</h2>
@@ -586,16 +557,17 @@ div.tocify {
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="do">### STUDY SAMPLE</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="do">### </span></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>orgs <span class="ot">&lt;-</span> <span class="fu">read.csv</span>( <span class="st">&quot;01-data-raw/org-sample.csv&quot;</span> )</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>orgs <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">select</span>( orgs, orgname, ein )</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co"># convert to integer to avoid leading zeros problem </span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>orgs<span class="sc">$</span>ein <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>( orgs<span class="sc">$</span>ein )</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Check how many orgs from the study sample are in the core file?</span></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="fu">intersect</span>( orgs<span class="sc">$</span>ein, core<span class="sc">$</span>ein ) <span class="sc">%&gt;%</span> <span class="fu">length</span>()</span></code></pre></div>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>url.orgs <span class="ot">&lt;-</span> <span class="st">&quot;https://www.dropbox.com/s/fqk05x2ox3girq7/org-sample.csv?dl=1&quot;</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>orgs <span class="ot">&lt;-</span> <span class="fu">read.csv</span>( url.orgs )</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>orgs <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">select</span>( orgs, orgname, ein )</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co"># convert to integer to avoid leading zeros problem </span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>orgs<span class="sc">$</span>ein <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>( orgs<span class="sc">$</span>ein )</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Check how many orgs from the study sample are in the core file?</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="fu">intersect</span>( orgs<span class="sc">$</span>ein, core<span class="sc">$</span>ein ) <span class="sc">%&gt;%</span> <span class="fu">length</span>()</span></code></pre></div>
 <pre><code>## [1] 5858</code></pre>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setdiff</span>(   orgs<span class="sc">$</span>ein, core<span class="sc">$</span>ein ) <span class="sc">%&gt;%</span> <span class="fu">length</span>()</span></code></pre></div>
 <pre><code>## [1] 2728</code></pre>
@@ -1011,7 +983,7 @@ blockquote {
 .footer {
   color: white;
   min-height: 450px !important;
-  background-color: #154360;
+  background-color: black;
   width:100%;
 }
 
@@ -1081,8 +1053,6 @@ footer.body{
 
 
 
-</div>
-</div>
 
 </div>
 
@@ -1114,36 +1084,12 @@ $(document).ready(function () {
 </script>
 
 <!-- code folding -->
-
 <script>
-$(document).ready(function ()  {
-
-    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
-    $('.unlisted.unnumbered').addClass('toc-ignore')
-
-    // move toc-ignore selectors from section div to header
-    $('div.section.toc-ignore')
-        .removeClass('toc-ignore')
-        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
-
-    // establish options
-    var options = {
-      selectors: "h1,h2,h3",
-      theme: "bootstrap3",
-      context: '.toc-content',
-      hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
-      },
-      ignoreSelector: ".toc-ignore",
-      scrollTo: 0
-    };
-    options.showAndHide = true;
-    options.smoothScroll = true;
-
-    // tocify
-    var toc = $("#TOC").tocify(options).data("toc-tocify");
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
 });
 </script>
+
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>
