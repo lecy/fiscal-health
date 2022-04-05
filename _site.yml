@@ -4,8 +4,10 @@ navbar:
   left:
     - text: "Data Wrangling"
       href: data-step-00-wrangling.html
-    - text: "Metric 01"
+    - text: "M1-DAR"
       href: metric-01-debt-to-asset-ratio.html
+    - text: "M2-CR"
+      href: metric-02-current-ratio.html
 output:
   html_document:
     theme: cosmo
