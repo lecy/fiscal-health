@@ -47,7 +47,7 @@ set_urbn_defaults(style = "print")
 
 source( "r-functions.R" )
 
-variable.label <- "current Ratio"
+variable.label <- "Current Ratio"
 
 # stargazer table print type
 # run chunk for live RMD sessions
@@ -257,7 +257,7 @@ core2$age.q   <- create_quantiles( var=core2$AGE,            n.groups=5 )
 
 
 
-## Current Ratio Density 
+## `r variable.label` Density 
 
 ```{r, fig.height=4}
 min.x <- min( core2$currentratio, na.rm=T )
@@ -274,7 +274,7 @@ ggplot( core2, aes(x = currentratio )) +
 
 
 
-## Current Ratio by NTEE Major Code
+## `r variable.label` by NTEE Major Code
 
 
 
@@ -311,7 +311,7 @@ ggplot( core3, aes( x=currentratio ) ) +
 
 
 
-## Current Ratio by Region 
+## `r variable.label` by Region 
 
 ```{r}
 table( core2$Region) %>% kable()
@@ -372,7 +372,7 @@ core2 %>%
 
 
 
-## Current Ratio by Nonprofit Size (Expenses)
+## `r variable.label` by Nonprofit Size (Expenses)
 
 
 ```{r, fig.height=4}
@@ -423,7 +423,7 @@ core2 %>%
 
 
 
-## Current Ratio by Nonprofit Size (Revenue)
+## `r variable.label` by Nonprofit Size (Revenue)
 
 
 ```{r, fig.height=4}
@@ -475,7 +475,7 @@ core2 %>%
 
 
 
-## Current Ratio by Nonprofit Size (Net Assets)
+## `r variable.label` by Nonprofit Size (Net Assets)
 
 ```{r, fig.height=4}
 ggplot( core2, aes(x = totnetassetend )) +  
@@ -583,7 +583,7 @@ core2 %>%
 ```
 
 
-## Current Ratio by Nonprofit Age
+## `r variable.label` by Nonprofit Age
 
 ```{r, fig.height=4}
 ggplot( core2, aes(x = AGE )) +  
