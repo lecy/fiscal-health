@@ -15,7 +15,7 @@ editor_options:
 
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, message=F, warning=F, fig.width = 10)
+knitr::opts_chunk$set( echo=TRUE, message=F, warning=F, fig.width=10 )
 ```
 
 
@@ -56,7 +56,7 @@ source( "r-functions.R" )
 bmf.2019 <- "https://www.dropbox.com/s/bi9ii23bo8l521h/nccs-bmf-2019.csv?dl=1"
 bmf <- read.csv( bmf.2019 )
 
-bmf <- select( bmf, EIN, NAME, ADDRESS, CITY, STATE, FIPS,  
+bmf <- dplyr::select( bmf, EIN, NAME, ADDRESS, CITY, STATE, FIPS,  
                RULEDATE, NTEEFINAL, NTEECC,
                NTEE1, NTMAJ5, NTMAJ10, NTMAJ12,	
                LEVEL1,	LEVEL2, LEVEL3, LEVEL4 )	
@@ -113,7 +113,7 @@ core.2019.pc <- read.csv( url.soi.pc )
 
 core.2019.pc <- 
   core.2019.pc %>% 
-  select( ein,
+  dplyr::select( ein,
           tax_pd,  
           accntspayableend,
           accntsrcvblend,
@@ -179,11 +179,11 @@ core.2019.pc <-
 url.soi.ez <- "https://www.dropbox.com/s/2amoe8woboyxpza/irs-990-ez-soi-extract-2019.csv?dl=1"
 core.2019.ez <- read.csv( url.soi.ez )
 
-core.2019.ez <- select( core.2019.ez, EIN, tax_pd, 
-                totrevnue, totexpns, networthend,
-                totassetsend, totliabend, prgmservrev ) 
+core.2019.ez <- dplyr::select( core.2019.ez, EIN, tax_pd, 
+                               totrevnue, totexpns, networthend,
+                               totassetsend, totliabend, prgmservrev  ) 
 
-core.2019.ez <- rename( core.2019.ez,
+core.2019.ez <- dplyr::rename( core.2019.ez,
                         ein = EIN,
                         totrevenue = totrevnue,
                         totprgmrevnue = prgmservrev,
@@ -198,7 +198,7 @@ core.2019.ez <- rename( core.2019.ez,
 ###  STACK PC AND EZ FILES 
 ###  
 
-core <- bind_rows( core.2019.pc, core.2019.ez )
+core <- dplyr::bind_rows( core.2019.pc, core.2019.ez )
 
 core$taxyr <- substr( core$tax_pd, 1, 4 )
 
@@ -271,7 +271,7 @@ setdiff(   orgs$ein, core$ein ) %>% length()
 Use only sample orgs:  
 
 ```{r}
-core <- filter( core, ein %in% orgs$ein )
+core <- dplyr::filter( core, ein %in% orgs$ein )
 
 table( core$NTMAJ12 )
 ```
