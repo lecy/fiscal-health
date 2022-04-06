@@ -1,5 +1,5 @@
 ---
-title: "Metric 05 - Self Sufficiency Ratio"
+title: "Metric 06- Months of Cash on Hand"
 author: ""
 date: "April 8, 2022"
 font: Lato
@@ -47,7 +47,7 @@ set_urbn_defaults(style = "print")
 
 source( "r-functions.R" )
 
-variable.label <- "Self Sufficiency Ratio"
+variable.label <- "Months of Cash on Hand"
 
 # stargazer table print type
 # run chunk for live RMD sessions
@@ -94,45 +94,53 @@ knitr::include_graphics(here::here("img", "logo.png"))
 ## Definition & Interpretation
 
 
-$$Self \: Sufficiency \: Ratio = \frac{Earned \: Income}{Total \: Expenses} $$
+$$Months \: of \: Cash \: on \: Hand = \frac{Cash \: or \: Cash \: Equivalent}{[(Operating \: Expenses - Noncash \: Expenses) / 12]} $$
 
-The Self Sufficiency Ratio measures the proportion of operating expenses that are covered by earned income. 
+MOnths of cash on hand is the number of months that an organization can continue to pay its operating expenses, given the amount of cash available.
 
-This metric is a good measure of how long an organization can survive without grants. Higher values mean it is more self-sufficient, meaning it could cover its costs longer without collecting any grants, rents, royalties, or sales of inventory. This ratio is primarily useful for organizations that have earned revenue through memberships, fees or tuition. Higher values mean organizations have more autonomy and flexibility. They generally improve over time as an organization grows. In the early stages, these ratios tend to be lower but the goal is to make them as high as possible. 
+This metric is good to review at startup of organization, during periods of low revenues, and prior to undertaking new major activity.
 
+The metric is limited though in the following ways. First, it is based on an average monthly cash outflow, which is not really the case. Instead, cash tends to be spent in a lumpy manner, such as when rent or payroll are paid. Also, management tends to take drastic action to reduce expenses as cash reserves decline, so that the actual months of operation tend to be longer than indicated by this ratio. Thus, it is better to use a detailed cash flow analysis to determine the precise duration of the available cash, with regular updates.
 
 
 ## Variables 
 
-Note: This data is available for both 990EZ and full 990 filers. 
+Note: This data is available only for organizations that file full 990s. [Organizations with revenues <$200,000 and total assets <$500,000 have the option to not file a full 990 and file an EZ instead.]
 
-**Numerator:** Program service revenue, EOY
+**Numerator:** (Cash + short-term investments + current receivables) 
 <br>
-*	On 990: Part 8, Line 2g, Column A
-  - SOI PC EXTRACTS: totprgmrevnue
-*	On EZ: Part 1, Line 2
-  - SOI PC EXTRACTS: prgmservrev
+*	On 990: (Part X, line 1B) + (Part X, line 2B) + (Part X, line 3B) + (Part X, line 4B)
+  - SOI PC EXTRACTS: nonintcashend, svngstempinvend, pldgegrntrcvblend, accntsrcvblend
+  <br>
+*	On EZ:Part I, line 22 [cash and short-term investments only]
+ - SOI PC EXTRACTS: Not available
+<br>
+**Denominator:** ((Operating expenses – bad debts – depreciation) / 365)
+*	On 990: Part IX, line 25A – Part IX, line 22A
+  -SOI PC EXTRACTS: accntspayableend+grntspayableend
+*	On EZ: Part I, line 17 [operating expenses only]
+<br>
 
-<br>
-**Denominator:** Total Expenses, EOY
-*	On 990: Part 9, line 25A
-  -SOI PC EXTRACTS: totfuncexpns
-*	On EZ: Part 1, Line 17
-  -SOI PC EXTRACTS: totexpns
-<br>
+**Note:** The original ratio yields years of cash on hand. We divide the denominator by 12, or multiply the ratio by 12, to get months of cash on hand.
+o	The 990 doesn’t record bad debts (the amount listed as uncollectible for receivable accounts); it just asks organizations to report grants/pledges/accounts receivable net of bad debts, so this term is missing from the denominator
+
+
 
 
 ```{r, eval=T}
+
+
 # TEMPORARY VARIABLES 
-earned_income  <- core$totprgmrevnue 
-total_expenses <- core$totfuncexpns
+operating_cash  <- ( core$nonintcashend + core$svngstempinvend)
+payables <- ( core$accntspayableend + core$grntspayableend )
 
 # can't divide by zero
-total_expenses[ total_expenses == 0 ] <- NA
+payables[ payables == 0 ] <- NA
 
 # SAVE RESULTS 
-core$selfsufficiency <- ( earned_income / total_expenses )             
-# summary( core$selfsufficiency )
+core$months_coh <-  operating_cash / payables
+                     
+# summary( core$months_coh )
 ```
 
 
@@ -141,36 +149,27 @@ core$selfsufficiency <- ( earned_income / total_expenses )
 Check high and low values to see what makes sense. 
 
 ```{r, fig.height=4}
-x.05 <- quantile( core$selfsufficiency, 0.05, na.rm=T )
-x.95 <- quantile( core$selfsufficiency, 0.95, na.rm=T )
+x.05 <- quantile( core$months_coh, 0.05, na.rm=T )
+x.95 <- quantile( core$months_coh, 0.95, na.rm=T )
 
-ggplot( core, aes(x = selfsufficiency ) ) +  
+ggplot( core, aes(x = months_coh ) ) +  
   geom_density( alpha = 0.5) + 
   xlim( x.05, x.95 ) 
 ```
 
 
 
-Winsorization: 
 
 ```{r}
-x.05 <- quantile( core$selfsufficiency, 0.05, na.rm=T )
-x.95 <- quantile( core$selfsufficiency, 0.95, na.rm=T )
-
 core2 <- core
 
 # proportion of values that are negative
-# mean( core$selfsufficiency < 0, na.rm=T ) 
+mean( core2$months_coh < 0, na.rm=T ) 
+core2$months_coh[ core2$months_coh < 0 ] <- 0
 
-# proption of values above 1% 
-# mean( core$selfsufficiency > 5, na.rm=T ) 
-
-# WINSORIZATION AT 5th and 95th PERCENTILES
-
-core2$selfsufficiency[ core2$selfsufficiency < x.05 ] <- x.05
-core2$selfsufficiency[ core2$selfsufficiency > x.95 ] <- x.95
-
-
+# proption of values above 200% 
+mean( core2$months_coh > 50, na.rm=T ) 
+core2$months_coh[ core2$months_coh > 50 ] <- 50
 ```
 
 
@@ -203,7 +202,7 @@ Convert all monetary variables to thousands of dollars.
 ```{r, results="asis"}
 
 core2 %>%
-  mutate( # selfsufficiency = selfsufficiency * 10000,
+  mutate( # months_coh = months_coh * 10000,
     totrevenue = totrevenue / 1000,
     totfuncexpns = totfuncexpns / 1000, 
     lndbldgsequipend = lndbldgsequipend / 1000,
@@ -211,7 +210,7 @@ core2 %>%
     totliabend = totliabend / 1000,
     totnetassetend = totnetassetend / 1000 ) %>% 
   select( STATE,  NTEE1, NTMAJ12, 
-          selfsufficiency, 
+          months_coh, 
           AGE, 
           totrevenue, totfuncexpns, 
           lndbldgsequipend, totassetsend, 
@@ -221,7 +220,7 @@ core2 %>%
              digits=0, 
              summary.stat = c("min","p25","median",
                               "mean","p75","max", "sd"),
-             covariate.labels = c("Self Sufficiency Ratio", "Age", 
+             covariate.labels = c("Months of COH", "Age", 
                                   "Revenue ($1k)", "Expenses($1k)", 
                                   "Buildings ($1k)", "Total Assets ($1k)",
                                   "Net Assets ($1k)", "Liabiliies ($1k)"))
@@ -229,15 +228,16 @@ core2 %>%
 
 
 
-What proportion of orgs have Self Sufficiency Ratios equal to zero (no income)?
+What proportion of orgs have Months of Cash equal to zero (no operating cash)?
 
 
 ```{r}
-prop.zero <- mean( core2$selfsufficiency == 0, na.rm=T )
+prop.zero <- mean( core2$months_coh == 0, na.rm=T )
 ```
 
 
-In the sample, `r 100*round(prop.zero,2)` percent of the organizations have Self Sufficiency ratios equal to zero, meaning they have no earned income. These organizations are dropped from subsequent graphs to keep the visualizations clean. The interpretation of the graphics should be the distributions of Self Sufficiency ratios for organizations that are earning at least $1 of income. 
+In the sample, `r 100*round(prop.zero,2)` percent of the organizations have zero months of cash on hand, meaning they could not survive without receivables and program service revenue. These organizations are dropped from subsequent graphs to keep the visualizations clean. The interpretation of the graphics should be the distributions of Months of Cash on Hand for organizations that have some cash on hand.  
+
 
 
 
@@ -262,10 +262,10 @@ core2$age.q   <- create_quantiles( var=core2$AGE,            n.groups=5 )
 ## `r variable.label` Density 
 
 ```{r, fig.height=4}
-min.x <- min( core$selfsufficiency, na.rm=T )
-max.x <- max( core$selfsufficiency, na.rm=T )
+min.x <- min( core2$months_coh, na.rm=T )
+max.x <- max( core2$months_coh, na.rm=T )
 
-ggplot( core2, aes(x = selfsufficiency )) +  
+ggplot( core2, aes(x = months_coh )) +  
   geom_density( alpha = 0.5 ) + 
   xlim( min.x, max.x  ) +
   xlab( variable.label ) +
@@ -293,7 +293,7 @@ df <- data.frame( x=Inf, y=Inf,
                   N=paste0( "N=", as.character(t) ), 
                   NTMAJ12=names(t) )
 
-ggplot( core3, aes( x=selfsufficiency ) ) + 
+ggplot( core3, aes( x=months_coh ) ) + 
   geom_density( alpha = 0.5) + 
   # xlim( -0.1, 1 ) +
   labs( title="Nonprofit Subsectors" ) + 
@@ -328,7 +328,7 @@ df <- data.frame( x=Inf, y=Inf,
 
 core2 %>% 
   filter( ! is.na(Region) ) %>% 
-  ggplot( aes(selfsufficiency) )  + 
+  ggplot( aes(months_coh) )  + 
     geom_density( alpha = 0.5 ) + 
     xlab( "Census Regions" ) + 
     ylab( variable.label ) +
@@ -356,7 +356,7 @@ df <- data.frame( x=Inf, y=Inf,
 
 core2 %>% 
   filter( ! is.na(Division) ) %>% 
-  ggplot( aes(selfsufficiency) )  + 
+  ggplot( aes(months_coh) )  + 
     geom_density( alpha = 0.5 ) + 
     xlab( "Census Sub-Regions (10)" ) + 
     ylab( variable.label ) +
@@ -396,7 +396,7 @@ if( nrow(core2) > 10000 )
   core3 <- core2
 }
 
-jplot( log10(core3$totfuncexpns), core3$selfsufficiency, 
+jplot( log10(core3$totfuncexpns), core3$months_coh, 
        xlab="Nonprofit Size (logged Expenses)", 
        ylab=variable.label,
        xaxt="n", xlim=c(3,10) )
@@ -411,7 +411,7 @@ axis( side=1,
 ```{r}
 core2 %>% 
   filter( ! is.na(exp.q) ) %>% 
-  ggplot( aes(selfsufficiency) )  + 
+  ggplot( aes(months_coh) )  + 
     geom_density( alpha = 0.5) + 
     labs( title="Nonprofit Size (logged expenses)" ) + 
     xlab( variable.label ) +
@@ -449,7 +449,7 @@ if( nrow(core2) > 10000 )
   core3 <- core2
 }
 
-jplot( log10(core3$totrevenue), core3$selfsufficiency, 
+jplot( log10(core3$totrevenue), core3$months_coh, 
        xlab="Nonprofit Size (logged Revenue)", 
        ylab=variable.label,
        xaxt="n", xlim=c(3,10) )
@@ -464,7 +464,7 @@ axis( side=1,
 ```{r}
 core2 %>% 
   filter( ! is.na(rev.q) ) %>% 
-  ggplot( aes(selfsufficiency) )  + 
+  ggplot( aes(months_coh) )  + 
     geom_density( alpha = 0.5 ) + 
     labs( title="Nonprofit Size (logged revenues)" ) + 
     xlab( variable.label ) +
@@ -500,7 +500,7 @@ if( nrow(core2) > 10000 )
   core3 <- core2
 }
 
-jplot( log10(core3$totnetassetend), core3$selfsufficiency, 
+jplot( log10(core3$totnetassetend), core3$months_coh, 
        xlab="Nonprofit Size (logged Net Assets)", 
        ylab=variable.label,
        xaxt="n", xlim=c(3,10) )
@@ -518,7 +518,7 @@ core2$asset.q <- create_quantiles( var=core2$totnetassetend, n.groups=5 )
 
 core2 %>% 
   filter( ! is.na(asset.q) ) %>% 
-  ggplot( aes(selfsufficiency) )  + 
+  ggplot( aes(months_coh) )  + 
     geom_density( alpha = 0.5 ) + 
     labs( title="Nonprofit Size (logged net assets, if assets > 0)" ) + 
     xlab( variable.label ) + 
@@ -547,7 +547,7 @@ if( nrow(core2) > 10000 )
   core3 <- core2
 }
 
-jplot( log10(core3$totassetsend), core3$selfsufficiency, 
+jplot( log10(core3$totassetsend), core3$months_coh, 
        xlab="Nonprofit Size (logged Total Assets)", 
        ylab=variable.label,
        xaxt="n", xlim=c(3,10) )
@@ -573,7 +573,7 @@ ggplot( core2, aes(x = totassetsend )) +
 ```{r}
 core2 %>% 
   filter( ! is.na(tot.asset.q) ) %>% 
-  ggplot( aes(selfsufficiency) )  + 
+  ggplot( aes(months_coh) )  + 
     geom_density( alpha = 0.5 ) + 
     xlab( "Nonprofit Size (logged total assets, if assets > 0)" ) + 
     ylab( variable.label ) +
@@ -604,7 +604,7 @@ if( nrow(core2) > 10000 )
   core3 <- core2
 }
 
-jplot( core3$AGE, core3$selfsufficiency, 
+jplot( core3$AGE, core3$months_coh, 
        xlab="Nonprofit Age", 
        ylab=variable.label ) 
 
@@ -616,7 +616,7 @@ jplot( core3$AGE, core3$selfsufficiency,
 ```{r}
 core2 %>% 
   filter( ! is.na(age.q) ) %>% 
-  ggplot( aes(selfsufficiency) )  + 
+  ggplot( aes(months_coh) )  + 
     geom_density( alpha = 0.5 ) + 
     labs( title="Nonprofit Age" ) + 
     xlab( variable.label ) +
@@ -634,9 +634,9 @@ core2 %>%
 # Save Metrics 
 
 ```{r, eval=F}
-core.selfsufficiency <- select( core, ein, tax_pd, selfsufficiency )
-saveRDS( core.selfsufficiency, "03-data-ratios/m-05-self-sufficiency-ratio.rds" )
-write.csv( core.selfsufficiency, "03-data-ratios/m-05-self-suffiency-ratio.csv" )
+core.months_coh <- select( core, ein, tax_pd, months_coh )
+saveRDS( core.months_coh, "03-data-ratios/m-06-months-cash.rds" )
+write.csv( core.months_coh, "03-data-ratios/m-06-months-cash.csv" )
 ```
 
 
