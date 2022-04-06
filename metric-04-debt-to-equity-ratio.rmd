@@ -98,7 +98,7 @@ $$Debt \: to \: Equity \: Ratio = \frac{Total \: Debt}{Unrestricted \: Net \: As
 
 Debt to Equity Ratio is a a leverage ratio that defines the total amount of debt relative to the unrestricted assets owned by an organization. 
 
-This metric measures how much the organization is relying on funding from others. Higher values mean it is more highly leveraged, meaning it has low capacity for future borrowing. As an example: if an organization has a total-debt-to-net-assets ratio of 0.4, 40% of its assets are financed by creditors, and 60% are its own unrestricted, available equity.
+This metric shows the big picture view of how much an organization owes relative to what it owns. Higher values mean it is more highly leveraged, meaning it has low capacity for future borrowing. As an example: if an organization has a total-debt-to-net-assets ratio of 0.4, 40% of its assets are financed by creditors, and 60% are its own unrestricted, available equity. As this percentage creeps up near the 50% mark, it can call into question the organization’s ability to manage debt, which could jeopardize the delivery of programs and services.
 
 One limitation of this metric is that it does not provide any indication of asset quality or liquidity since it lumps tangible and intangible assets together. 
 
