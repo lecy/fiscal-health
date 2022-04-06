@@ -1,0 +1,678 @@
+---
+title: "Metric 05 - Self Sufficiency Ratio"
+author: ""
+date: "April 8, 2022"
+font: Lato
+output:
+  html_document:
+    self_contained: TRUE
+    toc: TRUE
+    toc_float: TRUE
+    css: www/web_report.css
+    output_dir: "."
+editor_options:
+    chunk_output_type: console
+---
+
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set( echo = TRUE, 
+                       message=F, 
+                       warning=F, 
+                       error = TRUE,
+                       fig.width = 10, 
+                       fig.height = 6, 
+                       collapse = TRUE )
+```
+
+
+```{r, echo=F}
+
+## Packages
+
+library( haven )        # importing data files 
+library( tidyr )        # data wrangling
+library( dplyr )        # data wrangling 
+library( ggplot2 )      # fancy plots 
+library( ggthemes )     # fancy plots
+library( scales )       # re-scaling numbers
+library( stargazer )    # nice tables 
+library( pander )       # format tables for HTML 
+library( knitr )        # formatting functions 
+library( DT )           # embed datasets in HTML docs
+
+library( urbnthemes )   # setting the color scheme to Urban's
+set_urbn_defaults(style = "print")
+
+source( "r-functions.R" )
+
+variable.label <- "Self Sufficiency Ratio"
+
+# stargazer table print type
+# run chunk for live RMD sessions
+s.type <- "text"
+
+# stargazer table print type
+# resets to html when knitting
+s.type <- "html"
+
+
+## Load Data
+
+# local: 
+# core <- readRDS( "02-data-wrangled/core.rds" )
+
+# from github: 
+URL <- "https://github.com/lecy/fiscal-health/raw/main/02-data-wrangled/core.rds"
+core <- readRDS(gzcon(url( URL )))
+
+
+
+# Preview the data: 
+# table( core$NTMAJ12 ) %>% kable()
+# head(core) %>% pander()
+```
+
+
+```{r header-image, fig.width = 3.5, fig.height = 1, echo = FALSE}
+# All defaults
+knitr::include_graphics(here::here("img", "logo.png"))
+```
+
+
+<br>
+<hr>
+<br>
+
+
+
+
+# Metric Construction
+
+
+## Definition & Interpretation
+
+
+$$Self \: Sufficiency \: Ratio = \frac{Earned \: Income}{Total \: Expenses} $$
+
+The Self Sufficiency Ratio measures the proportion of operating expenses that are covered by earned income. 
+
+This metric is a good measure of how long an organization can survive without grants. Higher values mean it is more self-sufficient, meaning it could cover its costs longer without collecting any grants, rents, royalties, or sales of inventory. This ratio is primarily useful for organizations that have earned revenue through memberships, fees or tuition. Higher values mean organizations have more autonomy and flexibility. They generally improve over time as an organization grows. In the early stages, these ratios tend to be lower but the goal is to make them as high as possible. 
+
+
+
+## Variables 
+
+Note: This data is available for both 990EZ and full 990 filers. 
+
+**Numerator:** Program service revenue, EOY
+<br>
+*	On 990: Part 8, Line 2g, Column A
+  - SOI PC EXTRACTS: totprgmrevnue
+*	On EZ: Part 1, Line 2
+  - SOI PC EXTRACTS: prgmservrev
+
+<br>
+**Denominator:** Total Expenses, EOY
+*	On 990: Part 9, line 25A
+  -SOI PC EXTRACTS: totfuncexpns
+*	On EZ: Part 1, Line 17
+  -SOI PC EXTRACTS: totexpns
+<br>
+
+
+```{r, eval=T}
+# TEMPORARY VARIABLES 
+earned_income  <- core$totprgmrevnue 
+total_expenses <- core$totfuncexpns
+
+# can't divide by zero
+total_expenses[ total_expenses == 0 ] <- NA
+
+# SAVE RESULTS 
+core$selfsufficiency <- ( earned_income / total_expenses )             
+# summary( core$selfsufficiency )
+```
+
+
+## Standardize Scales
+
+Check high and low values to see what makes sense. 
+
+```{r, fig.height=4}
+x.05 <- quantile( core$selfsufficiency, 0.05, na.rm=T )
+x.95 <- quantile( core$selfsufficiency, 0.95, na.rm=T )
+
+ggplot( core, aes(x = selfsufficiency ) ) +  
+  geom_density( alpha = 0.5) + 
+  xlim( x.05, x.95 ) 
+```
+
+
+
+Winsorization: 
+
+```{r}
+x.05 <- quantile( core$selfsufficiency, 0.05, na.rm=T )
+x.95 <- quantile( core$selfsufficiency, 0.95, na.rm=T )
+
+core2 <- core
+
+# proportion of values that are negative
+# mean( core$selfsufficiency < 0, na.rm=T ) 
+
+# proption of values above 1% 
+# mean( core$selfsufficiency > 5, na.rm=T ) 
+
+# WINSORIZATION AT 5th and 95th PERCENTILES
+
+core2$selfsufficiency[ core2$selfsufficiency < x.05 ] <- x.05
+core2$selfsufficiency[ core2$selfsufficiency > x.95 ] <- x.95
+
+
+```
+
+
+
+## Metric Scope
+
+
+Tax data is available for full 990 filers, so this metric does not describe any organizations with Gross receipts < $200,000 and
+Total assets < $500,000. Some organizations with receipts or assets below those thresholds may have filed a full 990, but these would be exceptions. 
+
+
+## Reference
+
+
+Any cited works here...
+
+
+
+
+
+
+
+
+
+# Descriptive Statistics
+
+
+Convert all monetary variables to thousands of dollars. 
+
+```{r, results="asis"}
+
+core2 %>%
+  mutate( # selfsufficiency = selfsufficiency * 10000,
+    totrevenue = totrevenue / 1000,
+    totfuncexpns = totfuncexpns / 1000, 
+    lndbldgsequipend = lndbldgsequipend / 1000,
+    totassetsend = totassetsend / 1000,
+    totliabend = totliabend / 1000,
+    totnetassetend = totnetassetend / 1000 ) %>% 
+  select( STATE,  NTEE1, NTMAJ12, 
+          selfsufficiency, 
+          AGE, 
+          totrevenue, totfuncexpns, 
+          lndbldgsequipend, totassetsend, 
+          totnetassetend, totliabend ) %>%
+
+  stargazer( type = s.type, 
+             digits=0, 
+             summary.stat = c("min","p25","median",
+                              "mean","p75","max", "sd"),
+             covariate.labels = c("Self Sufficiency Ratio", "Age", 
+                                  "Revenue ($1k)", "Expenses($1k)", 
+                                  "Buildings ($1k)", "Total Assets ($1k)",
+                                  "Net Assets ($1k)", "Liabiliies ($1k)"))
+```
+
+
+
+What proportion of orgs have Self Sufficiency Ratios equal to zero (no income)?
+
+
+```{r}
+prop.zero <- mean( core$selfsufficiency == 0, na.rm=T )
+```
+
+
+In the sample, `r 100*round(prop.zero,2)` percent of the organizations have Self Sufficiency ratios equal to zero, meaning they have no earned income. These organizations are dropped from subsequent graphs to keep the visualizations clean. The interpretation of the graphics should be the distributions of Self Sufficiency ratios for organizations that are earning at least $1 of income. 
+
+
+
+```{r}
+###
+### ADD QUANTILES
+###
+###   function create_quantiles() defined in r-functions.R
+
+core2$exp.q   <- create_quantiles( var=core2$totfuncexpns,   n.groups=5 )
+core2$rev.q   <- create_quantiles( var=core2$totrevenue,     n.groups=5 )
+core2$asset.q <- create_quantiles( var=core2$totnetassetend, n.groups=5 )
+core2$age.q   <- create_quantiles( var=core2$AGE,            n.groups=5 )
+```
+
+
+
+
+
+
+
+## `r variable.label` Density 
+
+```{r, fig.height=4}
+min.x <- min( core$selfsufficiency, na.rm=T )
+max.x <- max( core$selfsufficiency, na.rm=T )
+
+ggplot( core2, aes(x = selfsufficiency )) +  
+  geom_density( alpha = 0.5 ) + 
+  xlim( min.x, max.x  ) +
+  xlab( variable.label ) +
+  theme( axis.title.y=element_blank(),
+         axis.text.y=element_blank(), 
+         axis.ticks.y=element_blank() )
+```
+
+
+
+## `r variable.label` by NTEE Major Code
+
+
+
+```{r}
+core3 <- core2 %>% filter( ! is.na(NTMAJ12) )
+table( core3$NTMAJ12) %>% sort(decreasing=TRUE) %>% kable()
+```
+
+
+```{r}
+
+t <- table( factor(core3$NTMAJ12) ) 
+df <- data.frame( x=Inf, y=Inf, 
+                  N=paste0( "N=", as.character(t) ), 
+                  NTMAJ12=names(t) )
+
+ggplot( core3, aes( x=selfsufficiency ) ) + 
+  geom_density( alpha = 0.5) + 
+  # xlim( -0.1, 1 ) +
+  labs( title="Nonprofit Subsectors" ) + 
+  xlab( variable.label ) + 
+  facet_wrap( ~ NTMAJ12, nrow=3 ) + 
+    theme_minimal( base_size = 15 )  + 
+    theme( axis.title.y=element_blank(),
+           axis.text.y=element_blank(), 
+           axis.ticks.y=element_blank(),
+           strip.text = element_text( face="bold") ) +  # size=20 
+  geom_text( data=df, 
+             aes(x, y, label=N ), 
+             hjust=2, vjust=3, 
+             color="gray60", size=6 )
+```
+
+
+
+
+## `r variable.label` by Region 
+
+```{r}
+table( core2$Region) %>% kable()
+```
+
+
+```{r}
+t <- table( factor(core2$Region) ) 
+df <- data.frame( x=Inf, y=Inf, 
+                  N=paste0( "N=", as.character(t) ), 
+                  Region=names(t) )
+
+core2 %>% 
+  filter( ! is.na(Region) ) %>% 
+  ggplot( aes(selfsufficiency) )  + 
+    geom_density( alpha = 0.5 ) + 
+    xlab( "Census Regions" ) + 
+    ylab( variable.label ) +
+    facet_wrap( ~ Region, nrow=3 ) + 
+    theme_minimal( base_size = 22 )  + 
+    theme( axis.title.y=element_blank(),
+           axis.text.y=element_blank(), 
+           axis.ticks.y=element_blank() ) + 
+    geom_text( data=df, 
+             aes(x, y, label=N ), 
+             hjust=2, vjust=3, 
+             color="gray60", size=6 )
+```
+
+
+```{r}
+table( core2$Division ) %>% kable()
+```
+
+```{r}
+t <- table( factor(core2$Division) ) 
+df <- data.frame( x=Inf, y=Inf, 
+                  N=paste0( "N=", as.character(t) ), 
+                  Division=names(t) )
+
+core2 %>% 
+  filter( ! is.na(Division) ) %>% 
+  ggplot( aes(selfsufficiency) )  + 
+    geom_density( alpha = 0.5 ) + 
+    xlab( "Census Sub-Regions (10)" ) + 
+    ylab( variable.label ) +
+    facet_wrap( ~ Division, nrow=3 ) + 
+    theme_minimal( base_size = 22 )  + 
+    theme( axis.title.y=element_blank(),
+           axis.text.y=element_blank(), 
+           axis.ticks.y=element_blank() ) + 
+    geom_text( data=df, 
+             aes(x, y, label=N ), 
+             hjust=2, vjust=3, 
+             color="gray60", size=6 ) 
+```
+
+
+
+
+## `r variable.label` by Nonprofit Size (Expenses)
+
+
+```{r, fig.height=4}
+ggplot( core2, aes(x = totfuncexpns )) +  
+  geom_density( alpha = 0.5 ) + 
+  xlim( quantile(core2$totfuncexpns, c(0.02,0.98), na.rm=T ) )
+```
+
+
+```{r, fig.height=5}
+core2$totfuncexpns[ core2$totfuncexpns < 1 ] <- 1
+# core2$totfuncexpns[ is.na(core2$totfuncexpns) ] <- 1
+
+if( nrow(core2) > 10000 )
+{
+  core3 <- sample_n( core2, 10000 )
+} else
+{
+  core3 <- core2
+}
+
+jplot( log10(core3$totfuncexpns), core3$selfsufficiency, 
+       xlab="Nonprofit Size (logged Expenses)", 
+       ylab=variable.label,
+       xaxt="n", xlim=c(3,10) )
+axis( side=1, 
+      at=c(3,4,5,6,7,8,9,10), 
+      labels=c("1k","10k","100k","1m","10m","100m","1b","10b") )
+```
+
+
+
+
+```{r}
+core2 %>% 
+  filter( ! is.na(exp.q) ) %>% 
+  ggplot( aes(selfsufficiency) )  + 
+    geom_density( alpha = 0.5) + 
+    labs( title="Nonprofit Size (logged expenses)" ) + 
+    xlab( variable.label ) +
+    facet_wrap( ~ exp.q, nrow=3 ) + 
+    theme_minimal( base_size = 22 )  + 
+    theme( axis.title.y=element_blank(),
+           axis.text.y=element_blank(), 
+           axis.ticks.y=element_blank() )
+```
+
+
+
+
+## `r variable.label` by Nonprofit Size (Revenue)
+
+
+```{r, fig.height=4}
+ggplot( core2, aes(x = totrevenue )) +  
+  geom_density( alpha = 0.5 ) + 
+  xlim( quantile(core2$totrevenue, c(0.02,0.98), na.rm=T ) ) + 
+  theme( axis.title.y=element_blank(),
+           axis.text.y=element_blank(), 
+           axis.ticks.y=element_blank() )
+```
+
+
+```{r, fig.height=5}
+core2$totrevenue[ core2$totrevenue < 1 ] <- 1
+
+if( nrow(core2) > 10000 )
+{
+  core3 <- sample_n( core2, 10000 )
+} else
+{
+  core3 <- core2
+}
+
+jplot( log10(core3$totrevenue), core3$selfsufficiency, 
+       xlab="Nonprofit Size (logged Revenue)", 
+       ylab=variable.label,
+       xaxt="n", xlim=c(3,10) )
+axis( side=1, 
+      at=c(3,4,5,6,7,8,9,10), 
+      labels=c("1k","10k","100k","1m","10m","100m","1b","10b") )
+```
+
+
+
+
+```{r}
+core2 %>% 
+  filter( ! is.na(rev.q) ) %>% 
+  ggplot( aes(selfsufficiency) )  + 
+    geom_density( alpha = 0.5 ) + 
+    labs( title="Nonprofit Size (logged revenues)" ) + 
+    xlab( variable.label ) +
+    facet_wrap( ~ rev.q, nrow=3 ) + 
+    theme_minimal( base_size = 22 )  + 
+    theme( axis.title.y=element_blank(),
+           axis.text.y=element_blank(), 
+           axis.ticks.y=element_blank() )
+```
+
+
+
+## `r variable.label` by Nonprofit Size (Net Assets)
+
+```{r, fig.height=4}
+ggplot( core2, aes(x = totnetassetend )) +  
+  geom_density( alpha = 0.5) + 
+  xlim( quantile(core2$totnetassetend, c(0.02,0.98), na.rm=T ) ) + 
+  xlab( "Net Assets" ) +
+    theme( axis.title.y=element_blank(),
+           axis.text.y=element_blank(), 
+           axis.ticks.y=element_blank() )
+```
+
+```{r, fig.height=5}
+core2$totnetassetend[ core2$totnetassetend < 1 ] <- NA
+
+if( nrow(core2) > 10000 )
+{
+  core3 <- sample_n( core2, 10000 )
+} else
+{
+  core3 <- core2
+}
+
+jplot( log10(core3$totnetassetend), core3$selfsufficiency, 
+       xlab="Nonprofit Size (logged Net Assets)", 
+       ylab=variable.label,
+       xaxt="n", xlim=c(3,10) )
+axis( side=1, 
+      at=c(3,4,5,6,7,8,9,10), 
+      labels=c("1k","10k","100k","1m","10m","100m","1b","10b") )
+```
+
+
+
+
+```{r}
+core2$totnetassetend[ core2$totnetassetend < 1 ] <- NA
+core2$asset.q <- create_quantiles( var=core2$totnetassetend, n.groups=5 )
+
+core2 %>% 
+  filter( ! is.na(asset.q) ) %>% 
+  ggplot( aes(selfsufficiency) )  + 
+    geom_density( alpha = 0.5 ) + 
+    labs( title="Nonprofit Size (logged net assets, if assets > 0)" ) + 
+    xlab( variable.label ) + 
+    ylab( "" ) + 
+    facet_wrap( ~ asset.q, nrow=3 ) + 
+    theme_minimal( base_size = 22 )  + 
+    theme( axis.title.y=element_blank(),
+           axis.text.y=element_blank(), 
+           axis.ticks.y=element_blank() )
+```
+
+
+
+
+Total Assets for Comparison 
+
+```{r, fig.height=5}
+core2$totassetsend[ core2$totassetsend < 1 ] <- NA
+core2$tot.asset.q <- create_quantiles( var=core2$totassetsend, n.groups=5 )
+
+if( nrow(core2) > 10000 )
+{
+  core3 <- sample_n( core2, 10000 )
+} else
+{
+  core3 <- core2
+}
+
+jplot( log10(core3$totassetsend), core3$selfsufficiency, 
+       xlab="Nonprofit Size (logged Total Assets)", 
+       ylab=variable.label,
+       xaxt="n", xlim=c(3,10) )
+axis( side=1, 
+      at=c(3,4,5,6,7,8,9,10), 
+      labels=c("1k","10k","100k","1m","10m","100m","1b","10b") )
+
+```
+
+
+```{r, fig.height=4}
+ggplot( core2, aes(x = totassetsend )) +  
+  geom_density( alpha = 0.5) + 
+  xlim( quantile(core2$totassetsend, c(0.02,0.98), na.rm=T ) ) + 
+  xlab( "Net Assets" ) +
+    theme( axis.title.y=element_blank(),
+           axis.text.y=element_blank(), 
+           axis.ticks.y=element_blank() )
+
+```
+
+
+```{r}
+core2 %>% 
+  filter( ! is.na(tot.asset.q) ) %>% 
+  ggplot( aes(selfsufficiency) )  + 
+    geom_density( alpha = 0.5 ) + 
+    xlab( "Nonprofit Size (logged total assets, if assets > 0)" ) + 
+    ylab( variable.label ) +
+    facet_wrap( ~ tot.asset.q, nrow=3 ) + 
+    theme_minimal( base_size = 22 )  + 
+    theme( axis.title.y=element_blank(),
+           axis.text.y=element_blank(), 
+           axis.ticks.y=element_blank() )
+```
+
+
+## `r variable.label` by Nonprofit Age
+
+```{r, fig.height=4}
+ggplot( core2, aes(x = AGE )) +  
+  geom_density( alpha = 0.5 )  
+```
+
+
+```{r, fig.height=5}
+core2$AGE[ core2$AGE < 1 ] <- NA
+
+if( nrow(core2) > 10000 )
+{
+  core3 <- sample_n( core2, 10000 )
+} else
+{
+  core3 <- core2
+}
+
+jplot( core3$AGE, core3$selfsufficiency, 
+       xlab="Nonprofit Age", 
+       ylab=variable.label ) 
+
+```
+
+
+
+
+```{r}
+core2 %>% 
+  filter( ! is.na(age.q) ) %>% 
+  ggplot( aes(selfsufficiency) )  + 
+    geom_density( alpha = 0.5 ) + 
+    labs( title="Nonprofit Age" ) + 
+    xlab( variable.label ) +
+    ylab( "" ) +
+    facet_wrap( ~ age.q, nrow=3 ) + 
+    theme_minimal( base_size = 22 )  + 
+    theme( axis.title.y=element_blank(),
+           axis.text.y=element_blank(), 
+           axis.ticks.y=element_blank() )
+```
+
+
+
+
+# Save Metrics 
+
+```{r, eval=F}
+core.selfsufficiency <- select( core, ein, tax_pd, selfsufficiency )
+saveRDS( core.selfsufficiency, "03-data-ratios/m-05-self-sufficiency-ratio.rds" )
+write.csv( core.selfsufficiency, "03-data-ratios/m-05-self-suffiency-ratio.csv" )
+```
+
+
+```{r, fig.height=10, eval=F, echo=F}
+# library( DT )
+
+these.buttons <- c( 'csv' )
+
+datatable( core2,
+           filter='bottom', rownames=FALSE, 
+           #options=list( pageLength=5, autoWidth=TRUE ),
+           fillContainer=TRUE, 
+           style="bootstrap",
+           class='table-condensed table-striped',
+           extensions = 'Buttons', 
+           options=list( dom='Bfrtip', 
+                         buttons=these.buttons  )) %>%
+  
+formatStyle( "NTMAJ12", "white-space"="nowrap" )
+```
+
+
+
+
+
+<br>
+<br>
+<hr>
+<br>
+<br>
+
+
+
+
+```{css, echo=F}
+
+div#TOC{ margin-top: 42px; }
+```
+

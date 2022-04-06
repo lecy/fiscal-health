@@ -171,11 +171,12 @@ core.2019.ez <- read.csv( url.soi.ez )
 
 core.2019.ez <- select( core.2019.ez, EIN, tax_pd, 
                 totrevnue, totexpns, networthend,
-                totassetsend, totliabend ) 
+                totassetsend, totliabend, prgmservrev ) 
 
 core.2019.ez <- rename( core.2019.ez,
                         ein = EIN,
                         totrevenue = totrevnue,
+                        totprgmrevnue = prgmservrev,
                         totfuncexpns = totexpns,
                         totnetassetend = networthend,
                         totassetsend = totassetsend,
