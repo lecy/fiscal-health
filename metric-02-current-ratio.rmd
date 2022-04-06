@@ -105,7 +105,7 @@ As a rule of thumb, organizations should strive for a current ratio of 1.0 or hi
 
 ## Variables 
 
-Notes: This data is only available for organizations that file a full 990, not for EZ filers. 
+<br>
 
 **Numerator:** (Cash + short-term investments + current receivables + inventories + prepaid expenses) 
 
@@ -113,6 +113,7 @@ Notes: This data is only available for organizations that file a full 990, not f
 * SOI PC EXTRACTS: nonintcashend, svngstempinvend,pldgegrntrcvblend, accntsrcvblend, invntriesalesend, prepaidexpnsend  
 *	On EZ: Part I, line 22 [cash and short-term investments only]  
 
+<br>
 
 **Denominator:** (Accounts payable + grants payable)
 
@@ -121,6 +122,8 @@ Notes: This data is only available for organizations that file a full 990, not f
 *	On EZ: Not available  
 
 <br>
+
+**Note:** This data is only available for organizations that file a full 990, not for EZ filers. 
 
 **Note:** The EZ form only asks filers to report on cash, savings and investments; all receivable accounts, inventories, and prepaid expenses are reported in the line item “other assets” (Part II, line 24), and details are reported in Schedule O. Similarly, the EZ form asks filers to report on total liabilities, with details about payable accounts reported in Schedule O.
 

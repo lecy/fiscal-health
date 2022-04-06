@@ -471,7 +471,7 @@ div.tocify {
 </div>
 <div id="variables" class="section level2">
 <h2>Variables</h2>
-<p>Notes: This data is only available for organizations that file a full 990, not for EZ filers.</p>
+<p><br></p>
 <p><strong>Numerator:</strong> (Cash + short-term investments + current receivables + inventories + prepaid expenses)</p>
 <ul>
 <li>On 990: (Part X, line 1B) + (Part X, line 2B) + (Part X, line 3B) + (Part X, line 4B) + (Part X, line 8B) + (Part X, line 9B)<br />
@@ -480,6 +480,7 @@ div.tocify {
 </li>
 <li>On EZ: Part I, line 22 [cash and short-term investments only]</li>
 </ul>
+<p><br></p>
 <p><strong>Denominator:</strong> (Accounts payable + grants payable)</p>
 <ul>
 <li>On 990: (Part X, line 17B) + (Part X, line 18B)<br />
@@ -489,6 +490,7 @@ div.tocify {
 <li>On EZ: Not available</li>
 </ul>
 <p><br></p>
+<p><strong>Note:</strong> This data is only available for organizations that file a full 990, not for EZ filers.</p>
 <p><strong>Note:</strong> The EZ form only asks filers to report on cash, savings and investments; all receivable accounts, inventories, and prepaid expenses are reported in the line item “other assets” (Part II, line 24), and details are reported in Schedule O. Similarly, the EZ form asks filers to report on total liabilities, with details about payable accounts reported in Schedule O.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>liquidity <span class="ot">&lt;-</span> ( core<span class="sc">$</span>nonintcashend <span class="sc">+</span> core<span class="sc">$</span>svngstempinvend <span class="sc">+</span> </span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>                         core<span class="sc">$</span>pldgegrntrcvblend <span class="sc">+</span> core<span class="sc">$</span>accntsrcvblend <span class="sc">+</span> </span>
