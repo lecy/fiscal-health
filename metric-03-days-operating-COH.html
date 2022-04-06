@@ -13,7 +13,7 @@
 
 <meta name="date" content="2022-04-08" />
 
-<title>Metric 02 - Current Ratio</title>
+<title>Metric 03- Days of Operating Cash on Hand</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -476,7 +476,7 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Metric 02 - Current Ratio</h1>
+<h1 class="title toc-ignore">Metric 03- Days of Operating Cash on Hand</h1>
 <h4 class="date">April 8, 2022</h4>
 
 </div>
@@ -490,49 +490,48 @@ div.tocify {
 <h1>Metric Construction</h1>
 <div id="definition-interpretation" class="section level2">
 <h2>Definition &amp; Interpretation</h2>
-<p><span class="math display">\[Current \: Asset \: Ratio = \frac{Current \: Assets}{Current \: Liabilities}\]</span></p>
-<p>The current ratio is used to measure the overall liquidity of a nonprofit organization.</p>
-<p>In its simplest form, it shows how many dollars of current assets an organization has to cover its current obligations. The higher the ratio, the more liquid the organization.</p>
-<p>As a rule of thumb, organizations should strive for a current ratio of 1.0 or higher. An organization with a ratio of 1.0 would have one dollar of assets to pay for every dollar of current liabilities.</p>
+<p><span class="math display">\[Days \: of \: Operating \: Cash \: on \: Hand = \frac{Operating \: Reserves}{[(Operating \: Expenses - Noncash \: Expenses) / 365]} \]</span></p>
+<p>Days cash on hand is the number of days that an organization can continue to pay its operating expenses, given the amount of cash available.</p>
+<p>This metric is good to review at startup of organization, during periods of low revenues, and prior to undertaking new major activity.</p>
+<p>The metric is limited though in the following ways. First, it is based on an average daily cash outflow, which is not really the case. Instead, cash tends to be spent in a lumpy manner, such as when rent or payroll are paid. Also, management tends to take drastic action to reduce expenses as cash reserves decline, so that the actual days of operation tend to be longer than indicated by this ratio. Thus, it is better to use a detailed cash flow analysis to determine the precise duration of the available cash, with regular updates.</p>
 </div>
 <div id="variables" class="section level2">
 <h2>Variables</h2>
-<p>Notes: This data is only available for organizations that file a full 990, not for EZ filers.</p>
-<p><strong>Numerator:</strong> (Cash + short-term investments + current receivables + inventories + prepaid expenses) <br> * On 990: (Part X, line 1B) + (Part X, line 2B) + (Part X, line 3B) + (Part X, line 4B) + (Part X, line 8B) + (Part X, line 9B) - SOI PC EXTRACTS: nonintcashend, svngstempinvend,pldgegrntrcvblend, accntsrcvblend, invntriesalesend, prepaidexpnsend <br> * On EZ: Part I, line 22 [cash and short-term investments only] <br> <strong>Denominator:</strong> (Accounts payable + grants payable) * On 990: (Part X, line 17B) + (Part X, line 18B) -SOI PC EXTRACTS: accntspayableend+grntspayableend * On EZ: Not available <br></p>
-<p><strong>Note:</strong> The EZ form only asks filers to report on cash, savings and investments; all receivable accounts, inventories, and prepaid expenses are reported in the line item “other assets” (Part II, line 24), and details are reported in Schedule O. Similarly, the EZ form asks filers to report on total liabilities, with details about payable accounts reported in Schedule O</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1">liquidity &lt;-<span class="st"> </span>( core<span class="op">$</span>nonintcashend <span class="op">+</span><span class="st"> </span>core<span class="op">$</span>svngstempinvend <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb1-2" title="2"><span class="st">                         </span>core<span class="op">$</span>pldgegrntrcvblend <span class="op">+</span><span class="st"> </span>core<span class="op">$</span>accntsrcvblend <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb1-3" title="3"><span class="st">                         </span>core<span class="op">$</span>invntriesalesend <span class="op">+</span><span class="st"> </span>core<span class="op">$</span>prepaidexpnsend )</a>
-<a class="sourceLine" id="cb1-4" title="4"></a>
-<a class="sourceLine" id="cb1-5" title="5"><span class="co"># can&#39;t divide by zero</span></a>
-<a class="sourceLine" id="cb1-6" title="6">payables &lt;-<span class="st"> </span>( core<span class="op">$</span>accntspayableend <span class="op">+</span><span class="st"> </span>core<span class="op">$</span>grntspayableend )</a>
-<a class="sourceLine" id="cb1-7" title="7">payables[ payables <span class="op">==</span><span class="st"> </span><span class="dv">0</span> ] &lt;-<span class="st"> </span><span class="ot">NA</span></a>
-<a class="sourceLine" id="cb1-8" title="8"></a>
-<a class="sourceLine" id="cb1-9" title="9">core<span class="op">$</span>currentratio &lt;-<span class="st">  </span>liquidity <span class="op">/</span><span class="st"> </span>payables</a>
-<a class="sourceLine" id="cb1-10" title="10">                     </a>
-<a class="sourceLine" id="cb1-11" title="11"><span class="co"># summary( core$currentratio )</span></a></code></pre></div>
+<p>Note: This data is available only for organizations that file full 990s. [Organizations with revenues &lt;$200,000 and total assets &lt;$500,000 have the option to not file a full 990 and file an EZ instead.]</p>
+<p><strong>Numerator:</strong> (Cash + short-term investments + current receivables) <br> * On 990: (Part X, line 1B) + (Part X, line 2B) + (Part X, line 3B) + (Part X, line 4B) - SOI PC EXTRACTS: nonintcashend, svngstempinvend, pldgegrntrcvblend, accntsrcvblend <br> * On EZ:Part I, line 22 [cash and short-term investments only] - SOI PC EXTRACTS: Not available <br> <strong>Denominator:</strong> ((Operating expenses – bad debts – depreciation) / 365) * On 990: Part IX, line 25A – Part IX, line 22A -SOI PC EXTRACTS: accntspayableend+grntspayableend * On EZ: Part I, line 17 [operating expenses only] <br></p>
+<p><strong>Note:</strong> The original ratio yields years of cash on hand. We divide the denominator by 365, or multiply the ratio by 365, to get days of cash on hand. o The 990 doesn’t record bad debts (the amount listed as uncollectible for receivable accounts); it just asks organizations to report grants/pledges/accounts receivable net of bad debts, so this term is missing from the denominator</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1">operating_cash &lt;-<span class="st"> </span>( core<span class="op">$</span>nonintcashend <span class="op">+</span><span class="st"> </span>core<span class="op">$</span>svngstempinvend <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="st">                         </span>core<span class="op">$</span>pldgegrntrcvblend <span class="op">+</span><span class="st"> </span>core<span class="op">$</span>accntsrcvblend)</a>
+<a class="sourceLine" id="cb1-3" title="3"></a>
+<a class="sourceLine" id="cb1-4" title="4"><span class="co"># can&#39;t divide by zero</span></a>
+<a class="sourceLine" id="cb1-5" title="5">payables &lt;-<span class="st"> </span>( core<span class="op">$</span>accntspayableend <span class="op">+</span><span class="st"> </span>core<span class="op">$</span>grntspayableend )</a>
+<a class="sourceLine" id="cb1-6" title="6">payables[ payables <span class="op">==</span><span class="st"> </span><span class="dv">0</span> ] &lt;-<span class="st"> </span><span class="ot">NA</span></a>
+<a class="sourceLine" id="cb1-7" title="7"></a>
+<a class="sourceLine" id="cb1-8" title="8">core<span class="op">$</span>daysoperating_coh &lt;-<span class="st">  </span>operating_cash <span class="op">/</span><span class="st"> </span>payables</a>
+<a class="sourceLine" id="cb1-9" title="9">                     </a>
+<a class="sourceLine" id="cb1-10" title="10"><span class="co"># summary( core$daysoperating_coh )</span></a></code></pre></div>
 </div>
 <div id="standardize-scales" class="section level2">
 <h2>Standardize Scales</h2>
 <p>Check high and low values to see what makes sense.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">x<span class="fl">.05</span> &lt;-<span class="st"> </span><span class="kw">quantile</span>( core<span class="op">$</span>currentratio, <span class="fl">0.05</span>, <span class="dt">na.rm=</span>T )</a>
-<a class="sourceLine" id="cb2-2" title="2">x<span class="fl">.95</span> &lt;-<span class="st"> </span><span class="kw">quantile</span>( core<span class="op">$</span>currentratio, <span class="fl">0.95</span>, <span class="dt">na.rm=</span>T )</a>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">x<span class="fl">.05</span> &lt;-<span class="st"> </span><span class="kw">quantile</span>( core<span class="op">$</span>daysoperating_coh, <span class="fl">0.05</span>, <span class="dt">na.rm=</span>T )</a>
+<a class="sourceLine" id="cb2-2" title="2">x<span class="fl">.95</span> &lt;-<span class="st"> </span><span class="kw">quantile</span>( core<span class="op">$</span>daysoperating_coh, <span class="fl">0.95</span>, <span class="dt">na.rm=</span>T )</a>
 <a class="sourceLine" id="cb2-3" title="3"></a>
-<a class="sourceLine" id="cb2-4" title="4"><span class="kw">ggplot</span>( core, <span class="kw">aes</span>(<span class="dt">x =</span> currentratio ) ) <span class="op">+</span><span class="st">  </span></a>
+<a class="sourceLine" id="cb2-4" title="4"><span class="kw">ggplot</span>( core, <span class="kw">aes</span>(<span class="dt">x =</span> daysoperating_coh ) ) <span class="op">+</span><span class="st">  </span></a>
 <a class="sourceLine" id="cb2-5" title="5"><span class="st">  </span><span class="kw">geom_density</span>( <span class="dt">alpha =</span> <span class="fl">0.5</span>, <span class="dt">fill=</span><span class="st">&quot;blue&quot;</span> ) <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb2-6" title="6"><span class="st">  </span><span class="kw">xlim</span>( x<span class="fl">.05</span>, x<span class="fl">.95</span> ) </a></code></pre></div>
-<p><img src="metric-02-current-ratio_files/figure-html/unnamed-chunk-3-1.png" width="960" /></p>
+<p><img src="metric-03-days-operating-COH_files/figure-html/unnamed-chunk-3-1.png" width="960" /></p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">core2 &lt;-<span class="st"> </span>core</a>
 <a class="sourceLine" id="cb3-2" title="2"></a>
 <a class="sourceLine" id="cb3-3" title="3"><span class="co"># proportion of values that are negative</span></a>
-<a class="sourceLine" id="cb3-4" title="4"><span class="kw">mean</span>( core2<span class="op">$</span>currentratio <span class="op">&lt;</span><span class="st"> </span><span class="dv">0</span>, <span class="dt">na.rm=</span>T ) </a>
-<a class="sourceLine" id="cb3-5" title="5"><span class="co">## [1] 0.003040091</span></a>
-<a class="sourceLine" id="cb3-6" title="6">core2<span class="op">$</span>currentratio[ core2<span class="op">$</span>currentratio <span class="op">&lt;</span><span class="st"> </span><span class="dv">0</span> ] &lt;-<span class="st"> </span><span class="dv">0</span></a>
+<a class="sourceLine" id="cb3-4" title="4"><span class="kw">mean</span>( core2<span class="op">$</span>daysoperating_coh <span class="op">&lt;</span><span class="st"> </span><span class="dv">0</span>, <span class="dt">na.rm=</span>T ) </a>
+<a class="sourceLine" id="cb3-5" title="5"><span class="co">## [1] 0.003230097</span></a>
+<a class="sourceLine" id="cb3-6" title="6">core2<span class="op">$</span>daysoperating_coh[ core2<span class="op">$</span>daysoperating_coh <span class="op">&lt;</span><span class="st"> </span><span class="dv">0</span> ] &lt;-<span class="st"> </span><span class="dv">0</span></a>
 <a class="sourceLine" id="cb3-7" title="7"></a>
 <a class="sourceLine" id="cb3-8" title="8"><span class="co"># proption of values above 200% </span></a>
-<a class="sourceLine" id="cb3-9" title="9"><span class="kw">mean</span>( core2<span class="op">$</span>currentratio <span class="op">&gt;</span><span class="st"> </span><span class="dv">200</span>, <span class="dt">na.rm=</span>T ) </a>
-<a class="sourceLine" id="cb3-10" title="10"><span class="co">## [1] 0.0400912</span></a>
-<a class="sourceLine" id="cb3-11" title="11">core2<span class="op">$</span>currentratio[ core2<span class="op">$</span>currentratio <span class="op">&gt;</span><span class="st"> </span><span class="dv">200</span> ] &lt;-<span class="st"> </span><span class="dv">200</span></a></code></pre></div>
+<a class="sourceLine" id="cb3-9" title="9"><span class="kw">mean</span>( core2<span class="op">$</span>daysoperating_coh <span class="op">&gt;</span><span class="st"> </span><span class="dv">365</span>, <span class="dt">na.rm=</span>T ) </a>
+<a class="sourceLine" id="cb3-10" title="10"><span class="co">## [1] 0.02299069</span></a>
+<a class="sourceLine" id="cb3-11" title="11">core2<span class="op">$</span>daysoperating_coh[ core2<span class="op">$</span>daysoperating_coh <span class="op">&gt;</span><span class="st"> </span><span class="dv">365</span> ] &lt;-<span class="st"> </span><span class="dv">365</span></a></code></pre></div>
 </div>
 <div id="metric-scope" class="section level2">
 <h2>Metric Scope</h2>
@@ -548,7 +547,7 @@ div.tocify {
 <p>Convert all monetary variables to thousands of dollars.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"></a>
 <a class="sourceLine" id="cb4-2" title="2">core2 <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb4-3" title="3"><span class="st">  </span><span class="kw">mutate</span>( <span class="co"># currentratio = currentratio * 10000,</span></a>
+<a class="sourceLine" id="cb4-3" title="3"><span class="st">  </span><span class="kw">mutate</span>( <span class="co"># daysoperating_coh = daysoperating_coh * 10000,</span></a>
 <a class="sourceLine" id="cb4-4" title="4">    <span class="dt">totrevenue =</span> totrevenue <span class="op">/</span><span class="st"> </span><span class="dv">1000</span>,</a>
 <a class="sourceLine" id="cb4-5" title="5">    <span class="dt">totfuncexpns =</span> totfuncexpns <span class="op">/</span><span class="st"> </span><span class="dv">1000</span>, </a>
 <a class="sourceLine" id="cb4-6" title="6">    <span class="dt">lndbldgsequipend =</span> lndbldgsequipend <span class="op">/</span><span class="st"> </span><span class="dv">1000</span>,</a>
@@ -556,7 +555,7 @@ div.tocify {
 <a class="sourceLine" id="cb4-8" title="8">    <span class="dt">totliabend =</span> totliabend <span class="op">/</span><span class="st"> </span><span class="dv">1000</span>,</a>
 <a class="sourceLine" id="cb4-9" title="9">    <span class="dt">totnetassetend =</span> totnetassetend <span class="op">/</span><span class="st"> </span><span class="dv">1000</span> ) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb4-10" title="10"><span class="st">  </span><span class="kw">select</span>( STATE,  NTEE1, NTMAJ12, </a>
-<a class="sourceLine" id="cb4-11" title="11">          currentratio, </a>
+<a class="sourceLine" id="cb4-11" title="11">          daysoperating_coh, </a>
 <a class="sourceLine" id="cb4-12" title="12">          AGE, </a>
 <a class="sourceLine" id="cb4-13" title="13">          totrevenue, totfuncexpns, </a>
 <a class="sourceLine" id="cb4-14" title="14">          lndbldgsequipend, totassetsend, </a>
@@ -566,7 +565,7 @@ div.tocify {
 <a class="sourceLine" id="cb4-18" title="18">             <span class="dt">digits=</span><span class="dv">0</span>, </a>
 <a class="sourceLine" id="cb4-19" title="19">             <span class="dt">summary.stat =</span> <span class="kw">c</span>(<span class="st">&quot;min&quot;</span>,<span class="st">&quot;p25&quot;</span>,<span class="st">&quot;median&quot;</span>,</a>
 <a class="sourceLine" id="cb4-20" title="20">                              <span class="st">&quot;mean&quot;</span>,<span class="st">&quot;p75&quot;</span>,<span class="st">&quot;max&quot;</span>, <span class="st">&quot;sd&quot;</span>),</a>
-<a class="sourceLine" id="cb4-21" title="21">             <span class="dt">covariate.labels =</span> <span class="kw">c</span>(<span class="st">&quot;Current Ratio&quot;</span>, <span class="st">&quot;Age&quot;</span>, </a>
+<a class="sourceLine" id="cb4-21" title="21">             <span class="dt">covariate.labels =</span> <span class="kw">c</span>(<span class="st">&quot;Days of Operating COH&quot;</span>, <span class="st">&quot;Age&quot;</span>, </a>
 <a class="sourceLine" id="cb4-22" title="22">                                  <span class="st">&quot;Revenue ($1k)&quot;</span>, <span class="st">&quot;Expenses($1k)&quot;</span>, </a>
 <a class="sourceLine" id="cb4-23" title="23">                                  <span class="st">&quot;Buildings ($1k)&quot;</span>, <span class="st">&quot;Total Assets ($1k)&quot;</span>,</a>
 <a class="sourceLine" id="cb4-24" title="24">                                  <span class="st">&quot;Net Assets ($1k)&quot;</span>, <span class="st">&quot;Liabiliies ($1k)&quot;</span>))</a></code></pre></div>
@@ -607,7 +606,7 @@ St. Dev.
 </tr>
 <tr>
 <td style="text-align:left">
-Current Ratio
+Days of Operating COH
 </td>
 <td>
 0
@@ -616,19 +615,19 @@ Current Ratio
 2
 </td>
 <td>
-7
+6
 </td>
 <td>
-24
+27
 </td>
 <td>
-20
+18
 </td>
 <td>
-200
+365
 </td>
 <td>
-45
+66
 </td>
 </tr>
 <tr>
@@ -818,10 +817,9 @@ Liabiliies (1k)
 </td>
 </tr>
 </table>
-<p>What proportion of orgs have a Current Ratio of zero (no outstanding liabilities)?</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1">prop.zero &lt;-<span class="st"> </span><span class="kw">mean</span>( core2<span class="op">$</span>currentratio <span class="op">==</span><span class="st"> </span><span class="dv">0</span>, <span class="dt">na.rm=</span>T )</a></code></pre></div>
-<p>In the sample, 0 percent of the organizations have a Current Ratio of zero, meaning they carried no debt. These organizations are dropped from subsequent graphs to keep the visualizations clean. The interpretation of the graphics should be the distributions of Debt to Asset Ratio for organizations that carry debt.</p>
-<p>Create quantile groups:</p>
+<p>What proportion of orgs have Days of Operating Cash equal to zero (no operating cash)?</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1">prop.zero &lt;-<span class="st"> </span><span class="kw">mean</span>( core2<span class="op">$</span>daysoperating_coh <span class="op">==</span><span class="st"> </span><span class="dv">0</span>, <span class="dt">na.rm=</span>T )</a></code></pre></div>
+<p>In the sample, 1 percent of the organizations have zero days of operating cash on hand, meaning they could not survive without receivables and program service revenue. These organizations are dropped from subsequent graphs to keep the visualizations clean. The interpretation of the graphics should be the distributions of Days of Operating Cash on Hand for organizations that have some cash on hand.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="co">###</span></a>
 <a class="sourceLine" id="cb6-2" title="2"><span class="co">### ADD QUANTILES</span></a>
 <a class="sourceLine" id="cb6-3" title="3"><span class="co">###</span></a>
@@ -831,22 +829,22 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb6-7" title="7">core2<span class="op">$</span>rev.q   &lt;-<span class="st"> </span><span class="kw">create_quantiles</span>( <span class="dt">var=</span>core2<span class="op">$</span>totrevenue,     <span class="dt">n.groups=</span><span class="dv">5</span> )</a>
 <a class="sourceLine" id="cb6-8" title="8">core2<span class="op">$</span>asset.q &lt;-<span class="st"> </span><span class="kw">create_quantiles</span>( <span class="dt">var=</span>core2<span class="op">$</span>totnetassetend, <span class="dt">n.groups=</span><span class="dv">5</span> )</a>
 <a class="sourceLine" id="cb6-9" title="9">core2<span class="op">$</span>age.q   &lt;-<span class="st"> </span><span class="kw">create_quantiles</span>( <span class="dt">var=</span>core2<span class="op">$</span>AGE,            <span class="dt">n.groups=</span><span class="dv">5</span> )</a></code></pre></div>
-<div id="current-ratio-density" class="section level2">
-<h2>Current Ratio Density</h2>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1">min.x &lt;-<span class="st"> </span><span class="kw">min</span>( core2<span class="op">$</span>currentratio, <span class="dt">na.rm=</span>T )</a>
-<a class="sourceLine" id="cb7-2" title="2">max.x &lt;-<span class="st"> </span><span class="kw">max</span>( core2<span class="op">$</span>currentratio, <span class="dt">na.rm=</span>T )</a>
+<div id="days-of-operating-cash-on-hand-density" class="section level2">
+<h2>Days of Operating Cash on Hand Density</h2>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1">min.x &lt;-<span class="st"> </span><span class="kw">min</span>( core2<span class="op">$</span>daysoperating_coh, <span class="dt">na.rm=</span>T )</a>
+<a class="sourceLine" id="cb7-2" title="2">max.x &lt;-<span class="st"> </span><span class="kw">max</span>( core2<span class="op">$</span>daysoperating_coh, <span class="dt">na.rm=</span>T )</a>
 <a class="sourceLine" id="cb7-3" title="3"></a>
-<a class="sourceLine" id="cb7-4" title="4"><span class="kw">ggplot</span>( core2, <span class="kw">aes</span>(<span class="dt">x =</span> currentratio )) <span class="op">+</span><span class="st">  </span></a>
-<a class="sourceLine" id="cb7-5" title="5"><span class="st">  </span><span class="kw">geom_density</span>( <span class="dt">alpha =</span> <span class="fl">0.5</span>, <span class="dt">fill=</span><span class="st">&quot;darkorange&quot;</span> ) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb7-4" title="4"><span class="kw">ggplot</span>( core2, <span class="kw">aes</span>(<span class="dt">x =</span> daysoperating_coh )) <span class="op">+</span><span class="st">  </span></a>
+<a class="sourceLine" id="cb7-5" title="5"><span class="st">  </span><span class="kw">geom_density</span>( <span class="dt">alpha =</span> <span class="fl">0.5</span>, <span class="dt">fill=</span><span class="st">&quot;blue&quot;</span> ) <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb7-6" title="6"><span class="st">  </span><span class="kw">xlim</span>( min.x, max.x  ) <span class="op">+</span></a>
 <a class="sourceLine" id="cb7-7" title="7"><span class="st">  </span><span class="kw">xlab</span>( variable.label ) <span class="op">+</span></a>
 <a class="sourceLine" id="cb7-8" title="8"><span class="st">  </span><span class="kw">theme</span>( <span class="dt">axis.title.y=</span><span class="kw">element_blank</span>(),</a>
 <a class="sourceLine" id="cb7-9" title="9">         <span class="dt">axis.text.y=</span><span class="kw">element_blank</span>(), </a>
 <a class="sourceLine" id="cb7-10" title="10">         <span class="dt">axis.ticks.y=</span><span class="kw">element_blank</span>() )</a></code></pre></div>
-<p><img src="metric-02-current-ratio_files/figure-html/unnamed-chunk-8-1.png" width="960" /></p>
+<p><img src="metric-03-days-operating-COH_files/figure-html/unnamed-chunk-8-1.png" width="960" /></p>
 </div>
-<div id="current-ratio-by-ntee-major-code" class="section level2">
-<h2>Current Ratio by NTEE Major Code</h2>
+<div id="days-of-operating-cash-on-hand-by-ntee-major-code" class="section level2">
+<h2>Days of Operating Cash on Hand by NTEE Major Code</h2>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1">core3 &lt;-<span class="st"> </span>core2 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>( <span class="op">!</span><span class="st"> </span><span class="kw">is.na</span>(NTMAJ12) )</a>
 <a class="sourceLine" id="cb8-2" title="2"><span class="kw">table</span>( core3<span class="op">$</span>NTMAJ12) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sort</span>(<span class="dt">decreasing=</span><span class="ot">TRUE</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">kable</span>()</a></code></pre></div>
 <table>
@@ -913,7 +911,7 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb9-4" title="4">                  <span class="dt">N=</span><span class="kw">paste0</span>( <span class="st">&quot;N=&quot;</span>, <span class="kw">as.character</span>(t) ), </a>
 <a class="sourceLine" id="cb9-5" title="5">                  <span class="dt">NTMAJ12=</span><span class="kw">names</span>(t) )</a>
 <a class="sourceLine" id="cb9-6" title="6"></a>
-<a class="sourceLine" id="cb9-7" title="7"><span class="kw">ggplot</span>( core3, <span class="kw">aes</span>( <span class="dt">x=</span>currentratio ) ) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb9-7" title="7"><span class="kw">ggplot</span>( core3, <span class="kw">aes</span>( <span class="dt">x=</span>daysoperating_coh ) ) <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb9-8" title="8"><span class="st">  </span><span class="kw">geom_density</span>( <span class="dt">alpha =</span> <span class="fl">0.5</span>, <span class="dt">fill=</span><span class="st">&quot;blue&quot;</span> ) <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb9-9" title="9"><span class="st">  </span><span class="co"># xlim( -0.1, 1 ) +</span></a>
 <a class="sourceLine" id="cb9-10" title="10"><span class="st">  </span><span class="kw">labs</span>( <span class="dt">title=</span><span class="st">&quot;Nonprofit Subsectors&quot;</span> ) <span class="op">+</span><span class="st"> </span></a>
@@ -928,10 +926,10 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb9-19" title="19">             <span class="kw">aes</span>(x, y, <span class="dt">label=</span>N ), </a>
 <a class="sourceLine" id="cb9-20" title="20">             <span class="dt">hjust=</span><span class="dv">2</span>, <span class="dt">vjust=</span><span class="dv">3</span>, </a>
 <a class="sourceLine" id="cb9-21" title="21">             <span class="dt">color=</span><span class="st">&quot;gray60&quot;</span>, <span class="dt">size=</span><span class="dv">6</span> )</a></code></pre></div>
-<p><img src="metric-02-current-ratio_files/figure-html/unnamed-chunk-10-1.png" width="960" /></p>
+<p><img src="metric-03-days-operating-COH_files/figure-html/unnamed-chunk-10-1.png" width="960" /></p>
 </div>
-<div id="current-ratio-by-region" class="section level2">
-<h2>Current Ratio by Region</h2>
+<div id="days-of-operating-cash-on-hand-by-region" class="section level2">
+<h2>Days of Operating Cash on Hand by Region</h2>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="kw">table</span>( core2<span class="op">$</span>Region) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">kable</span>()</a></code></pre></div>
 <table>
 <thead>
@@ -966,7 +964,7 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb11-5" title="5"></a>
 <a class="sourceLine" id="cb11-6" title="6">core2 <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb11-7" title="7"><span class="st">  </span><span class="kw">filter</span>( <span class="op">!</span><span class="st"> </span><span class="kw">is.na</span>(Region) ) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb11-8" title="8"><span class="st">  </span><span class="kw">ggplot</span>( <span class="kw">aes</span>(currentratio) )  <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb11-8" title="8"><span class="st">  </span><span class="kw">ggplot</span>( <span class="kw">aes</span>(daysoperating_coh) )  <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb11-9" title="9"><span class="st">    </span><span class="kw">geom_density</span>( <span class="dt">alpha =</span> <span class="fl">0.5</span>, <span class="dt">fill=</span><span class="st">&quot;blue&quot;</span> ) <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb11-10" title="10"><span class="st">    </span><span class="kw">xlab</span>( <span class="st">&quot;Census Regions&quot;</span> ) <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb11-11" title="11"><span class="st">    </span><span class="kw">ylab</span>( variable.label ) <span class="op">+</span></a>
@@ -979,7 +977,7 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb11-18" title="18">             <span class="kw">aes</span>(x, y, <span class="dt">label=</span>N ), </a>
 <a class="sourceLine" id="cb11-19" title="19">             <span class="dt">hjust=</span><span class="dv">2</span>, <span class="dt">vjust=</span><span class="dv">3</span>, </a>
 <a class="sourceLine" id="cb11-20" title="20">             <span class="dt">color=</span><span class="st">&quot;gray60&quot;</span>, <span class="dt">size=</span><span class="dv">6</span> )</a></code></pre></div>
-<p><img src="metric-02-current-ratio_files/figure-html/unnamed-chunk-12-1.png" width="960" /></p>
+<p><img src="metric-03-days-operating-COH_files/figure-html/unnamed-chunk-12-1.png" width="960" /></p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="kw">table</span>( core2<span class="op">$</span>Division ) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">kable</span>()</a></code></pre></div>
 <table>
 <thead>
@@ -1034,7 +1032,7 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb13-5" title="5"></a>
 <a class="sourceLine" id="cb13-6" title="6">core2 <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb13-7" title="7"><span class="st">  </span><span class="kw">filter</span>( <span class="op">!</span><span class="st"> </span><span class="kw">is.na</span>(Division) ) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb13-8" title="8"><span class="st">  </span><span class="kw">ggplot</span>( <span class="kw">aes</span>(currentratio) )  <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb13-8" title="8"><span class="st">  </span><span class="kw">ggplot</span>( <span class="kw">aes</span>(daysoperating_coh) )  <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb13-9" title="9"><span class="st">    </span><span class="kw">geom_density</span>( <span class="dt">alpha =</span> <span class="fl">0.5</span>, <span class="dt">fill=</span><span class="st">&quot;blue&quot;</span> ) <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb13-10" title="10"><span class="st">    </span><span class="kw">xlab</span>( <span class="st">&quot;Census Sub-Regions (10)&quot;</span> ) <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb13-11" title="11"><span class="st">    </span><span class="kw">ylab</span>( variable.label ) <span class="op">+</span></a>
@@ -1047,14 +1045,14 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb13-18" title="18">             <span class="kw">aes</span>(x, y, <span class="dt">label=</span>N ), </a>
 <a class="sourceLine" id="cb13-19" title="19">             <span class="dt">hjust=</span><span class="dv">2</span>, <span class="dt">vjust=</span><span class="dv">3</span>, </a>
 <a class="sourceLine" id="cb13-20" title="20">             <span class="dt">color=</span><span class="st">&quot;gray60&quot;</span>, <span class="dt">size=</span><span class="dv">6</span> ) </a></code></pre></div>
-<p><img src="metric-02-current-ratio_files/figure-html/unnamed-chunk-14-1.png" width="960" /></p>
+<p><img src="metric-03-days-operating-COH_files/figure-html/unnamed-chunk-14-1.png" width="960" /></p>
 </div>
-<div id="current-ratio-by-nonprofit-size-expenses" class="section level2">
-<h2>Current Ratio by Nonprofit Size (Expenses)</h2>
+<div id="days-of-operating-cash-on-hand-by-nonprofit-size-expenses" class="section level2">
+<h2>Days of Operating Cash on Hand by Nonprofit Size (Expenses)</h2>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1"><span class="kw">ggplot</span>( core2, <span class="kw">aes</span>(<span class="dt">x =</span> totfuncexpns )) <span class="op">+</span><span class="st">  </span></a>
 <a class="sourceLine" id="cb14-2" title="2"><span class="st">  </span><span class="kw">geom_density</span>( <span class="dt">alpha =</span> <span class="fl">0.5</span>, <span class="dt">fill=</span><span class="st">&quot;darkorange&quot;</span> ) <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb14-3" title="3"><span class="st">  </span><span class="kw">xlim</span>( <span class="kw">quantile</span>(core2<span class="op">$</span>totfuncexpns, <span class="kw">c</span>(<span class="fl">0.02</span>,<span class="fl">0.98</span>), <span class="dt">na.rm=</span>T ) )</a></code></pre></div>
-<p><img src="metric-02-current-ratio_files/figure-html/unnamed-chunk-15-1.png" width="960" /></p>
+<p><img src="metric-03-days-operating-COH_files/figure-html/unnamed-chunk-15-1.png" width="960" /></p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1">core2<span class="op">$</span>totfuncexpns[ core2<span class="op">$</span>totfuncexpns <span class="op">&lt;</span><span class="st"> </span><span class="dv">1</span> ] &lt;-<span class="st"> </span><span class="dv">1</span></a>
 <a class="sourceLine" id="cb15-2" title="2"><span class="co"># core2$totfuncexpns[ is.na(core2$totfuncexpns) ] &lt;- 1</span></a>
 <a class="sourceLine" id="cb15-3" title="3"></a>
@@ -1066,17 +1064,17 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb15-9" title="9">  core3 &lt;-<span class="st"> </span>core2</a>
 <a class="sourceLine" id="cb15-10" title="10">}</a>
 <a class="sourceLine" id="cb15-11" title="11"></a>
-<a class="sourceLine" id="cb15-12" title="12"><span class="kw">jplot</span>( <span class="kw">log10</span>(core3<span class="op">$</span>totfuncexpns), core3<span class="op">$</span>currentratio, </a>
+<a class="sourceLine" id="cb15-12" title="12"><span class="kw">jplot</span>( <span class="kw">log10</span>(core3<span class="op">$</span>totfuncexpns), core3<span class="op">$</span>daysoperating_coh, </a>
 <a class="sourceLine" id="cb15-13" title="13">       <span class="dt">xlab=</span><span class="st">&quot;Nonprofit Size (logged Expenses)&quot;</span>, </a>
 <a class="sourceLine" id="cb15-14" title="14">       <span class="dt">ylab=</span>variable.label,</a>
 <a class="sourceLine" id="cb15-15" title="15">       <span class="dt">xaxt=</span><span class="st">&quot;n&quot;</span>, <span class="dt">xlim=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">10</span>) )</a>
 <a class="sourceLine" id="cb15-16" title="16"><span class="kw">axis</span>( <span class="dt">side=</span><span class="dv">1</span>, </a>
 <a class="sourceLine" id="cb15-17" title="17">      <span class="dt">at=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">10</span>), </a>
 <a class="sourceLine" id="cb15-18" title="18">      <span class="dt">labels=</span><span class="kw">c</span>(<span class="st">&quot;1k&quot;</span>,<span class="st">&quot;10k&quot;</span>,<span class="st">&quot;100k&quot;</span>,<span class="st">&quot;1m&quot;</span>,<span class="st">&quot;10m&quot;</span>,<span class="st">&quot;100m&quot;</span>,<span class="st">&quot;1b&quot;</span>,<span class="st">&quot;10b&quot;</span>) )</a></code></pre></div>
-<p><img src="metric-02-current-ratio_files/figure-html/unnamed-chunk-16-1.png" width="960" /></p>
+<p><img src="metric-03-days-operating-COH_files/figure-html/unnamed-chunk-16-1.png" width="960" /></p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1">core2 <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb16-2" title="2"><span class="st">  </span><span class="kw">filter</span>( <span class="op">!</span><span class="st"> </span><span class="kw">is.na</span>(exp.q) ) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb16-3" title="3"><span class="st">  </span><span class="kw">ggplot</span>( <span class="kw">aes</span>(currentratio) )  <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb16-3" title="3"><span class="st">  </span><span class="kw">ggplot</span>( <span class="kw">aes</span>(daysoperating_coh) )  <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb16-4" title="4"><span class="st">    </span><span class="kw">geom_density</span>( <span class="dt">alpha =</span> <span class="fl">0.5</span>, <span class="dt">fill=</span><span class="st">&quot;blue&quot;</span> ) <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb16-5" title="5"><span class="st">    </span><span class="kw">labs</span>( <span class="dt">title=</span><span class="st">&quot;Nonprofit Size (logged expenses)&quot;</span> ) <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb16-6" title="6"><span class="st">    </span><span class="kw">xlab</span>( variable.label ) <span class="op">+</span></a>
@@ -1085,17 +1083,17 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb16-9" title="9"><span class="st">    </span><span class="kw">theme</span>( <span class="dt">axis.title.y=</span><span class="kw">element_blank</span>(),</a>
 <a class="sourceLine" id="cb16-10" title="10">           <span class="dt">axis.text.y=</span><span class="kw">element_blank</span>(), </a>
 <a class="sourceLine" id="cb16-11" title="11">           <span class="dt">axis.ticks.y=</span><span class="kw">element_blank</span>() )</a></code></pre></div>
-<p><img src="metric-02-current-ratio_files/figure-html/unnamed-chunk-17-1.png" width="960" /></p>
+<p><img src="metric-03-days-operating-COH_files/figure-html/unnamed-chunk-17-1.png" width="960" /></p>
 </div>
-<div id="current-ratio-by-nonprofit-size-revenue" class="section level2">
-<h2>Current Ratio by Nonprofit Size (Revenue)</h2>
+<div id="days-of-operating-cash-on-hand-by-nonprofit-size-revenue" class="section level2">
+<h2>Days of Operating Cash on Hand by Nonprofit Size (Revenue)</h2>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1"><span class="kw">ggplot</span>( core2, <span class="kw">aes</span>(<span class="dt">x =</span> totrevenue )) <span class="op">+</span><span class="st">  </span></a>
 <a class="sourceLine" id="cb17-2" title="2"><span class="st">  </span><span class="kw">geom_density</span>( <span class="dt">alpha =</span> <span class="fl">0.5</span>, <span class="dt">fill=</span><span class="st">&quot;darkorange&quot;</span> ) <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb17-3" title="3"><span class="st">  </span><span class="kw">xlim</span>( <span class="kw">quantile</span>(core2<span class="op">$</span>totrevenue, <span class="kw">c</span>(<span class="fl">0.02</span>,<span class="fl">0.98</span>), <span class="dt">na.rm=</span>T ) ) <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb17-4" title="4"><span class="st">  </span><span class="kw">theme</span>( <span class="dt">axis.title.y=</span><span class="kw">element_blank</span>(),</a>
 <a class="sourceLine" id="cb17-5" title="5">           <span class="dt">axis.text.y=</span><span class="kw">element_blank</span>(), </a>
 <a class="sourceLine" id="cb17-6" title="6">           <span class="dt">axis.ticks.y=</span><span class="kw">element_blank</span>() )</a></code></pre></div>
-<p><img src="metric-02-current-ratio_files/figure-html/unnamed-chunk-18-1.png" width="960" /></p>
+<p><img src="metric-03-days-operating-COH_files/figure-html/unnamed-chunk-18-1.png" width="960" /></p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1">core2<span class="op">$</span>totrevenue[ core2<span class="op">$</span>totrevenue <span class="op">&lt;</span><span class="st"> </span><span class="dv">1</span> ] &lt;-<span class="st"> </span><span class="dv">1</span></a>
 <a class="sourceLine" id="cb18-2" title="2"></a>
 <a class="sourceLine" id="cb18-3" title="3"><span class="cf">if</span>( <span class="kw">nrow</span>(core2) <span class="op">&gt;</span><span class="st"> </span><span class="dv">10000</span> )</a>
@@ -1106,17 +1104,17 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb18-8" title="8">  core3 &lt;-<span class="st"> </span>core2</a>
 <a class="sourceLine" id="cb18-9" title="9">}</a>
 <a class="sourceLine" id="cb18-10" title="10"></a>
-<a class="sourceLine" id="cb18-11" title="11"><span class="kw">jplot</span>( <span class="kw">log10</span>(core3<span class="op">$</span>totrevenue), core3<span class="op">$</span>currentratio, </a>
+<a class="sourceLine" id="cb18-11" title="11"><span class="kw">jplot</span>( <span class="kw">log10</span>(core3<span class="op">$</span>totrevenue), core3<span class="op">$</span>daysoperating_coh, </a>
 <a class="sourceLine" id="cb18-12" title="12">       <span class="dt">xlab=</span><span class="st">&quot;Nonprofit Size (logged Revenue)&quot;</span>, </a>
 <a class="sourceLine" id="cb18-13" title="13">       <span class="dt">ylab=</span>variable.label,</a>
 <a class="sourceLine" id="cb18-14" title="14">       <span class="dt">xaxt=</span><span class="st">&quot;n&quot;</span>, <span class="dt">xlim=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">10</span>) )</a>
 <a class="sourceLine" id="cb18-15" title="15"><span class="kw">axis</span>( <span class="dt">side=</span><span class="dv">1</span>, </a>
 <a class="sourceLine" id="cb18-16" title="16">      <span class="dt">at=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">10</span>), </a>
 <a class="sourceLine" id="cb18-17" title="17">      <span class="dt">labels=</span><span class="kw">c</span>(<span class="st">&quot;1k&quot;</span>,<span class="st">&quot;10k&quot;</span>,<span class="st">&quot;100k&quot;</span>,<span class="st">&quot;1m&quot;</span>,<span class="st">&quot;10m&quot;</span>,<span class="st">&quot;100m&quot;</span>,<span class="st">&quot;1b&quot;</span>,<span class="st">&quot;10b&quot;</span>) )</a></code></pre></div>
-<p><img src="metric-02-current-ratio_files/figure-html/unnamed-chunk-19-1.png" width="960" /></p>
+<p><img src="metric-03-days-operating-COH_files/figure-html/unnamed-chunk-19-1.png" width="960" /></p>
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" title="1">core2 <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb19-2" title="2"><span class="st">  </span><span class="kw">filter</span>( <span class="op">!</span><span class="st"> </span><span class="kw">is.na</span>(rev.q) ) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb19-3" title="3"><span class="st">  </span><span class="kw">ggplot</span>( <span class="kw">aes</span>(currentratio) )  <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb19-3" title="3"><span class="st">  </span><span class="kw">ggplot</span>( <span class="kw">aes</span>(daysoperating_coh) )  <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb19-4" title="4"><span class="st">    </span><span class="kw">geom_density</span>( <span class="dt">alpha =</span> <span class="fl">0.5</span>, <span class="dt">fill=</span><span class="st">&quot;blue&quot;</span> ) <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb19-5" title="5"><span class="st">    </span><span class="kw">labs</span>( <span class="dt">title=</span><span class="st">&quot;Nonprofit Size (logged revenues)&quot;</span> ) <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb19-6" title="6"><span class="st">    </span><span class="kw">xlab</span>( variable.label ) <span class="op">+</span></a>
@@ -1125,10 +1123,10 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb19-9" title="9"><span class="st">    </span><span class="kw">theme</span>( <span class="dt">axis.title.y=</span><span class="kw">element_blank</span>(),</a>
 <a class="sourceLine" id="cb19-10" title="10">           <span class="dt">axis.text.y=</span><span class="kw">element_blank</span>(), </a>
 <a class="sourceLine" id="cb19-11" title="11">           <span class="dt">axis.ticks.y=</span><span class="kw">element_blank</span>() )</a></code></pre></div>
-<p><img src="metric-02-current-ratio_files/figure-html/unnamed-chunk-20-1.png" width="960" /></p>
+<p><img src="metric-03-days-operating-COH_files/figure-html/unnamed-chunk-20-1.png" width="960" /></p>
 </div>
-<div id="current-ratio-by-nonprofit-size-net-assets" class="section level2">
-<h2>Current Ratio by Nonprofit Size (Net Assets)</h2>
+<div id="days-of-operating-cash-on-hand-by-nonprofit-size-net-assets" class="section level2">
+<h2>Days of Operating Cash on Hand by Nonprofit Size (Net Assets)</h2>
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1"><span class="kw">ggplot</span>( core2, <span class="kw">aes</span>(<span class="dt">x =</span> totnetassetend )) <span class="op">+</span><span class="st">  </span></a>
 <a class="sourceLine" id="cb20-2" title="2"><span class="st">  </span><span class="kw">geom_density</span>( <span class="dt">alpha =</span> <span class="fl">0.5</span>, <span class="dt">fill=</span><span class="st">&quot;darkorange&quot;</span> ) <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb20-3" title="3"><span class="st">  </span><span class="kw">xlim</span>( <span class="kw">quantile</span>(core2<span class="op">$</span>totnetassetend, <span class="kw">c</span>(<span class="fl">0.02</span>,<span class="fl">0.98</span>), <span class="dt">na.rm=</span>T ) ) <span class="op">+</span><span class="st"> </span></a>
@@ -1136,7 +1134,7 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb20-5" title="5"><span class="st">    </span><span class="kw">theme</span>( <span class="dt">axis.title.y=</span><span class="kw">element_blank</span>(),</a>
 <a class="sourceLine" id="cb20-6" title="6">           <span class="dt">axis.text.y=</span><span class="kw">element_blank</span>(), </a>
 <a class="sourceLine" id="cb20-7" title="7">           <span class="dt">axis.ticks.y=</span><span class="kw">element_blank</span>() )</a></code></pre></div>
-<p><img src="metric-02-current-ratio_files/figure-html/unnamed-chunk-21-1.png" width="960" /></p>
+<p><img src="metric-03-days-operating-COH_files/figure-html/unnamed-chunk-21-1.png" width="960" /></p>
 <div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" title="1">core2<span class="op">$</span>totnetassetend[ core2<span class="op">$</span>totnetassetend <span class="op">&lt;</span><span class="st"> </span><span class="dv">1</span> ] &lt;-<span class="st"> </span><span class="ot">NA</span></a>
 <a class="sourceLine" id="cb21-2" title="2"></a>
 <a class="sourceLine" id="cb21-3" title="3"><span class="cf">if</span>( <span class="kw">nrow</span>(core2) <span class="op">&gt;</span><span class="st"> </span><span class="dv">10000</span> )</a>
@@ -1147,20 +1145,20 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb21-8" title="8">  core3 &lt;-<span class="st"> </span>core2</a>
 <a class="sourceLine" id="cb21-9" title="9">}</a>
 <a class="sourceLine" id="cb21-10" title="10"></a>
-<a class="sourceLine" id="cb21-11" title="11"><span class="kw">jplot</span>( <span class="kw">log10</span>(core3<span class="op">$</span>totnetassetend), core3<span class="op">$</span>currentratio, </a>
+<a class="sourceLine" id="cb21-11" title="11"><span class="kw">jplot</span>( <span class="kw">log10</span>(core3<span class="op">$</span>totnetassetend), core3<span class="op">$</span>daysoperating_coh, </a>
 <a class="sourceLine" id="cb21-12" title="12">       <span class="dt">xlab=</span><span class="st">&quot;Nonprofit Size (logged Net Assets)&quot;</span>, </a>
 <a class="sourceLine" id="cb21-13" title="13">       <span class="dt">ylab=</span>variable.label,</a>
 <a class="sourceLine" id="cb21-14" title="14">       <span class="dt">xaxt=</span><span class="st">&quot;n&quot;</span>, <span class="dt">xlim=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">10</span>) )</a>
 <a class="sourceLine" id="cb21-15" title="15"><span class="kw">axis</span>( <span class="dt">side=</span><span class="dv">1</span>, </a>
 <a class="sourceLine" id="cb21-16" title="16">      <span class="dt">at=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">10</span>), </a>
 <a class="sourceLine" id="cb21-17" title="17">      <span class="dt">labels=</span><span class="kw">c</span>(<span class="st">&quot;1k&quot;</span>,<span class="st">&quot;10k&quot;</span>,<span class="st">&quot;100k&quot;</span>,<span class="st">&quot;1m&quot;</span>,<span class="st">&quot;10m&quot;</span>,<span class="st">&quot;100m&quot;</span>,<span class="st">&quot;1b&quot;</span>,<span class="st">&quot;10b&quot;</span>) )</a></code></pre></div>
-<p><img src="metric-02-current-ratio_files/figure-html/unnamed-chunk-22-1.png" width="960" /></p>
+<p><img src="metric-03-days-operating-COH_files/figure-html/unnamed-chunk-22-1.png" width="960" /></p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" title="1">core2<span class="op">$</span>totnetassetend[ core2<span class="op">$</span>totnetassetend <span class="op">&lt;</span><span class="st"> </span><span class="dv">1</span> ] &lt;-<span class="st"> </span><span class="ot">NA</span></a>
 <a class="sourceLine" id="cb22-2" title="2">core2<span class="op">$</span>asset.q &lt;-<span class="st"> </span><span class="kw">create_quantiles</span>( <span class="dt">var=</span>core2<span class="op">$</span>totnetassetend, <span class="dt">n.groups=</span><span class="dv">5</span> )</a>
 <a class="sourceLine" id="cb22-3" title="3"></a>
 <a class="sourceLine" id="cb22-4" title="4">core2 <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb22-5" title="5"><span class="st">  </span><span class="kw">filter</span>( <span class="op">!</span><span class="st"> </span><span class="kw">is.na</span>(asset.q) ) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb22-6" title="6"><span class="st">  </span><span class="kw">ggplot</span>( <span class="kw">aes</span>(currentratio) )  <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb22-6" title="6"><span class="st">  </span><span class="kw">ggplot</span>( <span class="kw">aes</span>(daysoperating_coh) )  <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb22-7" title="7"><span class="st">    </span><span class="kw">geom_density</span>( <span class="dt">alpha =</span> <span class="fl">0.5</span>, <span class="dt">fill=</span><span class="st">&quot;blue&quot;</span> ) <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb22-8" title="8"><span class="st">    </span><span class="kw">labs</span>( <span class="dt">title=</span><span class="st">&quot;Nonprofit Size (logged net assets, if assets &gt; 0)&quot;</span> ) <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb22-9" title="9"><span class="st">    </span><span class="kw">xlab</span>( variable.label ) <span class="op">+</span><span class="st"> </span></a>
@@ -1170,7 +1168,7 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb22-13" title="13"><span class="st">    </span><span class="kw">theme</span>( <span class="dt">axis.title.y=</span><span class="kw">element_blank</span>(),</a>
 <a class="sourceLine" id="cb22-14" title="14">           <span class="dt">axis.text.y=</span><span class="kw">element_blank</span>(), </a>
 <a class="sourceLine" id="cb22-15" title="15">           <span class="dt">axis.ticks.y=</span><span class="kw">element_blank</span>() )</a></code></pre></div>
-<p><img src="metric-02-current-ratio_files/figure-html/unnamed-chunk-23-1.png" width="960" /></p>
+<p><img src="metric-03-days-operating-COH_files/figure-html/unnamed-chunk-23-1.png" width="960" /></p>
 <p>Total Assets for Comparison</p>
 <div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" title="1">core2<span class="op">$</span>totassetsend[ core2<span class="op">$</span>totassetsend <span class="op">&lt;</span><span class="st"> </span><span class="dv">1</span> ] &lt;-<span class="st"> </span><span class="ot">NA</span></a>
 <a class="sourceLine" id="cb23-2" title="2">core2<span class="op">$</span>tot.asset.q &lt;-<span class="st"> </span><span class="kw">create_quantiles</span>( <span class="dt">var=</span>core2<span class="op">$</span>totassetsend, <span class="dt">n.groups=</span><span class="dv">5</span> )</a>
@@ -1183,14 +1181,14 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb23-9" title="9">  core3 &lt;-<span class="st"> </span>core2</a>
 <a class="sourceLine" id="cb23-10" title="10">}</a>
 <a class="sourceLine" id="cb23-11" title="11"></a>
-<a class="sourceLine" id="cb23-12" title="12"><span class="kw">jplot</span>( <span class="kw">log10</span>(core3<span class="op">$</span>totassetsend), core3<span class="op">$</span>currentratio, </a>
+<a class="sourceLine" id="cb23-12" title="12"><span class="kw">jplot</span>( <span class="kw">log10</span>(core3<span class="op">$</span>totassetsend), core3<span class="op">$</span>daysoperating_coh, </a>
 <a class="sourceLine" id="cb23-13" title="13">       <span class="dt">xlab=</span><span class="st">&quot;Nonprofit Size (logged Total Assets)&quot;</span>, </a>
 <a class="sourceLine" id="cb23-14" title="14">       <span class="dt">ylab=</span>variable.label,</a>
 <a class="sourceLine" id="cb23-15" title="15">       <span class="dt">xaxt=</span><span class="st">&quot;n&quot;</span>, <span class="dt">xlim=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">10</span>) )</a>
 <a class="sourceLine" id="cb23-16" title="16"><span class="kw">axis</span>( <span class="dt">side=</span><span class="dv">1</span>, </a>
 <a class="sourceLine" id="cb23-17" title="17">      <span class="dt">at=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">10</span>), </a>
 <a class="sourceLine" id="cb23-18" title="18">      <span class="dt">labels=</span><span class="kw">c</span>(<span class="st">&quot;1k&quot;</span>,<span class="st">&quot;10k&quot;</span>,<span class="st">&quot;100k&quot;</span>,<span class="st">&quot;1m&quot;</span>,<span class="st">&quot;10m&quot;</span>,<span class="st">&quot;100m&quot;</span>,<span class="st">&quot;1b&quot;</span>,<span class="st">&quot;10b&quot;</span>) )</a></code></pre></div>
-<p><img src="metric-02-current-ratio_files/figure-html/unnamed-chunk-24-1.png" width="960" /></p>
+<p><img src="metric-03-days-operating-COH_files/figure-html/unnamed-chunk-24-1.png" width="960" /></p>
 <div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" title="1"><span class="kw">ggplot</span>( core2, <span class="kw">aes</span>(<span class="dt">x =</span> totassetsend )) <span class="op">+</span><span class="st">  </span></a>
 <a class="sourceLine" id="cb24-2" title="2"><span class="st">  </span><span class="kw">geom_density</span>( <span class="dt">alpha =</span> <span class="fl">0.5</span>, <span class="dt">fill=</span><span class="st">&quot;darkorange&quot;</span> ) <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb24-3" title="3"><span class="st">  </span><span class="kw">xlim</span>( <span class="kw">quantile</span>(core2<span class="op">$</span>totassetsend, <span class="kw">c</span>(<span class="fl">0.02</span>,<span class="fl">0.98</span>), <span class="dt">na.rm=</span>T ) ) <span class="op">+</span><span class="st"> </span></a>
@@ -1198,10 +1196,10 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb24-5" title="5"><span class="st">    </span><span class="kw">theme</span>( <span class="dt">axis.title.y=</span><span class="kw">element_blank</span>(),</a>
 <a class="sourceLine" id="cb24-6" title="6">           <span class="dt">axis.text.y=</span><span class="kw">element_blank</span>(), </a>
 <a class="sourceLine" id="cb24-7" title="7">           <span class="dt">axis.ticks.y=</span><span class="kw">element_blank</span>() )</a></code></pre></div>
-<p><img src="metric-02-current-ratio_files/figure-html/unnamed-chunk-25-1.png" width="960" /></p>
+<p><img src="metric-03-days-operating-COH_files/figure-html/unnamed-chunk-25-1.png" width="960" /></p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" title="1">core2 <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb25-2" title="2"><span class="st">  </span><span class="kw">filter</span>( <span class="op">!</span><span class="st"> </span><span class="kw">is.na</span>(tot.asset.q) ) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb25-3" title="3"><span class="st">  </span><span class="kw">ggplot</span>( <span class="kw">aes</span>(currentratio) )  <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb25-3" title="3"><span class="st">  </span><span class="kw">ggplot</span>( <span class="kw">aes</span>(daysoperating_coh) )  <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb25-4" title="4"><span class="st">    </span><span class="kw">geom_density</span>( <span class="dt">alpha =</span> <span class="fl">0.5</span>, <span class="dt">fill=</span><span class="st">&quot;blue&quot;</span> ) <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb25-5" title="5"><span class="st">    </span><span class="kw">xlab</span>( <span class="st">&quot;Nonprofit Size (logged total assets, if assets &gt; 0)&quot;</span> ) <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb25-6" title="6"><span class="st">    </span><span class="kw">ylab</span>( variable.label ) <span class="op">+</span></a>
@@ -1210,13 +1208,13 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb25-9" title="9"><span class="st">    </span><span class="kw">theme</span>( <span class="dt">axis.title.y=</span><span class="kw">element_blank</span>(),</a>
 <a class="sourceLine" id="cb25-10" title="10">           <span class="dt">axis.text.y=</span><span class="kw">element_blank</span>(), </a>
 <a class="sourceLine" id="cb25-11" title="11">           <span class="dt">axis.ticks.y=</span><span class="kw">element_blank</span>() )</a></code></pre></div>
-<p><img src="metric-02-current-ratio_files/figure-html/unnamed-chunk-26-1.png" width="960" /></p>
+<p><img src="metric-03-days-operating-COH_files/figure-html/unnamed-chunk-26-1.png" width="960" /></p>
 </div>
-<div id="current-ratio-by-nonprofit-age" class="section level2">
-<h2>Current Ratio by Nonprofit Age</h2>
+<div id="days-of-operating-cash-on-hand-by-nonprofit-age" class="section level2">
+<h2>Days of Operating Cash on Hand by Nonprofit Age</h2>
 <div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" title="1"><span class="kw">ggplot</span>( core2, <span class="kw">aes</span>(<span class="dt">x =</span> AGE )) <span class="op">+</span><span class="st">  </span></a>
 <a class="sourceLine" id="cb26-2" title="2"><span class="st">  </span><span class="kw">geom_density</span>( <span class="dt">alpha =</span> <span class="fl">0.5</span>, <span class="dt">fill=</span><span class="st">&quot;darkorange&quot;</span> )  </a></code></pre></div>
-<p><img src="metric-02-current-ratio_files/figure-html/unnamed-chunk-27-1.png" width="960" /></p>
+<p><img src="metric-03-days-operating-COH_files/figure-html/unnamed-chunk-27-1.png" width="960" /></p>
 <div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" title="1">core2<span class="op">$</span>AGE[ core2<span class="op">$</span>AGE <span class="op">&lt;</span><span class="st"> </span><span class="dv">1</span> ] &lt;-<span class="st"> </span><span class="ot">NA</span></a>
 <a class="sourceLine" id="cb27-2" title="2"></a>
 <a class="sourceLine" id="cb27-3" title="3"><span class="cf">if</span>( <span class="kw">nrow</span>(core2) <span class="op">&gt;</span><span class="st"> </span><span class="dv">10000</span> )</a>
@@ -1227,13 +1225,13 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb27-8" title="8">  core3 &lt;-<span class="st"> </span>core2</a>
 <a class="sourceLine" id="cb27-9" title="9">}</a>
 <a class="sourceLine" id="cb27-10" title="10"></a>
-<a class="sourceLine" id="cb27-11" title="11"><span class="kw">jplot</span>( core3<span class="op">$</span>AGE, core3<span class="op">$</span>currentratio, </a>
+<a class="sourceLine" id="cb27-11" title="11"><span class="kw">jplot</span>( core3<span class="op">$</span>AGE, core3<span class="op">$</span>daysoperating_coh, </a>
 <a class="sourceLine" id="cb27-12" title="12">       <span class="dt">xlab=</span><span class="st">&quot;Nonprofit Age&quot;</span>, </a>
 <a class="sourceLine" id="cb27-13" title="13">       <span class="dt">ylab=</span>variable.label ) </a></code></pre></div>
-<p><img src="metric-02-current-ratio_files/figure-html/unnamed-chunk-28-1.png" width="960" /></p>
+<p><img src="metric-03-days-operating-COH_files/figure-html/unnamed-chunk-28-1.png" width="960" /></p>
 <div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" title="1">core2 <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb28-2" title="2"><span class="st">  </span><span class="kw">filter</span>( <span class="op">!</span><span class="st"> </span><span class="kw">is.na</span>(age.q) ) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb28-3" title="3"><span class="st">  </span><span class="kw">ggplot</span>( <span class="kw">aes</span>(currentratio) )  <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb28-3" title="3"><span class="st">  </span><span class="kw">ggplot</span>( <span class="kw">aes</span>(daysoperating_coh) )  <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb28-4" title="4"><span class="st">    </span><span class="kw">geom_density</span>( <span class="dt">alpha =</span> <span class="fl">0.5</span>, <span class="dt">fill=</span><span class="st">&quot;blue&quot;</span> ) <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb28-5" title="5"><span class="st">    </span><span class="kw">labs</span>( <span class="dt">title=</span><span class="st">&quot;Nonprofit Age&quot;</span> ) <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb28-6" title="6"><span class="st">    </span><span class="kw">xlab</span>( variable.label ) <span class="op">+</span></a>
@@ -1243,14 +1241,14 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb28-10" title="10"><span class="st">    </span><span class="kw">theme</span>( <span class="dt">axis.title.y=</span><span class="kw">element_blank</span>(),</a>
 <a class="sourceLine" id="cb28-11" title="11">           <span class="dt">axis.text.y=</span><span class="kw">element_blank</span>(), </a>
 <a class="sourceLine" id="cb28-12" title="12">           <span class="dt">axis.ticks.y=</span><span class="kw">element_blank</span>() )</a></code></pre></div>
-<p><img src="metric-02-current-ratio_files/figure-html/unnamed-chunk-29-1.png" width="960" /></p>
+<p><img src="metric-03-days-operating-COH_files/figure-html/unnamed-chunk-29-1.png" width="960" /></p>
 </div>
 </div>
 <div id="save-metrics" class="section level1">
 <h1>Save Metrics</h1>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" title="1">core.currentratio &lt;-<span class="st"> </span><span class="kw">select</span>( core, ein, tax_pd, currentratio )</a>
-<a class="sourceLine" id="cb29-2" title="2"><span class="kw">saveRDS</span>( core.currentratio, <span class="st">&quot;03-data-ratios/m-02-current-ratio.rds&quot;</span> )</a>
-<a class="sourceLine" id="cb29-3" title="3"><span class="kw">write.csv</span>( core.currentratio, <span class="st">&quot;03-data-ratios/m-02-current-ratio.csv&quot;</span> )</a></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" title="1">core.daysoperating_coh &lt;-<span class="st"> </span><span class="kw">select</span>( core, ein, tax_pd, daysoperating_coh )</a>
+<a class="sourceLine" id="cb29-2" title="2"><span class="kw">saveRDS</span>( core.daysoperating_coh, <span class="st">&quot;03-data-ratios/m-02-current-ratio.rds&quot;</span> )</a>
+<a class="sourceLine" id="cb29-3" title="3"><span class="kw">write.csv</span>( core.daysoperating_coh, <span class="st">&quot;03-data-ratios/m-02-current-ratio.csv&quot;</span> )</a></code></pre></div>
 <br> <br>
 <hr>
 <p><br> <br></p>

@@ -1,5 +1,5 @@
 ---
-title: "Metric 02 - Current Ratio"
+title: "Metric 03- Days of Operating Cash on Hand"
 author: ""
 date: "April 8, 2022"
 font: Lato
@@ -47,7 +47,7 @@ set_urbn_defaults(style = "print")
 
 source( "r-functions.R" )
 
-variable.label <- "Current Ratio"
+variable.label <- "Days of Operating Cash on Hand"
 
 # stargazer table print type
 # run chunk for live RMD sessions
@@ -94,49 +94,50 @@ knitr::include_graphics(here::here("img", "logo.png"))
 ## Definition & Interpretation
 
 
-$$Current \: Asset \: Ratio = \frac{Current \: Assets}{Current \: Liabilities}$$
+$$Days \: of \: Operating \: Cash \: on \: Hand = \frac{Operating \: Reserves}{[(Operating \: Expenses - Noncash \: Expenses) / 365]} $$
 
-The current ratio is used to measure the overall liquidity of a nonprofit organization.
+Days cash on hand is the number of days that an organization can continue to pay its operating expenses, given the amount of cash available.
 
-In its simplest form, it shows how many dollars of current assets an organization has to cover its current obligations. The higher the ratio, the more liquid the organization.
+This metric is good to review at startup of organization, during periods of low revenues, and prior to undertaking new major activity.
 
-As a rule of thumb, organizations should strive for a current ratio of 1.0 or higher.  An organization with a ratio of 1.0 would have one dollar of assets to pay for every dollar of current liabilities.
+The metric is limited though in the following ways. First, it is based on an average daily cash outflow, which is not really the case. Instead, cash tends to be spent in a lumpy manner, such as when rent or payroll are paid. Also, management tends to take drastic action to reduce expenses as cash reserves decline, so that the actual days of operation tend to be longer than indicated by this ratio. Thus, it is better to use a detailed cash flow analysis to determine the precise duration of the available cash, with regular updates.
 
 
 ## Variables 
 
-Notes: This data is only available for organizations that file a full 990, not for EZ filers. 
+Note: This data is available only for organizations that file full 990s. [Organizations with revenues <$200,000 and total assets <$500,000 have the option to not file a full 990 and file an EZ instead.]
 
-**Numerator:** (Cash + short-term investments + current receivables + inventories + prepaid expenses)
+**Numerator:** (Cash + short-term investments + current receivables) 
 <br>
-*	On 990: (Part X, line 1B) + (Part X, line 2B) + (Part X, line 3B) + (Part X, line 4B) + (Part X, line 8B) + (Part X, line 9B)
-  - SOI PC EXTRACTS: nonintcashend, svngstempinvend,pldgegrntrcvblend, accntsrcvblend, invntriesalesend, prepaidexpnsend 
+*	On 990: (Part X, line 1B) + (Part X, line 2B) + (Part X, line 3B) + (Part X, line 4B)
+  - SOI PC EXTRACTS: nonintcashend, svngstempinvend, pldgegrntrcvblend, accntsrcvblend
   <br>
-*	On EZ: Part I, line 22 [cash and short-term investments only]
+*	On EZ:Part I, line 22 [cash and short-term investments only]
+ - SOI PC EXTRACTS: Not available
 <br>
-**Denominator:** (Accounts payable + grants payable)
-*	On 990: (Part X, line 17B) + (Part X, line 18B) 
+**Denominator:** ((Operating expenses – bad debts – depreciation) / 365)
+*	On 990: Part IX, line 25A – Part IX, line 22A
   -SOI PC EXTRACTS: accntspayableend+grntspayableend
-*	On EZ: Not available
+*	On EZ: Part I, line 17 [operating expenses only]
 <br>
 
-**Note:** The EZ form only asks filers to report on cash, savings and investments; all receivable accounts, inventories, and prepaid expenses are reported in the line item “other assets” (Part II, line 24), and details are reported in Schedule O. Similarly, the EZ form asks filers to report on total liabilities, with details about payable accounts reported in Schedule O
+**Note:** The original ratio yields years of cash on hand. We divide the denominator by 365, or multiply the ratio by 365, to get days of cash on hand.
+o	The 990 doesn’t record bad debts (the amount listed as uncollectible for receivable accounts); it just asks organizations to report grants/pledges/accounts receivable net of bad debts, so this term is missing from the denominator
 
 
 
 
 ```{r, eval=T}
-liquidity <- ( core$nonintcashend + core$svngstempinvend + 
-                         core$pldgegrntrcvblend + core$accntsrcvblend + 
-                         core$invntriesalesend + core$prepaidexpnsend )
+operating_cash <- ( core$nonintcashend + core$svngstempinvend + 
+                         core$pldgegrntrcvblend + core$accntsrcvblend)
 
 # can't divide by zero
 payables <- ( core$accntspayableend + core$grntspayableend )
 payables[ payables == 0 ] <- NA
 
-core$currentratio <-  liquidity / payables
+core$daysoperating_coh <-  operating_cash / payables
                      
-# summary( core$currentratio )
+# summary( core$daysoperating_coh )
 ```
 
 
@@ -145,10 +146,10 @@ core$currentratio <-  liquidity / payables
 Check high and low values to see what makes sense. 
 
 ```{r, fig.height=4}
-x.05 <- quantile( core$currentratio, 0.05, na.rm=T )
-x.95 <- quantile( core$currentratio, 0.95, na.rm=T )
+x.05 <- quantile( core$daysoperating_coh, 0.05, na.rm=T )
+x.95 <- quantile( core$daysoperating_coh, 0.95, na.rm=T )
 
-ggplot( core, aes(x = currentratio ) ) +  
+ggplot( core, aes(x = daysoperating_coh ) ) +  
   geom_density( alpha = 0.5, fill="blue" ) + 
   xlim( x.05, x.95 ) 
 ```
@@ -160,12 +161,12 @@ ggplot( core, aes(x = currentratio ) ) +
 core2 <- core
 
 # proportion of values that are negative
-mean( core2$currentratio < 0, na.rm=T ) 
-core2$currentratio[ core2$currentratio < 0 ] <- 0
+mean( core2$daysoperating_coh < 0, na.rm=T ) 
+core2$daysoperating_coh[ core2$daysoperating_coh < 0 ] <- 0
 
 # proption of values above 200% 
-mean( core2$currentratio > 200, na.rm=T ) 
-core2$currentratio[ core2$currentratio > 200 ] <- 200
+mean( core2$daysoperating_coh > 365, na.rm=T ) 
+core2$daysoperating_coh[ core2$daysoperating_coh > 365 ] <- 365
 ```
 
 
@@ -198,7 +199,7 @@ Convert all monetary variables to thousands of dollars.
 ```{r, results="asis"}
 
 core2 %>%
-  mutate( # currentratio = currentratio * 10000,
+  mutate( # daysoperating_coh = daysoperating_coh * 10000,
     totrevenue = totrevenue / 1000,
     totfuncexpns = totfuncexpns / 1000, 
     lndbldgsequipend = lndbldgsequipend / 1000,
@@ -206,7 +207,7 @@ core2 %>%
     totliabend = totliabend / 1000,
     totnetassetend = totnetassetend / 1000 ) %>% 
   select( STATE,  NTEE1, NTMAJ12, 
-          currentratio, 
+          daysoperating_coh, 
           AGE, 
           totrevenue, totfuncexpns, 
           lndbldgsequipend, totassetsend, 
@@ -216,7 +217,7 @@ core2 %>%
              digits=0, 
              summary.stat = c("min","p25","median",
                               "mean","p75","max", "sd"),
-             covariate.labels = c("Current Ratio", "Age", 
+             covariate.labels = c("Days of Operating COH", "Age", 
                                   "Revenue ($1k)", "Expenses($1k)", 
                                   "Buildings ($1k)", "Total Assets ($1k)",
                                   "Net Assets ($1k)", "Liabiliies ($1k)"))
@@ -224,18 +225,18 @@ core2 %>%
 
 
 
-What proportion of orgs have a Current Ratio of zero (no outstanding liabilities)?
+What proportion of orgs have Days of Operating Cash equal to zero (no operating cash)?
 
 
 ```{r}
-prop.zero <- mean( core2$currentratio == 0, na.rm=T )
+prop.zero <- mean( core2$daysoperating_coh == 0, na.rm=T )
 ```
 
 
-In the sample, `r 100*round(prop.zero,2)` percent of the organizations have a Current Ratio of zero, meaning they carried no debt. These organizations are dropped from subsequent graphs to keep the visualizations clean. The interpretation of the graphics should be the distributions of Debt to Asset Ratio for organizations that carry debt. 
+In the sample, `r 100*round(prop.zero,2)` percent of the organizations have zero days of operating cash on hand, meaning they could not survive without receivables and program service revenue. These organizations are dropped from subsequent graphs to keep the visualizations clean. The interpretation of the graphics should be the distributions of Days of Operating Cash on Hand for organizations that have some cash on hand.  
 
 
-Create quantile groups: 
+
 
 ```{r}
 ###
@@ -258,11 +259,11 @@ core2$age.q   <- create_quantiles( var=core2$AGE,            n.groups=5 )
 ## `r variable.label` Density 
 
 ```{r, fig.height=4}
-min.x <- min( core2$currentratio, na.rm=T )
-max.x <- max( core2$currentratio, na.rm=T )
+min.x <- min( core2$daysoperating_coh, na.rm=T )
+max.x <- max( core2$daysoperating_coh, na.rm=T )
 
-ggplot( core2, aes(x = currentratio )) +  
-  geom_density( alpha = 0.5, fill="darkorange" ) + 
+ggplot( core2, aes(x = daysoperating_coh )) +  
+  geom_density( alpha = 0.5, fill="blue" ) + 
   xlim( min.x, max.x  ) +
   xlab( variable.label ) +
   theme( axis.title.y=element_blank(),
@@ -289,7 +290,7 @@ df <- data.frame( x=Inf, y=Inf,
                   N=paste0( "N=", as.character(t) ), 
                   NTMAJ12=names(t) )
 
-ggplot( core3, aes( x=currentratio ) ) + 
+ggplot( core3, aes( x=daysoperating_coh ) ) + 
   geom_density( alpha = 0.5, fill="blue" ) + 
   # xlim( -0.1, 1 ) +
   labs( title="Nonprofit Subsectors" ) + 
@@ -324,7 +325,7 @@ df <- data.frame( x=Inf, y=Inf,
 
 core2 %>% 
   filter( ! is.na(Region) ) %>% 
-  ggplot( aes(currentratio) )  + 
+  ggplot( aes(daysoperating_coh) )  + 
     geom_density( alpha = 0.5, fill="blue" ) + 
     xlab( "Census Regions" ) + 
     ylab( variable.label ) +
@@ -352,7 +353,7 @@ df <- data.frame( x=Inf, y=Inf,
 
 core2 %>% 
   filter( ! is.na(Division) ) %>% 
-  ggplot( aes(currentratio) )  + 
+  ggplot( aes(daysoperating_coh) )  + 
     geom_density( alpha = 0.5, fill="blue" ) + 
     xlab( "Census Sub-Regions (10)" ) + 
     ylab( variable.label ) +
@@ -392,7 +393,7 @@ if( nrow(core2) > 10000 )
   core3 <- core2
 }
 
-jplot( log10(core3$totfuncexpns), core3$currentratio, 
+jplot( log10(core3$totfuncexpns), core3$daysoperating_coh, 
        xlab="Nonprofit Size (logged Expenses)", 
        ylab=variable.label,
        xaxt="n", xlim=c(3,10) )
@@ -407,7 +408,7 @@ axis( side=1,
 ```{r}
 core2 %>% 
   filter( ! is.na(exp.q) ) %>% 
-  ggplot( aes(currentratio) )  + 
+  ggplot( aes(daysoperating_coh) )  + 
     geom_density( alpha = 0.5, fill="blue" ) + 
     labs( title="Nonprofit Size (logged expenses)" ) + 
     xlab( variable.label ) +
@@ -445,7 +446,7 @@ if( nrow(core2) > 10000 )
   core3 <- core2
 }
 
-jplot( log10(core3$totrevenue), core3$currentratio, 
+jplot( log10(core3$totrevenue), core3$daysoperating_coh, 
        xlab="Nonprofit Size (logged Revenue)", 
        ylab=variable.label,
        xaxt="n", xlim=c(3,10) )
@@ -460,7 +461,7 @@ axis( side=1,
 ```{r}
 core2 %>% 
   filter( ! is.na(rev.q) ) %>% 
-  ggplot( aes(currentratio) )  + 
+  ggplot( aes(daysoperating_coh) )  + 
     geom_density( alpha = 0.5, fill="blue" ) + 
     labs( title="Nonprofit Size (logged revenues)" ) + 
     xlab( variable.label ) +
@@ -496,7 +497,7 @@ if( nrow(core2) > 10000 )
   core3 <- core2
 }
 
-jplot( log10(core3$totnetassetend), core3$currentratio, 
+jplot( log10(core3$totnetassetend), core3$daysoperating_coh, 
        xlab="Nonprofit Size (logged Net Assets)", 
        ylab=variable.label,
        xaxt="n", xlim=c(3,10) )
@@ -514,7 +515,7 @@ core2$asset.q <- create_quantiles( var=core2$totnetassetend, n.groups=5 )
 
 core2 %>% 
   filter( ! is.na(asset.q) ) %>% 
-  ggplot( aes(currentratio) )  + 
+  ggplot( aes(daysoperating_coh) )  + 
     geom_density( alpha = 0.5, fill="blue" ) + 
     labs( title="Nonprofit Size (logged net assets, if assets > 0)" ) + 
     xlab( variable.label ) + 
@@ -543,7 +544,7 @@ if( nrow(core2) > 10000 )
   core3 <- core2
 }
 
-jplot( log10(core3$totassetsend), core3$currentratio, 
+jplot( log10(core3$totassetsend), core3$daysoperating_coh, 
        xlab="Nonprofit Size (logged Total Assets)", 
        ylab=variable.label,
        xaxt="n", xlim=c(3,10) )
@@ -569,7 +570,7 @@ ggplot( core2, aes(x = totassetsend )) +
 ```{r}
 core2 %>% 
   filter( ! is.na(tot.asset.q) ) %>% 
-  ggplot( aes(currentratio) )  + 
+  ggplot( aes(daysoperating_coh) )  + 
     geom_density( alpha = 0.5, fill="blue" ) + 
     xlab( "Nonprofit Size (logged total assets, if assets > 0)" ) + 
     ylab( variable.label ) +
@@ -600,7 +601,7 @@ if( nrow(core2) > 10000 )
   core3 <- core2
 }
 
-jplot( core3$AGE, core3$currentratio, 
+jplot( core3$AGE, core3$daysoperating_coh, 
        xlab="Nonprofit Age", 
        ylab=variable.label ) 
 
@@ -612,7 +613,7 @@ jplot( core3$AGE, core3$currentratio,
 ```{r}
 core2 %>% 
   filter( ! is.na(age.q) ) %>% 
-  ggplot( aes(currentratio) )  + 
+  ggplot( aes(daysoperating_coh) )  + 
     geom_density( alpha = 0.5, fill="blue" ) + 
     labs( title="Nonprofit Age" ) + 
     xlab( variable.label ) +
@@ -630,9 +631,9 @@ core2 %>%
 # Save Metrics 
 
 ```{r, eval=F}
-core.currentratio <- select( core, ein, tax_pd, currentratio )
-saveRDS( core.currentratio, "03-data-ratios/m-02-current-ratio.rds" )
-write.csv( core.currentratio, "03-data-ratios/m-02-current-ratio.csv" )
+core.daysoperating_coh <- select( core, ein, tax_pd, daysoperating_coh )
+saveRDS( core.daysoperating_coh, "03-data-ratios/m-02-current-ratio.rds" )
+write.csv( core.daysoperating_coh, "03-data-ratios/m-02-current-ratio.csv" )
 ```
 
 
