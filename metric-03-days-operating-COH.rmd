@@ -150,7 +150,7 @@ x.05 <- quantile( core$daysoperating_coh, 0.05, na.rm=T )
 x.95 <- quantile( core$daysoperating_coh, 0.95, na.rm=T )
 
 ggplot( core, aes(x = daysoperating_coh ) ) +  
-  geom_density( alpha = 0.5, fill="blue" ) + 
+  geom_density( alpha = 0.5) + 
   xlim( x.05, x.95 ) 
 ```
 
@@ -165,8 +165,8 @@ mean( core2$daysoperating_coh < 0, na.rm=T )
 core2$daysoperating_coh[ core2$daysoperating_coh < 0 ] <- 0
 
 # proption of values above 200% 
-mean( core2$daysoperating_coh > 365, na.rm=T ) 
-core2$daysoperating_coh[ core2$daysoperating_coh > 365 ] <- 365
+mean( core2$daysoperating_coh > 50, na.rm=T ) 
+core2$daysoperating_coh[ core2$daysoperating_coh > 50 ] <- 50
 ```
 
 
@@ -263,7 +263,7 @@ min.x <- min( core2$daysoperating_coh, na.rm=T )
 max.x <- max( core2$daysoperating_coh, na.rm=T )
 
 ggplot( core2, aes(x = daysoperating_coh )) +  
-  geom_density( alpha = 0.5, fill="blue" ) + 
+  geom_density( alpha = 0.5 ) + 
   xlim( min.x, max.x  ) +
   xlab( variable.label ) +
   theme( axis.title.y=element_blank(),
@@ -291,7 +291,7 @@ df <- data.frame( x=Inf, y=Inf,
                   NTMAJ12=names(t) )
 
 ggplot( core3, aes( x=daysoperating_coh ) ) + 
-  geom_density( alpha = 0.5, fill="blue" ) + 
+  geom_density( alpha = 0.5) + 
   # xlim( -0.1, 1 ) +
   labs( title="Nonprofit Subsectors" ) + 
   xlab( variable.label ) + 
@@ -326,7 +326,7 @@ df <- data.frame( x=Inf, y=Inf,
 core2 %>% 
   filter( ! is.na(Region) ) %>% 
   ggplot( aes(daysoperating_coh) )  + 
-    geom_density( alpha = 0.5, fill="blue" ) + 
+    geom_density( alpha = 0.5 ) + 
     xlab( "Census Regions" ) + 
     ylab( variable.label ) +
     facet_wrap( ~ Region, nrow=3 ) + 
@@ -354,7 +354,7 @@ df <- data.frame( x=Inf, y=Inf,
 core2 %>% 
   filter( ! is.na(Division) ) %>% 
   ggplot( aes(daysoperating_coh) )  + 
-    geom_density( alpha = 0.5, fill="blue" ) + 
+    geom_density( alpha = 0.5 ) + 
     xlab( "Census Sub-Regions (10)" ) + 
     ylab( variable.label ) +
     facet_wrap( ~ Division, nrow=3 ) + 
@@ -376,7 +376,7 @@ core2 %>%
 
 ```{r, fig.height=4}
 ggplot( core2, aes(x = totfuncexpns )) +  
-  geom_density( alpha = 0.5, fill="darkorange" ) + 
+  geom_density( alpha = 0.5 ) + 
   xlim( quantile(core2$totfuncexpns, c(0.02,0.98), na.rm=T ) )
 ```
 
@@ -409,7 +409,7 @@ axis( side=1,
 core2 %>% 
   filter( ! is.na(exp.q) ) %>% 
   ggplot( aes(daysoperating_coh) )  + 
-    geom_density( alpha = 0.5, fill="blue" ) + 
+    geom_density( alpha = 0.5) + 
     labs( title="Nonprofit Size (logged expenses)" ) + 
     xlab( variable.label ) +
     facet_wrap( ~ exp.q, nrow=3 ) + 
@@ -427,7 +427,7 @@ core2 %>%
 
 ```{r, fig.height=4}
 ggplot( core2, aes(x = totrevenue )) +  
-  geom_density( alpha = 0.5, fill="darkorange" ) + 
+  geom_density( alpha = 0.5 ) + 
   xlim( quantile(core2$totrevenue, c(0.02,0.98), na.rm=T ) ) + 
   theme( axis.title.y=element_blank(),
            axis.text.y=element_blank(), 
@@ -462,7 +462,7 @@ axis( side=1,
 core2 %>% 
   filter( ! is.na(rev.q) ) %>% 
   ggplot( aes(daysoperating_coh) )  + 
-    geom_density( alpha = 0.5, fill="blue" ) + 
+    geom_density( alpha = 0.5 ) + 
     labs( title="Nonprofit Size (logged revenues)" ) + 
     xlab( variable.label ) +
     facet_wrap( ~ rev.q, nrow=3 ) + 
@@ -478,7 +478,7 @@ core2 %>%
 
 ```{r, fig.height=4}
 ggplot( core2, aes(x = totnetassetend )) +  
-  geom_density( alpha = 0.5, fill="darkorange" ) + 
+  geom_density( alpha = 0.5) + 
   xlim( quantile(core2$totnetassetend, c(0.02,0.98), na.rm=T ) ) + 
   xlab( "Net Assets" ) +
     theme( axis.title.y=element_blank(),
@@ -516,7 +516,7 @@ core2$asset.q <- create_quantiles( var=core2$totnetassetend, n.groups=5 )
 core2 %>% 
   filter( ! is.na(asset.q) ) %>% 
   ggplot( aes(daysoperating_coh) )  + 
-    geom_density( alpha = 0.5, fill="blue" ) + 
+    geom_density( alpha = 0.5 ) + 
     labs( title="Nonprofit Size (logged net assets, if assets > 0)" ) + 
     xlab( variable.label ) + 
     ylab( "" ) + 
@@ -557,7 +557,7 @@ axis( side=1,
 
 ```{r, fig.height=4}
 ggplot( core2, aes(x = totassetsend )) +  
-  geom_density( alpha = 0.5, fill="darkorange" ) + 
+  geom_density( alpha = 0.5) + 
   xlim( quantile(core2$totassetsend, c(0.02,0.98), na.rm=T ) ) + 
   xlab( "Net Assets" ) +
     theme( axis.title.y=element_blank(),
@@ -571,7 +571,7 @@ ggplot( core2, aes(x = totassetsend )) +
 core2 %>% 
   filter( ! is.na(tot.asset.q) ) %>% 
   ggplot( aes(daysoperating_coh) )  + 
-    geom_density( alpha = 0.5, fill="blue" ) + 
+    geom_density( alpha = 0.5 ) + 
     xlab( "Nonprofit Size (logged total assets, if assets > 0)" ) + 
     ylab( variable.label ) +
     facet_wrap( ~ tot.asset.q, nrow=3 ) + 
@@ -586,7 +586,7 @@ core2 %>%
 
 ```{r, fig.height=4}
 ggplot( core2, aes(x = AGE )) +  
-  geom_density( alpha = 0.5, fill="darkorange" )  
+  geom_density( alpha = 0.5 )  
 ```
 
 
@@ -614,7 +614,7 @@ jplot( core3$AGE, core3$daysoperating_coh,
 core2 %>% 
   filter( ! is.na(age.q) ) %>% 
   ggplot( aes(daysoperating_coh) )  + 
-    geom_density( alpha = 0.5, fill="blue" ) + 
+    geom_density( alpha = 0.5 ) + 
     labs( title="Nonprofit Age" ) + 
     xlab( variable.label ) +
     ylab( "" ) +
