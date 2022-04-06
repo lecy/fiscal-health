@@ -632,8 +632,8 @@ core2 %>%
 
 ```{r, eval=F}
 core.daysoperating_coh <- select( core, ein, tax_pd, daysoperating_coh )
-saveRDS( core.daysoperating_coh, "03-data-ratios/m-02-current-ratio.rds" )
-write.csv( core.daysoperating_coh, "03-data-ratios/m-02-current-ratio.csv" )
+saveRDS( core.daysoperating_coh, "03-data-ratios/m-03-days-operating-cash.rds" )
+write.csv( core.daysoperating_coh, "03-data-ratios/m-03-days-operating-cash.csv" )
 ```
 
 
