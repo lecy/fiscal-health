@@ -8,6 +8,10 @@ navbar:
       href: metric-01-debt-to-asset-ratio.html
     - text: "M2-CR"
       href: metric-02-current-ratio.html
+    - text: "M3"
+      href: metric-03-days-operating-COH.html
+    - text: "M4"
+      href: metric-04-debt-to-equity-ratio.html
 output:
   html_document:
     theme: cosmo
