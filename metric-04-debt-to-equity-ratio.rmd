@@ -153,17 +153,24 @@ ggplot( core, aes(x = der ) ) +
 
 
 
+Winsorization: 
 
 ```{r}
+x.05 <- quantile( core$der, 0.05, na.rm=T )
+x.95 <- quantile( core$der, 0.95, na.rm=T )
+
 core2 <- core
 
 # proportion of values that are negative
-mean( core2$der < 0, na.rm=T ) 
-core2$der[ core2$der < 0 ] <- 0
+# mean( core2$der < 0, na.rm=T ) 
 
 # proption of values above 1% 
-mean( core2$der > 5, na.rm=T ) 
-core2$der[ core2$der > 5 ] <- 5
+# mean( core2$der > 5, na.rm=T ) 
+
+# WINSORIZATION AT 5th and 95th PERCENTILES
+
+core2$der[ core2$der < x.05 ] <- x.05
+core2$der[ core2$der > x.95 ] <- x.95
 ```
 
 
