@@ -233,7 +233,7 @@ What proportion of orgs have Self Sufficiency Ratios equal to zero (no income)?
 
 
 ```{r}
-prop.zero <- mean( core$selfsufficiency == 0, na.rm=T )
+prop.zero <- mean( core2$selfsufficiency == 0, na.rm=T )
 ```
 
 

@@ -456,6 +456,12 @@ div.tocify {
 <li>
   <a href="metric-02-current-ratio.html">M2-CR</a>
 </li>
+<li>
+  <a href="metric-03-days-operating-COH.html">M3</a>
+</li>
+<li>
+  <a href="metric-04-debt-to-equity-ratio.html">M4</a>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         
@@ -822,8 +828,8 @@ Liabiliies (1k)
 </tr>
 </table>
 <p>What proportion of orgs have Self Sufficiency Ratios equal to zero (no income)?</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1">prop.zero &lt;-<span class="st"> </span><span class="kw">mean</span>( core<span class="op">$</span>selfsufficiency <span class="op">==</span><span class="st"> </span><span class="dv">0</span>, <span class="dt">na.rm=</span>T )</a></code></pre></div>
-<p>In the sample, 17 percent of the organizations have Self Sufficiency ratios equal to zero, meaning they have no earned income. These organizations are dropped from subsequent graphs to keep the visualizations clean. The interpretation of the graphics should be the distributions of Self Sufficiency ratios for organizations that are earning at least $1 of income.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1">prop.zero &lt;-<span class="st"> </span><span class="kw">mean</span>( core2<span class="op">$</span>selfsufficiency <span class="op">==</span><span class="st"> </span><span class="dv">0</span>, <span class="dt">na.rm=</span>T )</a></code></pre></div>
+<p>In the sample, 19 percent of the organizations have Self Sufficiency ratios equal to zero, meaning they have no earned income. These organizations are dropped from subsequent graphs to keep the visualizations clean. The interpretation of the graphics should be the distributions of Self Sufficiency ratios for organizations that are earning at least $1 of income.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="co">###</span></a>
 <a class="sourceLine" id="cb6-2" title="2"><span class="co">### ADD QUANTILES</span></a>
 <a class="sourceLine" id="cb6-3" title="3"><span class="co">###</span></a>
