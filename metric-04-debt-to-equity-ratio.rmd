@@ -126,14 +126,14 @@ Note: This data is available only for organizations that file full 990s. [Organi
 
 
 ```{r, eval=T}
-total_debt <- ( core$accntspayableend)
+total_debt <- ( core$accntspayableend )
 
 # can't divide by zero
 unrs_net_assets <- (core$unrstrctnetasstsend )
 unrs_net_assets[ unrs_net_assets == 0 ] <- NA
 
 
-der <- (total_debt/unrs_net_assets)                     
+core$der <- ( total_debt / unrs_net_assets )                     
 # summary( core$der )
 ```
 
