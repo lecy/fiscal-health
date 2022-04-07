@@ -569,10 +569,8 @@ div.tocify {
 <a class="sourceLine" id="cb3-25" title="25"></a>
 <a class="sourceLine" id="cb3-26" title="26"><span class="co"># WINSORIZATION AT 5th and 95th PERCENTILES</span></a>
 <a class="sourceLine" id="cb3-27" title="27"></a>
-<a class="sourceLine" id="cb3-28" title="28">core2<span class="op">$</span>pred_profitmargin[ core2<span class="op">$</span>pred_profitmargin <span class="op">&lt;</span><span class="st"> </span>x<span class="fl">.01</span> ] &lt;-<span class="st"> </span>x<span class="fl">.01</span></a>
-<a class="sourceLine" id="cb3-29" title="29"><span class="co">## Error in eval(expr, envir, enclos): object &#39;x.01&#39; not found</span></a>
-<a class="sourceLine" id="cb3-30" title="30">core2<span class="op">$</span>pred_profitmargin[ core2<span class="op">$</span>pred_profitmargin <span class="op">&gt;</span><span class="st"> </span>x<span class="fl">.99</span> ] &lt;-<span class="st"> </span>x<span class="fl">.99</span></a>
-<a class="sourceLine" id="cb3-31" title="31"><span class="co">## Error in eval(expr, envir, enclos): object &#39;x.99&#39; not found</span></a></code></pre></div>
+<a class="sourceLine" id="cb3-28" title="28">core2<span class="op">$</span>pred_profitmargin[ core2<span class="op">$</span>pred_profitmargin <span class="op">&lt;</span><span class="st"> </span>x<span class="fl">.05</span> ] &lt;-<span class="st"> </span>x<span class="fl">.05</span></a>
+<a class="sourceLine" id="cb3-29" title="29">core2<span class="op">$</span>pred_profitmargin[ core2<span class="op">$</span>pred_profitmargin <span class="op">&gt;</span><span class="st"> </span>x<span class="fl">.95</span> ] &lt;-<span class="st"> </span>x<span class="fl">.95</span></a></code></pre></div>
 </div>
 <div id="metric-scope" class="section level2">
 <h2>Metric Scope</h2>
@@ -651,7 +649,7 @@ St. Dev.
 Pre-Depreciation Profitability Margin
 </td>
 <td>
--179,195
+-1
 </td>
 <td>
 -0
@@ -660,16 +658,16 @@ Pre-Depreciation Profitability Margin
 0
 </td>
 <td>
--37
+0
 </td>
 <td>
 0
 </td>
 <td>
-67
+1
 </td>
 <td>
-2,366
+0
 </td>
 </tr>
 <tr>

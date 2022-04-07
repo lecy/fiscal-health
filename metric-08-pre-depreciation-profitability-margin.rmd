@@ -182,8 +182,8 @@ core2 <- core
 
 # WINSORIZATION AT 5th and 95th PERCENTILES
 
-core2$pred_profitmargin[ core2$pred_profitmargin < x.01 ] <- x.01
-core2$pred_profitmargin[ core2$pred_profitmargin > x.99 ] <- x.99
+core2$pred_profitmargin[ core2$pred_profitmargin < x.05 ] <- x.05
+core2$pred_profitmargin[ core2$pred_profitmargin > x.95 ] <- x.95
 ```
 
 
