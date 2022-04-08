@@ -1,0 +1,757 @@
+---
+title: "Metric 14-Income Reliance Ratios"
+author: ""
+date: "April 8, 2022"
+font: Lato
+output:
+  html_document:
+    self_contained: TRUE
+    toc: TRUE
+    toc_float: TRUE
+    css: www/web_report.css
+    output_dir: "."
+editor_options:
+    chunk_output_type: console
+---
+
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set( echo = TRUE, 
+                       message=F, 
+                       warning=F, 
+                       error = TRUE,
+                       fig.width = 10, 
+                       fig.height = 6, 
+                       collapse = TRUE )
+```
+
+
+```{r, echo=F}
+
+## Packages
+
+library( haven )        # importing data files 
+library( tidyr )        # data wrangling
+library( dplyr )        # data wrangling 
+library( ggplot2 )      # fancy plots 
+library( ggthemes )     # fancy plots
+library( scales )       # re-scaling numbers
+library( stargazer )    # nice tables 
+library( pander )       # format tables for HTML 
+library( knitr )        # formatting functions 
+library( DT )           # embed datasets in HTML docs
+
+library( urbnthemes )   # setting the color scheme to Urban's
+set_urbn_defaults(style = "print")
+
+source( "r-functions.R" )
+
+variable.label1 <- "Donated Income Dependence Ratio"
+variable.label2 <- "Earned Income Dependence Ratio"
+variable.label3 <- "Investment Income Dependence Ratio"
+variable.label4 <- "Income Reliance Ratio"
+
+# stargazer table print type
+# run chunk for live RMD sessions
+s.type <- "text"
+
+# stargazer table print type
+# resets to html when knitting
+s.type <- "html"
+
+
+## Load Data
+
+# local: 
+# core <- readRDS( "02-data-wrangled/core.rds" )
+
+# from github: 
+URL <- "https://github.com/lecy/fiscal-health/raw/main/02-data-wrangled/core.rds"
+core <- readRDS(gzcon(url( URL )))
+
+
+
+# Preview the data: 
+# table( core$NTMAJ12 ) %>% kable()
+# head(core) %>% pander()
+```
+
+`r knitr::include_graphics(here::here("www", "images", "urban-institute-logo.png"))`
+
+<br>
+<hr>
+
+
+# Metric Construction
+
+
+## Definition & Interpretation
+
+There are three indicators to construct that show the relationship between types of income to overall revenue, and one final indicator that analyzes across all three of those indicators, picking the largest of them for any organization, which ultimately shows what the average degree of dependence on any one source of income is across all organizations. 
+
+### Donation Dependence Ratio
+
+$$Donation\: Dependence \:Ratio = \frac{Donation\: Revenues}{Total \: Revenues} $$
+
+This metric shows how much of an organization's total revenues come from contributions and special event reveues. High levels in this indicator are undesirable since that means that an organization's revenues are volatile insofar as it is dependent on  contributions that are highly likely to contract during economic downturns. Low values in this indicator mean an organization is not dependent on donations.
+
+<br>
+### Earned Income Dependence Ratio
+$$Earned\: Income\: Dependence \:Ratio = \frac{Earned\: Income}{Total \: Revenues} $$
+
+This metric shows how much of an organization's total revenues come from earned income (program service revenues, dues, assessments, profits from sales). High levels in this indicator are more desirable since that means that an organization is fairly self-sustaining with its own activities. Low values in this indicator mean an organization is likely dependent on donations or investments for their revenues and thus more vulnerable to the sentiments of donors or market forces.
+
+<br>
+
+### Investment Income Dependence Ratio
+$$Investment\: Income\: Dependence \:Ratio = \frac{Investment\: Income}{Total \: Revenues} $$
+
+This metric shows how much of an organization's total revenues come from investment income (interest, dividents, gains/losses on sales of securities or other assets). High levels in this metric indicate an organization is more depenent on investment income (and thus vulnerable to market downturns), and low values indicate their income comes more from donations or earned income. 
+
+### Income Reliance Ratio
+
+$$Income \:Reliance \:Ratio = Max({Investment\: Income \:Ratio,\: Donation \: Dependence \: Ratio,\: Earned \: Income \: Ratio) $$
+
+This metric shows on average how much organizations depend on a single source of revenue. 
+
+This metric is limited because it doesn't indicate which source of revenue organizations are dependent on. Given that high values in the donation and investment ratios indicate vulnerability to market downturns while high values in the earned income ratio indicate financial independence, interpretation of this variable must be restricted to simply understanding business models. 
+
+
+## Variables 
+Note: This data is available only for organizations that file full 990s. [Organizations with revenues <$200,000 and total assets <$500,000 have the option to not file a full 990 and file an EZ instead.]
+
+
+### Donation Dependence Ratio 
+
+* **Numerator:** Donation Revenues [total contributions and net special event revenue] 
+  <br>
+  
+  *	On 990:  Part VIII, Line 1h(A) + Part VIII, Line 8c(A)
+    - SOI PC EXTRACTS: (totcntrbgfts+netincfndrsng) 
+    <br>
+  
+  *	On EZ: Not Available
+    - SOI PC EXTRACTS: Not Available
+  <br>
+* **Denominator:** Total Reveues
+  *	On 990: (Part VIII, Line 12A) 
+    -SOI PC EXTRACTS: totrevenue
+    
+  *	On EZ: Part I, Line 9
+    -SOI PC EXTRACTS: totrevnue
+  <br>
+
+
+### Earned Income Dependence Ratio 
+
+* **Numerator:** Earned income (program service revenue, royalties, profits from sale of inventory, and other revenue)
+  <br>
+  
+  *	On 990:  (Part VIII, Line 2g(A)) + (Part VIII, Line 1b(A)) + (Part VIII, Line 5(A)) + (Part VIII, Line 11d(A))
+    - SOI PC EXTRACTS: (totprgmrevnue +royaltsinc+ netincsales+miscrevtot11e) 
+    <br>
+  
+  *	On EZ: Not Available
+    - SOI PC EXTRACTS: Not Available
+  <br>
+* **Denominator:** Total Reveues
+  *	On 990: (Part VIII, Line 12A) 
+    -SOI PC EXTRACTS: totrevenue
+    
+  *	On EZ: Part I, Line 9
+    -SOI PC EXTRACTS: totrevnue
+  <br>
+
+
+### Investment Income Dependence Ratio 
+
+* **Numerator:** Investment income (interest, dividends, net rental income,  and realized gains/losses on sales of securities or other assets)
+  <br>
+  
+  *	On 990:  (Part VIII, Line 3(A)) + (Part VIII, Line 4(A)) + (Part VIII, Line 6(A)) + (Part VIII, Line 7(A))
+    - SOI PC EXTRACTS: (invstmntinc + txexmptbndsproceeds + netrntlinc + netgnls) 
+    <br>
+  
+  *	On EZ: Not Available
+    - SOI PC EXTRACTS: Not Available
+  <br>
+* **Denominator:** Total Reveues
+  *	On 990: (Part VIII, Line 12A) 
+    -SOI PC EXTRACTS: totrevenue
+    
+  *	On EZ: Part I, Line 9
+    -SOI PC EXTRACTS: totrevnue
+  <br>
+
+
+#Donation Reliance Ratio Analysis
+```{r, eval=T}
+
+
+# TEMPORARY VARIABLES 
+donation_revenues  <- (core$totcntrbgfts+core$netincfndrsng)
+totalrevenues <- ( core$totrevenue)
+
+# can't divide by zero
+totalrevenues[ totalrevenues == 0 ] <- NA
+
+# SAVE RESULTS 
+core$donation_ratio <-  donation_revenues / totalrevenues
+                     
+# summary( core$donation_ratio )
+```
+
+
+## Standardize Scales
+
+Check high and low values to see what makes sense. 
+
+```{r, fig.height=4}
+x.05 <- quantile( core$donation_ratio, 0.05, na.rm=T )
+x.95 <- quantile( core$donation_ratio, 0.95, na.rm=T )
+
+ggplot( core, aes(x = donation_ratio ) ) +  
+  geom_density( alpha = 0.5) + 
+  xlim( x.05, x.95 ) 
+```
+
+
+
+
+```{r}
+core2 <- core
+
+# proportion of values that are negative
+#mean( core2$donation_ratio < 0, na.rm=T ) 
+#core2$donation_ratio[ core2$donation_ratio < 0 ] <- 0
+
+# proption of values above 200% 
+#mean( core2$donation_ratio > 50, na.rm=T ) 
+#core2$donation_ratio[ core2$donation_ratio > 50 ] <- 50
+
+
+
+x.05 <- quantile( core$donation_ratio, 0.05, na.rm=T )
+x.95 <- quantile( core$donation_ratio, 0.95, na.rm=T )
+
+core2 <- core
+
+# proportion of values that are negative
+# mean( core2$der < 0, na.rm=T ) 
+
+# proption of values above 1% 
+# mean( core2$der > 5, na.rm=T ) 
+
+# WINSORIZATION AT 5th and 95th PERCENTILES
+
+core2$donation_ratio[ core2$donation_ratio < x.05 ] <- x.05
+core2$donation_ratio[ core2$donation_ratio > x.95 ] <- x.95
+```
+
+
+
+## Metric Scope
+
+
+Tax data is available for full 990 filers, so this metric does not describe any organizations with Gross receipts < $200,000 and
+Total assets < $500,000. Some organizations with receipts or assets below those thresholds may have filed a full 990, but these would be exceptions. 
+
+The data have been capped to those with values between 5% and 95% of the normal distribution to cut off outliers and exempt organizations with zero profitability (though negative values are allowed still). 
+
+
+## Reference
+
+
+Any cited works here...
+
+
+
+
+
+
+
+
+
+# Descriptive Statistics
+
+
+Note: All monetary variables have been converted to thousands of dollars. 
+
+```{r, results="asis"}
+
+core2 %>%
+  mutate( # donation_ratio = donation_ratio * 10000,
+    totrevenue = totrevenue / 1000,
+    totfuncexpns = totfuncexpns / 1000, 
+    lndbldgsequipend = lndbldgsequipend / 1000,
+    totassetsend = totassetsend / 1000,
+    totliabend = totliabend / 1000,
+    totnetassetend = totnetassetend / 1000 ) %>% 
+  select( STATE,  NTEE1, NTMAJ12, 
+          donation_ratio, 
+          AGE, 
+          totrevenue, totfuncexpns, 
+          lndbldgsequipend, totassetsend, 
+          totnetassetend, totliabend ) %>%
+
+  stargazer( type = s.type, 
+             digits=2, 
+             summary.stat = c("min","p25","median",
+                              "mean","p75","max", "sd"),
+             covariate.labels = c("Short Term Debt Ratio", "Age", 
+                                  "Revenue ($1k)", "Expenses($1k)", 
+                                  "Buildings ($1k)", "Total Assets ($1k)",
+                                  "Net Assets ($1k)", "Liabiliies ($1k)"))
+```
+
+
+
+What proportion of orgs have Short Term Debt Ratios equal to zero?
+
+
+```{r}
+prop.zero <- mean( core2$donation_ratio == 0, na.rm=T )
+```
+
+
+In the sample, `r 100*round(prop.zero,2)` percent of the organizations have Short Term Debt Ratios equal to zero, meaning they have no current liabilities. These organizations are dropped from subsequent graphs to keep the visualizations clean. The interpretation of the graphics should be the distributions of Short Term Debt Ratios for organizations that have positive or negative values.  
+
+
+
+
+```{r}
+###
+### ADD QUANTILES
+###
+###   function create_quantiles() defined in r-functions.R
+
+core2$exp.q   <- create_quantiles( var=core2$totfuncexpns,   n.groups=5 )
+core2$rev.q   <- create_quantiles( var=core2$totrevenue,     n.groups=5 )
+core2$asset.q <- create_quantiles( var=core2$totnetassetend, n.groups=5 )
+core2$age.q   <- create_quantiles( var=core2$AGE,            n.groups=5 )
+```
+
+
+
+
+
+
+
+## `r variable.label1` Density 
+
+```{r, fig.height=4}
+min.x <- min( core2$donation_ratio, na.rm=T )
+max.x <- max( core2$donation_ratio, na.rm=T )
+
+ggplot( core2, aes(x = donation_ratio )) +  
+  geom_density( alpha = 0.5 ) + 
+  xlim( min.x, max.x  ) +
+  xlab( variable.label1 ) +
+  theme( axis.title.y=element_blank(),
+         axis.text.y=element_blank(), 
+         axis.ticks.y=element_blank() )
+```
+
+
+
+## `r variable.label1` by NTEE Major Code
+
+
+
+```{r}
+core3 <- core2 %>% filter( ! is.na(NTMAJ12) )
+table( core3$NTMAJ12) %>% sort(decreasing=TRUE) %>% kable()
+```
+
+
+```{r}
+
+t <- table( factor(core3$NTMAJ12) ) 
+df <- data.frame( x=Inf, y=Inf, 
+                  N=paste0( "N=", as.character(t) ), 
+                  NTMAJ12=names(t) )
+
+ggplot( core3, aes( x=donation_ratio ) ) + 
+  geom_density( alpha = 0.5) + 
+  # xlim( -0.1, 1 ) +
+  labs( title="Nonprofit Subsectors" ) + 
+  xlab( variable.label1 ) + 
+  facet_wrap( ~ NTMAJ12, nrow=3 ) + 
+    theme_minimal( base_size = 15 )  + 
+    theme( axis.title.y=element_blank(),
+           axis.text.y=element_blank(), 
+           axis.ticks.y=element_blank(),
+           strip.text = element_text( face="bold") ) +  # size=20 
+  geom_text( data=df, 
+             aes(x, y, label=N ), 
+             hjust=2, vjust=3, 
+             color="gray60", size=6 )
+```
+
+
+
+
+## `r variable.label1` by Region 
+
+```{r}
+table( core2$Region) %>% kable()
+```
+
+
+```{r}
+t <- table( factor(core2$Region) ) 
+df <- data.frame( x=Inf, y=Inf, 
+                  N=paste0( "N=", as.character(t) ), 
+                  Region=names(t) )
+
+core2 %>% 
+  filter( ! is.na(Region) ) %>% 
+  ggplot( aes(donation_ratio) )  + 
+    geom_density( alpha = 0.5 ) + 
+    xlab( "Census Regions" ) + 
+    ylab( variable.label1 ) +
+    facet_wrap( ~ Region, nrow=3 ) + 
+    theme_minimal( base_size = 22 )  + 
+    theme( axis.title.y=element_blank(),
+           axis.text.y=element_blank(), 
+           axis.ticks.y=element_blank() ) + 
+    geom_text( data=df, 
+             aes(x, y, label=N ), 
+             hjust=2, vjust=3, 
+             color="gray60", size=6 )
+```
+
+
+```{r}
+table( core2$Division ) %>% kable()
+```
+
+```{r}
+t <- table( factor(core2$Division) ) 
+df <- data.frame( x=Inf, y=Inf, 
+                  N=paste0( "N=", as.character(t) ), 
+                  Division=names(t) )
+
+core2 %>% 
+  filter( ! is.na(Division) ) %>% 
+  ggplot( aes(donation_ratio) )  + 
+    geom_density( alpha = 0.5 ) + 
+    xlab( "Census Sub-Regions (10)" ) + 
+    ylab( variable.label1 ) +
+    facet_wrap( ~ Division, nrow=3 ) + 
+    theme_minimal( base_size = 22 )  + 
+    theme( axis.title.y=element_blank(),
+           axis.text.y=element_blank(), 
+           axis.ticks.y=element_blank() ) + 
+    geom_text( data=df, 
+             aes(x, y, label=N ), 
+             hjust=2, vjust=3, 
+             color="gray60", size=6 ) 
+```
+
+
+
+
+## `r variable.label1` by Nonprofit Size (Expenses)
+
+
+```{r, fig.height=4}
+ggplot( core2, aes(x = totfuncexpns )) +  
+  geom_density( alpha = 0.5 ) + 
+  xlim( quantile(core2$totfuncexpns, c(0.02,0.98), na.rm=T ) )
+```
+
+
+```{r, fig.height=5}
+core2$totfuncexpns[ core2$totfuncexpns < 1 ] <- 1
+# core2$totfuncexpns[ is.na(core2$totfuncexpns) ] <- 1
+
+if( nrow(core2) > 10000 )
+{
+  core3 <- sample_n( core2, 10000 )
+} else
+{
+  core3 <- core2
+}
+
+jplot( log10(core3$totfuncexpns), core3$donation_ratio, 
+       xlab="Nonprofit Size (logged Expenses)", 
+       ylab=variable.label1,
+       xaxt="n", xlim=c(3,10) )
+axis( side=1, 
+      at=c(3,4,5,6,7,8,9,10), 
+      labels=c("1k","10k","100k","1m","10m","100m","1b","10b") )
+```
+
+
+
+
+```{r}
+core2 %>% 
+  filter( ! is.na(exp.q) ) %>% 
+  ggplot( aes(donation_ratio) )  + 
+    geom_density( alpha = 0.5) + 
+    labs( title="Nonprofit Size (logged expenses)" ) + 
+    xlab( variable.label1 ) +
+    facet_wrap( ~ exp.q, nrow=3 ) + 
+    theme_minimal( base_size = 22 )  + 
+    theme( axis.title.y=element_blank(),
+           axis.text.y=element_blank(), 
+           axis.ticks.y=element_blank() )
+```
+
+
+
+
+## `r variable.label1` by Nonprofit Size (Revenue)
+
+
+```{r, fig.height=4}
+ggplot( core2, aes(x = totrevenue )) +  
+  geom_density( alpha = 0.5 ) + 
+  xlim( quantile(core2$totrevenue, c(0.02,0.98), na.rm=T ) ) + 
+  theme( axis.title.y=element_blank(),
+           axis.text.y=element_blank(), 
+           axis.ticks.y=element_blank() )
+```
+
+
+```{r, fig.height=5}
+core2$totrevenue[ core2$totrevenue < 1 ] <- 1
+
+if( nrow(core2) > 10000 )
+{
+  core3 <- sample_n( core2, 10000 )
+} else
+{
+  core3 <- core2
+}
+
+jplot( log10(core3$totrevenue), core3$donation_ratio, 
+       xlab="Nonprofit Size (logged Revenue)", 
+       ylab=variable.label1,
+       xaxt="n", xlim=c(3,10) )
+axis( side=1, 
+      at=c(3,4,5,6,7,8,9,10), 
+      labels=c("1k","10k","100k","1m","10m","100m","1b","10b") )
+```
+
+
+
+
+```{r}
+core2 %>% 
+  filter( ! is.na(rev.q) ) %>% 
+  ggplot( aes(donation_ratio) )  + 
+    geom_density( alpha = 0.5 ) + 
+    labs( title="Nonprofit Size (logged revenues)" ) + 
+    xlab( variable.label1 ) +
+    facet_wrap( ~ rev.q, nrow=3 ) + 
+    theme_minimal( base_size = 22 )  + 
+    theme( axis.title.y=element_blank(),
+           axis.text.y=element_blank(), 
+           axis.ticks.y=element_blank() )
+```
+
+
+
+## `r variable.label1` by Nonprofit Size (Net Assets)
+
+```{r, fig.height=4}
+ggplot( core2, aes(x = totnetassetend )) +  
+  geom_density( alpha = 0.5) + 
+  xlim( quantile(core2$totnetassetend, c(0.02,0.98), na.rm=T ) ) + 
+  xlab( "Net Assets" ) +
+    theme( axis.title.y=element_blank(),
+           axis.text.y=element_blank(), 
+           axis.ticks.y=element_blank() )
+```
+
+```{r, fig.height=5}
+core2$totnetassetend[ core2$totnetassetend < 1 ] <- NA
+
+if( nrow(core2) > 10000 )
+{
+  core3 <- sample_n( core2, 10000 )
+} else
+{
+  core3 <- core2
+}
+
+jplot( log10(core3$totnetassetend), core3$donation_ratio, 
+       xlab="Nonprofit Size (logged Net Assets)", 
+       ylab=variable.label1,
+       xaxt="n", xlim=c(3,10) )
+axis( side=1, 
+      at=c(3,4,5,6,7,8,9,10), 
+      labels=c("1k","10k","100k","1m","10m","100m","1b","10b") )
+```
+
+
+
+
+```{r}
+core2$totnetassetend[ core2$totnetassetend < 1 ] <- NA
+core2$asset.q <- create_quantiles( var=core2$totnetassetend, n.groups=5 )
+
+core2 %>% 
+  filter( ! is.na(asset.q) ) %>% 
+  ggplot( aes(donation_ratio) )  + 
+    geom_density( alpha = 0.5 ) + 
+    labs( title="Nonprofit Size (logged net assets, if assets > 0)" ) + 
+    xlab( variable.label1 ) + 
+    ylab( "" ) + 
+    facet_wrap( ~ asset.q, nrow=3 ) + 
+    theme_minimal( base_size = 22 )  + 
+    theme( axis.title.y=element_blank(),
+           axis.text.y=element_blank(), 
+           axis.ticks.y=element_blank() )
+```
+
+
+
+
+Total Assets for Comparison 
+
+```{r, fig.height=5}
+core2$totassetsend[ core2$totassetsend < 1 ] <- NA
+core2$tot.asset.q <- create_quantiles( var=core2$totassetsend, n.groups=5 )
+
+if( nrow(core2) > 10000 )
+{
+  core3 <- sample_n( core2, 10000 )
+} else
+{
+  core3 <- core2
+}
+
+jplot( log10(core3$totassetsend), core3$donation_ratio, 
+       xlab="Nonprofit Size (logged Total Assets)", 
+       ylab=variable.label1,
+       xaxt="n", xlim=c(3,10) )
+axis( side=1, 
+      at=c(3,4,5,6,7,8,9,10), 
+      labels=c("1k","10k","100k","1m","10m","100m","1b","10b") )
+
+```
+
+
+```{r, fig.height=4}
+ggplot( core2, aes(x = totassetsend )) +  
+  geom_density( alpha = 0.5) + 
+  xlim( quantile(core2$totassetsend, c(0.02,0.98), na.rm=T ) ) + 
+  xlab( "Net Assets" ) +
+    theme( axis.title.y=element_blank(),
+           axis.text.y=element_blank(), 
+           axis.ticks.y=element_blank() )
+
+```
+
+
+```{r}
+core2 %>% 
+  filter( ! is.na(tot.asset.q) ) %>% 
+  ggplot( aes(donation_ratio) )  + 
+    geom_density( alpha = 0.5 ) + 
+    xlab( "Nonprofit Size (logged total assets, if assets > 0)" ) + 
+    ylab( variable.label1 ) +
+    facet_wrap( ~ tot.asset.q, nrow=3 ) + 
+    theme_minimal( base_size = 22 )  + 
+    theme( axis.title.y=element_blank(),
+           axis.text.y=element_blank(), 
+           axis.ticks.y=element_blank() )
+```
+
+
+## `r variable.label1` by Nonprofit Age
+
+```{r, fig.height=4}
+ggplot( core2, aes(x = AGE )) +  
+  geom_density( alpha = 0.5 )  
+```
+
+
+```{r, fig.height=5}
+core2$AGE[ core2$AGE < 1 ] <- NA
+
+if( nrow(core2) > 10000 )
+{
+  core3 <- sample_n( core2, 10000 )
+} else
+{
+  core3 <- core2
+}
+
+jplot( core3$AGE, core3$donation_ratio, 
+       xlab="Nonprofit Age", 
+       ylab=variable.label1 ) 
+
+```
+
+
+
+
+```{r}
+core2 %>% 
+  filter( ! is.na(age.q) ) %>% 
+  ggplot( aes(donation_ratio) )  + 
+    geom_density( alpha = 0.5 ) + 
+    labs( title="Nonprofit Age" ) + 
+    xlab( variable.label1 ) +
+    ylab( "" ) +
+    facet_wrap( ~ age.q, nrow=3 ) + 
+    theme_minimal( base_size = 22 )  + 
+    theme( axis.title.y=element_blank(),
+           axis.text.y=element_blank(), 
+           axis.ticks.y=element_blank() )
+```
+
+
+
+
+# Save Metrics 
+
+```{r, eval=F}
+core.donation_ratio <- select( core, ein, tax_pd, donation_ratio )
+saveRDS( core.donation_ratio, "03-data-ratios/m-13-short-term-debt-ratio.rds" )
+write.csv( core.donation_ratio, "03-data-ratios/m-13-short-term-debt-ratio.csv" )
+```
+
+
+```{r, fig.height=10, eval=F, echo=F}
+# library( DT )
+
+these.buttons <- c( 'csv' )
+
+datatable( core2,
+           filter='bottom', rownames=FALSE, 
+           #options=list( pageLength=5, autoWidth=TRUE ),
+           fillContainer=TRUE, 
+           style="bootstrap",
+           class='table-condensed table-striped',
+           extensions = 'Buttons', 
+           options=list( dom='Bfrtip', 
+                         buttons=these.buttons  )) %>%
+  
+formatStyle( "NTMAJ12", "white-space"="nowrap" )
+```
+
+
+
+
+
+<br>
+<br>
+<hr>
+<br>
+<br>
+
+
+
+
+```{css, echo=F}
+
+div#TOC{ margin-top: 42px; }
+```
+
