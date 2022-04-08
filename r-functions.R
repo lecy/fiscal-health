@@ -50,9 +50,8 @@ panel.smooth <- function (x, y, col = par("col"), bg = NA, pch = par("pch"),
 }
 
 
-# pairs( iris[ , 1:4 ], lower.panel=panel.smooth, upper.panel=panel.cor )
-
-
+# d2 <- select( dat, x, y, z )
+# pairs( d2, lower.panel=panel.smooth, upper.panel=panel.cor )
 
 
 
