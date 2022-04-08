@@ -93,7 +93,6 @@ $$Quick\:Ratio = \frac{Cash + Short \text-term \: Investments + Current\: Receiv
 
 This metric indicates how well an organization can cover its liabilities with its readily available cash. When an organization has a quick ratio of 1, its quick assets are equal to its current liabilities. This also indicates that the organization can pay off its current debts without selling its long-term assets. If an organization has a quick ratio higher than 1, this means that it owns more quick assets than current liabilities.
 
-A recommended value is 1.5 
 
 ## Variables 
 
