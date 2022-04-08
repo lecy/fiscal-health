@@ -131,7 +131,9 @@ core.2019.pc <-
           totnetassetend,
           totprgmrevnue,
           totrevenue,
-          unrstrctnetasstsend )  
+          unrstrctnetasstsend,
+          totcntrbgfts,
+          netincfndrsng )  
 
 
 
@@ -181,7 +183,8 @@ core.2019.ez <- read.csv( "01-data-raw/irs-990-ez-soi-extract-2019.csv" )
 
 core.2019.ez <- dplyr::select( core.2019.ez, EIN, tax_pd, 
                                totrevnue, totexpns, networthend,
-                               totassetsend, totliabend, prgmservrev  ) 
+                               totassetsend, totliabend, prgmservrev,
+                               totcntrbs, netincfndrsng ) 
 
 core.2019.ez <- dplyr::rename( core.2019.ez,
                         ein = EIN,
@@ -190,7 +193,8 @@ core.2019.ez <- dplyr::rename( core.2019.ez,
                         totfuncexpns = totexpns,
                         totnetassetend = networthend,
                         totassetsend = totassetsend,
-                        totliabend = totliabend  )
+                        totliabend = totliabend,
+                        totcntrbgfts = totcntrbs )
 
 
 
@@ -278,6 +282,7 @@ core <- dplyr::filter( core, ein %in% orgs$ein )
 table( core$NTMAJ12 )
 
 core <- filter( core, NTEE1 %in% c("L","P","S") )
+core$NTMAJ12 <- factor( core$NTMAJ12 )
 ```
 
 
