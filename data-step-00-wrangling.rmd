@@ -51,10 +51,10 @@ source( "r-functions.R" )
 ### BUSINESS MASTER FILES 
 ###
 
-# bmf <- read.csv( "01-data-raw/nccs-bmf-2019.csv" )
+bmf <- read.csv( "01-data-raw/nccs-bmf-2019.csv" )
 
-bmf.2019 <- "https://www.dropbox.com/s/bi9ii23bo8l521h/nccs-bmf-2019.csv?dl=1"
-bmf <- read.csv( bmf.2019 )
+# bmf.2019 <- "https://www.dropbox.com/s/bi9ii23bo8l521h/nccs-bmf-2019.csv?dl=1"
+# bmf <- read.csv( bmf.2019 )
 
 bmf <- dplyr::select( bmf, EIN, NAME, ADDRESS, CITY, STATE, FIPS,  
                RULEDATE, NTEEFINAL, NTEECC,
@@ -80,10 +80,10 @@ bmf$AGE <- 2022 - bmf$RULEDATE
 ### ADD CENSUS REGIONS
 ### 
 
-# census <- read.csv( "01-data-raw/us-census-bureau-regions-and-divisions.csv" )
+census <- read.csv( "01-data-raw/us-census-bureau-regions-and-divisions.csv" )
 
-url.census <- "https://raw.githubusercontent.com/lecy/fiscal-health/main/01-data-raw/us-census-bureau-regions-and-divisions.csv"
-census <- read.csv( url.census )
+# url.census <- "https://raw.githubusercontent.com/lecy/fiscal-health/main/01-data-raw/us-census-bureau-regions-and-divisions.csv"
+# census <- read.csv( url.census )
 
 bmf <- merge( bmf, census, by.x="STATE", by.y="State.Code", all.x=TRUE )
 
@@ -106,10 +106,10 @@ bmf <- merge( bmf, census, by.x="STATE", by.y="State.Code", all.x=TRUE )
 # totassetsend - total assets end of year
 # totliabend - total liabilities end of year
 
-# core.2019.pc <- read.csv( "01-data-raw/irs-990-pc-soi-extract-2019.csv" )
+core.2019.pc <- read.csv( "01-data-raw/irs-990-pc-soi-extract-2019.csv" )
 
-url.soi.pc <- "https://www.dropbox.com/s/88y9sup4d3mwoo5/irs-990-pc-soi-extract-2019.csv?dl=1"
-core.2019.pc <- read.csv( url.soi.pc )
+# url.soi.pc <- "https://www.dropbox.com/s/88y9sup4d3mwoo5/irs-990-pc-soi-extract-2019.csv?dl=1"
+# core.2019.pc <- read.csv( url.soi.pc )
 
 core.2019.pc <- 
   core.2019.pc %>% 
@@ -174,10 +174,10 @@ core.2019.pc <-
 # totassetsend - total assets end of year
 # totliabend - total liabilities end of year
 
-# core.2019.ez <- read.csv( "01-data-raw/irs-990-ez-soi-extract-2019.csv" )
+core.2019.ez <- read.csv( "01-data-raw/irs-990-ez-soi-extract-2019.csv" )
 
-url.soi.ez <- "https://www.dropbox.com/s/2amoe8woboyxpza/irs-990-ez-soi-extract-2019.csv?dl=1"
-core.2019.ez <- read.csv( url.soi.ez )
+# url.soi.ez <- "https://www.dropbox.com/s/2amoe8woboyxpza/irs-990-ez-soi-extract-2019.csv?dl=1"
+# core.2019.ez <- read.csv( url.soi.ez )
 
 core.2019.ez <- dplyr::select( core.2019.ez, EIN, tax_pd, 
                                totrevnue, totexpns, networthend,
@@ -253,8 +253,10 @@ core$NTMAJ12 <- factor( core$NTMAJ12 )
 ### STUDY SAMPLE
 ### 
 
-url.orgs <- "https://www.dropbox.com/s/fqk05x2ox3girq7/org-sample.csv?dl=1"
-orgs <- read.csv( url.orgs )
+orgs <- read.csv( "01-data-raw/org-sample.csv" )
+
+# url.orgs <- "https://www.dropbox.com/s/fqk05x2ox3girq7/org-sample.csv?dl=1"
+# orgs <- read.csv( url.orgs )
 
 orgs <- dplyr::select( orgs, orgname, ein )
 
