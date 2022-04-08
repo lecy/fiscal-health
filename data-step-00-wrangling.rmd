@@ -184,7 +184,10 @@ core.2019.ez <- read.csv( "01-data-raw/irs-990-ez-soi-extract-2019.csv" )
 core.2019.ez <- dplyr::select( core.2019.ez, EIN, tax_pd, 
                                totrevnue, totexpns, networthend,
                                totassetsend, totliabend, prgmservrev,
-                               totcntrbs, netincfndrsng ) 
+                               totcntrbs, netincfndrsng, invstmntinc, 
+                               txexmptbndsproceeds, netrntlinc, netgnls, 
+                               totprgmrevnue, royaltsinc, netincsales, 
+                               miscrevtot11e) 
 
 core.2019.ez <- dplyr::rename( core.2019.ez,
                         ein = EIN,
