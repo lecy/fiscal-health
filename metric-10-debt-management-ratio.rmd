@@ -91,7 +91,10 @@ core <- readRDS(gzcon(url( URL )))
 
 $$Debt\: Management \: Ratio = \frac{Total \: Liabilities}{Unrestricted \: Net \: Assets} $$
 
-NEED A DEFINITION HERE
+This metric measures how much an organization is relying on funding from lending entities and the amount of free, unrestricted cash it has to pay back those loans.
+
+A high value in this metric could mean an organization is highly leveraged and thus that it has reduced ability to borrow more money in the future. Conversely, a low value indicates the organization may not be leveraging its assets to achieve the most growth and impact it could or that there is a dearth of credit available from lending entities. 
+
 
 ## Variables 
 
