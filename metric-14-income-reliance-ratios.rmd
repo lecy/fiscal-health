@@ -366,17 +366,17 @@ table( core3$NTMAJ12) %>% sort(decreasing=TRUE) %>% kable()
 
 ```{r}
 
-t <- table( factor(core3$NTMAJ12) ) 
+t <- table( factor(core3$NTEE1) ) 
 df <- data.frame( x=Inf, y=Inf, 
                   N=paste0( "N=", as.character(t) ), 
-                  NTMAJ12=names(t) )
+                  NTEE1=names(t) )
 
 ggplot( core3, aes( x=donation_ratio ) ) + 
   geom_density( alpha = 0.5) + 
   # xlim( -0.1, 1 ) +
   labs( title="Nonprofit Subsectors" ) + 
   xlab( variable.label1 ) + 
-  facet_wrap( ~ NTMAJ12, nrow=1 ) + 
+  facet_wrap( ~ NTEE1, nrow=1 ) + 
     theme_minimal( base_size = 15 )  + 
     theme( axis.title.y=element_blank(),
            axis.text.y=element_blank(), 

@@ -282,6 +282,11 @@ core <- dplyr::filter( core, ein %in% orgs$ein )
 table( core$NTMAJ12 )
 
 core <- filter( core, NTEE1 %in% c("L","P","S") )
+
+core$NTEE1[ core$NTEE1 == "L" ] <- "Housing"
+core$NTEE1[ core$NTEE1 == "P" ] <- "Human Services"
+core$NTEE1[ core$NTEE1 == "S" ] <- "Community Development"
+
 core$NTMAJ12 <- factor( core$NTMAJ12 )
 ```
 
@@ -307,6 +312,13 @@ names(core)
 saveRDS( core, "02-data-wrangled/core.rds" )
 ```
 
+
+
+```{r, eval=F, echo=F}
+# to save a backup copy
+core.temp <- readRDS( "02-data-wrangled/core.rds" )
+saveRDS( core.temp, "02-data-wrangled/core-backup.rds" )
+```
 
 
 
