@@ -878,7 +878,7 @@ Liabiliies (1k)
 </table>
 <p>What proportion of orgs have Short Term Debt Ratios equal to zero?</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1">prop.zero &lt;-<span class="st"> </span><span class="kw">mean</span>( core2<span class="op">$</span>st_debt_ratio <span class="op">==</span><span class="st"> </span><span class="dv">0</span>, <span class="dt">na.rm=</span>T )</a></code></pre></div>
-<p>In the sample, 11 percent of the organizations have Short Term Debt Ratios equal to zero, meaning they have no quick cash available. These organizations are dropped from subsequent graphs to keep the visualizations clean. The interpretation of the graphics should be the distributions of Short Term Debt Ratios for organizations that have positive or negative values.</p>
+<p>In the sample, 11 percent of the organizations have Short Term Debt Ratios equal to zero, meaning they have no current liabilities. These organizations are dropped from subsequent graphs to keep the visualizations clean. The interpretation of the graphics should be the distributions of Short Term Debt Ratios for organizations that have positive or negative values.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="co">###</span></a>
 <a class="sourceLine" id="cb6-2" title="2"><span class="co">### ADD QUANTILES</span></a>
 <a class="sourceLine" id="cb6-3" title="3"><span class="co">###</span></a>
@@ -1306,8 +1306,8 @@ Liabiliies (1k)
 <div id="save-metrics" class="section level1">
 <h1>Save Metrics</h1>
 <div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" title="1">core.st_debt_ratio &lt;-<span class="st"> </span><span class="kw">select</span>( core, ein, tax_pd, st_debt_ratio )</a>
-<a class="sourceLine" id="cb29-2" title="2"><span class="kw">saveRDS</span>( core.st_debt_ratio, <span class="st">&quot;03-data-ratios/m-12-quick-ratio.rds&quot;</span> )</a>
-<a class="sourceLine" id="cb29-3" title="3"><span class="kw">write.csv</span>( core.st_debt_ratio, <span class="st">&quot;03-data-ratios/m-12-quick-ratio.csv&quot;</span> )</a></code></pre></div>
+<a class="sourceLine" id="cb29-2" title="2"><span class="kw">saveRDS</span>( core.st_debt_ratio, <span class="st">&quot;03-data-ratios/m-13-short-term-debt-ratio.rds&quot;</span> )</a>
+<a class="sourceLine" id="cb29-3" title="3"><span class="kw">write.csv</span>( core.st_debt_ratio, <span class="st">&quot;03-data-ratios/m-13-short-term-debt-ratio.csv&quot;</span> )</a></code></pre></div>
 <br> <br>
 <hr>
 <p><br> <br></p>
