@@ -276,6 +276,8 @@ Use only sample orgs:
 core <- dplyr::filter( core, ein %in% orgs$ein )
 
 table( core$NTMAJ12 )
+
+core <- filter( core, NTEE1 %in% c("L","P","S") )
 ```
 
 
