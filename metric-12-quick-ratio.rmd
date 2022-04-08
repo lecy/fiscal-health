@@ -221,7 +221,7 @@ core2 %>%
     lndbldgsequipend = lndbldgsequipend / 1000,
     totassetsend = totassetsend / 1000,
     totliabend = totliabend / 1000,
-    totnetassetend = totnetassetend / 1000 ) %>% 
+    totnetassetend = totnetassetend / 1000) %>% 
   select( STATE,  NTEE1, NTMAJ12, 
           quick_ratio, 
           AGE, 
@@ -264,6 +264,7 @@ core2$exp.q   <- create_quantiles( var=core2$totfuncexpns,   n.groups=5 )
 core2$rev.q   <- create_quantiles( var=core2$totrevenue,     n.groups=5 )
 core2$asset.q <- create_quantiles( var=core2$totnetassetend, n.groups=5 )
 core2$age.q   <- create_quantiles( var=core2$AGE,            n.groups=5 )
+core2$land.q <- create_quantiles (var=core2$lndbldgsequipend,n.groups=5 )
 ```
 
 
@@ -642,8 +643,49 @@ core2 %>%
 ```
 
 
+## `r variable.label` by Land and Building Value
+
+```{r, fig.height=4}
+ggplot( core2, aes(x = lndbldgsequipend )) +  
+  geom_density( alpha = 0.5 )  
+```
 
 
+```{r, fig.height=5}
+core2$lndbldgsequipend[ core2$lndbldgsequipend < 1 ] <- NA
+
+if( nrow(core2) > 10000 )
+{
+  core3 <- sample_n( core2, 10000 )
+} else
+{
+  core3 <- core2
+}
+
+jplot( core3$lndbldgsequipend, core3$quick_ratio, 
+       xlab="Land and Building Value", 
+       ylab=variable.label ) 
+
+```
+
+
+
+
+```{r}
+core2 %>% 
+  filter( ! is.na(land.q) ) %>% 
+  ggplot( aes(quick_ratio) )  + 
+    geom_density( alpha = 0.5 ) + 
+    labs( title="Land and Building Value" ) + 
+    xlab( variable.label ) +
+    ylab( "" ) +
+    facet_wrap( ~ age.q, nrow=3 ) + 
+    theme_minimal( base_size = 22 )  + 
+    theme( axis.title.y=element_blank(),
+           axis.text.y=element_blank(), 
+           axis.ticks.y=element_blank() )
+
+```
 # Save Metrics 
 
 ```{r, eval=F}
