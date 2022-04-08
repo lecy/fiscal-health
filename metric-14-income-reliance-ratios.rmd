@@ -253,22 +253,10 @@ core2$donation_ratio[ core2$donation_ratio > x.95 ] <- x.95
 ## Metric Scope
 
 
-Tax data is available for full 990 filers, so this metric does not describe any organizations with Gross receipts < $200,000 and
+Tax data is available for full 990 filers only, so this metric does not describe any organizations with Gross receipts < $200,000 and
 Total assets < $500,000. Some organizations with receipts or assets below those thresholds may have filed a full 990, but these would be exceptions. 
 
 The data have been capped to those with values between 5% and 95% of the normal distribution to cut off outliers and exempt organizations with zero profitability (though negative values are allowed still). 
-
-
-## Reference
-
-
-Any cited works here...
-
-
-
-
-
-
 
 
 
@@ -298,7 +286,7 @@ core2 %>%
              digits=2, 
              summary.stat = c("min","p25","median",
                               "mean","p75","max", "sd"),
-             covariate.labels = c("Short Term Debt Ratio", "Age", 
+             covariate.labels = c("Donation Reliance Ratio", "Age", 
                                   "Revenue ($1k)", "Expenses($1k)", 
                                   "Buildings ($1k)", "Total Assets ($1k)",
                                   "Net Assets ($1k)", "Liabiliies ($1k)"))
@@ -306,7 +294,7 @@ core2 %>%
 
 
 
-What proportion of orgs have Short Term Debt Ratios equal to zero?
+What proportion of orgs have Donation Reliance Ratios equal to zero?
 
 
 ```{r}
@@ -314,7 +302,7 @@ prop.zero <- mean( core2$donation_ratio == 0, na.rm=T )
 ```
 
 
-In the sample, `r 100*round(prop.zero,2)` percent of the organizations have Short Term Debt Ratios equal to zero, meaning they have no current liabilities. These organizations are dropped from subsequent graphs to keep the visualizations clean. The interpretation of the graphics should be the distributions of Short Term Debt Ratios for organizations that have positive or negative values.  
+In the sample, `r 100*round(prop.zero,2)` percent of the organizations have Donation Reliance Ratios equal to zero, meaning they have no donation revenues. These organizations are dropped from subsequent graphs to keep the visualizations clean. The interpretation of the graphics should be the distributions of Donation Reliance Ratios for organizations that have positive or negative values.  
 
 
 
@@ -337,7 +325,7 @@ core2$age.q   <- create_quantiles( var=core2$AGE,            n.groups=5 )
 
 
 
-## `r variable.label1` Density 
+## `r variable.label3` Density 
 
 ```{r, fig.height=4}
 min.x <- min( core2$donation_ratio, na.rm=T )
@@ -707,6 +695,1024 @@ core2 %>%
 ```
 
 
+#Earned Income Reliance Ratio Analysis
+
+```{r, eval=T}
+# TEMPORARY VARIABLES 
+earned_income  <- core$totprgmrevnue +core$royaltsinc+ core$netincsales+core$miscrevtot11e 
+totalrevenues <- ( core$totrevenue )
+
+# can't divide by zero
+totalrevenues[ totalrevenues == 0 ] <- NA
+
+# SAVE RESULTS 
+core$earned_income_ratio <-  earned_income / totalrevenues
+                     
+# summary( core$earned_income_ratio )
+```
+
+
+## Standardize Scales
+
+Check high and low values to see what makes sense. 
+
+```{r, fig.height=4}
+x.05 <- quantile( core$earned_income_ratio, 0.05, na.rm=T )
+x.95 <- quantile( core$earned_income_ratio, 0.95, na.rm=T )
+
+ggplot( core, aes(x = earned_income_ratio ) ) +  
+  geom_density( alpha = 0.5) + 
+  xlim( x.05, x.95 ) 
+```
+
+
+
+
+```{r}
+core2 <- core
+
+# proportion of values that are negative
+#mean( core2$earned_income_ratio < 0, na.rm=T ) 
+#core2$earned_income_ratio[ core2$earned_income_ratio < 0 ] <- 0
+
+# proption of values above 200% 
+#mean( core2$earned_income_ratio > 50, na.rm=T ) 
+#core2$earned_income_ratio[ core2$earned_income_ratio > 50 ] <- 50
+
+
+
+x.05 <- quantile( core$earned_income_ratio, 0.05, na.rm=T )
+x.95 <- quantile( core$earned_income_ratio, 0.95, na.rm=T )
+
+core2 <- core
+
+# proportion of values that are negative
+# mean( core2$der < 0, na.rm=T ) 
+
+# proption of values above 1% 
+# mean( core2$der > 5, na.rm=T ) 
+
+# WINSORIZATION AT 5th and 95th PERCENTILES
+
+core2$earned_income_ratio[ core2$earned_income_ratio < x.05 ] <- x.05
+core2$earned_income_ratio[ core2$earned_income_ratio > x.95 ] <- x.95
+```
+
+
+
+## Metric Scope
+
+
+Tax data is available for full 990 filers only, so this metric does not describe any organizations with Gross receipts < $200,000 and
+Total assets < $500,000. Some organizations with receipts or assets below those thresholds may have filed a full 990, but these would be exceptions. 
+
+The data have been capped to those with values between 5% and 95% of the normal distribution to cut off outliers and exempt organizations with zero profitability (though negative values are allowed still). 
+
+
+
+
+# Descriptive Statistics
+
+
+Note: All monetary variables have been converted to thousands of dollars. 
+
+```{r, results="asis"}
+
+core2 %>%
+  mutate( # earned_income_ratio = earned_income_ratio * 10000,
+    totrevenue = totrevenue / 1000,
+    totfuncexpns = totfuncexpns / 1000, 
+    lndbldgsequipend = lndbldgsequipend / 1000,
+    totassetsend = totassetsend / 1000,
+    totliabend = totliabend / 1000,
+    totnetassetend = totnetassetend / 1000 ) %>% 
+  select( STATE,  NTEE1, NTMAJ12, 
+          earned_income_ratio, 
+          AGE, 
+          totrevenue, totfuncexpns, 
+          lndbldgsequipend, totassetsend, 
+          totnetassetend, totliabend ) %>%
+
+  stargazer( type = s.type, 
+             digits=2, 
+             summary.stat = c("min","p25","median",
+                              "mean","p75","max", "sd"),
+             covariate.labels = c("Earned Income Reliance Ratio", "Age", 
+                                  "Revenue ($1k)", "Expenses($1k)", 
+                                  "Buildings ($1k)", "Total Assets ($1k)",
+                                  "Net Assets ($1k)", "Liabiliies ($1k)"))
+```
+
+
+
+What proportion of orgs have Earned Income Reliance Ratios equal to zero?
+
+
+```{r}
+prop.zero <- mean( core2$earned_income_ratio == 0, na.rm=T )
+```
+
+
+In the sample, `r 100*round(prop.zero,2)` percent of the organizations have Earned Income Reliance Ratios equal to zero, meaning they have no earned income. These organizations are dropped from subsequent graphs to keep the visualizations clean. The interpretation of the graphics should be the distributions of Earned Income Reliance Ratios for organizations that have positive or negative values.  
+
+
+
+
+```{r}
+###
+### ADD QUANTILES
+###
+###   function create_quantiles() defined in r-functions.R
+
+core2$exp.q   <- create_quantiles( var=core2$totfuncexpns,   n.groups=5 )
+core2$rev.q   <- create_quantiles( var=core2$totrevenue,     n.groups=5 )
+core2$asset.q <- create_quantiles( var=core2$totnetassetend, n.groups=5 )
+core2$age.q   <- create_quantiles( var=core2$AGE,            n.groups=5 )
+```
+
+
+
+
+
+
+
+## `r variable.label2` Density 
+
+```{r, fig.height=4}
+min.x <- min( core2$earned_income_ratio, na.rm=T )
+max.x <- max( core2$earned_income_ratio, na.rm=T )
+
+ggplot( core2, aes(x = earned_income_ratio )) +  
+  geom_density( alpha = 0.5 ) + 
+  xlim( min.x, max.x  ) +
+  xlab( variable.label2 ) +
+  theme( axis.title.y=element_blank(),
+         axis.text.y=element_blank(), 
+         axis.ticks.y=element_blank() )
+```
+
+
+
+## `r variable.label2` by NTEE Major Code
+
+
+
+```{r}
+core3 <- core2 %>% filter( ! is.na(NTMAJ12) )
+table( core3$NTMAJ12) %>% sort(decreasing=TRUE) %>% kable()
+```
+
+
+```{r}
+
+t <- table( factor(core3$NTEE1) ) 
+df <- data.frame( x=Inf, y=Inf, 
+                  N=paste0( "N=", as.character(t) ), 
+                  NTEE1=names(t) )
+
+ggplot( core3, aes( x=earned_income_ratio ) ) + 
+  geom_density( alpha = 0.5) + 
+  # xlim( -0.1, 1 ) +
+  labs( title="Nonprofit Subsectors" ) + 
+  xlab( variable.label2 ) + 
+  facet_wrap( ~ NTEE1, nrow=1 ) + 
+    theme_minimal( base_size = 15 )  + 
+    theme( axis.title.y=element_blank(),
+           axis.text.y=element_blank(), 
+           axis.ticks.y=element_blank(),
+           strip.text = element_text( face="bold") ) +  # size=20 
+  geom_text( data=df, 
+             aes(x, y, label=N ), 
+             hjust=2, vjust=3, 
+             color="gray60", size=6 )
+```
+
+
+
+
+## `r variable.label2` by Region 
+
+```{r}
+table( core2$Region) %>% kable()
+```
+
+
+```{r}
+t <- table( factor(core2$Region) ) 
+df <- data.frame( x=Inf, y=Inf, 
+                  N=paste0( "N=", as.character(t) ), 
+                  Region=names(t) )
+
+core2 %>% 
+  filter( ! is.na(Region) ) %>% 
+  ggplot( aes(earned_income_ratio) )  + 
+    geom_density( alpha = 0.5 ) + 
+    xlab( "Census Regions" ) + 
+    ylab( variable.label2 ) +
+    facet_wrap( ~ Region, nrow=3 ) + 
+    theme_minimal( base_size = 22 )  + 
+    theme( axis.title.y=element_blank(),
+           axis.text.y=element_blank(), 
+           axis.ticks.y=element_blank() ) + 
+    geom_text( data=df, 
+             aes(x, y, label=N ), 
+             hjust=2, vjust=3, 
+             color="gray60", size=6 )
+```
+
+
+```{r}
+table( core2$Division ) %>% kable()
+```
+
+```{r}
+t <- table( factor(core2$Division) ) 
+df <- data.frame( x=Inf, y=Inf, 
+                  N=paste0( "N=", as.character(t) ), 
+                  Division=names(t) )
+
+core2 %>% 
+  filter( ! is.na(Division) ) %>% 
+  ggplot( aes(earned_income_ratio) )  + 
+    geom_density( alpha = 0.5 ) + 
+    xlab( "Census Sub-Regions (10)" ) + 
+    ylab( variable.label2 ) +
+    facet_wrap( ~ Division, nrow=3 ) + 
+    theme_minimal( base_size = 22 )  + 
+    theme( axis.title.y=element_blank(),
+           axis.text.y=element_blank(), 
+           axis.ticks.y=element_blank() ) + 
+    geom_text( data=df, 
+             aes(x, y, label=N ), 
+             hjust=2, vjust=3, 
+             color="gray60", size=6 ) 
+```
+
+
+
+
+## `r variable.label2` by Nonprofit Size (Expenses)
+
+
+```{r, fig.height=4}
+ggplot( core2, aes(x = totfuncexpns )) +  
+  geom_density( alpha = 0.5 ) + 
+  xlim( quantile(core2$totfuncexpns, c(0.02,0.98), na.rm=T ) )
+```
+
+
+```{r, fig.height=5}
+core2$totfuncexpns[ core2$totfuncexpns < 1 ] <- 1
+# core2$totfuncexpns[ is.na(core2$totfuncexpns) ] <- 1
+
+if( nrow(core2) > 10000 )
+{
+  core3 <- sample_n( core2, 10000 )
+} else
+{
+  core3 <- core2
+}
+
+jplot( log10(core3$totfuncexpns), core3$earned_income_ratio, 
+       xlab="Nonprofit Size (logged Expenses)", 
+       ylab=variable.label2,
+       xaxt="n", xlim=c(3,10) )
+axis( side=1, 
+      at=c(3,4,5,6,7,8,9,10), 
+      labels=c("1k","10k","100k","1m","10m","100m","1b","10b") )
+```
+
+
+
+
+```{r}
+core2 %>% 
+  filter( ! is.na(exp.q) ) %>% 
+  ggplot( aes(earned_income_ratio) )  + 
+    geom_density( alpha = 0.5) + 
+    labs( title="Nonprofit Size (logged expenses)" ) + 
+    xlab( variable.label2 ) +
+    facet_wrap( ~ exp.q, nrow=3 ) + 
+    theme_minimal( base_size = 22 )  + 
+    theme( axis.title.y=element_blank(),
+           axis.text.y=element_blank(), 
+           axis.ticks.y=element_blank() )
+```
+
+
+
+
+## `r variable.label2` by Nonprofit Size (Revenue)
+
+
+```{r, fig.height=4}
+ggplot( core2, aes(x = totrevenue )) +  
+  geom_density( alpha = 0.5 ) + 
+  xlim( quantile(core2$totrevenue, c(0.02,0.98), na.rm=T ) ) + 
+  theme( axis.title.y=element_blank(),
+           axis.text.y=element_blank(), 
+           axis.ticks.y=element_blank() )
+```
+
+
+```{r, fig.height=5}
+core2$totrevenue[ core2$totrevenue < 1 ] <- 1
+
+if( nrow(core2) > 10000 )
+{
+  core3 <- sample_n( core2, 10000 )
+} else
+{
+  core3 <- core2
+}
+
+jplot( log10(core3$totrevenue), core3$earned_income_ratio, 
+       xlab="Nonprofit Size (logged Revenue)", 
+       ylab=variable.label2,
+       xaxt="n", xlim=c(3,10) )
+axis( side=1, 
+      at=c(3,4,5,6,7,8,9,10), 
+      labels=c("1k","10k","100k","1m","10m","100m","1b","10b") )
+```
+
+
+
+
+```{r}
+core2 %>% 
+  filter( ! is.na(rev.q) ) %>% 
+  ggplot( aes(earned_income_ratio) )  + 
+    geom_density( alpha = 0.5 ) + 
+    labs( title="Nonprofit Size (logged revenues)" ) + 
+    xlab( variable.label2 ) +
+    facet_wrap( ~ rev.q, nrow=3 ) + 
+    theme_minimal( base_size = 22 )  + 
+    theme( axis.title.y=element_blank(),
+           axis.text.y=element_blank(), 
+           axis.ticks.y=element_blank() )
+```
+
+
+
+## `r variable.label2` by Nonprofit Size (Net Assets)
+
+```{r, fig.height=4}
+ggplot( core2, aes(x = totnetassetend )) +  
+  geom_density( alpha = 0.5) + 
+  xlim( quantile(core2$totnetassetend, c(0.02,0.98), na.rm=T ) ) + 
+  xlab( "Net Assets" ) +
+    theme( axis.title.y=element_blank(),
+           axis.text.y=element_blank(), 
+           axis.ticks.y=element_blank() )
+```
+
+```{r, fig.height=5}
+core2$totnetassetend[ core2$totnetassetend < 1 ] <- NA
+
+if( nrow(core2) > 10000 )
+{
+  core3 <- sample_n( core2, 10000 )
+} else
+{
+  core3 <- core2
+}
+
+jplot( log10(core3$totnetassetend), core3$earned_income_ratio, 
+       xlab="Nonprofit Size (logged Net Assets)", 
+       ylab=variable.label2,
+       xaxt="n", xlim=c(3,10) )
+axis( side=1, 
+      at=c(3,4,5,6,7,8,9,10), 
+      labels=c("1k","10k","100k","1m","10m","100m","1b","10b") )
+```
+
+
+
+
+```{r}
+core2$totnetassetend[ core2$totnetassetend < 1 ] <- NA
+core2$asset.q <- create_quantiles( var=core2$totnetassetend, n.groups=5 )
+
+core2 %>% 
+  filter( ! is.na(asset.q) ) %>% 
+  ggplot( aes(earned_income_ratio) )  + 
+    geom_density( alpha = 0.5 ) + 
+    labs( title="Nonprofit Size (logged net assets, if assets > 0)" ) + 
+    xlab( variable.label2 ) + 
+    ylab( "" ) + 
+    facet_wrap( ~ asset.q, nrow=3 ) + 
+    theme_minimal( base_size = 22 )  + 
+    theme( axis.title.y=element_blank(),
+           axis.text.y=element_blank(), 
+           axis.ticks.y=element_blank() )
+```
+
+
+
+
+Total Assets for Comparison 
+
+```{r, fig.height=5}
+core2$totassetsend[ core2$totassetsend < 1 ] <- NA
+core2$tot.asset.q <- create_quantiles( var=core2$totassetsend, n.groups=5 )
+
+if( nrow(core2) > 10000 )
+{
+  core3 <- sample_n( core2, 10000 )
+} else
+{
+  core3 <- core2
+}
+
+jplot( log10(core3$totassetsend), core3$earned_income_ratio, 
+       xlab="Nonprofit Size (logged Total Assets)", 
+       ylab=variable.label2,
+       xaxt="n", xlim=c(3,10) )
+axis( side=1, 
+      at=c(3,4,5,6,7,8,9,10), 
+      labels=c("1k","10k","100k","1m","10m","100m","1b","10b") )
+
+```
+
+
+```{r, fig.height=4}
+ggplot( core2, aes(x = totassetsend )) +  
+  geom_density( alpha = 0.5) + 
+  xlim( quantile(core2$totassetsend, c(0.02,0.98), na.rm=T ) ) + 
+  xlab( "Net Assets" ) +
+    theme( axis.title.y=element_blank(),
+           axis.text.y=element_blank(), 
+           axis.ticks.y=element_blank() )
+
+```
+
+
+```{r}
+core2 %>% 
+  filter( ! is.na(tot.asset.q) ) %>% 
+  ggplot( aes(earned_income_ratio) )  + 
+    geom_density( alpha = 0.5 ) + 
+    xlab( "Nonprofit Size (logged total assets, if assets > 0)" ) + 
+    ylab( variable.label2 ) +
+    facet_wrap( ~ tot.asset.q, nrow=3 ) + 
+    theme_minimal( base_size = 22 )  + 
+    theme( axis.title.y=element_blank(),
+           axis.text.y=element_blank(), 
+           axis.ticks.y=element_blank() )
+```
+
+
+## `r variable.label2` by Nonprofit Age
+
+```{r, fig.height=4}
+ggplot( core2, aes(x = AGE )) +  
+  geom_density( alpha = 0.5 )  
+```
+
+
+```{r, fig.height=5}
+core2$AGE[ core2$AGE < 1 ] <- NA
+
+if( nrow(core2) > 10000 )
+{
+  core3 <- sample_n( core2, 10000 )
+} else
+{
+  core3 <- core2
+}
+
+jplot( core3$AGE, core3$earned_income_ratio, 
+       xlab="Nonprofit Age", 
+       ylab=variable.label2 ) 
+
+```
+
+
+
+
+```{r}
+core2 %>% 
+  filter( ! is.na(age.q) ) %>% 
+  ggplot( aes(earned_income_ratio) )  + 
+    geom_density( alpha = 0.5 ) + 
+    labs( title="Nonprofit Age" ) + 
+    xlab( variable.label2 ) +
+    ylab( "" ) +
+    facet_wrap( ~ age.q, nrow=3 ) + 
+    theme_minimal( base_size = 22 )  + 
+    theme( axis.title.y=element_blank(),
+           axis.text.y=element_blank(), 
+           axis.ticks.y=element_blank() )
+```
+
+#Investment Income Reliance Ratio Analysis
+
+```{r, eval=T}
+# TEMPORARY VARIABLES 
+investment_income  <- core$invstmntinc + core$txexmptbndsproceeds + core$netrntlinc + core$netgnls
+totalrevenues <- ( core$totrevenue )
+
+# can't divide by zero
+totalrevenues[ totalrevenues == 0 ] <- NA
+
+# SAVE RESULTS 
+core$investment_income_ratio <-  investment_income / totalrevenues
+                     
+# summary( core$investment_income_ratio )
+```
+
+
+## Standardize Scales
+
+Check high and low values to see what makes sense. 
+
+```{r, fig.height=4}
+x.05 <- quantile( core$investment_income_ratio, 0.05, na.rm=T )
+x.95 <- quantile( core$investment_income_ratio, 0.95, na.rm=T )
+
+ggplot( core, aes(x = investment_income_ratio ) ) +  
+  geom_density( alpha = 0.5) + 
+  xlim( x.05, x.95 ) 
+```
+
+
+
+
+```{r}
+core2 <- core
+
+# proportion of values that are negative
+#mean( core2$investment_income_ratio < 0, na.rm=T ) 
+#core2$investment_income_ratio[ core2$investment_income_ratio < 0 ] <- 0
+
+# proption of values above 200% 
+#mean( core2$investment_income_ratio > 50, na.rm=T ) 
+#core2$investment_income_ratio[ core2$investment_income_ratio > 50 ] <- 50
+
+
+
+x.05 <- quantile( core$investment_income_ratio, 0.05, na.rm=T )
+x.95 <- quantile( core$investment_income_ratio, 0.95, na.rm=T )
+
+core2 <- core
+
+# proportion of values that are negative
+# mean( core2$der < 0, na.rm=T ) 
+
+# proption of values above 1% 
+# mean( core2$der > 5, na.rm=T ) 
+
+# WINSORIZATION AT 5th and 95th PERCENTILES
+
+core2$investment_income_ratio[ core2$investment_income_ratio < x.05 ] <- x.05
+core2$investment_income_ratio[ core2$investment_income_ratio > x.95 ] <- x.95
+```
+
+
+
+## Metric Scope
+
+
+Tax data is available for full 990 filers only, so this metric does not describe any organizations with Gross receipts < $200,000 and
+Total assets < $500,000. Some organizations with receipts or assets below those thresholds may have filed a full 990, but these would be exceptions. 
+
+The data have been capped to those with values between 5% and 95% of the normal distribution to cut off outliers and exempt organizations with zero profitability (though negative values are allowed still). 
+
+
+
+# Descriptive Statistics
+
+
+Note: All monetary variables have been converted to thousands of dollars. 
+
+```{r, results="asis"}
+
+core2 %>%
+  mutate( # investment_income_ratio = investment_income_ratio * 10000,
+    totrevenue = totrevenue / 1000,
+    totfuncexpns = totfuncexpns / 1000, 
+    lndbldgsequipend = lndbldgsequipend / 1000,
+    totassetsend = totassetsend / 1000,
+    totliabend = totliabend / 1000,
+    totnetassetend = totnetassetend / 1000 ) %>% 
+  select( STATE,  NTEE1, NTMAJ12, 
+          investment_income_ratio, 
+          AGE, 
+          totrevenue, totfuncexpns, 
+          lndbldgsequipend, totassetsend, 
+          totnetassetend, totliabend ) %>%
+
+  stargazer( type = s.type, 
+             digits=2, 
+             summary.stat = c("min","p25","median",
+                              "mean","p75","max", "sd"),
+             covariate.labels = c("Investment Income Reliance Ratio", "Age", 
+                                  "Revenue ($1k)", "Expenses($1k)", 
+                                  "Buildings ($1k)", "Total Assets ($1k)",
+                                  "Net Assets ($1k)", "Liabiliies ($1k)"))
+```
+
+
+
+What proportion of orgs have Investment Income Reliance Ratios equal to zero?
+
+
+```{r}
+prop.zero <- mean( core2$investment_income_ratio == 0, na.rm=T )
+```
+
+
+In the sample, `r 100*round(prop.zero,2)` percent of the organizations have Investment Income Reliance Ratios equal to zero, meaning they have no earned income. These organizations are dropped from subsequent graphs to keep the visualizations clean. The interpretation of the graphics should be the distributions of Investment Income Reliance Ratios for organizations that have positive or negative values.  
+
+
+
+
+```{r}
+###
+### ADD QUANTILES
+###
+###   function create_quantiles() defined in r-functions.R
+
+core2$exp.q   <- create_quantiles( var=core2$totfuncexpns,   n.groups=5 )
+core2$rev.q   <- create_quantiles( var=core2$totrevenue,     n.groups=5 )
+core2$asset.q <- create_quantiles( var=core2$totnetassetend, n.groups=5 )
+core2$age.q   <- create_quantiles( var=core2$AGE,            n.groups=5 )
+```
+
+
+
+
+
+
+
+## `r variable.label3` Density 
+
+```{r, fig.height=4}
+min.x <- min( core2$investment_income_ratio, na.rm=T )
+max.x <- max( core2$investment_income_ratio, na.rm=T )
+
+ggplot( core2, aes(x = investment_income_ratio )) +  
+  geom_density( alpha = 0.5 ) + 
+  xlim( min.x, max.x  ) +
+  xlab( variable.label3 ) +
+  theme( axis.title.y=element_blank(),
+         axis.text.y=element_blank(), 
+         axis.ticks.y=element_blank() )
+```
+
+
+
+## `r variable.label3` by NTEE Major Code
+
+
+
+```{r}
+core3 <- core2 %>% filter( ! is.na(NTMAJ12) )
+table( core3$NTMAJ12) %>% sort(decreasing=TRUE) %>% kable()
+```
+
+
+```{r}
+
+t <- table( factor(core3$NTEE1) ) 
+df <- data.frame( x=Inf, y=Inf, 
+                  N=paste0( "N=", as.character(t) ), 
+                  NTEE1=names(t) )
+
+ggplot( core3, aes( x=investment_income_ratio ) ) + 
+  geom_density( alpha = 0.5) + 
+  # xlim( -0.1, 1 ) +
+  labs( title="Nonprofit Subsectors" ) + 
+  xlab( variable.label3 ) + 
+  facet_wrap( ~ NTEE1, nrow=1 ) + 
+    theme_minimal( base_size = 15 )  + 
+    theme( axis.title.y=element_blank(),
+           axis.text.y=element_blank(), 
+           axis.ticks.y=element_blank(),
+           strip.text = element_text( face="bold") ) +  # size=20 
+  geom_text( data=df, 
+             aes(x, y, label=N ), 
+             hjust=2, vjust=3, 
+             color="gray60", size=6 )
+```
+
+
+
+
+## `r variable.label3` by Region 
+
+```{r}
+table( core2$Region) %>% kable()
+```
+
+
+```{r}
+t <- table( factor(core2$Region) ) 
+df <- data.frame( x=Inf, y=Inf, 
+                  N=paste0( "N=", as.character(t) ), 
+                  Region=names(t) )
+
+core2 %>% 
+  filter( ! is.na(Region) ) %>% 
+  ggplot( aes(investment_income_ratio) )  + 
+    geom_density( alpha = 0.5 ) + 
+    xlab( "Census Regions" ) + 
+    ylab( variable.label3 ) +
+    facet_wrap( ~ Region, nrow=3 ) + 
+    theme_minimal( base_size = 22 )  + 
+    theme( axis.title.y=element_blank(),
+           axis.text.y=element_blank(), 
+           axis.ticks.y=element_blank() ) + 
+    geom_text( data=df, 
+             aes(x, y, label=N ), 
+             hjust=2, vjust=3, 
+             color="gray60", size=6 )
+```
+
+
+```{r}
+table( core2$Division ) %>% kable()
+```
+
+```{r}
+t <- table( factor(core2$Division) ) 
+df <- data.frame( x=Inf, y=Inf, 
+                  N=paste0( "N=", as.character(t) ), 
+                  Division=names(t) )
+
+core2 %>% 
+  filter( ! is.na(Division) ) %>% 
+  ggplot( aes(investment_income_ratio) )  + 
+    geom_density( alpha = 0.5 ) + 
+    xlab( "Census Sub-Regions (10)" ) + 
+    ylab( variable.label3 ) +
+    facet_wrap( ~ Division, nrow=3 ) + 
+    theme_minimal( base_size = 22 )  + 
+    theme( axis.title.y=element_blank(),
+           axis.text.y=element_blank(), 
+           axis.ticks.y=element_blank() ) + 
+    geom_text( data=df, 
+             aes(x, y, label=N ), 
+             hjust=2, vjust=3, 
+             color="gray60", size=6 ) 
+```
+
+
+
+
+## `r variable.label3` by Nonprofit Size (Expenses)
+
+
+```{r, fig.height=4}
+ggplot( core2, aes(x = totfuncexpns )) +  
+  geom_density( alpha = 0.5 ) + 
+  xlim( quantile(core2$totfuncexpns, c(0.02,0.98), na.rm=T ) )
+```
+
+
+```{r, fig.height=5}
+core2$totfuncexpns[ core2$totfuncexpns < 1 ] <- 1
+# core2$totfuncexpns[ is.na(core2$totfuncexpns) ] <- 1
+
+if( nrow(core2) > 10000 )
+{
+  core3 <- sample_n( core2, 10000 )
+} else
+{
+  core3 <- core2
+}
+
+jplot( log10(core3$totfuncexpns), core3$investment_income_ratio, 
+       xlab="Nonprofit Size (logged Expenses)", 
+       ylab=variable.label3,
+       xaxt="n", xlim=c(3,10) )
+axis( side=1, 
+      at=c(3,4,5,6,7,8,9,10), 
+      labels=c("1k","10k","100k","1m","10m","100m","1b","10b") )
+```
+
+
+
+
+```{r}
+core2 %>% 
+  filter( ! is.na(exp.q) ) %>% 
+  ggplot( aes(investment_income_ratio) )  + 
+    geom_density( alpha = 0.5) + 
+    labs( title="Nonprofit Size (logged expenses)" ) + 
+    xlab( variable.label3 ) +
+    facet_wrap( ~ exp.q, nrow=3 ) + 
+    theme_minimal( base_size = 22 )  + 
+    theme( axis.title.y=element_blank(),
+           axis.text.y=element_blank(), 
+           axis.ticks.y=element_blank() )
+```
+
+
+
+
+## `r variable.label3` by Nonprofit Size (Revenue)
+
+
+```{r, fig.height=4}
+ggplot( core2, aes(x = totrevenue )) +  
+  geom_density( alpha = 0.5 ) + 
+  xlim( quantile(core2$totrevenue, c(0.02,0.98), na.rm=T ) ) + 
+  theme( axis.title.y=element_blank(),
+           axis.text.y=element_blank(), 
+           axis.ticks.y=element_blank() )
+```
+
+
+```{r, fig.height=5}
+core2$totrevenue[ core2$totrevenue < 1 ] <- 1
+
+if( nrow(core2) > 10000 )
+{
+  core3 <- sample_n( core2, 10000 )
+} else
+{
+  core3 <- core2
+}
+
+jplot( log10(core3$totrevenue), core3$investment_income_ratio, 
+       xlab="Nonprofit Size (logged Revenue)", 
+       ylab=variable.label3,
+       xaxt="n", xlim=c(3,10) )
+axis( side=1, 
+      at=c(3,4,5,6,7,8,9,10), 
+      labels=c("1k","10k","100k","1m","10m","100m","1b","10b") )
+```
+
+
+
+
+```{r}
+core2 %>% 
+  filter( ! is.na(rev.q) ) %>% 
+  ggplot( aes(investment_income_ratio) )  + 
+    geom_density( alpha = 0.5 ) + 
+    labs( title="Nonprofit Size (logged revenues)" ) + 
+    xlab( variable.label3 ) +
+    facet_wrap( ~ rev.q, nrow=3 ) + 
+    theme_minimal( base_size = 22 )  + 
+    theme( axis.title.y=element_blank(),
+           axis.text.y=element_blank(), 
+           axis.ticks.y=element_blank() )
+```
+
+
+
+## `r variable.label3` by Nonprofit Size (Net Assets)
+
+```{r, fig.height=4}
+ggplot( core2, aes(x = totnetassetend )) +  
+  geom_density( alpha = 0.5) + 
+  xlim( quantile(core2$totnetassetend, c(0.02,0.98), na.rm=T ) ) + 
+  xlab( "Net Assets" ) +
+    theme( axis.title.y=element_blank(),
+           axis.text.y=element_blank(), 
+           axis.ticks.y=element_blank() )
+```
+
+```{r, fig.height=5}
+core2$totnetassetend[ core2$totnetassetend < 1 ] <- NA
+
+if( nrow(core2) > 10000 )
+{
+  core3 <- sample_n( core2, 10000 )
+} else
+{
+  core3 <- core2
+}
+
+jplot( log10(core3$totnetassetend), core3$investment_income_ratio, 
+       xlab="Nonprofit Size (logged Net Assets)", 
+       ylab=variable.label3,
+       xaxt="n", xlim=c(3,10) )
+axis( side=1, 
+      at=c(3,4,5,6,7,8,9,10), 
+      labels=c("1k","10k","100k","1m","10m","100m","1b","10b") )
+```
+
+
+
+
+```{r}
+core2$totnetassetend[ core2$totnetassetend < 1 ] <- NA
+core2$asset.q <- create_quantiles( var=core2$totnetassetend, n.groups=5 )
+
+core2 %>% 
+  filter( ! is.na(asset.q) ) %>% 
+  ggplot( aes(investment_income_ratio) )  + 
+    geom_density( alpha = 0.5 ) + 
+    labs( title="Nonprofit Size (logged net assets, if assets > 0)" ) + 
+    xlab( variable.label3 ) + 
+    ylab( "" ) + 
+    facet_wrap( ~ asset.q, nrow=3 ) + 
+    theme_minimal( base_size = 22 )  + 
+    theme( axis.title.y=element_blank(),
+           axis.text.y=element_blank(), 
+           axis.ticks.y=element_blank() )
+```
+
+
+
+
+Total Assets for Comparison 
+
+```{r, fig.height=5}
+core2$totassetsend[ core2$totassetsend < 1 ] <- NA
+core2$tot.asset.q <- create_quantiles( var=core2$totassetsend, n.groups=5 )
+
+if( nrow(core2) > 10000 )
+{
+  core3 <- sample_n( core2, 10000 )
+} else
+{
+  core3 <- core2
+}
+
+jplot( log10(core3$totassetsend), core3$investment_income_ratio, 
+       xlab="Nonprofit Size (logged Total Assets)", 
+       ylab=variable.label3,
+       xaxt="n", xlim=c(3,10) )
+axis( side=1, 
+      at=c(3,4,5,6,7,8,9,10), 
+      labels=c("1k","10k","100k","1m","10m","100m","1b","10b") )
+
+```
+
+
+```{r, fig.height=4}
+ggplot( core2, aes(x = totassetsend )) +  
+  geom_density( alpha = 0.5) + 
+  xlim( quantile(core2$totassetsend, c(0.02,0.98), na.rm=T ) ) + 
+  xlab( "Net Assets" ) +
+    theme( axis.title.y=element_blank(),
+           axis.text.y=element_blank(), 
+           axis.ticks.y=element_blank() )
+
+```
+
+
+```{r}
+core2 %>% 
+  filter( ! is.na(tot.asset.q) ) %>% 
+  ggplot( aes(investment_income_ratio) )  + 
+    geom_density( alpha = 0.5 ) + 
+    xlab( "Nonprofit Size (logged total assets, if assets > 0)" ) + 
+    ylab( variable.label3 ) +
+    facet_wrap( ~ tot.asset.q, nrow=3 ) + 
+    theme_minimal( base_size = 22 )  + 
+    theme( axis.title.y=element_blank(),
+           axis.text.y=element_blank(), 
+           axis.ticks.y=element_blank() )
+```
+
+
+## `r variable.label3` by Nonprofit Age
+
+```{r, fig.height=4}
+ggplot( core2, aes(x = AGE )) +  
+  geom_density( alpha = 0.5 )  
+```
+
+
+```{r, fig.height=5}
+core2$AGE[ core2$AGE < 1 ] <- NA
+
+if( nrow(core2) > 10000 )
+{
+  core3 <- sample_n( core2, 10000 )
+} else
+{
+  core3 <- core2
+}
+
+jplot( core3$AGE, core3$investment_income_ratio, 
+       xlab="Nonprofit Age", 
+       ylab=variable.label3 ) 
+
+```
+
+
+
+
+```{r}
+core2 %>% 
+  filter( ! is.na(age.q) ) %>% 
+  ggplot( aes(investment_income_ratio) )  + 
+    geom_density( alpha = 0.5 ) + 
+    labs( title="Nonprofit Age" ) + 
+    xlab( variable.label3 ) +
+    ylab( "" ) +
+    facet_wrap( ~ age.q, nrow=3 ) + 
+    theme_minimal( base_size = 22 )  + 
+    theme( axis.title.y=element_blank(),
+           axis.text.y=element_blank(), 
+           axis.ticks.y=element_blank() )
+```
 
 
 # Save Metrics 

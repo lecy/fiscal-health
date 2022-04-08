@@ -926,7 +926,7 @@ Liabiliies (1k)
 </tbody>
 </table>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"></a>
-<a class="sourceLine" id="cb9-2" title="2">t &lt;-<span class="st"> </span><span class="kw">table</span>( <span class="kw">factor</span>(core3<span class="op">$</span>NTMAJ12) ) </a>
+<a class="sourceLine" id="cb9-2" title="2">t &lt;-<span class="st"> </span><span class="kw">table</span>( <span class="kw">factor</span>(core3<span class="op">$</span>NTEE1) ) </a>
 <a class="sourceLine" id="cb9-3" title="3">df &lt;-<span class="st"> </span><span class="kw">data.frame</span>( <span class="dt">x=</span><span class="ot">Inf</span>, <span class="dt">y=</span><span class="ot">Inf</span>, </a>
 <a class="sourceLine" id="cb9-4" title="4">                  <span class="dt">N=</span><span class="kw">paste0</span>( <span class="st">&quot;N=&quot;</span>, <span class="kw">as.character</span>(t) ), </a>
 <a class="sourceLine" id="cb9-5" title="5">                  <span class="dt">NTEE1=</span><span class="kw">names</span>(t) )</a>
@@ -936,7 +936,7 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb9-9" title="9"><span class="st">  </span><span class="co"># xlim( -0.1, 1 ) +</span></a>
 <a class="sourceLine" id="cb9-10" title="10"><span class="st">  </span><span class="kw">labs</span>( <span class="dt">title=</span><span class="st">&quot;Nonprofit Subsectors&quot;</span> ) <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb9-11" title="11"><span class="st">  </span><span class="kw">xlab</span>( variable.label ) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb9-12" title="12"><span class="st">  </span><span class="kw">facet_wrap</span>( <span class="op">~</span><span class="st"> </span>NTEE1, <span class="dt">nrow=</span><span class="dv">3</span> ) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb9-12" title="12"><span class="st">  </span><span class="kw">facet_wrap</span>( <span class="op">~</span><span class="st"> </span>NTEE1, <span class="dt">nrow=</span><span class="dv">1</span> ) <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb9-13" title="13"><span class="st">    </span><span class="kw">theme_minimal</span>( <span class="dt">base_size =</span> <span class="dv">15</span> )  <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb9-14" title="14"><span class="st">    </span><span class="kw">theme</span>( <span class="dt">axis.title.y=</span><span class="kw">element_blank</span>(),</a>
 <a class="sourceLine" id="cb9-15" title="15">           <span class="dt">axis.text.y=</span><span class="kw">element_blank</span>(), </a>
