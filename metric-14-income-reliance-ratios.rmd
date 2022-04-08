@@ -186,12 +186,11 @@ Note: This data is available only for organizations that file full 990s. [Organi
 
 
 #Donation Reliance Ratio Analysis
+
 ```{r, eval=T}
-
-
 # TEMPORARY VARIABLES 
-donation_revenues  <- (core$totcntrbgfts+core$netincfndrsng)
-totalrevenues <- ( core$totrevenue)
+donation_revenues  <- core$totcntrbgfts + core$netincfndrsng
+totalrevenues <- ( core$totrevenue )
 
 # can't divide by zero
 totalrevenues[ totalrevenues == 0 ] <- NA
@@ -377,7 +376,7 @@ ggplot( core3, aes( x=donation_ratio ) ) +
   # xlim( -0.1, 1 ) +
   labs( title="Nonprofit Subsectors" ) + 
   xlab( variable.label1 ) + 
-  facet_wrap( ~ NTMAJ12, nrow=3 ) + 
+  facet_wrap( ~ NTMAJ12, nrow=1 ) + 
     theme_minimal( base_size = 15 )  + 
     theme( axis.title.y=element_blank(),
            axis.text.y=element_blank(), 
