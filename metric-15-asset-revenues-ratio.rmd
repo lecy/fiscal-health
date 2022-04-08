@@ -1,5 +1,5 @@
 ---
-title: "Metric 13- Short Term Debt Ratio"
+title: "Metric 15- Assets to Revenues Ratio"
 author: ""
 date: "April 8, 2022"
 font: Lato
@@ -47,7 +47,7 @@ set_urbn_defaults(style = "print")
 
 source( "r-functions.R" )
 
-variable.label <- "Short Term Debt Ratio"
+variable.label <- "Assets to Revenues Ratio"
 
 # stargazer table print type
 # run chunk for live RMD sessions
@@ -89,33 +89,33 @@ core <- readRDS(gzcon(url( URL )))
 ## Definition & Interpretation
 
 
-$$Short\: Term\: Debt\:Ratio = \frac{Current\: Liabilities}{Net \: Assets} $$
+$$Assets\: to\: Revenues\:Ratio = \frac{Total\: Assets}{Total \: Revenues} $$
 
-This metric indicates how well an organization can cover its immediate liabilities with its equity. Low values are better as they indicate that an organization has lower levels of leverage and more flexibility to dispense its assets as needed or as opportunities arise.
+This metric measures how many dollars of assets it has per dollar of annual revenues (how many dollars of revenue have been converted into assets in the past or that year for the current year).
 
-When an organization has a Short Term Debt Ratio of 1, its liabilities are fully equal to the assets it owns. If an organization has a ratio higher than 1, it indicates that it is over leveraged. A value close to zero indicates low levels of liability, and a negative value indicates that an organization has overpaid on their liabilities. 
+Generally, this ratio should be higher for organizations with large inventories of developments or large endowments. 
 
 
 ## Variables 
 
-Note: This data is available only for organizations that file full 990s. [Organizations with revenues <$200,000 and total assets <$500,000 have the option to not file a full 990 and file an EZ instead.]
+Note: This data is available only for all organizations.
 
-* **Numerator:** Current Liabilities [Accounts Payable + Grants Payale] 
+* **Numerator:** Total Assets
   <br>
   
-  *	On 990:  (Part X, Line 17B) + (Part X, Line 18B) 
-    - SOI PC EXTRACTS: (accntspayableend+grntspayableend) 
+  *	On 990: Part X, Line 16B
+    - SOI PC EXTRACTS: totassetsend
     <br>
   
-  *	On EZ: Not Available
-    - SOI PC EXTRACTS: Not Available
+  *	On EZ: Pt II, Line 25B
+    - SOI PC EXTRACTS: totassetsend
   <br>
-* **Denominator:** Net Assets
-  *	On 990: (Part X, Line 33B) 
-    -SOI PC EXTRACTS: totnetassetend
+* **Denominator:** Total Revenues
+  *	On 990: Part VIII, Line 12A 
+    -SOI PC EXTRACTS: totrevenue
     
-  *	On EZ: Part I, Line 21
-    -SOI PC EXTRACTS: networthend
+  *	On EZ: Part I, Line 9
+    -SOI PC EXTRACTS: totrevnue
   <br>
 
 
@@ -125,16 +125,16 @@ Note: This data is available only for organizations that file full 990s. [Organi
 
 
 # TEMPORARY VARIABLES 
-current_liabilities  <- (core$accntspayableend+core$grntspayableend)
-netassets <- ( core$totnetassetend)
+total_assets  <- core$totassetsend
+total_revenues <- core$totrevenue
 
 # can't divide by zero
-netassets[ netassets == 0 ] <- NA
+total_revenues[ total_revenues == 0 ] <- NA
 
 # SAVE RESULTS 
-core$st_debt_ratio <-  current_liabilities / netassets
+core$asset_rev_ratio <-  total_assets / total_revenues
                      
-# summary( core$st_debt_ratio )
+# summary( core$asset_rev_ratio )
 ```
 
 
@@ -143,10 +143,10 @@ core$st_debt_ratio <-  current_liabilities / netassets
 Check high and low values to see what makes sense. 
 
 ```{r, fig.height=4}
-x.05 <- quantile( core$st_debt_ratio, 0.05, na.rm=T )
-x.95 <- quantile( core$st_debt_ratio, 0.95, na.rm=T )
+x.05 <- quantile( core$asset_rev_ratio, 0.05, na.rm=T )
+x.95 <- quantile( core$asset_rev_ratio, 0.95, na.rm=T )
 
-ggplot( core, aes(x = st_debt_ratio ) ) +  
+ggplot( core, aes(x = asset_rev_ratio ) ) +  
   geom_density( alpha = 0.5) + 
   xlim( x.05, x.95 ) 
 ```
@@ -158,17 +158,17 @@ ggplot( core, aes(x = st_debt_ratio ) ) +
 core2 <- core
 
 # proportion of values that are negative
-#mean( core2$st_debt_ratio < 0, na.rm=T ) 
-#core2$st_debt_ratio[ core2$st_debt_ratio < 0 ] <- 0
+#mean( core2$asset_rev_ratio < 0, na.rm=T ) 
+#core2$asset_rev_ratio[ core2$asset_rev_ratio < 0 ] <- 0
 
 # proption of values above 200% 
-#mean( core2$st_debt_ratio > 50, na.rm=T ) 
-#core2$st_debt_ratio[ core2$st_debt_ratio > 50 ] <- 50
+#mean( core2$asset_rev_ratio > 50, na.rm=T ) 
+#core2$asset_rev_ratio[ core2$asset_rev_ratio > 50 ] <- 50
 
 
 
-x.05 <- quantile( core$st_debt_ratio, 0.05, na.rm=T )
-x.95 <- quantile( core$st_debt_ratio, 0.95, na.rm=T )
+x.05 <- quantile( core$asset_rev_ratio, 0.05, na.rm=T )
+x.95 <- quantile( core$asset_rev_ratio, 0.95, na.rm=T )
 
 core2 <- core
 
@@ -180,8 +180,8 @@ core2 <- core
 
 # WINSORIZATION AT 5th and 95th PERCENTILES
 
-core2$st_debt_ratio[ core2$st_debt_ratio < x.05 ] <- x.05
-core2$st_debt_ratio[ core2$st_debt_ratio > x.95 ] <- x.95
+core2$asset_rev_ratio[ core2$asset_rev_ratio < x.05 ] <- x.05
+core2$asset_rev_ratio[ core2$asset_rev_ratio > x.95 ] <- x.95
 ```
 
 
@@ -189,22 +189,9 @@ core2$st_debt_ratio[ core2$st_debt_ratio > x.95 ] <- x.95
 ## Metric Scope
 
 
-Tax data is available for full 990 filers, so this metric does not describe any organizations with Gross receipts < $200,000 and
-Total assets < $500,000. Some organizations with receipts or assets below those thresholds may have filed a full 990, but these would be exceptions. 
+Tax data is available for full 990 filers and 990EZ filers (organizations with Gross receipts < $200,000 and Total assets < $500,000). 
 
 The data have been capped to those with values between 5% and 95% of the normal distribution to cut off outliers and exempt organizations with zero profitability (though negative values are allowed still). 
-
-
-## Reference
-
-
-Any cited works here...
-
-
-
-
-
-
 
 
 
@@ -216,7 +203,7 @@ Note: All monetary variables have been converted to thousands of dollars.
 ```{r, results="asis"}
 
 core2 %>%
-  mutate( # st_debt_ratio = st_debt_ratio * 10000,
+  mutate( # asset_rev_ratio = asset_rev_ratio * 10000,
     totrevenue = totrevenue / 1000,
     totfuncexpns = totfuncexpns / 1000, 
     lndbldgsequipend = lndbldgsequipend / 1000,
@@ -224,7 +211,7 @@ core2 %>%
     totliabend = totliabend / 1000,
     totnetassetend = totnetassetend / 1000 ) %>% 
   select( STATE,  NTEE1, NTMAJ12, 
-          st_debt_ratio, 
+          asset_rev_ratio, 
           AGE, 
           totrevenue, totfuncexpns, 
           lndbldgsequipend, totassetsend, 
@@ -234,7 +221,7 @@ core2 %>%
              digits=2, 
              summary.stat = c("min","p25","median",
                               "mean","p75","max", "sd"),
-             covariate.labels = c("Short Term Debt Ratio", "Age", 
+             covariate.labels = c("Asset to Revenue Ratio", "Age", 
                                   "Revenue ($1k)", "Expenses($1k)", 
                                   "Buildings ($1k)", "Total Assets ($1k)",
                                   "Net Assets ($1k)", "Liabiliies ($1k)"))
@@ -242,15 +229,15 @@ core2 %>%
 
 
 
-What proportion of orgs have Short Term Debt Ratios equal to zero?
+What proportion of orgs have asset to revenue ratios equal to zero?
 
 
 ```{r}
-prop.zero <- mean( core2$st_debt_ratio == 0, na.rm=T )
+prop.zero <- mean( core2$asset_rev_ratio == 0, na.rm=T )
 ```
 
 
-In the sample, `r 100*round(prop.zero,2)` percent of the organizations have Short Term Debt Ratios equal to zero, meaning they have no current liabilities. These organizations are dropped from subsequent graphs to keep the visualizations clean. The interpretation of the graphics should be the distributions of Short Term Debt Ratios for organizations that have positive or negative values.  
+In the sample, `r 100*round(prop.zero,2)` percent of the organizations have asset to revenue ratios equal to zero, meaning they have no assets. These organizations are dropped from subsequent graphs to keep the visualizations clean. The interpretation of the graphics should be the distributions of asset to revenue ratios for organizations that have positive or negative values.  
 
 
 
@@ -265,6 +252,8 @@ core2$exp.q   <- create_quantiles( var=core2$totfuncexpns,   n.groups=5 )
 core2$rev.q   <- create_quantiles( var=core2$totrevenue,     n.groups=5 )
 core2$asset.q <- create_quantiles( var=core2$totnetassetend, n.groups=5 )
 core2$age.q   <- create_quantiles( var=core2$AGE,            n.groups=5 )
+core2$land.q <- create_quantiles(var=core2$lndbldgsequipend,            n.groups=5 )
+
 ```
 
 
@@ -276,10 +265,10 @@ core2$age.q   <- create_quantiles( var=core2$AGE,            n.groups=5 )
 ## `r variable.label` Density 
 
 ```{r, fig.height=4}
-min.x <- min( core2$st_debt_ratio, na.rm=T )
-max.x <- max( core2$st_debt_ratio, na.rm=T )
+min.x <- min( core2$asset_rev_ratio, na.rm=T )
+max.x <- max( core2$asset_rev_ratio, na.rm=T )
 
-ggplot( core2, aes(x = st_debt_ratio )) +  
+ggplot( core2, aes(x = asset_rev_ratio )) +  
   geom_density( alpha = 0.5 ) + 
   xlim( min.x, max.x  ) +
   xlab( variable.label ) +
@@ -295,8 +284,8 @@ ggplot( core2, aes(x = st_debt_ratio )) +
 
 
 ```{r}
-core3 <- core2 %>% filter( ! is.na(NTMAJ12) )
-table( core3$NTMAJ12) %>% sort(decreasing=TRUE) %>% kable()
+core3 <- core2 %>% filter( ! is.na(NTEE1) )
+table( core3$NTEE1) %>% sort(decreasing=TRUE) %>% kable()
 ```
 
 
@@ -305,14 +294,14 @@ table( core3$NTMAJ12) %>% sort(decreasing=TRUE) %>% kable()
 t <- table( factor(core3$NTMAJ12) ) 
 df <- data.frame( x=Inf, y=Inf, 
                   N=paste0( "N=", as.character(t) ), 
-                  NTMAJ12=names(t) )
+                  NTEE1=names(t) )
 
-ggplot( core3, aes( x=st_debt_ratio ) ) + 
+ggplot( core3, aes( x=asset_rev_ratio ) ) + 
   geom_density( alpha = 0.5) + 
   # xlim( -0.1, 1 ) +
   labs( title="Nonprofit Subsectors" ) + 
   xlab( variable.label ) + 
-  facet_wrap( ~ NTMAJ12, nrow=3 ) + 
+  facet_wrap( ~ NTEE1, nrow=3 ) + 
     theme_minimal( base_size = 15 )  + 
     theme( axis.title.y=element_blank(),
            axis.text.y=element_blank(), 
@@ -342,7 +331,7 @@ df <- data.frame( x=Inf, y=Inf,
 
 core2 %>% 
   filter( ! is.na(Region) ) %>% 
-  ggplot( aes(st_debt_ratio) )  + 
+  ggplot( aes(asset_rev_ratio) )  + 
     geom_density( alpha = 0.5 ) + 
     xlab( "Census Regions" ) + 
     ylab( variable.label ) +
@@ -370,7 +359,7 @@ df <- data.frame( x=Inf, y=Inf,
 
 core2 %>% 
   filter( ! is.na(Division) ) %>% 
-  ggplot( aes(st_debt_ratio) )  + 
+  ggplot( aes(asset_rev_ratio) )  + 
     geom_density( alpha = 0.5 ) + 
     xlab( "Census Sub-Regions (10)" ) + 
     ylab( variable.label ) +
@@ -410,7 +399,7 @@ if( nrow(core2) > 10000 )
   core3 <- core2
 }
 
-jplot( log10(core3$totfuncexpns), core3$st_debt_ratio, 
+jplot( log10(core3$totfuncexpns), core3$asset_rev_ratio, 
        xlab="Nonprofit Size (logged Expenses)", 
        ylab=variable.label,
        xaxt="n", xlim=c(3,10) )
@@ -425,7 +414,7 @@ axis( side=1,
 ```{r}
 core2 %>% 
   filter( ! is.na(exp.q) ) %>% 
-  ggplot( aes(st_debt_ratio) )  + 
+  ggplot( aes(asset_rev_ratio) )  + 
     geom_density( alpha = 0.5) + 
     labs( title="Nonprofit Size (logged expenses)" ) + 
     xlab( variable.label ) +
@@ -463,7 +452,7 @@ if( nrow(core2) > 10000 )
   core3 <- core2
 }
 
-jplot( log10(core3$totrevenue), core3$st_debt_ratio, 
+jplot( log10(core3$totrevenue), core3$asset_rev_ratio, 
        xlab="Nonprofit Size (logged Revenue)", 
        ylab=variable.label,
        xaxt="n", xlim=c(3,10) )
@@ -478,7 +467,7 @@ axis( side=1,
 ```{r}
 core2 %>% 
   filter( ! is.na(rev.q) ) %>% 
-  ggplot( aes(st_debt_ratio) )  + 
+  ggplot( aes(asset_rev_ratio) )  + 
     geom_density( alpha = 0.5 ) + 
     labs( title="Nonprofit Size (logged revenues)" ) + 
     xlab( variable.label ) +
@@ -514,7 +503,7 @@ if( nrow(core2) > 10000 )
   core3 <- core2
 }
 
-jplot( log10(core3$totnetassetend), core3$st_debt_ratio, 
+jplot( log10(core3$totnetassetend), core3$asset_rev_ratio, 
        xlab="Nonprofit Size (logged Net Assets)", 
        ylab=variable.label,
        xaxt="n", xlim=c(3,10) )
@@ -532,7 +521,7 @@ core2$asset.q <- create_quantiles( var=core2$totnetassetend, n.groups=5 )
 
 core2 %>% 
   filter( ! is.na(asset.q) ) %>% 
-  ggplot( aes(st_debt_ratio) )  + 
+  ggplot( aes(asset_rev_ratio) )  + 
     geom_density( alpha = 0.5 ) + 
     labs( title="Nonprofit Size (logged net assets, if assets > 0)" ) + 
     xlab( variable.label ) + 
@@ -561,7 +550,7 @@ if( nrow(core2) > 10000 )
   core3 <- core2
 }
 
-jplot( log10(core3$totassetsend), core3$st_debt_ratio, 
+jplot( log10(core3$totassetsend), core3$asset_rev_ratio, 
        xlab="Nonprofit Size (logged Total Assets)", 
        ylab=variable.label,
        xaxt="n", xlim=c(3,10) )
@@ -587,7 +576,7 @@ ggplot( core2, aes(x = totassetsend )) +
 ```{r}
 core2 %>% 
   filter( ! is.na(tot.asset.q) ) %>% 
-  ggplot( aes(st_debt_ratio) )  + 
+  ggplot( aes(asset_rev_ratio) )  + 
     geom_density( alpha = 0.5 ) + 
     xlab( "Nonprofit Size (logged total assets, if assets > 0)" ) + 
     ylab( variable.label ) +
@@ -618,7 +607,7 @@ if( nrow(core2) > 10000 )
   core3 <- core2
 }
 
-jplot( core3$AGE, core3$st_debt_ratio, 
+jplot( core3$AGE, core3$asset_rev_ratio, 
        xlab="Nonprofit Age", 
        ylab=variable.label ) 
 
@@ -630,7 +619,7 @@ jplot( core3$AGE, core3$st_debt_ratio,
 ```{r}
 core2 %>% 
   filter( ! is.na(age.q) ) %>% 
-  ggplot( aes(st_debt_ratio) )  + 
+  ggplot( aes(asset_rev_ratio) )  + 
     geom_density( alpha = 0.5 ) + 
     labs( title="Nonprofit Age" ) + 
     xlab( variable.label ) +
@@ -648,9 +637,9 @@ core2 %>%
 # Save Metrics 
 
 ```{r, eval=F}
-core.st_debt_ratio <- select( core, ein, tax_pd, st_debt_ratio )
-saveRDS( core.st_debt_ratio, "03-data-ratios/m-13-short-term-debt-ratio.rds" )
-write.csv( core.st_debt_ratio, "03-data-ratios/m-13-short-term-debt-ratio.csv" )
+core.asset_rev_ratio <- select( core, ein, tax_pd, asset_rev_ratio )
+saveRDS( core.asset_rev_ratio, "03-data-ratios/m-15-asset-revenue-ratio.rds" )
+write.csv( core.asset_rev_ratio, "03-data-ratios/m-15-asset-revenue-ratio.csv" )
 ```
 
 
