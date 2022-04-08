@@ -652,6 +652,8 @@ ggplot( core2, aes(x = lndbldgsequipend )) +
 
 
 ```{r, fig.height=5}
+
+
 core2$lndbldgsequipend[ core2$lndbldgsequipend < 1 ] <- NA
 
 if( nrow(core2) > 10000 )
@@ -660,11 +662,16 @@ if( nrow(core2) > 10000 )
 } else
 {
   core3 <- core2
-}
 
-jplot( core3$lndbldgsequipend, core3$quick_ratio, 
-       xlab="Land and Building Value", 
-       ylab=variable.label ) 
+
+jplot( log10(core3$lndbldgsequipend), core3$quick_ratio, 
+       xlab="Land and Building Value (logged)", 
+       ylab=variable.label,
+       xaxt="n", xlim=c(3,10) )
+axis( side=1, 
+      at=c(3,4,5,6,7,8,9,10), 
+      labels=c("1k","10k","100k","1m","10m","100m","1b","10b") )
+}
 
 ```
 
@@ -679,7 +686,7 @@ core2 %>%
     labs( title="Land and Building Value" ) + 
     xlab( variable.label ) +
     ylab( "" ) +
-    facet_wrap( ~ age.q, nrow=3 ) + 
+    facet_wrap( ~ land.q, nrow=3 ) + 
     theme_minimal( base_size = 22 )  + 
     theme( axis.title.y=element_blank(),
            axis.text.y=element_blank(), 
