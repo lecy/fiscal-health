@@ -1,0 +1,734 @@
+---
+title: "Metric 17 - Administration Expense Ratio"
+author: ""
+date: "April 8, 2022"
+font: Lato
+output:
+  html_document:
+    self_contained: TRUE
+    toc: TRUE
+    toc_float: TRUE
+    css: www/web_report.css
+    output_dir: "."
+editor_options:
+    chunk_output_type: console
+---
+
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set( echo = TRUE, 
+                       message=F, 
+                       warning=F, 
+                       error = TRUE,
+                       fig.width = 10, 
+                       fig.height = 6, 
+                       collapse = TRUE )
+```
+
+
+```{r, echo=F}
+
+## Packages
+
+library( haven )        # importing data files 
+library( tidyr )        # data wrangling
+library( dplyr )        # data wrangling 
+library( ggplot2 )      # fancy plots 
+library( ggthemes )     # fancy plots
+library( scales )       # re-scaling numbers
+library( stargazer )    # nice tables 
+library( pander )       # format tables for HTML 
+library( knitr )        # formatting functions 
+library( DT )           # embed datasets in HTML docs
+
+library( urbnthemes )   # setting the color scheme to Urban's
+set_urbn_defaults(style = "print")
+
+source( "r-functions.R" )
+
+variable.label <- "Administration Expense Ratio"
+
+# stargazer table print type
+# run chunk for live RMD sessions
+s.type <- "text"
+
+# stargazer table print type
+# resets to html when knitting
+s.type <- "html"
+
+
+## Load Data
+
+# local: 
+# core <- readRDS( "02-data-wrangled/core.rds" )
+
+# from github: 
+URL <- "https://github.com/lecy/fiscal-health/raw/main/02-data-wrangled/core.rds"
+core <- readRDS(gzcon(url( URL )))
+
+
+
+# Preview the data: 
+# table( core$NTEE1 ) %>% kable()
+# head(core) %>% pander()
+```
+
+`r knitr::include_graphics(here::here("www", "images", "urban-institute-logo.png"))`
+
+<br>
+<hr>
+<br>
+
+
+
+
+# Metric Construction
+
+
+## Definition & Interpretation
+
+
+$$Administration\: Expense\:Ratio = \frac{Management \: and \:General \: Expense \:Total}{Total \: Expenses} $$
+
+The administrative expense ratio measures the percentage of an organization’s expenses that are being allocated to administrative costs
+
+High values in this ratio indicate that more of an organization's expenses are going towards its management and general expenses (or overhead) while a lower number indicates that an organization's funds are going towards program service or fundraising expenses.
+
+Charity Navigator generally gives its highest rankings to organizations that spend less than 15% of expenses on overhead. The Better Business Bureau’s Wise Giving Alliance recommends a ratio of less than 35%.
+
+
+
+## Variables 
+
+Note: This data is available only for organizations that filed 990s using e-file submissions. The data is sourced from AWS. 
+
+* **Numerator:** Total Management and General Expenses
+  <br>
+  
+  *	On 990: PART 9, LINE 25(C)
+    - AWS Tax File Data: F9_09_EXP_TOT_MGMT
+    <br>
+  
+  *	On EZ: Not Available
+    - AWS Tax File Data: Not Available
+  <br>
+* **Denominator:** Total Expenses
+  *	On 990: PART 9, LINE 25(A)
+    -AWS Tax File Data: F9_09_EXP_TOT_TOT
+    
+  *	On EZ: PART 1, Line 17
+    -AWS Tax File Data: F9_09_EXP_TOT_TOT
+  <br>
+
+
+
+
+```{r, eval=T}
+
+
+# TEMPORARY VARIABLES 
+mgmntexp  <- core$F9_09_EXP_TOT_MGMT
+total_expense <- core$F9_09_EXP_TOT_TOT
+
+# can't divide by zero
+total_expense[ total_expense == 0 ] <- NA
+
+# SAVE RESULTS 
+core$adminstration_expense_ratio <-  mgmntexp / total_expense
+                     
+# summary( core$adminstration_expense_ratio )
+```
+
+
+## Standardize Scales
+
+Check high and low values to see what makes sense. 
+
+```{r, fig.height=4}
+x.05 <- quantile( core$adminstration_expense_ratio, 0.05, na.rm=T )
+x.95 <- quantile( core$adminstration_expense_ratio, 0.95, na.rm=T )
+
+ggplot( core, aes(x = adminstration_expense_ratio ) ) +  
+  geom_density( alpha = 0.5) + 
+  xlim( x.05, x.95 ) 
+```
+
+
+
+
+```{r}
+core2 <- core
+
+# proportion of values that are negative
+#mean( core2$adminstration_expense_ratio < 0, na.rm=T ) 
+#core2$adminstration_expense_ratio[ core2$adminstration_expense_ratio < 0 ] <- 0
+
+# proption of values above 200% 
+#mean( core2$adminstration_expense_ratio > 50, na.rm=T ) 
+#core2$adminstration_expense_ratio[ core2$adminstration_expense_ratio > 50 ] <- 50
+
+
+
+x.05 <- quantile( core$adminstration_expense_ratio, 0.05, na.rm=T )
+x.95 <- quantile( core$adminstration_expense_ratio, 0.95, na.rm=T )
+
+core2 <- core
+
+# proportion of values that are negative
+# mean( core2$der < 0, na.rm=T ) 
+
+# proption of values above 1% 
+# mean( core2$der > 5, na.rm=T ) 
+
+# WINSORIZATION AT 5th and 95th PERCENTILES
+
+core2$adminstration_expense_ratio[ core2$adminstration_expense_ratio < x.05 ] <- x.05
+core2$adminstration_expense_ratio[ core2$adminstration_expense_ratio > x.95 ] <- x.95
+```
+
+
+
+## Metric Scope
+
+
+Tax data is available for full 990 filers and 990EZ filers (organizations with Gross receipts < $200,000 and Total assets < $500,000). 
+
+The data have been capped to those with values between 5% and 95% of the normal distribution to cut off outliers and exempt organizations with zero profitability (though negative values are allowed still). 
+
+
+
+# Descriptive Statistics
+
+
+Note: All monetary variables have been converted to thousands of dollars. 
+
+```{r, results="asis"}
+
+core2 %>%
+  mutate( # adminstration_expense_ratio = adminstration_expense_ratio * 10000,
+    totrevenue = totrevenue / 1000,
+    totfuncexpns = totfuncexpns / 1000, 
+    lndbldgsequipend = lndbldgsequipend / 1000,
+    totassetsend = totassetsend / 1000,
+    totliabend = totliabend / 1000,
+    totnetassetend = totnetassetend / 1000 ) %>% 
+  select( STATE,  NTEE1, NTMAJ12, 
+          adminstration_expense_ratio, 
+          AGE, 
+          totrevenue, totfuncexpns, 
+          lndbldgsequipend, totassetsend, 
+          totnetassetend, totliabend ) %>%
+
+  stargazer( type = s.type, 
+             digits=2, 
+             summary.stat = c("min","p25","median",
+                              "mean","p75","max", "sd"),
+             covariate.labels = c("Administration Expense Ratio", "Age", 
+                                  "Revenue ($1k)", "Expenses($1k)", 
+                                  "Buildings ($1k)", "Total Assets ($1k)",
+                                  "Net Assets ($1k)", "Liabiliies ($1k)"))
+```
+
+
+
+What proportion of orgs have Administration Expense ratios equal to zero?
+
+
+```{r}
+prop.zero <- mean( core2$adminstration_expense_ratio == 0, na.rm=T )
+```
+
+
+In the sample, `r 100*round(prop.zero,2)` percent of the organizations have Administration Expense ratios equal to zero, meaning they have no administration expenses. These organizations are dropped from subsequent graphs to keep the visualizations clean. The interpretation of the graphics should be the distributions of Administration Expense ratios for organizations that have positive or negative values.  
+
+
+
+
+```{r}
+###
+### ADD QUANTILES
+###
+###   function create_quantiles() defined in r-functions.R
+
+core2$exp.q   <- create_quantiles( var=core2$totfuncexpns,   n.groups=5 )
+core2$rev.q   <- create_quantiles( var=core2$totrevenue,     n.groups=5 )
+core2$asset.q <- create_quantiles( var=core2$totnetassetend, n.groups=5 )
+core2$age.q   <- create_quantiles( var=core2$AGE,            n.groups=5 )
+core2$land.q <- create_quantiles(var=core2$lndbldgsequipend,            n.groups=5 )
+
+```
+
+
+
+
+
+
+
+## `r variable.label` Density 
+
+```{r, fig.height=4}
+min.x <- min( core2$adminstration_expense_ratio, na.rm=T )
+max.x <- max( core2$adminstration_expense_ratio, na.rm=T )
+
+ggplot( core2, aes(x = adminstration_expense_ratio )) +  
+  geom_density( alpha = 0.5 ) + 
+  xlim( min.x, max.x  ) +
+  xlab( variable.label ) +
+  theme( axis.title.y=element_blank(),
+         axis.text.y=element_blank(), 
+         axis.ticks.y=element_blank() )
+```
+
+
+
+## `r variable.label` by NTEE Major Code
+
+
+
+```{r}
+core3 <- core2 %>% filter( ! is.na(NTEE1) )
+table( core3$NTEE1) %>% sort(decreasing=TRUE) %>% kable()
+```
+
+
+```{r}
+
+t <- table( factor(core3$NTEE1) ) 
+df <- data.frame( x=Inf, y=Inf, 
+                  N=paste0( "N=", as.character(t) ), 
+                  NTEE1=names(t) )
+
+ggplot( core3, aes( x=adminstration_expense_ratio ) ) + 
+  geom_density( alpha = 0.5) + 
+  # xlim( -0.1, 1 ) +
+  labs( title="Nonprofit Subsectors" ) + 
+  xlab( variable.label ) + 
+  facet_wrap( ~ NTEE1, nrow=1 ) + 
+    theme_minimal( base_size = 15 )  + 
+    theme( axis.title.y=element_blank(),
+           axis.text.y=element_blank(), 
+           axis.ticks.y=element_blank(),
+           strip.text = element_text( face="bold") ) +  # size=20 
+  geom_text( data=df, 
+             aes(x, y, label=N ), 
+             hjust=2, vjust=3, 
+             color="gray60", size=6 )
+```
+
+
+
+
+## `r variable.label` by Region 
+
+```{r}
+table( core2$Region) %>% kable()
+```
+
+
+```{r}
+t <- table( factor(core2$Region) ) 
+df <- data.frame( x=Inf, y=Inf, 
+                  N=paste0( "N=", as.character(t) ), 
+                  Region=names(t) )
+
+core2 %>% 
+  filter( ! is.na(Region) ) %>% 
+  ggplot( aes(adminstration_expense_ratio) )  + 
+    geom_density( alpha = 0.5 ) + 
+    xlab( "Census Regions" ) + 
+    ylab( variable.label ) +
+    facet_wrap( ~ Region, nrow=3 ) + 
+    theme_minimal( base_size = 22 )  + 
+    theme( axis.title.y=element_blank(),
+           axis.text.y=element_blank(), 
+           axis.ticks.y=element_blank() ) + 
+    geom_text( data=df, 
+             aes(x, y, label=N ), 
+             hjust=2, vjust=3, 
+             color="gray60", size=6 )
+```
+
+
+```{r}
+table( core2$Division ) %>% kable()
+```
+
+```{r}
+t <- table( factor(core2$Division) ) 
+df <- data.frame( x=Inf, y=Inf, 
+                  N=paste0( "N=", as.character(t) ), 
+                  Division=names(t) )
+
+core2 %>% 
+  filter( ! is.na(Division) ) %>% 
+  ggplot( aes(adminstration_expense_ratio) )  + 
+    geom_density( alpha = 0.5 ) + 
+    xlab( "Census Sub-Regions (10)" ) + 
+    ylab( variable.label ) +
+    facet_wrap( ~ Division, nrow=3 ) + 
+    theme_minimal( base_size = 22 )  + 
+    theme( axis.title.y=element_blank(),
+           axis.text.y=element_blank(), 
+           axis.ticks.y=element_blank() ) + 
+    geom_text( data=df, 
+             aes(x, y, label=N ), 
+             hjust=2, vjust=3, 
+             color="gray60", size=6 ) 
+```
+
+
+
+
+## `r variable.label` by Nonprofit Size (Expenses)
+
+
+```{r, fig.height=4}
+ggplot( core2, aes(x = totfuncexpns )) +  
+  geom_density( alpha = 0.5 ) + 
+  xlim( quantile(core2$totfuncexpns, c(0.02,0.98), na.rm=T ) )
+```
+
+
+```{r, fig.height=5}
+core2$totfuncexpns[ core2$totfuncexpns < 1 ] <- 1
+# core2$totfuncexpns[ is.na(core2$totfuncexpns) ] <- 1
+
+if( nrow(core2) > 10000 )
+{
+  core3 <- sample_n( core2, 10000 )
+} else
+{
+  core3 <- core2
+}
+
+jplot( log10(core3$totfuncexpns), core3$adminstration_expense_ratio, 
+       xlab="Nonprofit Size (logged Expenses)", 
+       ylab=variable.label,
+       xaxt="n", xlim=c(3,10) )
+axis( side=1, 
+      at=c(3,4,5,6,7,8,9,10), 
+      labels=c("1k","10k","100k","1m","10m","100m","1b","10b") )
+```
+
+
+
+
+```{r}
+core2 %>% 
+  filter( ! is.na(exp.q) ) %>% 
+  ggplot( aes(adminstration_expense_ratio) )  + 
+    geom_density( alpha = 0.5) + 
+    labs( title="Nonprofit Size (logged expenses)" ) + 
+    xlab( variable.label ) +
+    facet_wrap( ~ exp.q, nrow=3 ) + 
+    theme_minimal( base_size = 22 )  + 
+    theme( axis.title.y=element_blank(),
+           axis.text.y=element_blank(), 
+           axis.ticks.y=element_blank() )
+```
+
+
+
+
+## `r variable.label` by Nonprofit Size (Revenue)
+
+
+```{r, fig.height=4}
+ggplot( core2, aes(x = totrevenue )) +  
+  geom_density( alpha = 0.5 ) + 
+  xlim( quantile(core2$totrevenue, c(0.02,0.98), na.rm=T ) ) + 
+  theme( axis.title.y=element_blank(),
+           axis.text.y=element_blank(), 
+           axis.ticks.y=element_blank() )
+```
+
+
+```{r, fig.height=5}
+core2$totrevenue[ core2$totrevenue < 1 ] <- 1
+
+if( nrow(core2) > 10000 )
+{
+  core3 <- sample_n( core2, 10000 )
+} else
+{
+  core3 <- core2
+}
+
+jplot( log10(core3$totrevenue), core3$adminstration_expense_ratio, 
+       xlab="Nonprofit Size (logged Revenue)", 
+       ylab=variable.label,
+       xaxt="n", xlim=c(3,10) )
+axis( side=1, 
+      at=c(3,4,5,6,7,8,9,10), 
+      labels=c("1k","10k","100k","1m","10m","100m","1b","10b") )
+```
+
+
+
+
+```{r}
+core2 %>% 
+  filter( ! is.na(rev.q) ) %>% 
+  ggplot( aes(adminstration_expense_ratio) )  + 
+    geom_density( alpha = 0.5 ) + 
+    labs( title="Nonprofit Size (logged revenues)" ) + 
+    xlab( variable.label ) +
+    facet_wrap( ~ rev.q, nrow=3 ) + 
+    theme_minimal( base_size = 22 )  + 
+    theme( axis.title.y=element_blank(),
+           axis.text.y=element_blank(), 
+           axis.ticks.y=element_blank() )
+```
+
+
+
+## `r variable.label` by Nonprofit Size (Net Assets)
+
+```{r, fig.height=4}
+ggplot( core2, aes(x = totnetassetend )) +  
+  geom_density( alpha = 0.5) + 
+  xlim( quantile(core2$totnetassetend, c(0.02,0.98), na.rm=T ) ) + 
+  xlab( "Net Assets" ) +
+    theme( axis.title.y=element_blank(),
+           axis.text.y=element_blank(), 
+           axis.ticks.y=element_blank() )
+```
+
+```{r, fig.height=5}
+core2$totnetassetend[ core2$totnetassetend < 1 ] <- NA
+
+if( nrow(core2) > 10000 )
+{
+  core3 <- sample_n( core2, 10000 )
+} else
+{
+  core3 <- core2
+}
+
+jplot( log10(core3$totnetassetend), core3$adminstration_expense_ratio, 
+       xlab="Nonprofit Size (logged Net Assets)", 
+       ylab=variable.label,
+       xaxt="n", xlim=c(3,10) )
+axis( side=1, 
+      at=c(3,4,5,6,7,8,9,10), 
+      labels=c("1k","10k","100k","1m","10m","100m","1b","10b") )
+```
+
+
+
+
+```{r}
+core2$totnetassetend[ core2$totnetassetend < 1 ] <- NA
+core2$asset.q <- create_quantiles( var=core2$totnetassetend, n.groups=5 )
+
+core2 %>% 
+  filter( ! is.na(asset.q) ) %>% 
+  ggplot( aes(adminstration_expense_ratio) )  + 
+    geom_density( alpha = 0.5 ) + 
+    labs( title="Nonprofit Size (logged net assets, if assets > 0)" ) + 
+    xlab( variable.label ) + 
+    ylab( "" ) + 
+    facet_wrap( ~ asset.q, nrow=3 ) + 
+    theme_minimal( base_size = 22 )  + 
+    theme( axis.title.y=element_blank(),
+           axis.text.y=element_blank(), 
+           axis.ticks.y=element_blank() )
+```
+
+
+
+
+Total Assets for Comparison 
+
+```{r, fig.height=5}
+core2$totassetsend[ core2$totassetsend < 1 ] <- NA
+core2$tot.asset.q <- create_quantiles( var=core2$totassetsend, n.groups=5 )
+
+if( nrow(core2) > 10000 )
+{
+  core3 <- sample_n( core2, 10000 )
+} else
+{
+  core3 <- core2
+}
+
+jplot( log10(core3$totassetsend), core3$adminstration_expense_ratio, 
+       xlab="Nonprofit Size (logged Total Assets)", 
+       ylab=variable.label,
+       xaxt="n", xlim=c(3,10) )
+axis( side=1, 
+      at=c(3,4,5,6,7,8,9,10), 
+      labels=c("1k","10k","100k","1m","10m","100m","1b","10b") )
+
+```
+
+
+```{r, fig.height=4}
+ggplot( core2, aes(x = totassetsend )) +  
+  geom_density( alpha = 0.5) + 
+  xlim( quantile(core2$totassetsend, c(0.02,0.98), na.rm=T ) ) + 
+  xlab( "Net Assets" ) +
+    theme( axis.title.y=element_blank(),
+           axis.text.y=element_blank(), 
+           axis.ticks.y=element_blank() )
+
+```
+
+
+```{r}
+core2 %>% 
+  filter( ! is.na(tot.asset.q) ) %>% 
+  ggplot( aes(adminstration_expense_ratio) )  + 
+    geom_density( alpha = 0.5 ) + 
+    xlab( "Nonprofit Size (logged total assets, if assets > 0)" ) + 
+    ylab( variable.label ) +
+    facet_wrap( ~ tot.asset.q, nrow=3 ) + 
+    theme_minimal( base_size = 22 )  + 
+    theme( axis.title.y=element_blank(),
+           axis.text.y=element_blank(), 
+           axis.ticks.y=element_blank() )
+```
+
+
+## `r variable.label` by Nonprofit Age
+
+```{r, fig.height=4}
+ggplot( core2, aes(x = AGE )) +  
+  geom_density( alpha = 0.5 )  
+```
+
+
+```{r, fig.height=5}
+core2$AGE[ core2$AGE < 1 ] <- NA
+
+if( nrow(core2) > 10000 )
+{
+  core3 <- sample_n( core2, 10000 )
+} else
+{
+  core3 <- core2
+}
+
+jplot( core3$AGE, core3$adminstration_expense_ratio, 
+       xlab="Nonprofit Age", 
+       ylab=variable.label ) 
+
+```
+
+
+
+
+```{r}
+core2 %>% 
+  filter( ! is.na(age.q) ) %>% 
+  ggplot( aes(adminstration_expense_ratio) )  + 
+    geom_density( alpha = 0.5 ) + 
+    labs( title="Nonprofit Age" ) + 
+    xlab( variable.label ) +
+    ylab( "" ) +
+    facet_wrap( ~ age.q, nrow=3 ) + 
+    theme_minimal( base_size = 22 )  + 
+    theme( axis.title.y=element_blank(),
+           axis.text.y=element_blank(), 
+           axis.ticks.y=element_blank() )
+```
+
+
+## `r variable.label` by Land and Building Value
+
+```{r, fig.height=4}
+ggplot( core2, aes(x = lndbldgsequipend )) +  
+  geom_density( alpha = 0.5 )  
+```
+
+
+```{r, fig.height=5}
+
+
+core2$lndbldgsequipend[ core2$lndbldgsequipend < 1 ] <- NA
+
+if( nrow(core2) > 10000 )
+{
+  core3 <- sample_n( core2, 10000 )
+} else
+{
+  core3 <- core2
+
+
+jplot( log10(core3$lndbldgsequipend), core3$adminstration_expense_ratio, 
+       xlab="Land and Building Value (logged)", 
+       ylab=variable.label,
+       xaxt="n", xlim=c(3,10) )
+axis( side=1, 
+      at=c(3,4,5,6,7,8,9,10), 
+      labels=c("1k","10k","100k","1m","10m","100m","1b","10b") )
+}
+
+```
+
+
+
+
+```{r}
+core2 %>% 
+  filter( ! is.na(land.q) ) %>% 
+  ggplot( aes(adminstration_expense_ratio) )  + 
+    geom_density( alpha = 0.5 ) + 
+    labs( title="Land and Building Value" ) + 
+    xlab( variable.label ) +
+    ylab( "" ) +
+    facet_wrap( ~ land.q, nrow=3 ) + 
+    theme_minimal( base_size = 22 )  + 
+    theme( axis.title.y=element_blank(),
+           axis.text.y=element_blank(), 
+           axis.ticks.y=element_blank() )
+
+```
+
+
+# Save Metrics 
+
+```{r, eval=F}
+core.adminstration_expense_ratio <- select( core, ein, tax_pd, adminstration_expense_ratio )
+saveRDS( core.adminstration_expense_ratio, "03-data-ratios/m-17-administration-expense-ratio.rds" )
+write.csv( core.adminstration_expense_ratio, "03-data-ratios/m-17-administration-expense-ratio.csv" )
+```
+
+
+```{r, fig.height=10, eval=F, echo=F}
+# library( DT )
+
+these.buttons <- c( 'csv' )
+
+datatable( core2,
+           filter='bottom', rownames=FALSE, 
+           #options=list( pageLength=5, autoWidth=TRUE ),
+           fillContainer=TRUE, 
+           style="bootstrap",
+           class='table-condensed table-striped',
+           extensions = 'Buttons', 
+           options=list( dom='Bfrtip', 
+                         buttons=these.buttons  )) %>%
+  
+formatStyle( "NTEE1", "white-space"="nowrap" )
+```
+
+
+
+
+
+<br>
+<br>
+<hr>
+<br>
+<br>
+
+
+
+
+```{css, echo=F}
+
+div#TOC{ margin-top: 42px; }
+```
+
