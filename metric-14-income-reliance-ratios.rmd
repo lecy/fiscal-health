@@ -1205,7 +1205,7 @@ core2 %>%
            axis.ticks.y=element_blank() )
 ```
 
-#Investment Income Reliance Ratio Analysis
+# Investment Income Reliance Ratio Analysis
 
 ```{r, eval=T}
 # TEMPORARY VARIABLES 
@@ -1280,7 +1280,7 @@ The data have been capped to those with values between 5% and 95% of the normal 
 
 
 
-# Descriptive Statistics
+## Descriptive Statistics
 
 
 Note: All monetary variables have been converted to thousands of dollars. 
@@ -1715,7 +1715,7 @@ core2 %>%
 ```
 
 
-#Income Reliance Ratio Analysis
+# Income Reliance Ratio Analysis
 
 ```{r, eval=T}
 
@@ -1733,8 +1733,8 @@ core3$income_reliance_ratio <- apply( dat, MARGIN=1, FUN=max )
 Check high and low values to see what makes sense. 
 
 ```{r, fig.height=4}
-x.05 <- quantile( core3$income_reliance_ratio, 0.05, na.rm=T )
-x.95 <- quantile( core3$income_reliance_ratio, 0.95, na.rm=T )
+x.05 <- quantile( core$income_reliance_ratio, 0.05, na.rm=T )
+x.95 <- quantile( core$income_reliance_ratio, 0.95, na.rm=T )
 
 ggplot( core, aes(x = income_reliance_ratio ) ) +  
   geom_density( alpha = 0.5) + 
@@ -1786,7 +1786,7 @@ The data have been capped to those with values between 5% and 95% of the normal 
 
 
 
-# Descriptive Statistics
+## Descriptive Statistics
 
 
 Note: All monetary variables have been converted to thousands of dollars. 
