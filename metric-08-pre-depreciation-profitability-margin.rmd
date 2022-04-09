@@ -70,7 +70,7 @@ core <- readRDS(gzcon(url( URL )))
 
 
 # Preview the data: 
-# table( core$NTMAJ12 ) %>% kable()
+# table( core$NTEE1 ) %>% kable()
 # head(core) %>% pander()
 ```
 
@@ -297,24 +297,24 @@ ggplot( core2, aes(x = pred_profitmargin )) +
 
 
 ```{r}
-core3 <- core2 %>% filter( ! is.na(NTMAJ12) )
-table( core3$NTMAJ12) %>% sort(decreasing=TRUE) %>% kable()
+core3 <- core2 %>% filter( ! is.na(NTEE1) )
+table( core3$NTEE1) %>% sort(decreasing=TRUE) %>% kable()
 ```
 
 
 ```{r}
 
-t <- table( factor(core3$NTMAJ12) ) 
+t <- table( factor(core3$NTEE1) ) 
 df <- data.frame( x=Inf, y=Inf, 
                   N=paste0( "N=", as.character(t) ), 
-                  NTMAJ12=names(t) )
+                  NTEE1=names(t) )
 
 ggplot( core3, aes( x=pred_profitmargin ) ) + 
   geom_density( alpha = 0.5) + 
   # xlim( -0.1, 1 ) +
   labs( title="Nonprofit Subsectors" ) + 
   xlab( variable.label ) + 
-  facet_wrap( ~ NTMAJ12, nrow=3 ) + 
+  facet_wrap( ~ NTEE1, nrow=1 ) + 
     theme_minimal( base_size = 15 )  + 
     theme( axis.title.y=element_blank(),
            axis.text.y=element_blank(), 
@@ -671,7 +671,7 @@ datatable( core2,
            options=list( dom='Bfrtip', 
                          buttons=these.buttons  )) %>%
   
-formatStyle( "NTMAJ12", "white-space"="nowrap" )
+formatStyle( "NTEE1", "white-space"="nowrap" )
 ```
 
 

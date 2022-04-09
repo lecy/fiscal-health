@@ -1,5 +1,5 @@
 ---
-title: "Metric 11- Equity Ratio"
+title: "Metric 16 - Program Efficiency Ratio"
 author: ""
 date: "April 8, 2022"
 font: Lato
@@ -47,7 +47,7 @@ set_urbn_defaults(style = "print")
 
 source( "r-functions.R" )
 
-variable.label <- "Equity Ratio"
+variable.label <- "Program Efficiency Ratio"
 
 # stargazer table print type
 # run chunk for live RMD sessions
@@ -89,35 +89,36 @@ core <- readRDS(gzcon(url( URL )))
 ## Definition & Interpretation
 
 
-$$Equity\:Ratio = \frac{Net \: Assets}{Total \: Assets} $$
+$$Program\: Efficiency\:Ratio = \frac{Program\: Service\:Expenses}{Total \: Expenses} $$
 
-This metric indicates how much of an organization's assets are owned free and clear or how much equity it has in its total assets. Nonprofits with greater amounts of equity are more flexible in the face of financial shocks than organizations with comparatively lesser amounts of equity because they can (1) borrow money from capital markets and (2) convert those assets to cash to offset financial shocks.
+The program efficiency ratio measures the percentage of expenses that a nonprofit organization is spending on its core mission.
 
-High values in this indicator are generally better, as they show that an organization has substantial equity in its assets. Low or negative values indicate an organization has higher liabilities and is generally more leveraged and thus more vulnerable to shocks. 
+High values in this ratio indicate that more of an organization's expenses are going towards its core mission or program services while a lower number indicates that an organization's expenses are comprised of other things like management or fundraising.
+
+Charity Navigator generally gives the highest rankings to those organizations whose ratio of program expenses is 85% or higher of their total expenses. Other agencies, such as the Better Business Bureau’s Wise Giving Alliance, recommend a ratio of 65% or higher.
+
+
 
 ## Variables 
 
-Note: This data is available only for both 990EZ and full 990 filers.
+Note: This data is available only for organizations that filed 990s using e-file submissions. The data is sourced from AWS. 
 
-* **Numerator:** Net Assets 
+* **Numerator:** Program Service Expenses
   <br>
   
-  *	On 990:  Part X, Line 33B
-    - SOI PC EXTRACTS: totnetassetend 
+  *	On 990: Part 9, Line 25B
+    - AWS Tax File Data: F9_09_EXP_TOT_PROG
     <br>
   
-  *	On EZ: Part I, Line 21
-    - SOI PC EXTRACTS: networthend
-
+  *	On EZ: Not Available
+    - AWS Tax File Data: Not Available
   <br>
-
-* **Denominator:** Total Assets
-
-  *	On 990: Part X, Line 16B
-    -SOI PC EXTRACTS: totassetsend 
+* **Denominator:** Total Expenses
+  *	On 990: Part 1, Line 18(B)
+    -AWS Tax File Data: F9_01_EXP_TOT_CY
     
-  *	On EZ: Part II, Line 25B
-    -SOI PC EXTRACTS: totassetsend
+  *	On EZ: PART 1, Line 17
+    -AWS Tax File Data: F9_01_EXP_TOT_CY
   <br>
 
 
@@ -127,16 +128,16 @@ Note: This data is available only for both 990EZ and full 990 filers.
 
 
 # TEMPORARY VARIABLES 
-netassets  <- ( core$totnetassetend)
-totassets <- ( core$totassetsend)
+progserv_exp  <- core$F9_09_EXP_TOT_PROG
+total_expense <- core$F9_01_EXP_TOT_CY
 
 # can't divide by zero
-totassets[ totassets == 0 ] <- NA
+total_expense[ total_expense == 0 ] <- NA
 
 # SAVE RESULTS 
-core$equity_ratio <-  netassets / totassets
+core$prog_efficiency_ratio <-  progserv_exp / total_expense
                      
-# summary( core$equity_ratio )
+# summary( core$prog_efficiency_ratio )
 ```
 
 
@@ -145,10 +146,10 @@ core$equity_ratio <-  netassets / totassets
 Check high and low values to see what makes sense. 
 
 ```{r, fig.height=4}
-x.05 <- quantile( core$equity_ratio, 0.05, na.rm=T )
-x.95 <- quantile( core$equity_ratio, 0.95, na.rm=T )
+x.05 <- quantile( core$prog_efficiency_ratio, 0.05, na.rm=T )
+x.95 <- quantile( core$prog_efficiency_ratio, 0.95, na.rm=T )
 
-ggplot( core, aes(x = equity_ratio ) ) +  
+ggplot( core, aes(x = prog_efficiency_ratio ) ) +  
   geom_density( alpha = 0.5) + 
   xlim( x.05, x.95 ) 
 ```
@@ -160,17 +161,17 @@ ggplot( core, aes(x = equity_ratio ) ) +
 core2 <- core
 
 # proportion of values that are negative
-mean( core2$equity_ratio < 0, na.rm=T ) 
-core2$equity_ratio[ core2$equity_ratio < 0 ] <- 0
+#mean( core2$prog_efficiency_ratio < 0, na.rm=T ) 
+#core2$prog_efficiency_ratio[ core2$prog_efficiency_ratio < 0 ] <- 0
 
 # proption of values above 200% 
-mean( core2$equity_ratio > 50, na.rm=T ) 
-core2$equity_ratio[ core2$equity_ratio > 50 ] <- 50
+#mean( core2$prog_efficiency_ratio > 50, na.rm=T ) 
+#core2$prog_efficiency_ratio[ core2$prog_efficiency_ratio > 50 ] <- 50
 
 
 
-x.05 <- quantile( core$equity_ratio, 0.05, na.rm=T )
-x.95 <- quantile( core$equity_ratio, 0.95, na.rm=T )
+x.05 <- quantile( core$prog_efficiency_ratio, 0.05, na.rm=T )
+x.95 <- quantile( core$prog_efficiency_ratio, 0.95, na.rm=T )
 
 core2 <- core
 
@@ -182,8 +183,8 @@ core2 <- core
 
 # WINSORIZATION AT 5th and 95th PERCENTILES
 
-core2$equity_ratio[ core2$equity_ratio < x.05 ] <- x.05
-core2$equity_ratio[ core2$equity_ratio > x.95 ] <- x.95
+core2$prog_efficiency_ratio[ core2$prog_efficiency_ratio < x.05 ] <- x.05
+core2$prog_efficiency_ratio[ core2$prog_efficiency_ratio > x.95 ] <- x.95
 ```
 
 
@@ -191,34 +192,21 @@ core2$equity_ratio[ core2$equity_ratio > x.95 ] <- x.95
 ## Metric Scope
 
 
-Tax data is available for full 990 filers, so this metric does not describe any organizations with Gross receipts < $200,000 and
-Total assets < $500,000. Some organizations with receipts or assets below those thresholds may have filed a full 990, but these would be exceptions. 
+Tax data is available for full 990 filers and 990EZ filers (organizations with Gross receipts < $200,000 and Total assets < $500,000). 
 
 The data have been capped to those with values between 5% and 95% of the normal distribution to cut off outliers and exempt organizations with zero profitability (though negative values are allowed still). 
-
-
-## Reference
-
-
-Any cited works here...
-
-
-
-
-
-
 
 
 
 # Descriptive Statistics
 
 
-Convert all monetary variables to thousands of dollars. 
+Note: All monetary variables have been converted to thousands of dollars. 
 
 ```{r, results="asis"}
 
 core2 %>%
-  mutate( equity_ratio = equity_ratio * 100,
+  mutate( # prog_efficiency_ratio = prog_efficiency_ratio * 10000,
     totrevenue = totrevenue / 1000,
     totfuncexpns = totfuncexpns / 1000, 
     lndbldgsequipend = lndbldgsequipend / 1000,
@@ -226,17 +214,17 @@ core2 %>%
     totliabend = totliabend / 1000,
     totnetassetend = totnetassetend / 1000 ) %>% 
   select( STATE,  NTEE1, NTMAJ12, 
-          equity_ratio, 
+          prog_efficiency_ratio, 
           AGE, 
           totrevenue, totfuncexpns, 
           lndbldgsequipend, totassetsend, 
           totnetassetend, totliabend ) %>%
 
   stargazer( type = s.type, 
-             digits=0, 
+             digits=2, 
              summary.stat = c("min","p25","median",
                               "mean","p75","max", "sd"),
-             covariate.labels = c("Equity Ratio (x100)", "Age", 
+             covariate.labels = c("Program Efficiency Ratio", "Age", 
                                   "Revenue ($1k)", "Expenses($1k)", 
                                   "Buildings ($1k)", "Total Assets ($1k)",
                                   "Net Assets ($1k)", "Liabiliies ($1k)"))
@@ -244,15 +232,15 @@ core2 %>%
 
 
 
-What proportion of orgs have equity ratios equal to zero?
+What proportion of orgs have program efficiency ratios equal to zero?
 
 
 ```{r}
-prop.zero <- mean( core2$equity_ratio == 0, na.rm=T )
+prop.zero <- mean( core2$prog_efficiency_ratio == 0, na.rm=T )
 ```
 
 
-In the sample, `r 100*round(prop.zero,2)` percent of the organizations have equity ratios equal to zero, meaning they have no equity in any of their assets. These organizations are dropped from subsequent graphs to keep the visualizations clean. The interpretation of the graphics should be the distributions of equity ratios for organizations that have positive or negative values.  
+In the sample, `r 100*round(prop.zero,2)` percent of the organizations have  program efficiency ratios equal to zero, meaning they have no program service expenses. These organizations are dropped from subsequent graphs to keep the visualizations clean. The interpretation of the graphics should be the distributions of Program Efficiency ratios for organizations that have positive or negative values.  
 
 
 
@@ -267,6 +255,8 @@ core2$exp.q   <- create_quantiles( var=core2$totfuncexpns,   n.groups=5 )
 core2$rev.q   <- create_quantiles( var=core2$totrevenue,     n.groups=5 )
 core2$asset.q <- create_quantiles( var=core2$totnetassetend, n.groups=5 )
 core2$age.q   <- create_quantiles( var=core2$AGE,            n.groups=5 )
+core2$land.q <- create_quantiles(var=core2$lndbldgsequipend,            n.groups=5 )
+
 ```
 
 
@@ -278,10 +268,10 @@ core2$age.q   <- create_quantiles( var=core2$AGE,            n.groups=5 )
 ## `r variable.label` Density 
 
 ```{r, fig.height=4}
-min.x <- min( core2$equity_ratio, na.rm=T )
-max.x <- max( core2$equity_ratio, na.rm=T )
+min.x <- min( core2$prog_efficiency_ratio, na.rm=T )
+max.x <- max( core2$prog_efficiency_ratio, na.rm=T )
 
-ggplot( core2, aes(x = equity_ratio )) +  
+ggplot( core2, aes(x = prog_efficiency_ratio )) +  
   geom_density( alpha = 0.5 ) + 
   xlim( min.x, max.x  ) +
   xlab( variable.label ) +
@@ -309,7 +299,7 @@ df <- data.frame( x=Inf, y=Inf,
                   N=paste0( "N=", as.character(t) ), 
                   NTEE1=names(t) )
 
-ggplot( core3, aes( x=equity_ratio ) ) + 
+ggplot( core3, aes( x=prog_efficiency_ratio ) ) + 
   geom_density( alpha = 0.5) + 
   # xlim( -0.1, 1 ) +
   labs( title="Nonprofit Subsectors" ) + 
@@ -344,7 +334,7 @@ df <- data.frame( x=Inf, y=Inf,
 
 core2 %>% 
   filter( ! is.na(Region) ) %>% 
-  ggplot( aes(equity_ratio) )  + 
+  ggplot( aes(prog_efficiency_ratio) )  + 
     geom_density( alpha = 0.5 ) + 
     xlab( "Census Regions" ) + 
     ylab( variable.label ) +
@@ -372,7 +362,7 @@ df <- data.frame( x=Inf, y=Inf,
 
 core2 %>% 
   filter( ! is.na(Division) ) %>% 
-  ggplot( aes(equity_ratio) )  + 
+  ggplot( aes(prog_efficiency_ratio) )  + 
     geom_density( alpha = 0.5 ) + 
     xlab( "Census Sub-Regions (10)" ) + 
     ylab( variable.label ) +
@@ -412,7 +402,7 @@ if( nrow(core2) > 10000 )
   core3 <- core2
 }
 
-jplot( log10(core3$totfuncexpns), core3$equity_ratio, 
+jplot( log10(core3$totfuncexpns), core3$prog_efficiency_ratio, 
        xlab="Nonprofit Size (logged Expenses)", 
        ylab=variable.label,
        xaxt="n", xlim=c(3,10) )
@@ -427,7 +417,7 @@ axis( side=1,
 ```{r}
 core2 %>% 
   filter( ! is.na(exp.q) ) %>% 
-  ggplot( aes(equity_ratio) )  + 
+  ggplot( aes(prog_efficiency_ratio) )  + 
     geom_density( alpha = 0.5) + 
     labs( title="Nonprofit Size (logged expenses)" ) + 
     xlab( variable.label ) +
@@ -465,7 +455,7 @@ if( nrow(core2) > 10000 )
   core3 <- core2
 }
 
-jplot( log10(core3$totrevenue), core3$equity_ratio, 
+jplot( log10(core3$totrevenue), core3$prog_efficiency_ratio, 
        xlab="Nonprofit Size (logged Revenue)", 
        ylab=variable.label,
        xaxt="n", xlim=c(3,10) )
@@ -480,7 +470,7 @@ axis( side=1,
 ```{r}
 core2 %>% 
   filter( ! is.na(rev.q) ) %>% 
-  ggplot( aes(equity_ratio) )  + 
+  ggplot( aes(prog_efficiency_ratio) )  + 
     geom_density( alpha = 0.5 ) + 
     labs( title="Nonprofit Size (logged revenues)" ) + 
     xlab( variable.label ) +
@@ -516,7 +506,7 @@ if( nrow(core2) > 10000 )
   core3 <- core2
 }
 
-jplot( log10(core3$totnetassetend), core3$equity_ratio, 
+jplot( log10(core3$totnetassetend), core3$prog_efficiency_ratio, 
        xlab="Nonprofit Size (logged Net Assets)", 
        ylab=variable.label,
        xaxt="n", xlim=c(3,10) )
@@ -534,7 +524,7 @@ core2$asset.q <- create_quantiles( var=core2$totnetassetend, n.groups=5 )
 
 core2 %>% 
   filter( ! is.na(asset.q) ) %>% 
-  ggplot( aes(equity_ratio) )  + 
+  ggplot( aes(prog_efficiency_ratio) )  + 
     geom_density( alpha = 0.5 ) + 
     labs( title="Nonprofit Size (logged net assets, if assets > 0)" ) + 
     xlab( variable.label ) + 
@@ -563,7 +553,7 @@ if( nrow(core2) > 10000 )
   core3 <- core2
 }
 
-jplot( log10(core3$totassetsend), core3$equity_ratio, 
+jplot( log10(core3$totassetsend), core3$prog_efficiency_ratio, 
        xlab="Nonprofit Size (logged Total Assets)", 
        ylab=variable.label,
        xaxt="n", xlim=c(3,10) )
@@ -589,7 +579,7 @@ ggplot( core2, aes(x = totassetsend )) +
 ```{r}
 core2 %>% 
   filter( ! is.na(tot.asset.q) ) %>% 
-  ggplot( aes(equity_ratio) )  + 
+  ggplot( aes(prog_efficiency_ratio) )  + 
     geom_density( alpha = 0.5 ) + 
     xlab( "Nonprofit Size (logged total assets, if assets > 0)" ) + 
     ylab( variable.label ) +
@@ -620,7 +610,7 @@ if( nrow(core2) > 10000 )
   core3 <- core2
 }
 
-jplot( core3$AGE, core3$equity_ratio, 
+jplot( core3$AGE, core3$prog_efficiency_ratio, 
        xlab="Nonprofit Age", 
        ylab=variable.label ) 
 
@@ -632,7 +622,7 @@ jplot( core3$AGE, core3$equity_ratio,
 ```{r}
 core2 %>% 
   filter( ! is.na(age.q) ) %>% 
-  ggplot( aes(equity_ratio) )  + 
+  ggplot( aes(prog_efficiency_ratio) )  + 
     geom_density( alpha = 0.5 ) + 
     labs( title="Nonprofit Age" ) + 
     xlab( variable.label ) +
@@ -645,14 +635,64 @@ core2 %>%
 ```
 
 
+## `r variable.label` by Land and Building Value
+
+```{r, fig.height=4}
+ggplot( core2, aes(x = lndbldgsequipend )) +  
+  geom_density( alpha = 0.5 )  
+```
+
+
+```{r, fig.height=5}
+
+
+core2$lndbldgsequipend[ core2$lndbldgsequipend < 1 ] <- NA
+
+if( nrow(core2) > 10000 )
+{
+  core3 <- sample_n( core2, 10000 )
+} else
+{
+  core3 <- core2
+
+
+jplot( log10(core3$lndbldgsequipend), core3$prog_efficiency_ratio, 
+       xlab="Land and Building Value (logged)", 
+       ylab=variable.label,
+       xaxt="n", xlim=c(3,10) )
+axis( side=1, 
+      at=c(3,4,5,6,7,8,9,10), 
+      labels=c("1k","10k","100k","1m","10m","100m","1b","10b") )
+}
+
+```
+
+
+
+
+```{r}
+core2 %>% 
+  filter( ! is.na(land.q) ) %>% 
+  ggplot( aes(prog_efficiency_ratio) )  + 
+    geom_density( alpha = 0.5 ) + 
+    labs( title="Land and Building Value" ) + 
+    xlab( variable.label ) +
+    ylab( "" ) +
+    facet_wrap( ~ land.q, nrow=3 ) + 
+    theme_minimal( base_size = 22 )  + 
+    theme( axis.title.y=element_blank(),
+           axis.text.y=element_blank(), 
+           axis.ticks.y=element_blank() )
+
+```
 
 
 # Save Metrics 
 
 ```{r, eval=F}
-core.equity_ratio <- select( core, ein, tax_pd, equity_ratio )
-saveRDS( core.equity_ratio, "03-data-ratios/m-11-equity-ratio.rds" )
-write.csv( core.equity_ratio, "03-data-ratios/m-11-equity-ratio.csv" )
+core.prog_efficiency_ratio <- select( core, ein, tax_pd, prog_efficiency_ratio )
+saveRDS( core.prog_efficiency_ratio, "03-data-ratios/m-16-program-efficiency-ratio.rds" )
+write.csv( core.prog_efficiency_ratio, "03-data-ratios/m-16-program-effiency-ratio.csv" )
 ```
 
 

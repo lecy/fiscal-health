@@ -283,7 +283,7 @@ ggplot( core3, aes( x=dar ) ) +
   xlim( -0.1, 1 ) +
   labs( title="Nonprofit Subsectors" ) + 
   xlab( variable.label ) + 
-  facet_wrap( ~ NTEE1, nrow=3 ) + 
+  facet_wrap( ~ NTEE1, nrow=1 ) + 
     theme_minimal( base_size = 15 )  + 
     theme( axis.title.y=element_blank(),
            axis.text.y=element_blank(), 

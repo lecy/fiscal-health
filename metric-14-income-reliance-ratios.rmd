@@ -73,7 +73,7 @@ core <- readRDS( "02-data-wrangled/core.rds" )
 
 
 # Preview the data: 
-# table( core$NTMAJ12 ) %>% kable()
+# table( core$NTEE1 ) %>% kable()
 # head(core) %>% pander()
 ```
 
@@ -860,8 +860,8 @@ ggplot( core2, aes(x = earned_income_ratio )) +
 
 
 ```{r}
-core3 <- core2 %>% filter( ! is.na(NTMAJ12) )
-table( core3$NTMAJ12) %>% sort(decreasing=TRUE) %>% kable()
+core3 <- core2 %>% filter( ! is.na(NTEE1) )
+table( core3$NTEE1) %>% sort(decreasing=TRUE) %>% kable()
 ```
 
 
