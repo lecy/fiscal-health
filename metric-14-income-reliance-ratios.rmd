@@ -185,7 +185,7 @@ Note: This data is available only for organizations that file full 990s. [Organi
   <br>
 
 
-#Donation Reliance Ratio Analysis
+# Donation Reliance Ratio Analysis 
 
 ```{r, eval=T}
 # TEMPORARY VARIABLES 
@@ -202,7 +202,7 @@ core$donation_ratio <-  donation_revenues / totalrevenues
 ```
 
 
-## Standardize Scales
+## Standardize Scales 
 
 Check high and low values to see what makes sense. 
 
@@ -260,7 +260,7 @@ The data have been capped to those with values between 5% and 95% of the normal 
 
 
 
-# Descriptive Statistics
+## Descriptive Statistics
 
 
 Note: All monetary variables have been converted to thousands of dollars. 
@@ -317,6 +317,8 @@ core2$exp.q   <- create_quantiles( var=core2$totfuncexpns,   n.groups=5 )
 core2$rev.q   <- create_quantiles( var=core2$totrevenue,     n.groups=5 )
 core2$asset.q <- create_quantiles( var=core2$totnetassetend, n.groups=5 )
 core2$age.q   <- create_quantiles( var=core2$AGE,            n.groups=5 )
+core2$land.q   <- create_quantiles( var=core2$lndbldgsequipend,  n.groups=5 )
+
 ```
 
 
@@ -347,8 +349,8 @@ ggplot( core2, aes(x = donation_ratio )) +
 
 
 ```{r}
-core3 <- core2 %>% filter( ! is.na(NTMAJ12) )
-table( core3$NTMAJ12) %>% sort(decreasing=TRUE) %>% kable()
+core3 <- core2 %>% filter( ! is.na(NTEE1) )
+table( core3$NTEE1) %>% sort(decreasing=TRUE) %>% kable()
 ```
 
 
@@ -695,7 +697,7 @@ core2 %>%
 ```
 
 
-#Earned Income Reliance Ratio Analysis
+# Earned Income Reliance Ratio Analysis 
 
 ```{r, eval=T}
 # TEMPORARY VARIABLES 
@@ -771,7 +773,7 @@ The data have been capped to those with values between 5% and 95% of the normal 
 
 
 
-# Descriptive Statistics
+## Descriptive Statistics
 
 
 Note: All monetary variables have been converted to thousands of dollars. 
@@ -1205,7 +1207,7 @@ core2 %>%
            axis.ticks.y=element_blank() )
 ```
 
-#Investment Income Reliance Ratio Analysis
+# Investment Income Reliance Ratio Analysis 
 
 ```{r, eval=T}
 # TEMPORARY VARIABLES 
@@ -1280,7 +1282,7 @@ The data have been capped to those with values between 5% and 95% of the normal 
 
 
 
-# Descriptive Statistics
+## Descriptive Statistics
 
 
 Note: All monetary variables have been converted to thousands of dollars. 
@@ -1367,8 +1369,8 @@ ggplot( core2, aes(x = investment_income_ratio )) +
 
 
 ```{r}
-core3 <- core2 %>% filter( ! is.na(NTMAJ12) )
-table( core3$NTMAJ12) %>% sort(decreasing=TRUE) %>% kable()
+core3 <- core2 %>% filter( ! is.na(NTEE1) )
+table( core3$NTEE1) %>% sort(decreasing=TRUE) %>% kable()
 ```
 
 
@@ -1713,15 +1715,15 @@ core2 %>%
            axis.text.y=element_blank(), 
            axis.ticks.y=element_blank() )
 ```
+ 
 
-
-#Income Reliance Ratio Analysis
+# Income Reliance Ratio Analysis
 
 ```{r, eval=T}
 
-dat <- dplyr::select( core3, donation_ratio, investment_income_ratio, earned_income_ratio )
+dat <- dplyr::select(core3, donation_ratio, investment_income_ratio, earned_income_ratio )
 
-core3$income_reliance_ratio <- apply( dat, MARGIN=1, FUN=max )
+core$income_reliance_ratio <- apply( dat, MARGIN=1, FUN=max )
 
                      
 # summary( core3$income_reliance_ratio )
@@ -1733,8 +1735,8 @@ core3$income_reliance_ratio <- apply( dat, MARGIN=1, FUN=max )
 Check high and low values to see what makes sense. 
 
 ```{r, fig.height=4}
-x.05 <- quantile( core3$income_reliance_ratio, 0.05, na.rm=T )
-x.95 <- quantile( core3$income_reliance_ratio, 0.95, na.rm=T )
+x.05 <- quantile( core$income_reliance_ratio, 0.05, na.rm=T )
+x.95 <- quantile( core$income_reliance_ratio, 0.95, na.rm=T )
 
 ggplot( core, aes(x = income_reliance_ratio ) ) +  
   geom_density( alpha = 0.5) + 
@@ -1757,10 +1759,10 @@ core2 <- core
 
 
 
-x.05 <- quantile( core3$income_reliance_ratio, 0.05, na.rm=T )
-x.95 <- quantile( core3$income_reliance_ratio, 0.95, na.rm=T )
+x.05 <- quantile( core$income_reliance_ratio, 0.05, na.rm=T )
+x.95 <- quantile( core$income_reliance_ratio, 0.95, na.rm=T )
 
-core3 <- core
+core2 <- core
 
 # proportion of values that are negative
 # mean( core2$der < 0, na.rm=T ) 
@@ -1770,8 +1772,8 @@ core3 <- core
 
 # WINSORIZATION AT 5th and 95th PERCENTILES
 
-core3$income_reliance_ratio[ core3$income_reliance_ratio < x.05 ] <- x.05
-core3$income_reliance_ratio[ core3$income_reliance_ratio > x.95 ] <- x.95
+core2$income_reliance_ratio[ core2$income_reliance_ratio < x.05 ] <- x.05
+core2$income_reliance_ratio[ core2$income_reliance_ratio > x.95 ] <- x.95
 ```
 
 
@@ -1786,14 +1788,14 @@ The data have been capped to those with values between 5% and 95% of the normal 
 
 
 
-# Descriptive Statistics
+## Descriptive Statistics
 
 
 Note: All monetary variables have been converted to thousands of dollars. 
 
 ```{r, results="asis"}
 
-core3 %>%
+core2 %>%
   mutate( # income_reliance_ratio = income_reliance_ratio * 10000,
     totrevenue = totrevenue / 1000,
     totfuncexpns = totfuncexpns / 1000, 
@@ -1824,7 +1826,7 @@ What proportion of orgs have Income Reliance Ratios equal to zero?
 
 
 ```{r}
-prop.zero <- mean( core3$income_reliance_ratio == 0, na.rm=T )
+prop.zero <- mean( core$income_reliance_ratio == 0, na.rm=T )
 ```
 
 
@@ -1854,8 +1856,8 @@ core2$age.q   <- create_quantiles( var=core2$AGE,            n.groups=5 )
 ## `r variable.label4` Density 
 
 ```{r, fig.height=4}
-min.x <- min( core3$income_reliance_ratio, na.rm=T )
-max.x <- max( core3$income_reliance_ratio, na.rm=T )
+min.x <- min( core2$income_reliance_ratio, na.rm=T )
+max.x <- max( core2$income_reliance_ratio, na.rm=T )
 
 ggplot( core2, aes(x = income_reliance_ratio )) +  
   geom_density( alpha = 0.5 ) + 
@@ -1873,8 +1875,8 @@ ggplot( core2, aes(x = income_reliance_ratio )) +
 
 
 ```{r}
-core3 <- core2 %>% filter( ! is.na(NTMAJ12) )
-table( core3$NTMAJ12) %>% sort(decreasing=TRUE) %>% kable()
+core3 <- core2 %>% filter( ! is.na(NTEE1) )
+table( core3$NTEE1) %>% sort(decreasing=TRUE) %>% kable()
 ```
 
 

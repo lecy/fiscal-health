@@ -599,7 +599,11 @@ div.tocify {
 <li><p>On EZ: Part I, Line 9 -SOI PC EXTRACTS: totrevnue <br></p></li>
 </ul></li>
 </ul>
-<p>#Donation Reliance Ratio Analysis</p>
+</div>
+</div>
+</div>
+<div id="donation-reliance-ratio-analysis" class="section level1">
+<h1>Donation Reliance Ratio Analysis</h1>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="co"># TEMPORARY VARIABLES </span></a>
 <a class="sourceLine" id="cb1-2" title="2">donation_revenues  &lt;-<span class="st"> </span>core<span class="op">$</span>totcntrbgfts <span class="op">+</span><span class="st"> </span>core<span class="op">$</span>netincfndrsng</a>
 <a class="sourceLine" id="cb1-3" title="3">totalrevenues &lt;-<span class="st"> </span>( core<span class="op">$</span>totrevenue )</a>
@@ -611,8 +615,6 @@ div.tocify {
 <a class="sourceLine" id="cb1-9" title="9">core<span class="op">$</span>donation_ratio &lt;-<span class="st">  </span>donation_revenues <span class="op">/</span><span class="st"> </span>totalrevenues</a>
 <a class="sourceLine" id="cb1-10" title="10">                     </a>
 <a class="sourceLine" id="cb1-11" title="11"><span class="co"># summary( core$donation_ratio )</span></a></code></pre></div>
-</div>
-</div>
 <div id="standardize-scales" class="section level2">
 <h2>Standardize Scales</h2>
 <p>Check high and low values to see what makes sense.</p>
@@ -656,9 +658,8 @@ div.tocify {
 <p>Tax data is available for full 990 filers only, so this metric does not describe any organizations with Gross receipts &lt; $200,000 and Total assets &lt; $500,000. Some organizations with receipts or assets below those thresholds may have filed a full 990, but these would be exceptions.</p>
 <p>The data have been capped to those with values between 5% and 95% of the normal distribution to cut off outliers and exempt organizations with zero profitability (though negative values are allowed still).</p>
 </div>
-</div>
-<div id="descriptive-statistics" class="section level1">
-<h1>Descriptive Statistics</h1>
+<div id="descriptive-statistics" class="section level2">
+<h2>Descriptive Statistics</h2>
 <p>Note: All monetary variables have been converted to thousands of dollars.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"></a>
 <a class="sourceLine" id="cb4-2" title="2">core2 <span class="op">%&gt;%</span></a>
@@ -742,7 +743,7 @@ Donation Reliance Ratio
 1.00
 </td>
 <td>
-0.39
+0.38
 </td>
 </tr>
 <tr>
@@ -943,7 +944,9 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb6-6" title="6">core2<span class="op">$</span>exp.q   &lt;-<span class="st"> </span><span class="kw">create_quantiles</span>( <span class="dt">var=</span>core2<span class="op">$</span>totfuncexpns,   <span class="dt">n.groups=</span><span class="dv">5</span> )</a>
 <a class="sourceLine" id="cb6-7" title="7">core2<span class="op">$</span>rev.q   &lt;-<span class="st"> </span><span class="kw">create_quantiles</span>( <span class="dt">var=</span>core2<span class="op">$</span>totrevenue,     <span class="dt">n.groups=</span><span class="dv">5</span> )</a>
 <a class="sourceLine" id="cb6-8" title="8">core2<span class="op">$</span>asset.q &lt;-<span class="st"> </span><span class="kw">create_quantiles</span>( <span class="dt">var=</span>core2<span class="op">$</span>totnetassetend, <span class="dt">n.groups=</span><span class="dv">5</span> )</a>
-<a class="sourceLine" id="cb6-9" title="9">core2<span class="op">$</span>age.q   &lt;-<span class="st"> </span><span class="kw">create_quantiles</span>( <span class="dt">var=</span>core2<span class="op">$</span>AGE,            <span class="dt">n.groups=</span><span class="dv">5</span> )</a></code></pre></div>
+<a class="sourceLine" id="cb6-9" title="9">core2<span class="op">$</span>age.q   &lt;-<span class="st"> </span><span class="kw">create_quantiles</span>( <span class="dt">var=</span>core2<span class="op">$</span>AGE,            <span class="dt">n.groups=</span><span class="dv">5</span> )</a>
+<a class="sourceLine" id="cb6-10" title="10">core2<span class="op">$</span>land.q   &lt;-<span class="st"> </span><span class="kw">create_quantiles</span>( <span class="dt">var=</span>core2<span class="op">$</span>lndbldgsequipend,  <span class="dt">n.groups=</span><span class="dv">5</span> )</a></code></pre></div>
+</div>
 <div id="investment-income-dependence-ratio-density" class="section level2">
 <h2>Investment Income Dependence Ratio Density</h2>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1">min.x &lt;-<span class="st"> </span><span class="kw">min</span>( core2<span class="op">$</span>donation_ratio, <span class="dt">na.rm=</span>T )</a>
@@ -960,8 +963,8 @@ Liabiliies (1k)
 </div>
 <div id="donated-income-dependence-ratio-by-ntee-major-code" class="section level2">
 <h2>Donated Income Dependence Ratio by NTEE Major Code</h2>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1">core3 &lt;-<span class="st"> </span>core2 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>( <span class="op">!</span><span class="st"> </span><span class="kw">is.na</span>(NTMAJ12) )</a>
-<a class="sourceLine" id="cb8-2" title="2"><span class="kw">table</span>( core3<span class="op">$</span>NTMAJ12) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sort</span>(<span class="dt">decreasing=</span><span class="ot">TRUE</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">kable</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1">core3 &lt;-<span class="st"> </span>core2 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>( <span class="op">!</span><span class="st"> </span><span class="kw">is.na</span>(NTEE1) )</a>
+<a class="sourceLine" id="cb8-2" title="2"><span class="kw">table</span>( core3<span class="op">$</span>NTEE1) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sort</span>(<span class="dt">decreasing=</span><span class="ot">TRUE</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">kable</span>()</a></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -971,12 +974,16 @@ Liabiliies (1k)
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">Human Services</td>
-<td align="right">3863</td>
+<td align="left">Housing</td>
+<td align="right">2772</td>
 </tr>
 <tr class="even">
-<td align="left">Public Benefit</td>
+<td align="left">Community Development</td>
 <td align="right">1683</td>
+</tr>
+<tr class="odd">
+<td align="left">Human Services</td>
+<td align="right">1091</td>
 </tr>
 </tbody>
 </table>
@@ -1317,7 +1324,10 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb28-11" title="11">           <span class="dt">axis.text.y=</span><span class="kw">element_blank</span>(), </a>
 <a class="sourceLine" id="cb28-12" title="12">           <span class="dt">axis.ticks.y=</span><span class="kw">element_blank</span>() )</a></code></pre></div>
 <p><img src="metric-14-income-reliance-ratios_files/figure-html/unnamed-chunk-29-1.png" width="960" /></p>
-<p>#Earned Income Reliance Ratio Analysis</p>
+</div>
+</div>
+<div id="earned-income-reliance-ratio-analysis" class="section level1">
+<h1>Earned Income Reliance Ratio Analysis</h1>
 <div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" title="1"><span class="co"># TEMPORARY VARIABLES </span></a>
 <a class="sourceLine" id="cb29-2" title="2">earned_income  &lt;-<span class="st"> </span>core<span class="op">$</span>totprgmrevnue <span class="op">+</span>core<span class="op">$</span>royaltsinc<span class="op">+</span><span class="st"> </span>core<span class="op">$</span>netincsales<span class="op">+</span>core<span class="op">$</span>miscrevtot11e </a>
 <a class="sourceLine" id="cb29-3" title="3">totalrevenues &lt;-<span class="st"> </span>( core<span class="op">$</span>totrevenue )</a>
@@ -1327,10 +1337,8 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb29-7" title="7"></a>
 <a class="sourceLine" id="cb29-8" title="8"><span class="co"># SAVE RESULTS </span></a>
 <a class="sourceLine" id="cb29-9" title="9">core<span class="op">$</span>earned_income_ratio &lt;-<span class="st">  </span>earned_income <span class="op">/</span><span class="st"> </span>totalrevenues</a>
-<a class="sourceLine" id="cb29-10" title="10"><span class="co">## Error in `$&lt;-.data.frame`(`*tmp*`, earned_income_ratio, value = numeric(0)): replacement has 0 rows, data has 5546</span></a>
-<a class="sourceLine" id="cb29-11" title="11">                     </a>
-<a class="sourceLine" id="cb29-12" title="12"><span class="co"># summary( core$earned_income_ratio )</span></a></code></pre></div>
-</div>
+<a class="sourceLine" id="cb29-10" title="10">                     </a>
+<a class="sourceLine" id="cb29-11" title="11"><span class="co"># summary( core$earned_income_ratio )</span></a></code></pre></div>
 <div id="standardize-scales-1" class="section level2">
 <h2>Standardize Scales</h2>
 <p>Check high and low values to see what makes sense.</p>
@@ -1339,8 +1347,7 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb30-3" title="3"></a>
 <a class="sourceLine" id="cb30-4" title="4"><span class="kw">ggplot</span>( core, <span class="kw">aes</span>(<span class="dt">x =</span> earned_income_ratio ) ) <span class="op">+</span><span class="st">  </span></a>
 <a class="sourceLine" id="cb30-5" title="5"><span class="st">  </span><span class="kw">geom_density</span>( <span class="dt">alpha =</span> <span class="fl">0.5</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb30-6" title="6"><span class="st">  </span><span class="kw">xlim</span>( x<span class="fl">.05</span>, x<span class="fl">.95</span> ) </a>
-<a class="sourceLine" id="cb30-7" title="7"><span class="co">## Error in FUN(X[[i]], ...): object &#39;earned_income_ratio&#39; not found</span></a></code></pre></div>
+<a class="sourceLine" id="cb30-6" title="6"><span class="st">  </span><span class="kw">xlim</span>( x<span class="fl">.05</span>, x<span class="fl">.95</span> ) </a></code></pre></div>
 <p><img src="metric-14-income-reliance-ratios_files/figure-html/unnamed-chunk-31-1.png" width="960" /></p>
 <div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" title="1">core2 &lt;-<span class="st"> </span>core</a>
 <a class="sourceLine" id="cb31-2" title="2"></a>
@@ -1368,18 +1375,15 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb31-24" title="24"><span class="co"># WINSORIZATION AT 5th and 95th PERCENTILES</span></a>
 <a class="sourceLine" id="cb31-25" title="25"></a>
 <a class="sourceLine" id="cb31-26" title="26">core2<span class="op">$</span>earned_income_ratio[ core2<span class="op">$</span>earned_income_ratio <span class="op">&lt;</span><span class="st"> </span>x<span class="fl">.05</span> ] &lt;-<span class="st"> </span>x<span class="fl">.05</span></a>
-<a class="sourceLine" id="cb31-27" title="27"><span class="co">## Error in `$&lt;-.data.frame`(`*tmp*`, earned_income_ratio, value = numeric(0)): replacement has 0 rows, data has 5546</span></a>
-<a class="sourceLine" id="cb31-28" title="28">core2<span class="op">$</span>earned_income_ratio[ core2<span class="op">$</span>earned_income_ratio <span class="op">&gt;</span><span class="st"> </span>x<span class="fl">.95</span> ] &lt;-<span class="st"> </span>x<span class="fl">.95</span></a>
-<a class="sourceLine" id="cb31-29" title="29"><span class="co">## Error in `$&lt;-.data.frame`(`*tmp*`, earned_income_ratio, value = numeric(0)): replacement has 0 rows, data has 5546</span></a></code></pre></div>
+<a class="sourceLine" id="cb31-27" title="27">core2<span class="op">$</span>earned_income_ratio[ core2<span class="op">$</span>earned_income_ratio <span class="op">&gt;</span><span class="st"> </span>x<span class="fl">.95</span> ] &lt;-<span class="st"> </span>x<span class="fl">.95</span></a></code></pre></div>
 </div>
 <div id="metric-scope-1" class="section level2">
 <h2>Metric Scope</h2>
 <p>Tax data is available for full 990 filers only, so this metric does not describe any organizations with Gross receipts &lt; $200,000 and Total assets &lt; $500,000. Some organizations with receipts or assets below those thresholds may have filed a full 990, but these would be exceptions.</p>
 <p>The data have been capped to those with values between 5% and 95% of the normal distribution to cut off outliers and exempt organizations with zero profitability (though negative values are allowed still).</p>
 </div>
-</div>
-<div id="descriptive-statistics-1" class="section level1">
-<h1>Descriptive Statistics</h1>
+<div id="descriptive-statistics-1" class="section level2">
+<h2>Descriptive Statistics</h2>
 <p>Note: All monetary variables have been converted to thousands of dollars.</p>
 <div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" title="1"></a>
 <a class="sourceLine" id="cb32-2" title="2">core2 <span class="op">%&gt;%</span></a>
@@ -1404,12 +1408,258 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb32-21" title="21">             <span class="dt">covariate.labels =</span> <span class="kw">c</span>(<span class="st">&quot;Earned Income Reliance Ratio&quot;</span>, <span class="st">&quot;Age&quot;</span>, </a>
 <a class="sourceLine" id="cb32-22" title="22">                                  <span class="st">&quot;Revenue ($1k)&quot;</span>, <span class="st">&quot;Expenses($1k)&quot;</span>, </a>
 <a class="sourceLine" id="cb32-23" title="23">                                  <span class="st">&quot;Buildings ($1k)&quot;</span>, <span class="st">&quot;Total Assets ($1k)&quot;</span>,</a>
-<a class="sourceLine" id="cb32-24" title="24">                                  <span class="st">&quot;Net Assets ($1k)&quot;</span>, <span class="st">&quot;Liabiliies ($1k)&quot;</span>))</a>
-<a class="sourceLine" id="cb32-25" title="25"><span class="co">## Error: Can&#39;t subset columns that don&#39;t exist.</span></a>
-<a class="sourceLine" id="cb32-26" title="26"><span class="co">## [31mx[39m Column `earned_income_ratio` doesn&#39;t exist.</span></a></code></pre></div>
+<a class="sourceLine" id="cb32-24" title="24">                                  <span class="st">&quot;Net Assets ($1k)&quot;</span>, <span class="st">&quot;Liabiliies ($1k)&quot;</span>))</a></code></pre></div>
+<table style="text-align:center">
+<tr>
+<td colspan="8" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Statistic
+</td>
+<td>
+Min
+</td>
+<td>
+Pctl(25)
+</td>
+<td>
+Median
+</td>
+<td>
+Mean
+</td>
+<td>
+Pctl(75)
+</td>
+<td>
+Max
+</td>
+<td>
+St. Dev.
+</td>
+</tr>
+<tr>
+<td colspan="8" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Earned Income Reliance Ratio
+</td>
+<td>
+0.00
+</td>
+<td>
+0.05
+</td>
+<td>
+0.34
+</td>
+<td>
+0.43
+</td>
+<td>
+0.81
+</td>
+<td>
+1.00
+</td>
+<td>
+0.38
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Age
+</td>
+<td>
+3
+</td>
+<td>
+22
+</td>
+<td>
+30
+</td>
+<td>
+31.97
+</td>
+<td>
+41
+</td>
+<td>
+101
+</td>
+<td>
+14.82
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Revenue (1k)
+</td>
+<td>
+-5,376.77
+</td>
+<td>
+253.67
+</td>
+<td>
+943.37
+</td>
+<td>
+4,687.28
+</td>
+<td>
+3,765.40
+</td>
+<td>
+408,932.00
+</td>
+<td>
+15,071.45
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Expenses(1k)
+</td>
+<td>
+0.00
+</td>
+<td>
+254.55
+</td>
+<td>
+861.78
+</td>
+<td>
+4,332.42
+</td>
+<td>
+3,391.81
+</td>
+<td>
+382,666.50
+</td>
+<td>
+14,055.29
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Buildings (1k)
+</td>
+<td>
+-4.49
+</td>
+<td>
+67.70
+</td>
+<td>
+780.96
+</td>
+<td>
+3,498.90
+</td>
+<td>
+2,875.68
+</td>
+<td>
+513,508.80
+</td>
+<td>
+13,239.15
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Total Assets (1k)
+</td>
+<td>
+-7,552.11
+</td>
+<td>
+747.47
+</td>
+<td>
+2,501.55
+</td>
+<td>
+10,084.78
+</td>
+<td>
+7,682.09
+</td>
+<td>
+1,212,784.00
+</td>
+<td>
+35,519.08
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Net Assets (1k)
+</td>
+<td>
+-178,869.70
+</td>
+<td>
+186.60
+</td>
+<td>
+1,139.23
+</td>
+<td>
+4,910.48
+</td>
+<td>
+4,222.31
+</td>
+<td>
+564,541.70
+</td>
+<td>
+18,162.74
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Liabiliies (1k)
+</td>
+<td>
+-2,707.10
+</td>
+<td>
+109.03
+</td>
+<td>
+776.31
+</td>
+<td>
+5,174.23
+</td>
+<td>
+3,083.72
+</td>
+<td>
+981,222.80
+</td>
+<td>
+24,847.35
+</td>
+</tr>
+<tr>
+<td colspan="8" style="border-bottom: 1px solid black">
+</td>
+</tr>
+</table>
 <p>What proportion of orgs have Earned Income Reliance Ratios equal to zero?</p>
 <div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" title="1">prop.zero &lt;-<span class="st"> </span><span class="kw">mean</span>( core2<span class="op">$</span>earned_income_ratio <span class="op">==</span><span class="st"> </span><span class="dv">0</span>, <span class="dt">na.rm=</span>T )</a></code></pre></div>
-<p>In the sample, NaN percent of the organizations have Earned Income Reliance Ratios equal to zero, meaning they have no earned income. These organizations are dropped from subsequent graphs to keep the visualizations clean. The interpretation of the graphics should be the distributions of Earned Income Reliance Ratios for organizations that have positive or negative values.</p>
+<p>In the sample, 11 percent of the organizations have Earned Income Reliance Ratios equal to zero, meaning they have no earned income. These organizations are dropped from subsequent graphs to keep the visualizations clean. The interpretation of the graphics should be the distributions of Earned Income Reliance Ratios for organizations that have positive or negative values.</p>
 <div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" title="1"><span class="co">###</span></a>
 <a class="sourceLine" id="cb34-2" title="2"><span class="co">### ADD QUANTILES</span></a>
 <a class="sourceLine" id="cb34-3" title="3"><span class="co">###</span></a>
@@ -1419,6 +1669,7 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb34-7" title="7">core2<span class="op">$</span>rev.q   &lt;-<span class="st"> </span><span class="kw">create_quantiles</span>( <span class="dt">var=</span>core2<span class="op">$</span>totrevenue,     <span class="dt">n.groups=</span><span class="dv">5</span> )</a>
 <a class="sourceLine" id="cb34-8" title="8">core2<span class="op">$</span>asset.q &lt;-<span class="st"> </span><span class="kw">create_quantiles</span>( <span class="dt">var=</span>core2<span class="op">$</span>totnetassetend, <span class="dt">n.groups=</span><span class="dv">5</span> )</a>
 <a class="sourceLine" id="cb34-9" title="9">core2<span class="op">$</span>age.q   &lt;-<span class="st"> </span><span class="kw">create_quantiles</span>( <span class="dt">var=</span>core2<span class="op">$</span>AGE,            <span class="dt">n.groups=</span><span class="dv">5</span> )</a></code></pre></div>
+</div>
 <div id="earned-income-dependence-ratio-density" class="section level2">
 <h2>Earned Income Dependence Ratio Density</h2>
 <div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" title="1">min.x &lt;-<span class="st"> </span><span class="kw">min</span>( core2<span class="op">$</span>earned_income_ratio, <span class="dt">na.rm=</span>T )</a>
@@ -1430,8 +1681,7 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb35-7" title="7"><span class="st">  </span><span class="kw">xlab</span>( variable.label2 ) <span class="op">+</span></a>
 <a class="sourceLine" id="cb35-8" title="8"><span class="st">  </span><span class="kw">theme</span>( <span class="dt">axis.title.y=</span><span class="kw">element_blank</span>(),</a>
 <a class="sourceLine" id="cb35-9" title="9">         <span class="dt">axis.text.y=</span><span class="kw">element_blank</span>(), </a>
-<a class="sourceLine" id="cb35-10" title="10">         <span class="dt">axis.ticks.y=</span><span class="kw">element_blank</span>() )</a>
-<a class="sourceLine" id="cb35-11" title="11"><span class="co">## Error in FUN(X[[i]], ...): object &#39;earned_income_ratio&#39; not found</span></a></code></pre></div>
+<a class="sourceLine" id="cb35-10" title="10">         <span class="dt">axis.ticks.y=</span><span class="kw">element_blank</span>() )</a></code></pre></div>
 <p><img src="metric-14-income-reliance-ratios_files/figure-html/unnamed-chunk-36-1.png" width="960" /></p>
 </div>
 <div id="earned-income-dependence-ratio-by-ntee-major-code" class="section level2">
@@ -1476,8 +1726,7 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb37-18" title="18"><span class="st">  </span><span class="kw">geom_text</span>( <span class="dt">data=</span>df, </a>
 <a class="sourceLine" id="cb37-19" title="19">             <span class="kw">aes</span>(x, y, <span class="dt">label=</span>N ), </a>
 <a class="sourceLine" id="cb37-20" title="20">             <span class="dt">hjust=</span><span class="dv">2</span>, <span class="dt">vjust=</span><span class="dv">3</span>, </a>
-<a class="sourceLine" id="cb37-21" title="21">             <span class="dt">color=</span><span class="st">&quot;gray60&quot;</span>, <span class="dt">size=</span><span class="dv">6</span> )</a>
-<a class="sourceLine" id="cb37-22" title="22"><span class="co">## Error in FUN(X[[i]], ...): object &#39;earned_income_ratio&#39; not found</span></a></code></pre></div>
+<a class="sourceLine" id="cb37-21" title="21">             <span class="dt">color=</span><span class="st">&quot;gray60&quot;</span>, <span class="dt">size=</span><span class="dv">6</span> )</a></code></pre></div>
 <p><img src="metric-14-income-reliance-ratios_files/figure-html/unnamed-chunk-38-1.png" width="960" /></p>
 </div>
 <div id="earned-income-dependence-ratio-by-region" class="section level2">
@@ -1528,8 +1777,7 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb39-17" title="17"><span class="st">    </span><span class="kw">geom_text</span>( <span class="dt">data=</span>df, </a>
 <a class="sourceLine" id="cb39-18" title="18">             <span class="kw">aes</span>(x, y, <span class="dt">label=</span>N ), </a>
 <a class="sourceLine" id="cb39-19" title="19">             <span class="dt">hjust=</span><span class="dv">2</span>, <span class="dt">vjust=</span><span class="dv">3</span>, </a>
-<a class="sourceLine" id="cb39-20" title="20">             <span class="dt">color=</span><span class="st">&quot;gray60&quot;</span>, <span class="dt">size=</span><span class="dv">6</span> )</a>
-<a class="sourceLine" id="cb39-21" title="21"><span class="co">## Error in FUN(X[[i]], ...): object &#39;earned_income_ratio&#39; not found</span></a></code></pre></div>
+<a class="sourceLine" id="cb39-20" title="20">             <span class="dt">color=</span><span class="st">&quot;gray60&quot;</span>, <span class="dt">size=</span><span class="dv">6</span> )</a></code></pre></div>
 <p><img src="metric-14-income-reliance-ratios_files/figure-html/unnamed-chunk-40-1.png" width="960" /></p>
 <div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" title="1"><span class="kw">table</span>( core2<span class="op">$</span>Division ) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">kable</span>()</a></code></pre></div>
 <table>
@@ -1597,8 +1845,7 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb41-17" title="17"><span class="st">    </span><span class="kw">geom_text</span>( <span class="dt">data=</span>df, </a>
 <a class="sourceLine" id="cb41-18" title="18">             <span class="kw">aes</span>(x, y, <span class="dt">label=</span>N ), </a>
 <a class="sourceLine" id="cb41-19" title="19">             <span class="dt">hjust=</span><span class="dv">2</span>, <span class="dt">vjust=</span><span class="dv">3</span>, </a>
-<a class="sourceLine" id="cb41-20" title="20">             <span class="dt">color=</span><span class="st">&quot;gray60&quot;</span>, <span class="dt">size=</span><span class="dv">6</span> ) </a>
-<a class="sourceLine" id="cb41-21" title="21"><span class="co">## Error in FUN(X[[i]], ...): object &#39;earned_income_ratio&#39; not found</span></a></code></pre></div>
+<a class="sourceLine" id="cb41-20" title="20">             <span class="dt">color=</span><span class="st">&quot;gray60&quot;</span>, <span class="dt">size=</span><span class="dv">6</span> ) </a></code></pre></div>
 <p><img src="metric-14-income-reliance-ratios_files/figure-html/unnamed-chunk-42-1.png" width="960" /></p>
 </div>
 <div id="earned-income-dependence-ratio-by-nonprofit-size-expenses" class="section level2">
@@ -1622,10 +1869,9 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb43-13" title="13">       <span class="dt">xlab=</span><span class="st">&quot;Nonprofit Size (logged Expenses)&quot;</span>, </a>
 <a class="sourceLine" id="cb43-14" title="14">       <span class="dt">ylab=</span>variable.label2,</a>
 <a class="sourceLine" id="cb43-15" title="15">       <span class="dt">xaxt=</span><span class="st">&quot;n&quot;</span>, <span class="dt">xlim=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">10</span>) )</a>
-<a class="sourceLine" id="cb43-16" title="16"><span class="co">## Error in lowess(x2[ok] ~ x1[ok]): invalid input</span></a>
-<a class="sourceLine" id="cb43-17" title="17"><span class="kw">axis</span>( <span class="dt">side=</span><span class="dv">1</span>, </a>
-<a class="sourceLine" id="cb43-18" title="18">      <span class="dt">at=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">10</span>), </a>
-<a class="sourceLine" id="cb43-19" title="19">      <span class="dt">labels=</span><span class="kw">c</span>(<span class="st">&quot;1k&quot;</span>,<span class="st">&quot;10k&quot;</span>,<span class="st">&quot;100k&quot;</span>,<span class="st">&quot;1m&quot;</span>,<span class="st">&quot;10m&quot;</span>,<span class="st">&quot;100m&quot;</span>,<span class="st">&quot;1b&quot;</span>,<span class="st">&quot;10b&quot;</span>) )</a></code></pre></div>
+<a class="sourceLine" id="cb43-16" title="16"><span class="kw">axis</span>( <span class="dt">side=</span><span class="dv">1</span>, </a>
+<a class="sourceLine" id="cb43-17" title="17">      <span class="dt">at=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">10</span>), </a>
+<a class="sourceLine" id="cb43-18" title="18">      <span class="dt">labels=</span><span class="kw">c</span>(<span class="st">&quot;1k&quot;</span>,<span class="st">&quot;10k&quot;</span>,<span class="st">&quot;100k&quot;</span>,<span class="st">&quot;1m&quot;</span>,<span class="st">&quot;10m&quot;</span>,<span class="st">&quot;100m&quot;</span>,<span class="st">&quot;1b&quot;</span>,<span class="st">&quot;10b&quot;</span>) )</a></code></pre></div>
 <p><img src="metric-14-income-reliance-ratios_files/figure-html/unnamed-chunk-44-1.png" width="960" /></p>
 <div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" title="1">core2 <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb44-2" title="2"><span class="st">  </span><span class="kw">filter</span>( <span class="op">!</span><span class="st"> </span><span class="kw">is.na</span>(exp.q) ) <span class="op">%&gt;%</span><span class="st"> </span></a>
@@ -1637,8 +1883,7 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb44-8" title="8"><span class="st">    </span><span class="kw">theme_minimal</span>( <span class="dt">base_size =</span> <span class="dv">22</span> )  <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb44-9" title="9"><span class="st">    </span><span class="kw">theme</span>( <span class="dt">axis.title.y=</span><span class="kw">element_blank</span>(),</a>
 <a class="sourceLine" id="cb44-10" title="10">           <span class="dt">axis.text.y=</span><span class="kw">element_blank</span>(), </a>
-<a class="sourceLine" id="cb44-11" title="11">           <span class="dt">axis.ticks.y=</span><span class="kw">element_blank</span>() )</a>
-<a class="sourceLine" id="cb44-12" title="12"><span class="co">## Error in FUN(X[[i]], ...): object &#39;earned_income_ratio&#39; not found</span></a></code></pre></div>
+<a class="sourceLine" id="cb44-11" title="11">           <span class="dt">axis.ticks.y=</span><span class="kw">element_blank</span>() )</a></code></pre></div>
 <p><img src="metric-14-income-reliance-ratios_files/figure-html/unnamed-chunk-45-1.png" width="960" /></p>
 </div>
 <div id="earned-income-dependence-ratio-by-nonprofit-size-revenue" class="section level2">
@@ -1664,10 +1909,9 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb46-12" title="12">       <span class="dt">xlab=</span><span class="st">&quot;Nonprofit Size (logged Revenue)&quot;</span>, </a>
 <a class="sourceLine" id="cb46-13" title="13">       <span class="dt">ylab=</span>variable.label2,</a>
 <a class="sourceLine" id="cb46-14" title="14">       <span class="dt">xaxt=</span><span class="st">&quot;n&quot;</span>, <span class="dt">xlim=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">10</span>) )</a>
-<a class="sourceLine" id="cb46-15" title="15"><span class="co">## Error in lowess(x2[ok] ~ x1[ok]): invalid input</span></a>
-<a class="sourceLine" id="cb46-16" title="16"><span class="kw">axis</span>( <span class="dt">side=</span><span class="dv">1</span>, </a>
-<a class="sourceLine" id="cb46-17" title="17">      <span class="dt">at=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">10</span>), </a>
-<a class="sourceLine" id="cb46-18" title="18">      <span class="dt">labels=</span><span class="kw">c</span>(<span class="st">&quot;1k&quot;</span>,<span class="st">&quot;10k&quot;</span>,<span class="st">&quot;100k&quot;</span>,<span class="st">&quot;1m&quot;</span>,<span class="st">&quot;10m&quot;</span>,<span class="st">&quot;100m&quot;</span>,<span class="st">&quot;1b&quot;</span>,<span class="st">&quot;10b&quot;</span>) )</a></code></pre></div>
+<a class="sourceLine" id="cb46-15" title="15"><span class="kw">axis</span>( <span class="dt">side=</span><span class="dv">1</span>, </a>
+<a class="sourceLine" id="cb46-16" title="16">      <span class="dt">at=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">10</span>), </a>
+<a class="sourceLine" id="cb46-17" title="17">      <span class="dt">labels=</span><span class="kw">c</span>(<span class="st">&quot;1k&quot;</span>,<span class="st">&quot;10k&quot;</span>,<span class="st">&quot;100k&quot;</span>,<span class="st">&quot;1m&quot;</span>,<span class="st">&quot;10m&quot;</span>,<span class="st">&quot;100m&quot;</span>,<span class="st">&quot;1b&quot;</span>,<span class="st">&quot;10b&quot;</span>) )</a></code></pre></div>
 <p><img src="metric-14-income-reliance-ratios_files/figure-html/unnamed-chunk-47-1.png" width="960" /></p>
 <div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" title="1">core2 <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb47-2" title="2"><span class="st">  </span><span class="kw">filter</span>( <span class="op">!</span><span class="st"> </span><span class="kw">is.na</span>(rev.q) ) <span class="op">%&gt;%</span><span class="st"> </span></a>
@@ -1679,8 +1923,7 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb47-8" title="8"><span class="st">    </span><span class="kw">theme_minimal</span>( <span class="dt">base_size =</span> <span class="dv">22</span> )  <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb47-9" title="9"><span class="st">    </span><span class="kw">theme</span>( <span class="dt">axis.title.y=</span><span class="kw">element_blank</span>(),</a>
 <a class="sourceLine" id="cb47-10" title="10">           <span class="dt">axis.text.y=</span><span class="kw">element_blank</span>(), </a>
-<a class="sourceLine" id="cb47-11" title="11">           <span class="dt">axis.ticks.y=</span><span class="kw">element_blank</span>() )</a>
-<a class="sourceLine" id="cb47-12" title="12"><span class="co">## Error in FUN(X[[i]], ...): object &#39;earned_income_ratio&#39; not found</span></a></code></pre></div>
+<a class="sourceLine" id="cb47-11" title="11">           <span class="dt">axis.ticks.y=</span><span class="kw">element_blank</span>() )</a></code></pre></div>
 <p><img src="metric-14-income-reliance-ratios_files/figure-html/unnamed-chunk-48-1.png" width="960" /></p>
 </div>
 <div id="earned-income-dependence-ratio-by-nonprofit-size-net-assets" class="section level2">
@@ -1707,10 +1950,9 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb49-12" title="12">       <span class="dt">xlab=</span><span class="st">&quot;Nonprofit Size (logged Net Assets)&quot;</span>, </a>
 <a class="sourceLine" id="cb49-13" title="13">       <span class="dt">ylab=</span>variable.label2,</a>
 <a class="sourceLine" id="cb49-14" title="14">       <span class="dt">xaxt=</span><span class="st">&quot;n&quot;</span>, <span class="dt">xlim=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">10</span>) )</a>
-<a class="sourceLine" id="cb49-15" title="15"><span class="co">## Error in lowess(x2[ok] ~ x1[ok]): invalid input</span></a>
-<a class="sourceLine" id="cb49-16" title="16"><span class="kw">axis</span>( <span class="dt">side=</span><span class="dv">1</span>, </a>
-<a class="sourceLine" id="cb49-17" title="17">      <span class="dt">at=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">10</span>), </a>
-<a class="sourceLine" id="cb49-18" title="18">      <span class="dt">labels=</span><span class="kw">c</span>(<span class="st">&quot;1k&quot;</span>,<span class="st">&quot;10k&quot;</span>,<span class="st">&quot;100k&quot;</span>,<span class="st">&quot;1m&quot;</span>,<span class="st">&quot;10m&quot;</span>,<span class="st">&quot;100m&quot;</span>,<span class="st">&quot;1b&quot;</span>,<span class="st">&quot;10b&quot;</span>) )</a></code></pre></div>
+<a class="sourceLine" id="cb49-15" title="15"><span class="kw">axis</span>( <span class="dt">side=</span><span class="dv">1</span>, </a>
+<a class="sourceLine" id="cb49-16" title="16">      <span class="dt">at=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">10</span>), </a>
+<a class="sourceLine" id="cb49-17" title="17">      <span class="dt">labels=</span><span class="kw">c</span>(<span class="st">&quot;1k&quot;</span>,<span class="st">&quot;10k&quot;</span>,<span class="st">&quot;100k&quot;</span>,<span class="st">&quot;1m&quot;</span>,<span class="st">&quot;10m&quot;</span>,<span class="st">&quot;100m&quot;</span>,<span class="st">&quot;1b&quot;</span>,<span class="st">&quot;10b&quot;</span>) )</a></code></pre></div>
 <p><img src="metric-14-income-reliance-ratios_files/figure-html/unnamed-chunk-50-1.png" width="960" /></p>
 <div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb50-1" title="1">core2<span class="op">$</span>totnetassetend[ core2<span class="op">$</span>totnetassetend <span class="op">&lt;</span><span class="st"> </span><span class="dv">1</span> ] &lt;-<span class="st"> </span><span class="ot">NA</span></a>
 <a class="sourceLine" id="cb50-2" title="2">core2<span class="op">$</span>asset.q &lt;-<span class="st"> </span><span class="kw">create_quantiles</span>( <span class="dt">var=</span>core2<span class="op">$</span>totnetassetend, <span class="dt">n.groups=</span><span class="dv">5</span> )</a>
@@ -1726,8 +1968,7 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb50-12" title="12"><span class="st">    </span><span class="kw">theme_minimal</span>( <span class="dt">base_size =</span> <span class="dv">22</span> )  <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb50-13" title="13"><span class="st">    </span><span class="kw">theme</span>( <span class="dt">axis.title.y=</span><span class="kw">element_blank</span>(),</a>
 <a class="sourceLine" id="cb50-14" title="14">           <span class="dt">axis.text.y=</span><span class="kw">element_blank</span>(), </a>
-<a class="sourceLine" id="cb50-15" title="15">           <span class="dt">axis.ticks.y=</span><span class="kw">element_blank</span>() )</a>
-<a class="sourceLine" id="cb50-16" title="16"><span class="co">## Error in FUN(X[[i]], ...): object &#39;earned_income_ratio&#39; not found</span></a></code></pre></div>
+<a class="sourceLine" id="cb50-15" title="15">           <span class="dt">axis.ticks.y=</span><span class="kw">element_blank</span>() )</a></code></pre></div>
 <p><img src="metric-14-income-reliance-ratios_files/figure-html/unnamed-chunk-51-1.png" width="960" /></p>
 <p>Total Assets for Comparison</p>
 <div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb51-1" title="1">core2<span class="op">$</span>totassetsend[ core2<span class="op">$</span>totassetsend <span class="op">&lt;</span><span class="st"> </span><span class="dv">1</span> ] &lt;-<span class="st"> </span><span class="ot">NA</span></a>
@@ -1745,10 +1986,9 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb51-13" title="13">       <span class="dt">xlab=</span><span class="st">&quot;Nonprofit Size (logged Total Assets)&quot;</span>, </a>
 <a class="sourceLine" id="cb51-14" title="14">       <span class="dt">ylab=</span>variable.label2,</a>
 <a class="sourceLine" id="cb51-15" title="15">       <span class="dt">xaxt=</span><span class="st">&quot;n&quot;</span>, <span class="dt">xlim=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">10</span>) )</a>
-<a class="sourceLine" id="cb51-16" title="16"><span class="co">## Error in lowess(x2[ok] ~ x1[ok]): invalid input</span></a>
-<a class="sourceLine" id="cb51-17" title="17"><span class="kw">axis</span>( <span class="dt">side=</span><span class="dv">1</span>, </a>
-<a class="sourceLine" id="cb51-18" title="18">      <span class="dt">at=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">10</span>), </a>
-<a class="sourceLine" id="cb51-19" title="19">      <span class="dt">labels=</span><span class="kw">c</span>(<span class="st">&quot;1k&quot;</span>,<span class="st">&quot;10k&quot;</span>,<span class="st">&quot;100k&quot;</span>,<span class="st">&quot;1m&quot;</span>,<span class="st">&quot;10m&quot;</span>,<span class="st">&quot;100m&quot;</span>,<span class="st">&quot;1b&quot;</span>,<span class="st">&quot;10b&quot;</span>) )</a></code></pre></div>
+<a class="sourceLine" id="cb51-16" title="16"><span class="kw">axis</span>( <span class="dt">side=</span><span class="dv">1</span>, </a>
+<a class="sourceLine" id="cb51-17" title="17">      <span class="dt">at=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">10</span>), </a>
+<a class="sourceLine" id="cb51-18" title="18">      <span class="dt">labels=</span><span class="kw">c</span>(<span class="st">&quot;1k&quot;</span>,<span class="st">&quot;10k&quot;</span>,<span class="st">&quot;100k&quot;</span>,<span class="st">&quot;1m&quot;</span>,<span class="st">&quot;10m&quot;</span>,<span class="st">&quot;100m&quot;</span>,<span class="st">&quot;1b&quot;</span>,<span class="st">&quot;10b&quot;</span>) )</a></code></pre></div>
 <p><img src="metric-14-income-reliance-ratios_files/figure-html/unnamed-chunk-52-1.png" width="960" /></p>
 <div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb52-1" title="1"><span class="kw">ggplot</span>( core2, <span class="kw">aes</span>(<span class="dt">x =</span> totassetsend )) <span class="op">+</span><span class="st">  </span></a>
 <a class="sourceLine" id="cb52-2" title="2"><span class="st">  </span><span class="kw">geom_density</span>( <span class="dt">alpha =</span> <span class="fl">0.5</span>) <span class="op">+</span><span class="st"> </span></a>
@@ -1768,8 +2008,7 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb53-8" title="8"><span class="st">    </span><span class="kw">theme_minimal</span>( <span class="dt">base_size =</span> <span class="dv">22</span> )  <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb53-9" title="9"><span class="st">    </span><span class="kw">theme</span>( <span class="dt">axis.title.y=</span><span class="kw">element_blank</span>(),</a>
 <a class="sourceLine" id="cb53-10" title="10">           <span class="dt">axis.text.y=</span><span class="kw">element_blank</span>(), </a>
-<a class="sourceLine" id="cb53-11" title="11">           <span class="dt">axis.ticks.y=</span><span class="kw">element_blank</span>() )</a>
-<a class="sourceLine" id="cb53-12" title="12"><span class="co">## Error in FUN(X[[i]], ...): object &#39;earned_income_ratio&#39; not found</span></a></code></pre></div>
+<a class="sourceLine" id="cb53-11" title="11">           <span class="dt">axis.ticks.y=</span><span class="kw">element_blank</span>() )</a></code></pre></div>
 <p><img src="metric-14-income-reliance-ratios_files/figure-html/unnamed-chunk-54-1.png" width="960" /></p>
 </div>
 <div id="earned-income-dependence-ratio-by-nonprofit-age" class="section level2">
@@ -1789,8 +2028,7 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb55-10" title="10"></a>
 <a class="sourceLine" id="cb55-11" title="11"><span class="kw">jplot</span>( core3<span class="op">$</span>AGE, core3<span class="op">$</span>earned_income_ratio, </a>
 <a class="sourceLine" id="cb55-12" title="12">       <span class="dt">xlab=</span><span class="st">&quot;Nonprofit Age&quot;</span>, </a>
-<a class="sourceLine" id="cb55-13" title="13">       <span class="dt">ylab=</span>variable.label2 ) </a>
-<a class="sourceLine" id="cb55-14" title="14"><span class="co">## Error in lowess(x2[ok] ~ x1[ok]): invalid input</span></a></code></pre></div>
+<a class="sourceLine" id="cb55-13" title="13">       <span class="dt">ylab=</span>variable.label2 ) </a></code></pre></div>
 <p><img src="metric-14-income-reliance-ratios_files/figure-html/unnamed-chunk-56-1.png" width="960" /></p>
 <div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb56-1" title="1">core2 <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb56-2" title="2"><span class="st">  </span><span class="kw">filter</span>( <span class="op">!</span><span class="st"> </span><span class="kw">is.na</span>(age.q) ) <span class="op">%&gt;%</span><span class="st"> </span></a>
@@ -1803,10 +2041,12 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb56-9" title="9"><span class="st">    </span><span class="kw">theme_minimal</span>( <span class="dt">base_size =</span> <span class="dv">22</span> )  <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb56-10" title="10"><span class="st">    </span><span class="kw">theme</span>( <span class="dt">axis.title.y=</span><span class="kw">element_blank</span>(),</a>
 <a class="sourceLine" id="cb56-11" title="11">           <span class="dt">axis.text.y=</span><span class="kw">element_blank</span>(), </a>
-<a class="sourceLine" id="cb56-12" title="12">           <span class="dt">axis.ticks.y=</span><span class="kw">element_blank</span>() )</a>
-<a class="sourceLine" id="cb56-13" title="13"><span class="co">## Error in FUN(X[[i]], ...): object &#39;earned_income_ratio&#39; not found</span></a></code></pre></div>
+<a class="sourceLine" id="cb56-12" title="12">           <span class="dt">axis.ticks.y=</span><span class="kw">element_blank</span>() )</a></code></pre></div>
 <p><img src="metric-14-income-reliance-ratios_files/figure-html/unnamed-chunk-57-1.png" width="960" /></p>
-<p>#Investment Income Reliance Ratio Analysis</p>
+</div>
+</div>
+<div id="investment-income-reliance-ratio-analysis" class="section level1">
+<h1>Investment Income Reliance Ratio Analysis</h1>
 <div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb57-1" title="1"><span class="co"># TEMPORARY VARIABLES </span></a>
 <a class="sourceLine" id="cb57-2" title="2">investment_income  &lt;-<span class="st"> </span>core<span class="op">$</span>invstmntinc <span class="op">+</span><span class="st"> </span>core<span class="op">$</span>txexmptbndsproceeds <span class="op">+</span><span class="st"> </span>core<span class="op">$</span>netrntlinc <span class="op">+</span><span class="st"> </span>core<span class="op">$</span>netgnls</a>
 <a class="sourceLine" id="cb57-3" title="3">totalrevenues &lt;-<span class="st"> </span>( core<span class="op">$</span>totrevenue )</a>
@@ -1816,10 +2056,8 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb57-7" title="7"></a>
 <a class="sourceLine" id="cb57-8" title="8"><span class="co"># SAVE RESULTS </span></a>
 <a class="sourceLine" id="cb57-9" title="9">core<span class="op">$</span>investment_income_ratio &lt;-<span class="st">  </span>investment_income <span class="op">/</span><span class="st"> </span>totalrevenues</a>
-<a class="sourceLine" id="cb57-10" title="10"><span class="co">## Error in `$&lt;-.data.frame`(`*tmp*`, investment_income_ratio, value = numeric(0)): replacement has 0 rows, data has 5546</span></a>
-<a class="sourceLine" id="cb57-11" title="11">                     </a>
-<a class="sourceLine" id="cb57-12" title="12"><span class="co"># summary( core$investment_income_ratio )</span></a></code></pre></div>
-</div>
+<a class="sourceLine" id="cb57-10" title="10">                     </a>
+<a class="sourceLine" id="cb57-11" title="11"><span class="co"># summary( core$investment_income_ratio )</span></a></code></pre></div>
 <div id="standardize-scales-2" class="section level2">
 <h2>Standardize Scales</h2>
 <p>Check high and low values to see what makes sense.</p>
@@ -1828,8 +2066,7 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb58-3" title="3"></a>
 <a class="sourceLine" id="cb58-4" title="4"><span class="kw">ggplot</span>( core, <span class="kw">aes</span>(<span class="dt">x =</span> investment_income_ratio ) ) <span class="op">+</span><span class="st">  </span></a>
 <a class="sourceLine" id="cb58-5" title="5"><span class="st">  </span><span class="kw">geom_density</span>( <span class="dt">alpha =</span> <span class="fl">0.5</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb58-6" title="6"><span class="st">  </span><span class="kw">xlim</span>( x<span class="fl">.05</span>, x<span class="fl">.95</span> ) </a>
-<a class="sourceLine" id="cb58-7" title="7"><span class="co">## Error in FUN(X[[i]], ...): object &#39;investment_income_ratio&#39; not found</span></a></code></pre></div>
+<a class="sourceLine" id="cb58-6" title="6"><span class="st">  </span><span class="kw">xlim</span>( x<span class="fl">.05</span>, x<span class="fl">.95</span> ) </a></code></pre></div>
 <p><img src="metric-14-income-reliance-ratios_files/figure-html/unnamed-chunk-59-1.png" width="960" /></p>
 <div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb59-1" title="1">core2 &lt;-<span class="st"> </span>core</a>
 <a class="sourceLine" id="cb59-2" title="2"></a>
@@ -1857,18 +2094,15 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb59-24" title="24"><span class="co"># WINSORIZATION AT 5th and 95th PERCENTILES</span></a>
 <a class="sourceLine" id="cb59-25" title="25"></a>
 <a class="sourceLine" id="cb59-26" title="26">core2<span class="op">$</span>investment_income_ratio[ core2<span class="op">$</span>investment_income_ratio <span class="op">&lt;</span><span class="st"> </span>x<span class="fl">.05</span> ] &lt;-<span class="st"> </span>x<span class="fl">.05</span></a>
-<a class="sourceLine" id="cb59-27" title="27"><span class="co">## Error in `$&lt;-.data.frame`(`*tmp*`, investment_income_ratio, value = numeric(0)): replacement has 0 rows, data has 5546</span></a>
-<a class="sourceLine" id="cb59-28" title="28">core2<span class="op">$</span>investment_income_ratio[ core2<span class="op">$</span>investment_income_ratio <span class="op">&gt;</span><span class="st"> </span>x<span class="fl">.95</span> ] &lt;-<span class="st"> </span>x<span class="fl">.95</span></a>
-<a class="sourceLine" id="cb59-29" title="29"><span class="co">## Error in `$&lt;-.data.frame`(`*tmp*`, investment_income_ratio, value = numeric(0)): replacement has 0 rows, data has 5546</span></a></code></pre></div>
+<a class="sourceLine" id="cb59-27" title="27">core2<span class="op">$</span>investment_income_ratio[ core2<span class="op">$</span>investment_income_ratio <span class="op">&gt;</span><span class="st"> </span>x<span class="fl">.95</span> ] &lt;-<span class="st"> </span>x<span class="fl">.95</span></a></code></pre></div>
 </div>
 <div id="metric-scope-2" class="section level2">
 <h2>Metric Scope</h2>
 <p>Tax data is available for full 990 filers only, so this metric does not describe any organizations with Gross receipts &lt; $200,000 and Total assets &lt; $500,000. Some organizations with receipts or assets below those thresholds may have filed a full 990, but these would be exceptions.</p>
 <p>The data have been capped to those with values between 5% and 95% of the normal distribution to cut off outliers and exempt organizations with zero profitability (though negative values are allowed still).</p>
 </div>
-</div>
-<div id="descriptive-statistics-2" class="section level1">
-<h1>Descriptive Statistics</h1>
+<div id="descriptive-statistics-2" class="section level2">
+<h2>Descriptive Statistics</h2>
 <p>Note: All monetary variables have been converted to thousands of dollars.</p>
 <div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb60-1" title="1"></a>
 <a class="sourceLine" id="cb60-2" title="2">core2 <span class="op">%&gt;%</span></a>
@@ -1893,12 +2127,258 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb60-21" title="21">             <span class="dt">covariate.labels =</span> <span class="kw">c</span>(<span class="st">&quot;Investment Income Reliance Ratio&quot;</span>, <span class="st">&quot;Age&quot;</span>, </a>
 <a class="sourceLine" id="cb60-22" title="22">                                  <span class="st">&quot;Revenue ($1k)&quot;</span>, <span class="st">&quot;Expenses($1k)&quot;</span>, </a>
 <a class="sourceLine" id="cb60-23" title="23">                                  <span class="st">&quot;Buildings ($1k)&quot;</span>, <span class="st">&quot;Total Assets ($1k)&quot;</span>,</a>
-<a class="sourceLine" id="cb60-24" title="24">                                  <span class="st">&quot;Net Assets ($1k)&quot;</span>, <span class="st">&quot;Liabiliies ($1k)&quot;</span>))</a>
-<a class="sourceLine" id="cb60-25" title="25"><span class="co">## Error: Can&#39;t subset columns that don&#39;t exist.</span></a>
-<a class="sourceLine" id="cb60-26" title="26"><span class="co">## [31mx[39m Column `investment_income_ratio` doesn&#39;t exist.</span></a></code></pre></div>
+<a class="sourceLine" id="cb60-24" title="24">                                  <span class="st">&quot;Net Assets ($1k)&quot;</span>, <span class="st">&quot;Liabiliies ($1k)&quot;</span>))</a></code></pre></div>
+<table style="text-align:center">
+<tr>
+<td colspan="8" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Statistic
+</td>
+<td>
+Min
+</td>
+<td>
+Pctl(25)
+</td>
+<td>
+Median
+</td>
+<td>
+Mean
+</td>
+<td>
+Pctl(75)
+</td>
+<td>
+Max
+</td>
+<td>
+St. Dev.
+</td>
+</tr>
+<tr>
+<td colspan="8" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Investment Income Reliance Ratio
+</td>
+<td>
+-0.005
+</td>
+<td>
+0.00
+</td>
+<td>
+0.001
+</td>
+<td>
+0.04
+</td>
+<td>
+0.02
+</td>
+<td>
+0.42
+</td>
+<td>
+0.10
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Age
+</td>
+<td>
+3
+</td>
+<td>
+22
+</td>
+<td>
+30
+</td>
+<td>
+31.97
+</td>
+<td>
+41
+</td>
+<td>
+101
+</td>
+<td>
+14.82
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Revenue (1k)
+</td>
+<td>
+-5,376.77
+</td>
+<td>
+253.67
+</td>
+<td>
+943.37
+</td>
+<td>
+4,687.28
+</td>
+<td>
+3,765.40
+</td>
+<td>
+408,932.00
+</td>
+<td>
+15,071.45
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Expenses(1k)
+</td>
+<td>
+0.00
+</td>
+<td>
+254.55
+</td>
+<td>
+861.78
+</td>
+<td>
+4,332.42
+</td>
+<td>
+3,391.81
+</td>
+<td>
+382,666.50
+</td>
+<td>
+14,055.29
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Buildings (1k)
+</td>
+<td>
+-4.49
+</td>
+<td>
+67.70
+</td>
+<td>
+780.96
+</td>
+<td>
+3,498.90
+</td>
+<td>
+2,875.68
+</td>
+<td>
+513,508.80
+</td>
+<td>
+13,239.15
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Total Assets (1k)
+</td>
+<td>
+-7,552.11
+</td>
+<td>
+747.47
+</td>
+<td>
+2,501.55
+</td>
+<td>
+10,084.78
+</td>
+<td>
+7,682.09
+</td>
+<td>
+1,212,784.00
+</td>
+<td>
+35,519.08
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Net Assets (1k)
+</td>
+<td>
+-178,869.70
+</td>
+<td>
+186.60
+</td>
+<td>
+1,139.23
+</td>
+<td>
+4,910.48
+</td>
+<td>
+4,222.31
+</td>
+<td>
+564,541.70
+</td>
+<td>
+18,162.74
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Liabiliies (1k)
+</td>
+<td>
+-2,707.10
+</td>
+<td>
+109.03
+</td>
+<td>
+776.31
+</td>
+<td>
+5,174.23
+</td>
+<td>
+3,083.72
+</td>
+<td>
+981,222.80
+</td>
+<td>
+24,847.35
+</td>
+</tr>
+<tr>
+<td colspan="8" style="border-bottom: 1px solid black">
+</td>
+</tr>
+</table>
 <p>What proportion of orgs have Investment Income Reliance Ratios equal to zero?</p>
 <div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb61-1" title="1">prop.zero &lt;-<span class="st"> </span><span class="kw">mean</span>( core2<span class="op">$</span>investment_income_ratio <span class="op">==</span><span class="st"> </span><span class="dv">0</span>, <span class="dt">na.rm=</span>T )</a></code></pre></div>
-<p>In the sample, NaN percent of the organizations have Investment Income Reliance Ratios equal to zero, meaning they have no earned income. These organizations are dropped from subsequent graphs to keep the visualizations clean. The interpretation of the graphics should be the distributions of Investment Income Reliance Ratios for organizations that have positive or negative values.</p>
+<p>In the sample, 19 percent of the organizations have Investment Income Reliance Ratios equal to zero, meaning they have no earned income. These organizations are dropped from subsequent graphs to keep the visualizations clean. The interpretation of the graphics should be the distributions of Investment Income Reliance Ratios for organizations that have positive or negative values.</p>
 <div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb62-1" title="1"><span class="co">###</span></a>
 <a class="sourceLine" id="cb62-2" title="2"><span class="co">### ADD QUANTILES</span></a>
 <a class="sourceLine" id="cb62-3" title="3"><span class="co">###</span></a>
@@ -1908,6 +2388,7 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb62-7" title="7">core2<span class="op">$</span>rev.q   &lt;-<span class="st"> </span><span class="kw">create_quantiles</span>( <span class="dt">var=</span>core2<span class="op">$</span>totrevenue,     <span class="dt">n.groups=</span><span class="dv">5</span> )</a>
 <a class="sourceLine" id="cb62-8" title="8">core2<span class="op">$</span>asset.q &lt;-<span class="st"> </span><span class="kw">create_quantiles</span>( <span class="dt">var=</span>core2<span class="op">$</span>totnetassetend, <span class="dt">n.groups=</span><span class="dv">5</span> )</a>
 <a class="sourceLine" id="cb62-9" title="9">core2<span class="op">$</span>age.q   &lt;-<span class="st"> </span><span class="kw">create_quantiles</span>( <span class="dt">var=</span>core2<span class="op">$</span>AGE,            <span class="dt">n.groups=</span><span class="dv">5</span> )</a></code></pre></div>
+</div>
 <div id="investment-income-dependence-ratio-density-1" class="section level2">
 <h2>Investment Income Dependence Ratio Density</h2>
 <div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb63-1" title="1">min.x &lt;-<span class="st"> </span><span class="kw">min</span>( core2<span class="op">$</span>investment_income_ratio, <span class="dt">na.rm=</span>T )</a>
@@ -1919,14 +2400,13 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb63-7" title="7"><span class="st">  </span><span class="kw">xlab</span>( variable.label3 ) <span class="op">+</span></a>
 <a class="sourceLine" id="cb63-8" title="8"><span class="st">  </span><span class="kw">theme</span>( <span class="dt">axis.title.y=</span><span class="kw">element_blank</span>(),</a>
 <a class="sourceLine" id="cb63-9" title="9">         <span class="dt">axis.text.y=</span><span class="kw">element_blank</span>(), </a>
-<a class="sourceLine" id="cb63-10" title="10">         <span class="dt">axis.ticks.y=</span><span class="kw">element_blank</span>() )</a>
-<a class="sourceLine" id="cb63-11" title="11"><span class="co">## Error in FUN(X[[i]], ...): object &#39;investment_income_ratio&#39; not found</span></a></code></pre></div>
+<a class="sourceLine" id="cb63-10" title="10">         <span class="dt">axis.ticks.y=</span><span class="kw">element_blank</span>() )</a></code></pre></div>
 <p><img src="metric-14-income-reliance-ratios_files/figure-html/unnamed-chunk-64-1.png" width="960" /></p>
 </div>
 <div id="investment-income-dependence-ratio-by-ntee-major-code" class="section level2">
 <h2>Investment Income Dependence Ratio by NTEE Major Code</h2>
-<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb64-1" title="1">core3 &lt;-<span class="st"> </span>core2 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>( <span class="op">!</span><span class="st"> </span><span class="kw">is.na</span>(NTMAJ12) )</a>
-<a class="sourceLine" id="cb64-2" title="2"><span class="kw">table</span>( core3<span class="op">$</span>NTMAJ12) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sort</span>(<span class="dt">decreasing=</span><span class="ot">TRUE</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">kable</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb64-1" title="1">core3 &lt;-<span class="st"> </span>core2 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>( <span class="op">!</span><span class="st"> </span><span class="kw">is.na</span>(NTEE1) )</a>
+<a class="sourceLine" id="cb64-2" title="2"><span class="kw">table</span>( core3<span class="op">$</span>NTEE1) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sort</span>(<span class="dt">decreasing=</span><span class="ot">TRUE</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">kable</span>()</a></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -1936,12 +2416,16 @@ Liabiliies (1k)
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">Human Services</td>
-<td align="right">3863</td>
+<td align="left">Housing</td>
+<td align="right">2772</td>
 </tr>
 <tr class="even">
-<td align="left">Public Benefit</td>
+<td align="left">Community Development</td>
 <td align="right">1683</td>
+</tr>
+<tr class="odd">
+<td align="left">Human Services</td>
+<td align="right">1091</td>
 </tr>
 </tbody>
 </table>
@@ -1965,8 +2449,7 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb65-18" title="18"><span class="st">  </span><span class="kw">geom_text</span>( <span class="dt">data=</span>df, </a>
 <a class="sourceLine" id="cb65-19" title="19">             <span class="kw">aes</span>(x, y, <span class="dt">label=</span>N ), </a>
 <a class="sourceLine" id="cb65-20" title="20">             <span class="dt">hjust=</span><span class="dv">2</span>, <span class="dt">vjust=</span><span class="dv">3</span>, </a>
-<a class="sourceLine" id="cb65-21" title="21">             <span class="dt">color=</span><span class="st">&quot;gray60&quot;</span>, <span class="dt">size=</span><span class="dv">6</span> )</a>
-<a class="sourceLine" id="cb65-22" title="22"><span class="co">## Error in FUN(X[[i]], ...): object &#39;investment_income_ratio&#39; not found</span></a></code></pre></div>
+<a class="sourceLine" id="cb65-21" title="21">             <span class="dt">color=</span><span class="st">&quot;gray60&quot;</span>, <span class="dt">size=</span><span class="dv">6</span> )</a></code></pre></div>
 <p><img src="metric-14-income-reliance-ratios_files/figure-html/unnamed-chunk-66-1.png" width="960" /></p>
 </div>
 <div id="investment-income-dependence-ratio-by-region" class="section level2">
@@ -2017,8 +2500,7 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb67-17" title="17"><span class="st">    </span><span class="kw">geom_text</span>( <span class="dt">data=</span>df, </a>
 <a class="sourceLine" id="cb67-18" title="18">             <span class="kw">aes</span>(x, y, <span class="dt">label=</span>N ), </a>
 <a class="sourceLine" id="cb67-19" title="19">             <span class="dt">hjust=</span><span class="dv">2</span>, <span class="dt">vjust=</span><span class="dv">3</span>, </a>
-<a class="sourceLine" id="cb67-20" title="20">             <span class="dt">color=</span><span class="st">&quot;gray60&quot;</span>, <span class="dt">size=</span><span class="dv">6</span> )</a>
-<a class="sourceLine" id="cb67-21" title="21"><span class="co">## Error in FUN(X[[i]], ...): object &#39;investment_income_ratio&#39; not found</span></a></code></pre></div>
+<a class="sourceLine" id="cb67-20" title="20">             <span class="dt">color=</span><span class="st">&quot;gray60&quot;</span>, <span class="dt">size=</span><span class="dv">6</span> )</a></code></pre></div>
 <p><img src="metric-14-income-reliance-ratios_files/figure-html/unnamed-chunk-68-1.png" width="960" /></p>
 <div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb68-1" title="1"><span class="kw">table</span>( core2<span class="op">$</span>Division ) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">kable</span>()</a></code></pre></div>
 <table>
@@ -2086,8 +2568,7 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb69-17" title="17"><span class="st">    </span><span class="kw">geom_text</span>( <span class="dt">data=</span>df, </a>
 <a class="sourceLine" id="cb69-18" title="18">             <span class="kw">aes</span>(x, y, <span class="dt">label=</span>N ), </a>
 <a class="sourceLine" id="cb69-19" title="19">             <span class="dt">hjust=</span><span class="dv">2</span>, <span class="dt">vjust=</span><span class="dv">3</span>, </a>
-<a class="sourceLine" id="cb69-20" title="20">             <span class="dt">color=</span><span class="st">&quot;gray60&quot;</span>, <span class="dt">size=</span><span class="dv">6</span> ) </a>
-<a class="sourceLine" id="cb69-21" title="21"><span class="co">## Error in FUN(X[[i]], ...): object &#39;investment_income_ratio&#39; not found</span></a></code></pre></div>
+<a class="sourceLine" id="cb69-20" title="20">             <span class="dt">color=</span><span class="st">&quot;gray60&quot;</span>, <span class="dt">size=</span><span class="dv">6</span> ) </a></code></pre></div>
 <p><img src="metric-14-income-reliance-ratios_files/figure-html/unnamed-chunk-70-1.png" width="960" /></p>
 </div>
 <div id="investment-income-dependence-ratio-by-nonprofit-size-expenses" class="section level2">
@@ -2111,10 +2592,9 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb71-13" title="13">       <span class="dt">xlab=</span><span class="st">&quot;Nonprofit Size (logged Expenses)&quot;</span>, </a>
 <a class="sourceLine" id="cb71-14" title="14">       <span class="dt">ylab=</span>variable.label3,</a>
 <a class="sourceLine" id="cb71-15" title="15">       <span class="dt">xaxt=</span><span class="st">&quot;n&quot;</span>, <span class="dt">xlim=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">10</span>) )</a>
-<a class="sourceLine" id="cb71-16" title="16"><span class="co">## Error in lowess(x2[ok] ~ x1[ok]): invalid input</span></a>
-<a class="sourceLine" id="cb71-17" title="17"><span class="kw">axis</span>( <span class="dt">side=</span><span class="dv">1</span>, </a>
-<a class="sourceLine" id="cb71-18" title="18">      <span class="dt">at=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">10</span>), </a>
-<a class="sourceLine" id="cb71-19" title="19">      <span class="dt">labels=</span><span class="kw">c</span>(<span class="st">&quot;1k&quot;</span>,<span class="st">&quot;10k&quot;</span>,<span class="st">&quot;100k&quot;</span>,<span class="st">&quot;1m&quot;</span>,<span class="st">&quot;10m&quot;</span>,<span class="st">&quot;100m&quot;</span>,<span class="st">&quot;1b&quot;</span>,<span class="st">&quot;10b&quot;</span>) )</a></code></pre></div>
+<a class="sourceLine" id="cb71-16" title="16"><span class="kw">axis</span>( <span class="dt">side=</span><span class="dv">1</span>, </a>
+<a class="sourceLine" id="cb71-17" title="17">      <span class="dt">at=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">10</span>), </a>
+<a class="sourceLine" id="cb71-18" title="18">      <span class="dt">labels=</span><span class="kw">c</span>(<span class="st">&quot;1k&quot;</span>,<span class="st">&quot;10k&quot;</span>,<span class="st">&quot;100k&quot;</span>,<span class="st">&quot;1m&quot;</span>,<span class="st">&quot;10m&quot;</span>,<span class="st">&quot;100m&quot;</span>,<span class="st">&quot;1b&quot;</span>,<span class="st">&quot;10b&quot;</span>) )</a></code></pre></div>
 <p><img src="metric-14-income-reliance-ratios_files/figure-html/unnamed-chunk-72-1.png" width="960" /></p>
 <div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb72-1" title="1">core2 <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb72-2" title="2"><span class="st">  </span><span class="kw">filter</span>( <span class="op">!</span><span class="st"> </span><span class="kw">is.na</span>(exp.q) ) <span class="op">%&gt;%</span><span class="st"> </span></a>
@@ -2126,8 +2606,7 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb72-8" title="8"><span class="st">    </span><span class="kw">theme_minimal</span>( <span class="dt">base_size =</span> <span class="dv">22</span> )  <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb72-9" title="9"><span class="st">    </span><span class="kw">theme</span>( <span class="dt">axis.title.y=</span><span class="kw">element_blank</span>(),</a>
 <a class="sourceLine" id="cb72-10" title="10">           <span class="dt">axis.text.y=</span><span class="kw">element_blank</span>(), </a>
-<a class="sourceLine" id="cb72-11" title="11">           <span class="dt">axis.ticks.y=</span><span class="kw">element_blank</span>() )</a>
-<a class="sourceLine" id="cb72-12" title="12"><span class="co">## Error in FUN(X[[i]], ...): object &#39;investment_income_ratio&#39; not found</span></a></code></pre></div>
+<a class="sourceLine" id="cb72-11" title="11">           <span class="dt">axis.ticks.y=</span><span class="kw">element_blank</span>() )</a></code></pre></div>
 <p><img src="metric-14-income-reliance-ratios_files/figure-html/unnamed-chunk-73-1.png" width="960" /></p>
 </div>
 <div id="investment-income-dependence-ratio-by-nonprofit-size-revenue" class="section level2">
@@ -2153,10 +2632,9 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb74-12" title="12">       <span class="dt">xlab=</span><span class="st">&quot;Nonprofit Size (logged Revenue)&quot;</span>, </a>
 <a class="sourceLine" id="cb74-13" title="13">       <span class="dt">ylab=</span>variable.label3,</a>
 <a class="sourceLine" id="cb74-14" title="14">       <span class="dt">xaxt=</span><span class="st">&quot;n&quot;</span>, <span class="dt">xlim=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">10</span>) )</a>
-<a class="sourceLine" id="cb74-15" title="15"><span class="co">## Error in lowess(x2[ok] ~ x1[ok]): invalid input</span></a>
-<a class="sourceLine" id="cb74-16" title="16"><span class="kw">axis</span>( <span class="dt">side=</span><span class="dv">1</span>, </a>
-<a class="sourceLine" id="cb74-17" title="17">      <span class="dt">at=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">10</span>), </a>
-<a class="sourceLine" id="cb74-18" title="18">      <span class="dt">labels=</span><span class="kw">c</span>(<span class="st">&quot;1k&quot;</span>,<span class="st">&quot;10k&quot;</span>,<span class="st">&quot;100k&quot;</span>,<span class="st">&quot;1m&quot;</span>,<span class="st">&quot;10m&quot;</span>,<span class="st">&quot;100m&quot;</span>,<span class="st">&quot;1b&quot;</span>,<span class="st">&quot;10b&quot;</span>) )</a></code></pre></div>
+<a class="sourceLine" id="cb74-15" title="15"><span class="kw">axis</span>( <span class="dt">side=</span><span class="dv">1</span>, </a>
+<a class="sourceLine" id="cb74-16" title="16">      <span class="dt">at=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">10</span>), </a>
+<a class="sourceLine" id="cb74-17" title="17">      <span class="dt">labels=</span><span class="kw">c</span>(<span class="st">&quot;1k&quot;</span>,<span class="st">&quot;10k&quot;</span>,<span class="st">&quot;100k&quot;</span>,<span class="st">&quot;1m&quot;</span>,<span class="st">&quot;10m&quot;</span>,<span class="st">&quot;100m&quot;</span>,<span class="st">&quot;1b&quot;</span>,<span class="st">&quot;10b&quot;</span>) )</a></code></pre></div>
 <p><img src="metric-14-income-reliance-ratios_files/figure-html/unnamed-chunk-75-1.png" width="960" /></p>
 <div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb75-1" title="1">core2 <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb75-2" title="2"><span class="st">  </span><span class="kw">filter</span>( <span class="op">!</span><span class="st"> </span><span class="kw">is.na</span>(rev.q) ) <span class="op">%&gt;%</span><span class="st"> </span></a>
@@ -2168,8 +2646,7 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb75-8" title="8"><span class="st">    </span><span class="kw">theme_minimal</span>( <span class="dt">base_size =</span> <span class="dv">22</span> )  <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb75-9" title="9"><span class="st">    </span><span class="kw">theme</span>( <span class="dt">axis.title.y=</span><span class="kw">element_blank</span>(),</a>
 <a class="sourceLine" id="cb75-10" title="10">           <span class="dt">axis.text.y=</span><span class="kw">element_blank</span>(), </a>
-<a class="sourceLine" id="cb75-11" title="11">           <span class="dt">axis.ticks.y=</span><span class="kw">element_blank</span>() )</a>
-<a class="sourceLine" id="cb75-12" title="12"><span class="co">## Error in FUN(X[[i]], ...): object &#39;investment_income_ratio&#39; not found</span></a></code></pre></div>
+<a class="sourceLine" id="cb75-11" title="11">           <span class="dt">axis.ticks.y=</span><span class="kw">element_blank</span>() )</a></code></pre></div>
 <p><img src="metric-14-income-reliance-ratios_files/figure-html/unnamed-chunk-76-1.png" width="960" /></p>
 </div>
 <div id="investment-income-dependence-ratio-by-nonprofit-size-net-assets" class="section level2">
@@ -2196,10 +2673,9 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb77-12" title="12">       <span class="dt">xlab=</span><span class="st">&quot;Nonprofit Size (logged Net Assets)&quot;</span>, </a>
 <a class="sourceLine" id="cb77-13" title="13">       <span class="dt">ylab=</span>variable.label3,</a>
 <a class="sourceLine" id="cb77-14" title="14">       <span class="dt">xaxt=</span><span class="st">&quot;n&quot;</span>, <span class="dt">xlim=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">10</span>) )</a>
-<a class="sourceLine" id="cb77-15" title="15"><span class="co">## Error in lowess(x2[ok] ~ x1[ok]): invalid input</span></a>
-<a class="sourceLine" id="cb77-16" title="16"><span class="kw">axis</span>( <span class="dt">side=</span><span class="dv">1</span>, </a>
-<a class="sourceLine" id="cb77-17" title="17">      <span class="dt">at=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">10</span>), </a>
-<a class="sourceLine" id="cb77-18" title="18">      <span class="dt">labels=</span><span class="kw">c</span>(<span class="st">&quot;1k&quot;</span>,<span class="st">&quot;10k&quot;</span>,<span class="st">&quot;100k&quot;</span>,<span class="st">&quot;1m&quot;</span>,<span class="st">&quot;10m&quot;</span>,<span class="st">&quot;100m&quot;</span>,<span class="st">&quot;1b&quot;</span>,<span class="st">&quot;10b&quot;</span>) )</a></code></pre></div>
+<a class="sourceLine" id="cb77-15" title="15"><span class="kw">axis</span>( <span class="dt">side=</span><span class="dv">1</span>, </a>
+<a class="sourceLine" id="cb77-16" title="16">      <span class="dt">at=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">10</span>), </a>
+<a class="sourceLine" id="cb77-17" title="17">      <span class="dt">labels=</span><span class="kw">c</span>(<span class="st">&quot;1k&quot;</span>,<span class="st">&quot;10k&quot;</span>,<span class="st">&quot;100k&quot;</span>,<span class="st">&quot;1m&quot;</span>,<span class="st">&quot;10m&quot;</span>,<span class="st">&quot;100m&quot;</span>,<span class="st">&quot;1b&quot;</span>,<span class="st">&quot;10b&quot;</span>) )</a></code></pre></div>
 <p><img src="metric-14-income-reliance-ratios_files/figure-html/unnamed-chunk-78-1.png" width="960" /></p>
 <div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb78-1" title="1">core2<span class="op">$</span>totnetassetend[ core2<span class="op">$</span>totnetassetend <span class="op">&lt;</span><span class="st"> </span><span class="dv">1</span> ] &lt;-<span class="st"> </span><span class="ot">NA</span></a>
 <a class="sourceLine" id="cb78-2" title="2">core2<span class="op">$</span>asset.q &lt;-<span class="st"> </span><span class="kw">create_quantiles</span>( <span class="dt">var=</span>core2<span class="op">$</span>totnetassetend, <span class="dt">n.groups=</span><span class="dv">5</span> )</a>
@@ -2215,8 +2691,7 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb78-12" title="12"><span class="st">    </span><span class="kw">theme_minimal</span>( <span class="dt">base_size =</span> <span class="dv">22</span> )  <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb78-13" title="13"><span class="st">    </span><span class="kw">theme</span>( <span class="dt">axis.title.y=</span><span class="kw">element_blank</span>(),</a>
 <a class="sourceLine" id="cb78-14" title="14">           <span class="dt">axis.text.y=</span><span class="kw">element_blank</span>(), </a>
-<a class="sourceLine" id="cb78-15" title="15">           <span class="dt">axis.ticks.y=</span><span class="kw">element_blank</span>() )</a>
-<a class="sourceLine" id="cb78-16" title="16"><span class="co">## Error in FUN(X[[i]], ...): object &#39;investment_income_ratio&#39; not found</span></a></code></pre></div>
+<a class="sourceLine" id="cb78-15" title="15">           <span class="dt">axis.ticks.y=</span><span class="kw">element_blank</span>() )</a></code></pre></div>
 <p><img src="metric-14-income-reliance-ratios_files/figure-html/unnamed-chunk-79-1.png" width="960" /></p>
 <p>Total Assets for Comparison</p>
 <div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb79-1" title="1">core2<span class="op">$</span>totassetsend[ core2<span class="op">$</span>totassetsend <span class="op">&lt;</span><span class="st"> </span><span class="dv">1</span> ] &lt;-<span class="st"> </span><span class="ot">NA</span></a>
@@ -2234,10 +2709,9 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb79-13" title="13">       <span class="dt">xlab=</span><span class="st">&quot;Nonprofit Size (logged Total Assets)&quot;</span>, </a>
 <a class="sourceLine" id="cb79-14" title="14">       <span class="dt">ylab=</span>variable.label3,</a>
 <a class="sourceLine" id="cb79-15" title="15">       <span class="dt">xaxt=</span><span class="st">&quot;n&quot;</span>, <span class="dt">xlim=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">10</span>) )</a>
-<a class="sourceLine" id="cb79-16" title="16"><span class="co">## Error in lowess(x2[ok] ~ x1[ok]): invalid input</span></a>
-<a class="sourceLine" id="cb79-17" title="17"><span class="kw">axis</span>( <span class="dt">side=</span><span class="dv">1</span>, </a>
-<a class="sourceLine" id="cb79-18" title="18">      <span class="dt">at=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">10</span>), </a>
-<a class="sourceLine" id="cb79-19" title="19">      <span class="dt">labels=</span><span class="kw">c</span>(<span class="st">&quot;1k&quot;</span>,<span class="st">&quot;10k&quot;</span>,<span class="st">&quot;100k&quot;</span>,<span class="st">&quot;1m&quot;</span>,<span class="st">&quot;10m&quot;</span>,<span class="st">&quot;100m&quot;</span>,<span class="st">&quot;1b&quot;</span>,<span class="st">&quot;10b&quot;</span>) )</a></code></pre></div>
+<a class="sourceLine" id="cb79-16" title="16"><span class="kw">axis</span>( <span class="dt">side=</span><span class="dv">1</span>, </a>
+<a class="sourceLine" id="cb79-17" title="17">      <span class="dt">at=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">10</span>), </a>
+<a class="sourceLine" id="cb79-18" title="18">      <span class="dt">labels=</span><span class="kw">c</span>(<span class="st">&quot;1k&quot;</span>,<span class="st">&quot;10k&quot;</span>,<span class="st">&quot;100k&quot;</span>,<span class="st">&quot;1m&quot;</span>,<span class="st">&quot;10m&quot;</span>,<span class="st">&quot;100m&quot;</span>,<span class="st">&quot;1b&quot;</span>,<span class="st">&quot;10b&quot;</span>) )</a></code></pre></div>
 <p><img src="metric-14-income-reliance-ratios_files/figure-html/unnamed-chunk-80-1.png" width="960" /></p>
 <div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb80-1" title="1"><span class="kw">ggplot</span>( core2, <span class="kw">aes</span>(<span class="dt">x =</span> totassetsend )) <span class="op">+</span><span class="st">  </span></a>
 <a class="sourceLine" id="cb80-2" title="2"><span class="st">  </span><span class="kw">geom_density</span>( <span class="dt">alpha =</span> <span class="fl">0.5</span>) <span class="op">+</span><span class="st"> </span></a>
@@ -2257,8 +2731,7 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb81-8" title="8"><span class="st">    </span><span class="kw">theme_minimal</span>( <span class="dt">base_size =</span> <span class="dv">22</span> )  <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb81-9" title="9"><span class="st">    </span><span class="kw">theme</span>( <span class="dt">axis.title.y=</span><span class="kw">element_blank</span>(),</a>
 <a class="sourceLine" id="cb81-10" title="10">           <span class="dt">axis.text.y=</span><span class="kw">element_blank</span>(), </a>
-<a class="sourceLine" id="cb81-11" title="11">           <span class="dt">axis.ticks.y=</span><span class="kw">element_blank</span>() )</a>
-<a class="sourceLine" id="cb81-12" title="12"><span class="co">## Error in FUN(X[[i]], ...): object &#39;investment_income_ratio&#39; not found</span></a></code></pre></div>
+<a class="sourceLine" id="cb81-11" title="11">           <span class="dt">axis.ticks.y=</span><span class="kw">element_blank</span>() )</a></code></pre></div>
 <p><img src="metric-14-income-reliance-ratios_files/figure-html/unnamed-chunk-82-1.png" width="960" /></p>
 </div>
 <div id="investment-income-dependence-ratio-by-nonprofit-age" class="section level2">
@@ -2278,8 +2751,7 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb83-10" title="10"></a>
 <a class="sourceLine" id="cb83-11" title="11"><span class="kw">jplot</span>( core3<span class="op">$</span>AGE, core3<span class="op">$</span>investment_income_ratio, </a>
 <a class="sourceLine" id="cb83-12" title="12">       <span class="dt">xlab=</span><span class="st">&quot;Nonprofit Age&quot;</span>, </a>
-<a class="sourceLine" id="cb83-13" title="13">       <span class="dt">ylab=</span>variable.label3 ) </a>
-<a class="sourceLine" id="cb83-14" title="14"><span class="co">## Error in lowess(x2[ok] ~ x1[ok]): invalid input</span></a></code></pre></div>
+<a class="sourceLine" id="cb83-13" title="13">       <span class="dt">ylab=</span>variable.label3 ) </a></code></pre></div>
 <p><img src="metric-14-income-reliance-ratios_files/figure-html/unnamed-chunk-84-1.png" width="960" /></p>
 <div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb84-1" title="1">core2 <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb84-2" title="2"><span class="st">  </span><span class="kw">filter</span>( <span class="op">!</span><span class="st"> </span><span class="kw">is.na</span>(age.q) ) <span class="op">%&gt;%</span><span class="st"> </span></a>
@@ -2292,31 +2764,28 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb84-9" title="9"><span class="st">    </span><span class="kw">theme_minimal</span>( <span class="dt">base_size =</span> <span class="dv">22</span> )  <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb84-10" title="10"><span class="st">    </span><span class="kw">theme</span>( <span class="dt">axis.title.y=</span><span class="kw">element_blank</span>(),</a>
 <a class="sourceLine" id="cb84-11" title="11">           <span class="dt">axis.text.y=</span><span class="kw">element_blank</span>(), </a>
-<a class="sourceLine" id="cb84-12" title="12">           <span class="dt">axis.ticks.y=</span><span class="kw">element_blank</span>() )</a>
-<a class="sourceLine" id="cb84-13" title="13"><span class="co">## Error in FUN(X[[i]], ...): object &#39;investment_income_ratio&#39; not found</span></a></code></pre></div>
+<a class="sourceLine" id="cb84-12" title="12">           <span class="dt">axis.ticks.y=</span><span class="kw">element_blank</span>() )</a></code></pre></div>
 <p><img src="metric-14-income-reliance-ratios_files/figure-html/unnamed-chunk-85-1.png" width="960" /></p>
-<p>#Income Reliance Ratio Analysis</p>
-<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb85-1" title="1"></a>
-<a class="sourceLine" id="cb85-2" title="2">dat &lt;-<span class="st"> </span>dplyr<span class="op">::</span><span class="kw">select</span>( core3, donation_ratio, investment_income_ratio, earned_income_ratio )</a>
-<a class="sourceLine" id="cb85-3" title="3"><span class="co">## Error: Can&#39;t subset columns that don&#39;t exist.</span></a>
-<a class="sourceLine" id="cb85-4" title="4"><span class="co">## [31mx[39m Column `investment_income_ratio` doesn&#39;t exist.</span></a>
-<a class="sourceLine" id="cb85-5" title="5"></a>
-<a class="sourceLine" id="cb85-6" title="6">core3<span class="op">$</span>income_reliance_ratio &lt;-<span class="st"> </span><span class="kw">apply</span>( dat, <span class="dt">MARGIN=</span><span class="dv">1</span>, <span class="dt">FUN=</span>max )</a>
-<a class="sourceLine" id="cb85-7" title="7"><span class="co">## Error in apply(dat, MARGIN = 1, FUN = max): object &#39;dat&#39; not found</span></a>
-<a class="sourceLine" id="cb85-8" title="8"></a>
-<a class="sourceLine" id="cb85-9" title="9">                     </a>
-<a class="sourceLine" id="cb85-10" title="10"><span class="co"># summary( core3$income_reliance_ratio )</span></a></code></pre></div>
 </div>
+</div>
+<div id="income-reliance-ratio-analysis" class="section level1">
+<h1>Income Reliance Ratio Analysis</h1>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb85-1" title="1"></a>
+<a class="sourceLine" id="cb85-2" title="2">dat &lt;-<span class="st"> </span>dplyr<span class="op">::</span><span class="kw">select</span>(core3, donation_ratio, investment_income_ratio, earned_income_ratio )</a>
+<a class="sourceLine" id="cb85-3" title="3"></a>
+<a class="sourceLine" id="cb85-4" title="4">core<span class="op">$</span>income_reliance_ratio &lt;-<span class="st"> </span><span class="kw">apply</span>( dat, <span class="dt">MARGIN=</span><span class="dv">1</span>, <span class="dt">FUN=</span>max )</a>
+<a class="sourceLine" id="cb85-5" title="5"></a>
+<a class="sourceLine" id="cb85-6" title="6">                     </a>
+<a class="sourceLine" id="cb85-7" title="7"><span class="co"># summary( core3$income_reliance_ratio )</span></a></code></pre></div>
 <div id="standardize-scales-3" class="section level2">
 <h2>Standardize Scales</h2>
 <p>Check high and low values to see what makes sense.</p>
-<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb86-1" title="1">x<span class="fl">.05</span> &lt;-<span class="st"> </span><span class="kw">quantile</span>( core3<span class="op">$</span>income_reliance_ratio, <span class="fl">0.05</span>, <span class="dt">na.rm=</span>T )</a>
-<a class="sourceLine" id="cb86-2" title="2">x<span class="fl">.95</span> &lt;-<span class="st"> </span><span class="kw">quantile</span>( core3<span class="op">$</span>income_reliance_ratio, <span class="fl">0.95</span>, <span class="dt">na.rm=</span>T )</a>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb86-1" title="1">x<span class="fl">.05</span> &lt;-<span class="st"> </span><span class="kw">quantile</span>( core<span class="op">$</span>income_reliance_ratio, <span class="fl">0.05</span>, <span class="dt">na.rm=</span>T )</a>
+<a class="sourceLine" id="cb86-2" title="2">x<span class="fl">.95</span> &lt;-<span class="st"> </span><span class="kw">quantile</span>( core<span class="op">$</span>income_reliance_ratio, <span class="fl">0.95</span>, <span class="dt">na.rm=</span>T )</a>
 <a class="sourceLine" id="cb86-3" title="3"></a>
 <a class="sourceLine" id="cb86-4" title="4"><span class="kw">ggplot</span>( core, <span class="kw">aes</span>(<span class="dt">x =</span> income_reliance_ratio ) ) <span class="op">+</span><span class="st">  </span></a>
 <a class="sourceLine" id="cb86-5" title="5"><span class="st">  </span><span class="kw">geom_density</span>( <span class="dt">alpha =</span> <span class="fl">0.5</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb86-6" title="6"><span class="st">  </span><span class="kw">xlim</span>( x<span class="fl">.05</span>, x<span class="fl">.95</span> ) </a>
-<a class="sourceLine" id="cb86-7" title="7"><span class="co">## Error in FUN(X[[i]], ...): object &#39;income_reliance_ratio&#39; not found</span></a></code></pre></div>
+<a class="sourceLine" id="cb86-6" title="6"><span class="st">  </span><span class="kw">xlim</span>( x<span class="fl">.05</span>, x<span class="fl">.95</span> ) </a></code></pre></div>
 <p><img src="metric-14-income-reliance-ratios_files/figure-html/unnamed-chunk-87-1.png" width="960" /></p>
 <div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb87-1" title="1">core2 &lt;-<span class="st"> </span>core</a>
 <a class="sourceLine" id="cb87-2" title="2"></a>
@@ -2330,10 +2799,10 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb87-10" title="10"></a>
 <a class="sourceLine" id="cb87-11" title="11"></a>
 <a class="sourceLine" id="cb87-12" title="12"></a>
-<a class="sourceLine" id="cb87-13" title="13">x<span class="fl">.05</span> &lt;-<span class="st"> </span><span class="kw">quantile</span>( core3<span class="op">$</span>income_reliance_ratio, <span class="fl">0.05</span>, <span class="dt">na.rm=</span>T )</a>
-<a class="sourceLine" id="cb87-14" title="14">x<span class="fl">.95</span> &lt;-<span class="st"> </span><span class="kw">quantile</span>( core3<span class="op">$</span>income_reliance_ratio, <span class="fl">0.95</span>, <span class="dt">na.rm=</span>T )</a>
+<a class="sourceLine" id="cb87-13" title="13">x<span class="fl">.05</span> &lt;-<span class="st"> </span><span class="kw">quantile</span>( core<span class="op">$</span>income_reliance_ratio, <span class="fl">0.05</span>, <span class="dt">na.rm=</span>T )</a>
+<a class="sourceLine" id="cb87-14" title="14">x<span class="fl">.95</span> &lt;-<span class="st"> </span><span class="kw">quantile</span>( core<span class="op">$</span>income_reliance_ratio, <span class="fl">0.95</span>, <span class="dt">na.rm=</span>T )</a>
 <a class="sourceLine" id="cb87-15" title="15"></a>
-<a class="sourceLine" id="cb87-16" title="16">core3 &lt;-<span class="st"> </span>core</a>
+<a class="sourceLine" id="cb87-16" title="16">core2 &lt;-<span class="st"> </span>core</a>
 <a class="sourceLine" id="cb87-17" title="17"></a>
 <a class="sourceLine" id="cb87-18" title="18"><span class="co"># proportion of values that are negative</span></a>
 <a class="sourceLine" id="cb87-19" title="19"><span class="co"># mean( core2$der &lt; 0, na.rm=T ) </span></a>
@@ -2343,22 +2812,19 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb87-23" title="23"></a>
 <a class="sourceLine" id="cb87-24" title="24"><span class="co"># WINSORIZATION AT 5th and 95th PERCENTILES</span></a>
 <a class="sourceLine" id="cb87-25" title="25"></a>
-<a class="sourceLine" id="cb87-26" title="26">core3<span class="op">$</span>income_reliance_ratio[ core3<span class="op">$</span>income_reliance_ratio <span class="op">&lt;</span><span class="st"> </span>x<span class="fl">.05</span> ] &lt;-<span class="st"> </span>x<span class="fl">.05</span></a>
-<a class="sourceLine" id="cb87-27" title="27"><span class="co">## Error in `$&lt;-.data.frame`(`*tmp*`, income_reliance_ratio, value = numeric(0)): replacement has 0 rows, data has 5546</span></a>
-<a class="sourceLine" id="cb87-28" title="28">core3<span class="op">$</span>income_reliance_ratio[ core3<span class="op">$</span>income_reliance_ratio <span class="op">&gt;</span><span class="st"> </span>x<span class="fl">.95</span> ] &lt;-<span class="st"> </span>x<span class="fl">.95</span></a>
-<a class="sourceLine" id="cb87-29" title="29"><span class="co">## Error in `$&lt;-.data.frame`(`*tmp*`, income_reliance_ratio, value = numeric(0)): replacement has 0 rows, data has 5546</span></a></code></pre></div>
+<a class="sourceLine" id="cb87-26" title="26">core2<span class="op">$</span>income_reliance_ratio[ core2<span class="op">$</span>income_reliance_ratio <span class="op">&lt;</span><span class="st"> </span>x<span class="fl">.05</span> ] &lt;-<span class="st"> </span>x<span class="fl">.05</span></a>
+<a class="sourceLine" id="cb87-27" title="27">core2<span class="op">$</span>income_reliance_ratio[ core2<span class="op">$</span>income_reliance_ratio <span class="op">&gt;</span><span class="st"> </span>x<span class="fl">.95</span> ] &lt;-<span class="st"> </span>x<span class="fl">.95</span></a></code></pre></div>
 </div>
 <div id="metric-scope-3" class="section level2">
 <h2>Metric Scope</h2>
 <p>Tax data is available for full 990 filers only, so this metric does not describe any organizations with Gross receipts &lt; $200,000 and Total assets &lt; $500,000. Some organizations with receipts or assets below those thresholds may have filed a full 990, but these would be exceptions.</p>
 <p>The data have been capped to those with values between 5% and 95% of the normal distribution to cut off outliers and exempt organizations with zero profitability (though negative values are allowed still).</p>
 </div>
-</div>
-<div id="descriptive-statistics-3" class="section level1">
-<h1>Descriptive Statistics</h1>
+<div id="descriptive-statistics-3" class="section level2">
+<h2>Descriptive Statistics</h2>
 <p>Note: All monetary variables have been converted to thousands of dollars.</p>
 <div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb88-1" title="1"></a>
-<a class="sourceLine" id="cb88-2" title="2">core3 <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb88-2" title="2">core2 <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb88-3" title="3"><span class="st">  </span><span class="kw">mutate</span>( <span class="co"># income_reliance_ratio = income_reliance_ratio * 10000,</span></a>
 <a class="sourceLine" id="cb88-4" title="4">    <span class="dt">totrevenue =</span> totrevenue <span class="op">/</span><span class="st"> </span><span class="dv">1000</span>,</a>
 <a class="sourceLine" id="cb88-5" title="5">    <span class="dt">totfuncexpns =</span> totfuncexpns <span class="op">/</span><span class="st"> </span><span class="dv">1000</span>, </a>
@@ -2380,12 +2846,258 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb88-21" title="21">             <span class="dt">covariate.labels =</span> <span class="kw">c</span>(<span class="st">&quot;Income  Reliance Ratio&quot;</span>, <span class="st">&quot;Age&quot;</span>, </a>
 <a class="sourceLine" id="cb88-22" title="22">                                  <span class="st">&quot;Revenue ($1k)&quot;</span>, <span class="st">&quot;Expenses($1k)&quot;</span>, </a>
 <a class="sourceLine" id="cb88-23" title="23">                                  <span class="st">&quot;Buildings ($1k)&quot;</span>, <span class="st">&quot;Total Assets ($1k)&quot;</span>,</a>
-<a class="sourceLine" id="cb88-24" title="24">                                  <span class="st">&quot;Net Assets ($1k)&quot;</span>, <span class="st">&quot;Liabiliies ($1k)&quot;</span>))</a>
-<a class="sourceLine" id="cb88-25" title="25"><span class="co">## Error: Can&#39;t subset columns that don&#39;t exist.</span></a>
-<a class="sourceLine" id="cb88-26" title="26"><span class="co">## [31mx[39m Column `income_reliance_ratio` doesn&#39;t exist.</span></a></code></pre></div>
+<a class="sourceLine" id="cb88-24" title="24">                                  <span class="st">&quot;Net Assets ($1k)&quot;</span>, <span class="st">&quot;Liabiliies ($1k)&quot;</span>))</a></code></pre></div>
+<table style="text-align:center">
+<tr>
+<td colspan="8" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Statistic
+</td>
+<td>
+Min
+</td>
+<td>
+Pctl(25)
+</td>
+<td>
+Median
+</td>
+<td>
+Mean
+</td>
+<td>
+Pctl(75)
+</td>
+<td>
+Max
+</td>
+<td>
+St. Dev.
+</td>
+</tr>
+<tr>
+<td colspan="8" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Income Reliance Ratio
+</td>
+<td>
+0.46
+</td>
+<td>
+0.67
+</td>
+<td>
+0.88
+</td>
+<td>
+0.82
+</td>
+<td>
+0.99
+</td>
+<td>
+1.00
+</td>
+<td>
+0.18
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Age
+</td>
+<td>
+3
+</td>
+<td>
+22
+</td>
+<td>
+30
+</td>
+<td>
+31.97
+</td>
+<td>
+41
+</td>
+<td>
+101
+</td>
+<td>
+14.82
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Revenue (1k)
+</td>
+<td>
+-5,376.77
+</td>
+<td>
+253.67
+</td>
+<td>
+943.37
+</td>
+<td>
+4,687.28
+</td>
+<td>
+3,765.40
+</td>
+<td>
+408,932.00
+</td>
+<td>
+15,071.45
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Expenses(1k)
+</td>
+<td>
+0.00
+</td>
+<td>
+254.55
+</td>
+<td>
+861.78
+</td>
+<td>
+4,332.42
+</td>
+<td>
+3,391.81
+</td>
+<td>
+382,666.50
+</td>
+<td>
+14,055.29
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Buildings (1k)
+</td>
+<td>
+-4.49
+</td>
+<td>
+67.70
+</td>
+<td>
+780.96
+</td>
+<td>
+3,498.90
+</td>
+<td>
+2,875.68
+</td>
+<td>
+513,508.80
+</td>
+<td>
+13,239.15
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Total Assets (1k)
+</td>
+<td>
+-7,552.11
+</td>
+<td>
+747.47
+</td>
+<td>
+2,501.55
+</td>
+<td>
+10,084.78
+</td>
+<td>
+7,682.09
+</td>
+<td>
+1,212,784.00
+</td>
+<td>
+35,519.08
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Net Assets (1k)
+</td>
+<td>
+-178,869.70
+</td>
+<td>
+186.60
+</td>
+<td>
+1,139.23
+</td>
+<td>
+4,910.48
+</td>
+<td>
+4,222.31
+</td>
+<td>
+564,541.70
+</td>
+<td>
+18,162.74
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Liabiliies (1k)
+</td>
+<td>
+-2,707.10
+</td>
+<td>
+109.03
+</td>
+<td>
+776.31
+</td>
+<td>
+5,174.23
+</td>
+<td>
+3,083.72
+</td>
+<td>
+981,222.80
+</td>
+<td>
+24,847.35
+</td>
+</tr>
+<tr>
+<td colspan="8" style="border-bottom: 1px solid black">
+</td>
+</tr>
+</table>
 <p>What proportion of orgs have Income Reliance Ratios equal to zero?</p>
-<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb89-1" title="1">prop.zero &lt;-<span class="st"> </span><span class="kw">mean</span>( core3<span class="op">$</span>income_reliance_ratio <span class="op">==</span><span class="st"> </span><span class="dv">0</span>, <span class="dt">na.rm=</span>T )</a></code></pre></div>
-<p>In the sample, NaN percent of the organizations have Income Reliance Ratios equal to zero, meaning their highest source of income is equal to zero. These organizations are dropped from subsequent graphs to keep the visualizations clean. The interpretation of the graphics should be the distributions of Income Reliance Ratios for organizations that have positive or negative values.</p>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb89-1" title="1">prop.zero &lt;-<span class="st"> </span><span class="kw">mean</span>( core<span class="op">$</span>income_reliance_ratio <span class="op">==</span><span class="st"> </span><span class="dv">0</span>, <span class="dt">na.rm=</span>T )</a></code></pre></div>
+<p>In the sample, 0 percent of the organizations have Income Reliance Ratios equal to zero, meaning their highest source of income is equal to zero. These organizations are dropped from subsequent graphs to keep the visualizations clean. The interpretation of the graphics should be the distributions of Income Reliance Ratios for organizations that have positive or negative values.</p>
 <div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb90-1" title="1"><span class="co">###</span></a>
 <a class="sourceLine" id="cb90-2" title="2"><span class="co">### ADD QUANTILES</span></a>
 <a class="sourceLine" id="cb90-3" title="3"><span class="co">###</span></a>
@@ -2395,10 +3107,11 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb90-7" title="7">core2<span class="op">$</span>rev.q   &lt;-<span class="st"> </span><span class="kw">create_quantiles</span>( <span class="dt">var=</span>core2<span class="op">$</span>totrevenue,     <span class="dt">n.groups=</span><span class="dv">5</span> )</a>
 <a class="sourceLine" id="cb90-8" title="8">core2<span class="op">$</span>asset.q &lt;-<span class="st"> </span><span class="kw">create_quantiles</span>( <span class="dt">var=</span>core2<span class="op">$</span>totnetassetend, <span class="dt">n.groups=</span><span class="dv">5</span> )</a>
 <a class="sourceLine" id="cb90-9" title="9">core2<span class="op">$</span>age.q   &lt;-<span class="st"> </span><span class="kw">create_quantiles</span>( <span class="dt">var=</span>core2<span class="op">$</span>AGE,            <span class="dt">n.groups=</span><span class="dv">5</span> )</a></code></pre></div>
+</div>
 <div id="income-reliance-ratio-density" class="section level2">
 <h2>Income Reliance Ratio Density</h2>
-<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb91-1" title="1">min.x &lt;-<span class="st"> </span><span class="kw">min</span>( core3<span class="op">$</span>income_reliance_ratio, <span class="dt">na.rm=</span>T )</a>
-<a class="sourceLine" id="cb91-2" title="2">max.x &lt;-<span class="st"> </span><span class="kw">max</span>( core3<span class="op">$</span>income_reliance_ratio, <span class="dt">na.rm=</span>T )</a>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb91-1" title="1">min.x &lt;-<span class="st"> </span><span class="kw">min</span>( core2<span class="op">$</span>income_reliance_ratio, <span class="dt">na.rm=</span>T )</a>
+<a class="sourceLine" id="cb91-2" title="2">max.x &lt;-<span class="st"> </span><span class="kw">max</span>( core2<span class="op">$</span>income_reliance_ratio, <span class="dt">na.rm=</span>T )</a>
 <a class="sourceLine" id="cb91-3" title="3"></a>
 <a class="sourceLine" id="cb91-4" title="4"><span class="kw">ggplot</span>( core2, <span class="kw">aes</span>(<span class="dt">x =</span> income_reliance_ratio )) <span class="op">+</span><span class="st">  </span></a>
 <a class="sourceLine" id="cb91-5" title="5"><span class="st">  </span><span class="kw">geom_density</span>( <span class="dt">alpha =</span> <span class="fl">0.5</span> ) <span class="op">+</span><span class="st"> </span></a>
@@ -2406,14 +3119,13 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb91-7" title="7"><span class="st">  </span><span class="kw">xlab</span>( variable.label4 ) <span class="op">+</span></a>
 <a class="sourceLine" id="cb91-8" title="8"><span class="st">  </span><span class="kw">theme</span>( <span class="dt">axis.title.y=</span><span class="kw">element_blank</span>(),</a>
 <a class="sourceLine" id="cb91-9" title="9">         <span class="dt">axis.text.y=</span><span class="kw">element_blank</span>(), </a>
-<a class="sourceLine" id="cb91-10" title="10">         <span class="dt">axis.ticks.y=</span><span class="kw">element_blank</span>() )</a>
-<a class="sourceLine" id="cb91-11" title="11"><span class="co">## Error in FUN(X[[i]], ...): object &#39;income_reliance_ratio&#39; not found</span></a></code></pre></div>
+<a class="sourceLine" id="cb91-10" title="10">         <span class="dt">axis.ticks.y=</span><span class="kw">element_blank</span>() )</a></code></pre></div>
 <p><img src="metric-14-income-reliance-ratios_files/figure-html/unnamed-chunk-92-1.png" width="960" /></p>
 </div>
 <div id="income-reliance-ratio-by-ntee-major-code" class="section level2">
 <h2>Income Reliance Ratio by NTEE Major Code</h2>
-<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb92-1" title="1">core3 &lt;-<span class="st"> </span>core2 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>( <span class="op">!</span><span class="st"> </span><span class="kw">is.na</span>(NTMAJ12) )</a>
-<a class="sourceLine" id="cb92-2" title="2"><span class="kw">table</span>( core3<span class="op">$</span>NTMAJ12) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sort</span>(<span class="dt">decreasing=</span><span class="ot">TRUE</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">kable</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb92-1" title="1">core3 &lt;-<span class="st"> </span>core2 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>( <span class="op">!</span><span class="st"> </span><span class="kw">is.na</span>(NTEE1) )</a>
+<a class="sourceLine" id="cb92-2" title="2"><span class="kw">table</span>( core3<span class="op">$</span>NTEE1) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sort</span>(<span class="dt">decreasing=</span><span class="ot">TRUE</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">kable</span>()</a></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -2423,12 +3135,16 @@ Liabiliies (1k)
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">Human Services</td>
-<td align="right">3863</td>
+<td align="left">Housing</td>
+<td align="right">2772</td>
 </tr>
 <tr class="even">
-<td align="left">Public Benefit</td>
+<td align="left">Community Development</td>
 <td align="right">1683</td>
+</tr>
+<tr class="odd">
+<td align="left">Human Services</td>
+<td align="right">1091</td>
 </tr>
 </tbody>
 </table>
@@ -2452,8 +3168,7 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb93-18" title="18"><span class="st">  </span><span class="kw">geom_text</span>( <span class="dt">data=</span>df, </a>
 <a class="sourceLine" id="cb93-19" title="19">             <span class="kw">aes</span>(x, y, <span class="dt">label=</span>N ), </a>
 <a class="sourceLine" id="cb93-20" title="20">             <span class="dt">hjust=</span><span class="dv">2</span>, <span class="dt">vjust=</span><span class="dv">3</span>, </a>
-<a class="sourceLine" id="cb93-21" title="21">             <span class="dt">color=</span><span class="st">&quot;gray60&quot;</span>, <span class="dt">size=</span><span class="dv">6</span> )</a>
-<a class="sourceLine" id="cb93-22" title="22"><span class="co">## Error in FUN(X[[i]], ...): object &#39;income_reliance_ratio&#39; not found</span></a></code></pre></div>
+<a class="sourceLine" id="cb93-21" title="21">             <span class="dt">color=</span><span class="st">&quot;gray60&quot;</span>, <span class="dt">size=</span><span class="dv">6</span> )</a></code></pre></div>
 <p><img src="metric-14-income-reliance-ratios_files/figure-html/unnamed-chunk-94-1.png" width="960" /></p>
 </div>
 <div id="income-reliance-ratio-by-region" class="section level2">
@@ -2504,8 +3219,7 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb95-17" title="17"><span class="st">    </span><span class="kw">geom_text</span>( <span class="dt">data=</span>df, </a>
 <a class="sourceLine" id="cb95-18" title="18">             <span class="kw">aes</span>(x, y, <span class="dt">label=</span>N ), </a>
 <a class="sourceLine" id="cb95-19" title="19">             <span class="dt">hjust=</span><span class="dv">2</span>, <span class="dt">vjust=</span><span class="dv">3</span>, </a>
-<a class="sourceLine" id="cb95-20" title="20">             <span class="dt">color=</span><span class="st">&quot;gray60&quot;</span>, <span class="dt">size=</span><span class="dv">6</span> )</a>
-<a class="sourceLine" id="cb95-21" title="21"><span class="co">## Error in FUN(X[[i]], ...): object &#39;income_reliance_ratio&#39; not found</span></a></code></pre></div>
+<a class="sourceLine" id="cb95-20" title="20">             <span class="dt">color=</span><span class="st">&quot;gray60&quot;</span>, <span class="dt">size=</span><span class="dv">6</span> )</a></code></pre></div>
 <p><img src="metric-14-income-reliance-ratios_files/figure-html/unnamed-chunk-96-1.png" width="960" /></p>
 <div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb96-1" title="1"><span class="kw">table</span>( core2<span class="op">$</span>Division ) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">kable</span>()</a></code></pre></div>
 <table>
@@ -2573,8 +3287,7 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb97-17" title="17"><span class="st">    </span><span class="kw">geom_text</span>( <span class="dt">data=</span>df, </a>
 <a class="sourceLine" id="cb97-18" title="18">             <span class="kw">aes</span>(x, y, <span class="dt">label=</span>N ), </a>
 <a class="sourceLine" id="cb97-19" title="19">             <span class="dt">hjust=</span><span class="dv">2</span>, <span class="dt">vjust=</span><span class="dv">3</span>, </a>
-<a class="sourceLine" id="cb97-20" title="20">             <span class="dt">color=</span><span class="st">&quot;gray60&quot;</span>, <span class="dt">size=</span><span class="dv">6</span> ) </a>
-<a class="sourceLine" id="cb97-21" title="21"><span class="co">## Error in FUN(X[[i]], ...): object &#39;income_reliance_ratio&#39; not found</span></a></code></pre></div>
+<a class="sourceLine" id="cb97-20" title="20">             <span class="dt">color=</span><span class="st">&quot;gray60&quot;</span>, <span class="dt">size=</span><span class="dv">6</span> ) </a></code></pre></div>
 <p><img src="metric-14-income-reliance-ratios_files/figure-html/unnamed-chunk-98-1.png" width="960" /></p>
 </div>
 <div id="income-reliance-ratio-by-nonprofit-size-expenses" class="section level2">
@@ -2598,10 +3311,9 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb99-13" title="13">       <span class="dt">xlab=</span><span class="st">&quot;Nonprofit Size (logged Expenses)&quot;</span>, </a>
 <a class="sourceLine" id="cb99-14" title="14">       <span class="dt">ylab=</span>variable.label4,</a>
 <a class="sourceLine" id="cb99-15" title="15">       <span class="dt">xaxt=</span><span class="st">&quot;n&quot;</span>, <span class="dt">xlim=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">10</span>) )</a>
-<a class="sourceLine" id="cb99-16" title="16"><span class="co">## Error in lowess(x2[ok] ~ x1[ok]): invalid input</span></a>
-<a class="sourceLine" id="cb99-17" title="17"><span class="kw">axis</span>( <span class="dt">side=</span><span class="dv">1</span>, </a>
-<a class="sourceLine" id="cb99-18" title="18">      <span class="dt">at=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">10</span>), </a>
-<a class="sourceLine" id="cb99-19" title="19">      <span class="dt">labels=</span><span class="kw">c</span>(<span class="st">&quot;1k&quot;</span>,<span class="st">&quot;10k&quot;</span>,<span class="st">&quot;100k&quot;</span>,<span class="st">&quot;1m&quot;</span>,<span class="st">&quot;10m&quot;</span>,<span class="st">&quot;100m&quot;</span>,<span class="st">&quot;1b&quot;</span>,<span class="st">&quot;10b&quot;</span>) )</a></code></pre></div>
+<a class="sourceLine" id="cb99-16" title="16"><span class="kw">axis</span>( <span class="dt">side=</span><span class="dv">1</span>, </a>
+<a class="sourceLine" id="cb99-17" title="17">      <span class="dt">at=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">10</span>), </a>
+<a class="sourceLine" id="cb99-18" title="18">      <span class="dt">labels=</span><span class="kw">c</span>(<span class="st">&quot;1k&quot;</span>,<span class="st">&quot;10k&quot;</span>,<span class="st">&quot;100k&quot;</span>,<span class="st">&quot;1m&quot;</span>,<span class="st">&quot;10m&quot;</span>,<span class="st">&quot;100m&quot;</span>,<span class="st">&quot;1b&quot;</span>,<span class="st">&quot;10b&quot;</span>) )</a></code></pre></div>
 <p><img src="metric-14-income-reliance-ratios_files/figure-html/unnamed-chunk-100-1.png" width="960" /></p>
 <div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb100-1" title="1">core2 <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb100-2" title="2"><span class="st">  </span><span class="kw">filter</span>( <span class="op">!</span><span class="st"> </span><span class="kw">is.na</span>(exp.q) ) <span class="op">%&gt;%</span><span class="st"> </span></a>
@@ -2613,8 +3325,7 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb100-8" title="8"><span class="st">    </span><span class="kw">theme_minimal</span>( <span class="dt">base_size =</span> <span class="dv">22</span> )  <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb100-9" title="9"><span class="st">    </span><span class="kw">theme</span>( <span class="dt">axis.title.y=</span><span class="kw">element_blank</span>(),</a>
 <a class="sourceLine" id="cb100-10" title="10">           <span class="dt">axis.text.y=</span><span class="kw">element_blank</span>(), </a>
-<a class="sourceLine" id="cb100-11" title="11">           <span class="dt">axis.ticks.y=</span><span class="kw">element_blank</span>() )</a>
-<a class="sourceLine" id="cb100-12" title="12"><span class="co">## Error in FUN(X[[i]], ...): object &#39;income_reliance_ratio&#39; not found</span></a></code></pre></div>
+<a class="sourceLine" id="cb100-11" title="11">           <span class="dt">axis.ticks.y=</span><span class="kw">element_blank</span>() )</a></code></pre></div>
 <p><img src="metric-14-income-reliance-ratios_files/figure-html/unnamed-chunk-101-1.png" width="960" /></p>
 </div>
 <div id="income-reliance-ratio-by-nonprofit-size-revenue" class="section level2">
@@ -2640,10 +3351,9 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb102-12" title="12">       <span class="dt">xlab=</span><span class="st">&quot;Nonprofit Size (logged Revenue)&quot;</span>, </a>
 <a class="sourceLine" id="cb102-13" title="13">       <span class="dt">ylab=</span>variable.label4,</a>
 <a class="sourceLine" id="cb102-14" title="14">       <span class="dt">xaxt=</span><span class="st">&quot;n&quot;</span>, <span class="dt">xlim=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">10</span>) )</a>
-<a class="sourceLine" id="cb102-15" title="15"><span class="co">## Error in lowess(x2[ok] ~ x1[ok]): invalid input</span></a>
-<a class="sourceLine" id="cb102-16" title="16"><span class="kw">axis</span>( <span class="dt">side=</span><span class="dv">1</span>, </a>
-<a class="sourceLine" id="cb102-17" title="17">      <span class="dt">at=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">10</span>), </a>
-<a class="sourceLine" id="cb102-18" title="18">      <span class="dt">labels=</span><span class="kw">c</span>(<span class="st">&quot;1k&quot;</span>,<span class="st">&quot;10k&quot;</span>,<span class="st">&quot;100k&quot;</span>,<span class="st">&quot;1m&quot;</span>,<span class="st">&quot;10m&quot;</span>,<span class="st">&quot;100m&quot;</span>,<span class="st">&quot;1b&quot;</span>,<span class="st">&quot;10b&quot;</span>) )</a></code></pre></div>
+<a class="sourceLine" id="cb102-15" title="15"><span class="kw">axis</span>( <span class="dt">side=</span><span class="dv">1</span>, </a>
+<a class="sourceLine" id="cb102-16" title="16">      <span class="dt">at=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">10</span>), </a>
+<a class="sourceLine" id="cb102-17" title="17">      <span class="dt">labels=</span><span class="kw">c</span>(<span class="st">&quot;1k&quot;</span>,<span class="st">&quot;10k&quot;</span>,<span class="st">&quot;100k&quot;</span>,<span class="st">&quot;1m&quot;</span>,<span class="st">&quot;10m&quot;</span>,<span class="st">&quot;100m&quot;</span>,<span class="st">&quot;1b&quot;</span>,<span class="st">&quot;10b&quot;</span>) )</a></code></pre></div>
 <p><img src="metric-14-income-reliance-ratios_files/figure-html/unnamed-chunk-103-1.png" width="960" /></p>
 <div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb103-1" title="1">core2 <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb103-2" title="2"><span class="st">  </span><span class="kw">filter</span>( <span class="op">!</span><span class="st"> </span><span class="kw">is.na</span>(rev.q) ) <span class="op">%&gt;%</span><span class="st"> </span></a>
@@ -2655,8 +3365,7 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb103-8" title="8"><span class="st">    </span><span class="kw">theme_minimal</span>( <span class="dt">base_size =</span> <span class="dv">22</span> )  <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb103-9" title="9"><span class="st">    </span><span class="kw">theme</span>( <span class="dt">axis.title.y=</span><span class="kw">element_blank</span>(),</a>
 <a class="sourceLine" id="cb103-10" title="10">           <span class="dt">axis.text.y=</span><span class="kw">element_blank</span>(), </a>
-<a class="sourceLine" id="cb103-11" title="11">           <span class="dt">axis.ticks.y=</span><span class="kw">element_blank</span>() )</a>
-<a class="sourceLine" id="cb103-12" title="12"><span class="co">## Error in FUN(X[[i]], ...): object &#39;income_reliance_ratio&#39; not found</span></a></code></pre></div>
+<a class="sourceLine" id="cb103-11" title="11">           <span class="dt">axis.ticks.y=</span><span class="kw">element_blank</span>() )</a></code></pre></div>
 <p><img src="metric-14-income-reliance-ratios_files/figure-html/unnamed-chunk-104-1.png" width="960" /></p>
 </div>
 <div id="income-reliance-ratio-by-nonprofit-size-net-assets" class="section level2">
@@ -2683,10 +3392,9 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb105-12" title="12">       <span class="dt">xlab=</span><span class="st">&quot;Nonprofit Size (logged Net Assets)&quot;</span>, </a>
 <a class="sourceLine" id="cb105-13" title="13">       <span class="dt">ylab=</span>variable.label4,</a>
 <a class="sourceLine" id="cb105-14" title="14">       <span class="dt">xaxt=</span><span class="st">&quot;n&quot;</span>, <span class="dt">xlim=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">10</span>) )</a>
-<a class="sourceLine" id="cb105-15" title="15"><span class="co">## Error in lowess(x2[ok] ~ x1[ok]): invalid input</span></a>
-<a class="sourceLine" id="cb105-16" title="16"><span class="kw">axis</span>( <span class="dt">side=</span><span class="dv">1</span>, </a>
-<a class="sourceLine" id="cb105-17" title="17">      <span class="dt">at=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">10</span>), </a>
-<a class="sourceLine" id="cb105-18" title="18">      <span class="dt">labels=</span><span class="kw">c</span>(<span class="st">&quot;1k&quot;</span>,<span class="st">&quot;10k&quot;</span>,<span class="st">&quot;100k&quot;</span>,<span class="st">&quot;1m&quot;</span>,<span class="st">&quot;10m&quot;</span>,<span class="st">&quot;100m&quot;</span>,<span class="st">&quot;1b&quot;</span>,<span class="st">&quot;10b&quot;</span>) )</a></code></pre></div>
+<a class="sourceLine" id="cb105-15" title="15"><span class="kw">axis</span>( <span class="dt">side=</span><span class="dv">1</span>, </a>
+<a class="sourceLine" id="cb105-16" title="16">      <span class="dt">at=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">10</span>), </a>
+<a class="sourceLine" id="cb105-17" title="17">      <span class="dt">labels=</span><span class="kw">c</span>(<span class="st">&quot;1k&quot;</span>,<span class="st">&quot;10k&quot;</span>,<span class="st">&quot;100k&quot;</span>,<span class="st">&quot;1m&quot;</span>,<span class="st">&quot;10m&quot;</span>,<span class="st">&quot;100m&quot;</span>,<span class="st">&quot;1b&quot;</span>,<span class="st">&quot;10b&quot;</span>) )</a></code></pre></div>
 <p><img src="metric-14-income-reliance-ratios_files/figure-html/unnamed-chunk-106-1.png" width="960" /></p>
 <div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb106-1" title="1">core2<span class="op">$</span>totnetassetend[ core2<span class="op">$</span>totnetassetend <span class="op">&lt;</span><span class="st"> </span><span class="dv">1</span> ] &lt;-<span class="st"> </span><span class="ot">NA</span></a>
 <a class="sourceLine" id="cb106-2" title="2">core2<span class="op">$</span>asset.q &lt;-<span class="st"> </span><span class="kw">create_quantiles</span>( <span class="dt">var=</span>core2<span class="op">$</span>totnetassetend, <span class="dt">n.groups=</span><span class="dv">5</span> )</a>
@@ -2702,8 +3410,7 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb106-12" title="12"><span class="st">    </span><span class="kw">theme_minimal</span>( <span class="dt">base_size =</span> <span class="dv">22</span> )  <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb106-13" title="13"><span class="st">    </span><span class="kw">theme</span>( <span class="dt">axis.title.y=</span><span class="kw">element_blank</span>(),</a>
 <a class="sourceLine" id="cb106-14" title="14">           <span class="dt">axis.text.y=</span><span class="kw">element_blank</span>(), </a>
-<a class="sourceLine" id="cb106-15" title="15">           <span class="dt">axis.ticks.y=</span><span class="kw">element_blank</span>() )</a>
-<a class="sourceLine" id="cb106-16" title="16"><span class="co">## Error in FUN(X[[i]], ...): object &#39;income_reliance_ratio&#39; not found</span></a></code></pre></div>
+<a class="sourceLine" id="cb106-15" title="15">           <span class="dt">axis.ticks.y=</span><span class="kw">element_blank</span>() )</a></code></pre></div>
 <p><img src="metric-14-income-reliance-ratios_files/figure-html/unnamed-chunk-107-1.png" width="960" /></p>
 <p>Total Assets for Comparison</p>
 <div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb107-1" title="1">core2<span class="op">$</span>totassetsend[ core2<span class="op">$</span>totassetsend <span class="op">&lt;</span><span class="st"> </span><span class="dv">1</span> ] &lt;-<span class="st"> </span><span class="ot">NA</span></a>
@@ -2721,10 +3428,9 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb107-13" title="13">       <span class="dt">xlab=</span><span class="st">&quot;Nonprofit Size (logged Total Assets)&quot;</span>, </a>
 <a class="sourceLine" id="cb107-14" title="14">       <span class="dt">ylab=</span>variable.label4,</a>
 <a class="sourceLine" id="cb107-15" title="15">       <span class="dt">xaxt=</span><span class="st">&quot;n&quot;</span>, <span class="dt">xlim=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">10</span>) )</a>
-<a class="sourceLine" id="cb107-16" title="16"><span class="co">## Error in lowess(x2[ok] ~ x1[ok]): invalid input</span></a>
-<a class="sourceLine" id="cb107-17" title="17"><span class="kw">axis</span>( <span class="dt">side=</span><span class="dv">1</span>, </a>
-<a class="sourceLine" id="cb107-18" title="18">      <span class="dt">at=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">10</span>), </a>
-<a class="sourceLine" id="cb107-19" title="19">      <span class="dt">labels=</span><span class="kw">c</span>(<span class="st">&quot;1k&quot;</span>,<span class="st">&quot;10k&quot;</span>,<span class="st">&quot;100k&quot;</span>,<span class="st">&quot;1m&quot;</span>,<span class="st">&quot;10m&quot;</span>,<span class="st">&quot;100m&quot;</span>,<span class="st">&quot;1b&quot;</span>,<span class="st">&quot;10b&quot;</span>) )</a></code></pre></div>
+<a class="sourceLine" id="cb107-16" title="16"><span class="kw">axis</span>( <span class="dt">side=</span><span class="dv">1</span>, </a>
+<a class="sourceLine" id="cb107-17" title="17">      <span class="dt">at=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">10</span>), </a>
+<a class="sourceLine" id="cb107-18" title="18">      <span class="dt">labels=</span><span class="kw">c</span>(<span class="st">&quot;1k&quot;</span>,<span class="st">&quot;10k&quot;</span>,<span class="st">&quot;100k&quot;</span>,<span class="st">&quot;1m&quot;</span>,<span class="st">&quot;10m&quot;</span>,<span class="st">&quot;100m&quot;</span>,<span class="st">&quot;1b&quot;</span>,<span class="st">&quot;10b&quot;</span>) )</a></code></pre></div>
 <p><img src="metric-14-income-reliance-ratios_files/figure-html/unnamed-chunk-108-1.png" width="960" /></p>
 <div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb108-1" title="1"><span class="kw">ggplot</span>( core2, <span class="kw">aes</span>(<span class="dt">x =</span> totassetsend )) <span class="op">+</span><span class="st">  </span></a>
 <a class="sourceLine" id="cb108-2" title="2"><span class="st">  </span><span class="kw">geom_density</span>( <span class="dt">alpha =</span> <span class="fl">0.5</span>) <span class="op">+</span><span class="st"> </span></a>
@@ -2744,8 +3450,7 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb109-8" title="8"><span class="st">    </span><span class="kw">theme_minimal</span>( <span class="dt">base_size =</span> <span class="dv">22</span> )  <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb109-9" title="9"><span class="st">    </span><span class="kw">theme</span>( <span class="dt">axis.title.y=</span><span class="kw">element_blank</span>(),</a>
 <a class="sourceLine" id="cb109-10" title="10">           <span class="dt">axis.text.y=</span><span class="kw">element_blank</span>(), </a>
-<a class="sourceLine" id="cb109-11" title="11">           <span class="dt">axis.ticks.y=</span><span class="kw">element_blank</span>() )</a>
-<a class="sourceLine" id="cb109-12" title="12"><span class="co">## Error in FUN(X[[i]], ...): object &#39;income_reliance_ratio&#39; not found</span></a></code></pre></div>
+<a class="sourceLine" id="cb109-11" title="11">           <span class="dt">axis.ticks.y=</span><span class="kw">element_blank</span>() )</a></code></pre></div>
 <p><img src="metric-14-income-reliance-ratios_files/figure-html/unnamed-chunk-110-1.png" width="960" /></p>
 </div>
 <div id="income-reliance-ratio-by-nonprofit-age" class="section level2">
@@ -2765,8 +3470,7 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb111-10" title="10"></a>
 <a class="sourceLine" id="cb111-11" title="11"><span class="kw">jplot</span>( core3<span class="op">$</span>AGE, core3<span class="op">$</span>income_reliance_ratio, </a>
 <a class="sourceLine" id="cb111-12" title="12">       <span class="dt">xlab=</span><span class="st">&quot;Nonprofit Age&quot;</span>, </a>
-<a class="sourceLine" id="cb111-13" title="13">       <span class="dt">ylab=</span>variable.label4 ) </a>
-<a class="sourceLine" id="cb111-14" title="14"><span class="co">## Error in lowess(x2[ok] ~ x1[ok]): invalid input</span></a></code></pre></div>
+<a class="sourceLine" id="cb111-13" title="13">       <span class="dt">ylab=</span>variable.label4 ) </a></code></pre></div>
 <p><img src="metric-14-income-reliance-ratios_files/figure-html/unnamed-chunk-112-1.png" width="960" /></p>
 <div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb112-1" title="1">core2 <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb112-2" title="2"><span class="st">  </span><span class="kw">filter</span>( <span class="op">!</span><span class="st"> </span><span class="kw">is.na</span>(age.q) ) <span class="op">%&gt;%</span><span class="st"> </span></a>
@@ -2779,8 +3483,7 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb112-9" title="9"><span class="st">    </span><span class="kw">theme_minimal</span>( <span class="dt">base_size =</span> <span class="dv">22</span> )  <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb112-10" title="10"><span class="st">    </span><span class="kw">theme</span>( <span class="dt">axis.title.y=</span><span class="kw">element_blank</span>(),</a>
 <a class="sourceLine" id="cb112-11" title="11">           <span class="dt">axis.text.y=</span><span class="kw">element_blank</span>(), </a>
-<a class="sourceLine" id="cb112-12" title="12">           <span class="dt">axis.ticks.y=</span><span class="kw">element_blank</span>() )</a>
-<a class="sourceLine" id="cb112-13" title="13"><span class="co">## Error in FUN(X[[i]], ...): object &#39;income_reliance_ratio&#39; not found</span></a></code></pre></div>
+<a class="sourceLine" id="cb112-12" title="12">           <span class="dt">axis.ticks.y=</span><span class="kw">element_blank</span>() )</a></code></pre></div>
 <p><img src="metric-14-income-reliance-ratios_files/figure-html/unnamed-chunk-113-1.png" width="960" /></p>
 </div>
 </div>
