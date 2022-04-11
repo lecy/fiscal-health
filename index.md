@@ -1,7 +1,6 @@
 ---
-title: "Fiscal Health Metrics of Community Development Organizations
+title: "Fiscal Health Metrics of Community Development Organizations"
 ---
-
 
 <img src="www/images/urban-institute-logo.png" alt="urban institute" width="250" >
 
