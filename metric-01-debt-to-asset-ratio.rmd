@@ -21,6 +21,11 @@ knitr::opts_chunk$set( echo = TRUE, message=F, warning=F,
 ```
 
 
+
+<hr>
+<br>
+
+
 ```{r header-image, fig.width = 3.5, fig.height = 1, echo = FALSE}
 # All defaults
 knitr::include_graphics(here::here("img", "logo.png"))

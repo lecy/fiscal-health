@@ -494,6 +494,8 @@ div.tocify {
 </div>
 
 
+<hr>
+<p><br></p>
 <p><img src="img/logo.png" width="370" /></p>
 <br>
 <hr>
@@ -850,7 +852,8 @@ totnetassetend
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>core2<span class="sc">$</span>exp.q   <span class="ot">&lt;-</span> <span class="fu">create_quantiles</span>( <span class="at">var=</span>core2<span class="sc">$</span>totfuncexpns,   <span class="at">n.groups=</span><span class="dv">5</span> )</span>
 <span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>core2<span class="sc">$</span>rev.q   <span class="ot">&lt;-</span> <span class="fu">create_quantiles</span>( <span class="at">var=</span>core2<span class="sc">$</span>totrevenue,     <span class="at">n.groups=</span><span class="dv">5</span> )</span>
 <span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>core2<span class="sc">$</span>asset.q <span class="ot">&lt;-</span> <span class="fu">create_quantiles</span>( <span class="at">var=</span>core2<span class="sc">$</span>totnetassetend, <span class="at">n.groups=</span><span class="dv">5</span> )</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>core2<span class="sc">$</span>age.q   <span class="ot">&lt;-</span> <span class="fu">create_quantiles</span>( <span class="at">var=</span>core2<span class="sc">$</span>AGE,            <span class="at">n.groups=</span><span class="dv">5</span> )</span></code></pre></div>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>core2<span class="sc">$</span>age.q   <span class="ot">&lt;-</span> <span class="fu">create_quantiles</span>( <span class="at">var=</span>core2<span class="sc">$</span>AGE,            <span class="at">n.groups=</span><span class="dv">5</span> )</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>core2<span class="sc">$</span>land.q  <span class="ot">&lt;-</span> <span class="fu">create_quantiles</span>( <span class="at">var=</span>core2<span class="sc">$</span>lndbldgsequipend, <span class="at">n.groups=</span><span class="dv">5</span> )</span></code></pre></div>
 <div id="dar-density" class="section level2">
 <h2>DAR Density</h2>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>( core2, <span class="fu">aes</span>(<span class="at">x =</span> dar )) <span class="sc">+</span>  </span>
@@ -1240,12 +1243,49 @@ totnetassetend
 <span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.ticks.y=</span><span class="fu">element_blank</span>() )</span></code></pre></div>
 <p><img src="metric-01-debt-to-asset-ratio_files/figure-html/unnamed-chunk-29-1.png" width="960" /></p>
 </div>
+<div id="dar-by-land-and-building-value" class="section level2">
+<h2>DAR by Land and Building Value</h2>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>( core2, <span class="fu">aes</span>(<span class="at">x =</span> lndbldgsequipend )) <span class="sc">+</span>  </span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>( <span class="at">alpha =</span> <span class="fl">0.5</span> )  </span></code></pre></div>
+<p><img src="metric-01-debt-to-asset-ratio_files/figure-html/unnamed-chunk-30-1.png" width="960" /></p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>core2<span class="sc">$</span>lndbldgsequipend[ core2<span class="sc">$</span>lndbldgsequipend <span class="sc">&lt;</span> <span class="dv">1</span> ] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>( <span class="fu">nrow</span>(core2) <span class="sc">&gt;</span> <span class="dv">10000</span> )</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>  core3 <span class="ot">&lt;-</span> <span class="fu">sample_n</span>( core2, <span class="dv">10000</span> )</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>  core3 <span class="ot">&lt;-</span> core2</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a><span class="fu">jplot</span>( <span class="fu">log10</span>(core3<span class="sc">$</span>lndbldgsequipend), core3<span class="sc">$</span>dar, </span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">xlab=</span><span class="st">&quot;Land and Building Value (logged)&quot;</span>, </span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">ylab=</span>variable.label,</span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">xaxt=</span><span class="st">&quot;n&quot;</span>, <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">10</span>) )</span>
+<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a><span class="fu">axis</span>( <span class="at">side=</span><span class="dv">1</span>, </span>
+<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a>      <span class="at">at=</span><span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">10</span>), </span>
+<span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a>      <span class="at">labels=</span><span class="fu">c</span>(<span class="st">&quot;1k&quot;</span>,<span class="st">&quot;10k&quot;</span>,<span class="st">&quot;100k&quot;</span>,<span class="st">&quot;1m&quot;</span>,<span class="st">&quot;10m&quot;</span>,<span class="st">&quot;100m&quot;</span>,<span class="st">&quot;1b&quot;</span>,<span class="st">&quot;10b&quot;</span>) )</span>
+<span id="cb31-17"><a href="#cb31-17" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p><img src="metric-01-debt-to-asset-ratio_files/figure-html/unnamed-chunk-31-1.png" width="960" /></p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>core2 <span class="sc">%&gt;%</span> </span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>( <span class="sc">!</span> <span class="fu">is.na</span>(land.q) ) <span class="sc">%&gt;%</span> </span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>( <span class="fu">aes</span>(dar) )  <span class="sc">+</span> </span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_density</span>( <span class="at">alpha =</span> <span class="fl">0.5</span> ) <span class="sc">+</span> </span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>( <span class="at">title=</span><span class="st">&quot;Land and Building Value&quot;</span> ) <span class="sc">+</span> </span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>( variable.label ) <span class="sc">+</span></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ylab</span>( <span class="st">&quot;&quot;</span> ) <span class="sc">+</span></span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>( <span class="sc">~</span> land.q, <span class="at">nrow=</span><span class="dv">3</span> ) <span class="sc">+</span> </span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>( <span class="at">base_size =</span> <span class="dv">22</span> )  <span class="sc">+</span> </span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>( <span class="at">axis.title.y=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.text.y=</span><span class="fu">element_blank</span>(), </span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.ticks.y=</span><span class="fu">element_blank</span>() )</span></code></pre></div>
+<p><img src="metric-01-debt-to-asset-ratio_files/figure-html/unnamed-chunk-32-1.png" width="960" /></p>
+</div>
 </div>
 <div id="save-metrics" class="section level1">
 <h1>Save Metrics</h1>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>core.dar <span class="ot">&lt;-</span> <span class="fu">select</span>( core, ein, tax_pd, dar )</span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>( core.dar, <span class="st">&quot;03-data-ratios/m-01-dept-to-asset-ratio.rds&quot;</span> )</span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>( core.dar, <span class="st">&quot;03-data-ratios/m-01-dept-to-asset-ratio.csv&quot;</span> )</span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>core.dar <span class="ot">&lt;-</span> <span class="fu">select</span>( core, ein, tax_pd, dar )</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>( core.dar, <span class="st">&quot;03-data-ratios/m-01-dept-to-asset-ratio.rds&quot;</span> )</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>( core.dar, <span class="st">&quot;03-data-ratios/m-01-dept-to-asset-ratio.csv&quot;</span> )</span></code></pre></div>
 <br> <br>
 <hr>
 <p><br> <br></p>
