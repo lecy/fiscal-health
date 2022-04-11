@@ -427,31 +427,46 @@ div.tocify {
       <a href="metric-01-debt-to-asset-ratio.html">M1 Debt to Asset Ratio</a>
     </li>
     <li>
-      <a href="metric-02-current-ratio.html">M2</a>
+      <a href="metric-02-current-ratio.html">M2 Current Ratio</a>
     </li>
     <li>
-      <a href="metric-03-days-operating-COH.html">M3</a>
+      <a href="metric-03-days-operating-COH.html">M3 Cash on Hand (Days)</a>
     </li>
     <li>
-      <a href="metric-04-debt-to-equity-ratio.html">M4</a>
+      <a href="metric-04-debt-to-equity-ratio.html">M4 Debt to Equity Ratio</a>
     </li>
     <li>
-      <a href="metric-05-self-sufficiency-ratio.html">M5</a>
+      <a href="metric-05-self-sufficiency-ratio.html">M5 Self-Sufficiency Ratio</a>
     </li>
     <li>
-      <a href="metric-06-months-of-COH.html">M6</a>
+      <a href="metric-06-months-of-COH.html">M6 Cash on Hand (Months)</a>
     </li>
     <li>
-      <a href="metric-07-land-to-assets-ratio.html">M7</a>
+      <a href="metric-07-land-to-assets-ratio.html">M7 Land to Assets Ratio</a>
     </li>
     <li>
-      <a href="metric-08-debt-to-equity-ratio.html">M8</a>
+      <a href="metric-08-debt-to-equity-ratio.html">M8 Debt to Equity Ratio</a>
     </li>
     <li>
-      <a href="metric-09-post-depreciation-profitability-margin.html">M9</a>
+      <a href="metric-09-post-depreciation-profitability-margin.html">M9 Post-Depreciation Profitability</a>
     </li>
     <li>
-      <a href="metric-10-debt-management-ratio.html">M10</a>
+      <a href="metric-10-debt-management-ratio.html">M10 Debt Management Ratio</a>
+    </li>
+    <li>
+      <a href="metric-11-equity-ratio.html">M11 Equity Ratio</a>
+    </li>
+    <li>
+      <a href="metric-12-quick-ratio.html">M12 Quick Ratio</a>
+    </li>
+    <li>
+      <a href="metric-13-short-term-debt-ratio.html">M13 Short Term Debt Ratio</a>
+    </li>
+    <li>
+      <a href="metric-14-income-reliance-ratios.html">M14 Income Reliance Ratio</a>
+    </li>
+    <li>
+      <a href="metric-15-asset-revenues-ratio.html">M15 Asset Revenue Ratio</a>
     </li>
   </ul>
 </li>
@@ -832,9 +847,10 @@ Liabiliies (1k)
 <span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>core2<span class="sc">$</span>exp.q   <span class="ot">&lt;-</span> <span class="fu">create_quantiles</span>( <span class="at">var=</span>core2<span class="sc">$</span>totfuncexpns,   <span class="at">n.groups=</span><span class="dv">5</span> )</span>
 <span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>core2<span class="sc">$</span>rev.q   <span class="ot">&lt;-</span> <span class="fu">create_quantiles</span>( <span class="at">var=</span>core2<span class="sc">$</span>totrevenue,     <span class="at">n.groups=</span><span class="dv">5</span> )</span>
 <span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>core2<span class="sc">$</span>asset.q <span class="ot">&lt;-</span> <span class="fu">create_quantiles</span>( <span class="at">var=</span>core2<span class="sc">$</span>totnetassetend, <span class="at">n.groups=</span><span class="dv">5</span> )</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>core2<span class="sc">$</span>age.q   <span class="ot">&lt;-</span> <span class="fu">create_quantiles</span>( <span class="at">var=</span>core2<span class="sc">$</span>AGE,            <span class="at">n.groups=</span><span class="dv">5</span> )</span></code></pre></div>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>core2<span class="sc">$</span>age.q   <span class="ot">&lt;-</span> <span class="fu">create_quantiles</span>( <span class="at">var=</span>core2<span class="sc">$</span>AGE,            <span class="at">n.groups=</span><span class="dv">5</span> )</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>core2<span class="sc">$</span>land.q  <span class="ot">&lt;-</span> <span class="fu">create_quantiles</span>( <span class="at">var=</span>core2<span class="sc">$</span>lndbldgsequipend,    <span class="at">n.groups=</span><span class="dv">5</span> )</span></code></pre></div>
 <div id="self-sufficiency-ratio-density" class="section level2">
-<h2>Self Sufficiency Ratio Density</h2>
+<h2>Self-Sufficiency Ratio Density</h2>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>min.x <span class="ot">&lt;-</span> <span class="fu">min</span>( core<span class="sc">$</span>selfsufficiency, <span class="at">na.rm=</span>T )</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>max.x <span class="ot">&lt;-</span> <span class="fu">max</span>( core<span class="sc">$</span>selfsufficiency, <span class="at">na.rm=</span>T )</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -848,7 +864,7 @@ Liabiliies (1k)
 <p><img src="metric-05-self-sufficiency-ratio_files/figure-html/unnamed-chunk-8-1.png" width="960" /></p>
 </div>
 <div id="self-sufficiency-ratio-by-ntee-major-code" class="section level2">
-<h2>Self Sufficiency Ratio by NTEE Major Code</h2>
+<h2>Self-Sufficiency Ratio by NTEE Major Code</h2>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>core3 <span class="ot">&lt;-</span> core2 <span class="sc">%&gt;%</span> <span class="fu">filter</span>( <span class="sc">!</span> <span class="fu">is.na</span>(NTEE1) )</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>( core3<span class="sc">$</span>NTEE1) <span class="sc">%&gt;%</span> <span class="fu">sort</span>(<span class="at">decreasing=</span><span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> <span class="fu">kable</span>()</span></code></pre></div>
 <table>
@@ -897,7 +913,7 @@ Liabiliies (1k)
 <p><img src="metric-05-self-sufficiency-ratio_files/figure-html/unnamed-chunk-10-1.png" width="960" /></p>
 </div>
 <div id="self-sufficiency-ratio-by-region" class="section level2">
-<h2>Self Sufficiency Ratio by Region</h2>
+<h2>Self-Sufficiency Ratio by Region</h2>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>( core2<span class="sc">$</span>Region) <span class="sc">%&gt;%</span> <span class="fu">kable</span>()</span></code></pre></div>
 <table>
 <thead>
@@ -1016,7 +1032,7 @@ Liabiliies (1k)
 <p><img src="metric-05-self-sufficiency-ratio_files/figure-html/unnamed-chunk-14-1.png" width="960" /></p>
 </div>
 <div id="self-sufficiency-ratio-by-nonprofit-size-expenses" class="section level2">
-<h2>Self Sufficiency Ratio by Nonprofit Size (Expenses)</h2>
+<h2>Self-Sufficiency Ratio by Nonprofit Size (Expenses)</h2>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>( core2, <span class="fu">aes</span>(<span class="at">x =</span> totfuncexpns )) <span class="sc">+</span>  </span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>( <span class="at">alpha =</span> <span class="fl">0.5</span> ) <span class="sc">+</span> </span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>( <span class="fu">quantile</span>(core2<span class="sc">$</span>totfuncexpns, <span class="fu">c</span>(<span class="fl">0.02</span>,<span class="fl">0.98</span>), <span class="at">na.rm=</span>T ) )</span></code></pre></div>
@@ -1054,7 +1070,7 @@ Liabiliies (1k)
 <p><img src="metric-05-self-sufficiency-ratio_files/figure-html/unnamed-chunk-17-1.png" width="960" /></p>
 </div>
 <div id="self-sufficiency-ratio-by-nonprofit-size-revenue" class="section level2">
-<h2>Self Sufficiency Ratio by Nonprofit Size (Revenue)</h2>
+<h2>Self-Sufficiency Ratio by Nonprofit Size (Revenue)</h2>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>( core2, <span class="fu">aes</span>(<span class="at">x =</span> totrevenue )) <span class="sc">+</span>  </span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>( <span class="at">alpha =</span> <span class="fl">0.5</span> ) <span class="sc">+</span> </span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>( <span class="fu">quantile</span>(core2<span class="sc">$</span>totrevenue, <span class="fu">c</span>(<span class="fl">0.02</span>,<span class="fl">0.98</span>), <span class="at">na.rm=</span>T ) ) <span class="sc">+</span> </span>
@@ -1094,7 +1110,7 @@ Liabiliies (1k)
 <p><img src="metric-05-self-sufficiency-ratio_files/figure-html/unnamed-chunk-20-1.png" width="960" /></p>
 </div>
 <div id="self-sufficiency-ratio-by-nonprofit-size-net-assets" class="section level2">
-<h2>Self Sufficiency Ratio by Nonprofit Size (Net Assets)</h2>
+<h2>Self-Sufficiency Ratio by Nonprofit Size (Net Assets)</h2>
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>( core2, <span class="fu">aes</span>(<span class="at">x =</span> totnetassetend )) <span class="sc">+</span>  </span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>( <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span> </span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>( <span class="fu">quantile</span>(core2<span class="sc">$</span>totnetassetend, <span class="fu">c</span>(<span class="fl">0.02</span>,<span class="fl">0.98</span>), <span class="at">na.rm=</span>T ) ) <span class="sc">+</span> </span>
@@ -1179,7 +1195,7 @@ Liabiliies (1k)
 <p><img src="metric-05-self-sufficiency-ratio_files/figure-html/unnamed-chunk-26-1.png" width="960" /></p>
 </div>
 <div id="self-sufficiency-ratio-by-nonprofit-age" class="section level2">
-<h2>Self Sufficiency Ratio by Nonprofit Age</h2>
+<h2>Self-Sufficiency Ratio by Nonprofit Age</h2>
 <div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>( core2, <span class="fu">aes</span>(<span class="at">x =</span> AGE )) <span class="sc">+</span>  </span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>( <span class="at">alpha =</span> <span class="fl">0.5</span> )  </span></code></pre></div>
 <p><img src="metric-05-self-sufficiency-ratio_files/figure-html/unnamed-chunk-27-1.png" width="960" /></p>
@@ -1211,12 +1227,49 @@ Liabiliies (1k)
 <span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.ticks.y=</span><span class="fu">element_blank</span>() )</span></code></pre></div>
 <p><img src="metric-05-self-sufficiency-ratio_files/figure-html/unnamed-chunk-29-1.png" width="960" /></p>
 </div>
+<div id="self-sufficiency-ratio-by-land-and-building-value" class="section level2">
+<h2>Self-Sufficiency Ratio by Land and Building Value</h2>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>( core2, <span class="fu">aes</span>(<span class="at">x =</span> lndbldgsequipend )) <span class="sc">+</span>  </span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>( <span class="at">alpha =</span> <span class="fl">0.5</span> )  </span></code></pre></div>
+<p><img src="metric-05-self-sufficiency-ratio_files/figure-html/unnamed-chunk-30-1.png" width="960" /></p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>core2<span class="sc">$</span>lndbldgsequipend[ core2<span class="sc">$</span>lndbldgsequipend <span class="sc">&lt;</span> <span class="dv">1</span> ] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>( <span class="fu">nrow</span>(core2) <span class="sc">&gt;</span> <span class="dv">10000</span> )</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>  core3 <span class="ot">&lt;-</span> <span class="fu">sample_n</span>( core2, <span class="dv">10000</span> )</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>  core3 <span class="ot">&lt;-</span> core2</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a><span class="fu">jplot</span>( <span class="fu">log10</span>(core3<span class="sc">$</span>lndbldgsequipend), core3<span class="sc">$</span>selfsufficiency, </span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">xlab=</span><span class="st">&quot;Land and Building Value (logged)&quot;</span>, </span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">ylab=</span>variable.label,</span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">xaxt=</span><span class="st">&quot;n&quot;</span>, <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">10</span>) )</span>
+<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a><span class="fu">axis</span>( <span class="at">side=</span><span class="dv">1</span>, </span>
+<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a>      <span class="at">at=</span><span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">10</span>), </span>
+<span id="cb30-16"><a href="#cb30-16" aria-hidden="true" tabindex="-1"></a>      <span class="at">labels=</span><span class="fu">c</span>(<span class="st">&quot;1k&quot;</span>,<span class="st">&quot;10k&quot;</span>,<span class="st">&quot;100k&quot;</span>,<span class="st">&quot;1m&quot;</span>,<span class="st">&quot;10m&quot;</span>,<span class="st">&quot;100m&quot;</span>,<span class="st">&quot;1b&quot;</span>,<span class="st">&quot;10b&quot;</span>) )</span>
+<span id="cb30-17"><a href="#cb30-17" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p><img src="metric-05-self-sufficiency-ratio_files/figure-html/unnamed-chunk-31-1.png" width="960" /></p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>core2 <span class="sc">%&gt;%</span> </span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>( <span class="sc">!</span> <span class="fu">is.na</span>(land.q) ) <span class="sc">%&gt;%</span> </span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>( <span class="fu">aes</span>(selfsufficiency) )  <span class="sc">+</span> </span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_density</span>( <span class="at">alpha =</span> <span class="fl">0.5</span> ) <span class="sc">+</span> </span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>( <span class="at">title=</span><span class="st">&quot;Land and Building Value&quot;</span> ) <span class="sc">+</span> </span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>( variable.label ) <span class="sc">+</span></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ylab</span>( <span class="st">&quot;&quot;</span> ) <span class="sc">+</span></span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>( <span class="sc">~</span> land.q, <span class="at">nrow=</span><span class="dv">3</span> ) <span class="sc">+</span> </span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>( <span class="at">base_size =</span> <span class="dv">22</span> )  <span class="sc">+</span> </span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>( <span class="at">axis.title.y=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.text.y=</span><span class="fu">element_blank</span>(), </span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.ticks.y=</span><span class="fu">element_blank</span>() )</span></code></pre></div>
+<p><img src="metric-05-self-sufficiency-ratio_files/figure-html/unnamed-chunk-32-1.png" width="960" /></p>
+</div>
 </div>
 <div id="save-metrics" class="section level1">
 <h1>Save Metrics</h1>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>core.selfsufficiency <span class="ot">&lt;-</span> <span class="fu">select</span>( core, ein, tax_pd, selfsufficiency )</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>( core.selfsufficiency, <span class="st">&quot;03-data-ratios/m-05-self-sufficiency-ratio.rds&quot;</span> )</span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>( core.selfsufficiency, <span class="st">&quot;03-data-ratios/m-05-self-suffiency-ratio.csv&quot;</span> )</span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>core.selfsufficiency <span class="ot">&lt;-</span> <span class="fu">select</span>( core, ein, tax_pd, selfsufficiency )</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>( core.selfsufficiency, <span class="st">&quot;03-data-ratios/m-05-self-sufficiency-ratio.rds&quot;</span> )</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>( core.selfsufficiency, <span class="st">&quot;03-data-ratios/m-05-self-suffiency-ratio.csv&quot;</span> )</span></code></pre></div>
 <br> <br>
 <hr>
 <p><br> <br></p>

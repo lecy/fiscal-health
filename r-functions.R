@@ -11,7 +11,7 @@ jplot <- function( x1, x2, draw.line=T, ... )
 
 	if( draw.line==T ){ 
 		ok <- is.finite(x1) & is.finite(x2)
-		lines( lowess(x2[ok]~x1[ok]), col="red", lwd=3 ) }
+		lines( lowess(x2[ok]~x1[ok]), col="steelblue", lwd=3 ) }
 
 }
 
