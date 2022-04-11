@@ -189,7 +189,7 @@ core2$gov_grant_ratio[ core2$gov_grant_ratio > x.95 ] <- x.95
 ## Metric Scope
 
 
-Tax data is available for full 990 filers and 990EZ filers (organizations with Gross receipts < $200,000 and Total assets < $500,000). 
+Tax data is available for full 990 filers only, and of those, only those organizations that e-file their forms. 
 
 The data have been capped to those with values between 5% and 95% of the normal distribution to cut off outliers and exempt organizations with zero profitability (though negative values are allowed still). 
 
