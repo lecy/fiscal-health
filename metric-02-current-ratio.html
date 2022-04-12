@@ -568,12 +568,12 @@ div.tocify {
 <a class="sourceLine" id="cb3-2" title="2"></a>
 <a class="sourceLine" id="cb3-3" title="3"><span class="co"># proportion of values that are negative</span></a>
 <a class="sourceLine" id="cb3-4" title="4"><span class="kw">mean</span>( core2<span class="op">$</span>currentratio <span class="op">&lt;</span><span class="st"> </span><span class="dv">0</span>, <span class="dt">na.rm=</span>T ) </a>
-<a class="sourceLine" id="cb3-5" title="5"><span class="co">## [1] 0.003040091</span></a>
+<a class="sourceLine" id="cb3-5" title="5"><span class="co">## [1] 0.002962963</span></a>
 <a class="sourceLine" id="cb3-6" title="6">core2<span class="op">$</span>currentratio[ core2<span class="op">$</span>currentratio <span class="op">&lt;</span><span class="st"> </span><span class="dv">0</span> ] &lt;-<span class="st"> </span><span class="dv">0</span></a>
 <a class="sourceLine" id="cb3-7" title="7"></a>
 <a class="sourceLine" id="cb3-8" title="8"><span class="co"># proption of values above 200% </span></a>
 <a class="sourceLine" id="cb3-9" title="9"><span class="kw">mean</span>( core2<span class="op">$</span>currentratio <span class="op">&gt;</span><span class="st"> </span><span class="dv">200</span>, <span class="dt">na.rm=</span>T ) </a>
-<a class="sourceLine" id="cb3-10" title="10"><span class="co">## [1] 0.0400912</span></a>
+<a class="sourceLine" id="cb3-10" title="10"><span class="co">## [1] 0.03978836</span></a>
 <a class="sourceLine" id="cb3-11" title="11">core2<span class="op">$</span>currentratio[ core2<span class="op">$</span>currentratio <span class="op">&gt;</span><span class="st"> </span><span class="dv">200</span> ] &lt;-<span class="st"> </span><span class="dv">200</span></a></code></pre></div>
 </div>
 <div id="metric-scope" class="section level2">
@@ -707,22 +707,22 @@ Revenue (1k)
 -5,377
 </td>
 <td>
-263
+254
 </td>
 <td>
-973
+943
 </td>
 <td>
-5,038
+4,687
 </td>
 <td>
-3,818
+3,765
 </td>
 <td>
-1,046,853
+408,932
 </td>
 <td>
-20,454
+15,071
 </td>
 </tr>
 <tr>
@@ -733,22 +733,22 @@ Expenses(1k)
 0
 </td>
 <td>
-263
+255
 </td>
 <td>
-890
+862
 </td>
 <td>
-4,679
+4,332
 </td>
 <td>
-3,453
+3,392
 </td>
 <td>
-1,052,673
+382,667
 </td>
 <td>
-19,771
+14,055
 </td>
 </tr>
 <tr>
@@ -759,22 +759,22 @@ Buildings (1k)
 -4
 </td>
 <td>
-66
+68
 </td>
 <td>
-782
+781
 </td>
 <td>
-3,701
+3,499
 </td>
 <td>
-2,898
+2,876
 </td>
 <td>
-985,507
+513,509
 </td>
 <td>
-18,175
+13,239
 </td>
 </tr>
 <tr>
@@ -785,22 +785,22 @@ Total Assets (1k)
 -7,552
 </td>
 <td>
-732
+747
 </td>
 <td>
-2,462
+2,502
 </td>
 <td>
-10,525
+10,085
 </td>
 <td>
-7,704
+7,682
 </td>
 <td>
-1,606,273
+1,212,784
 </td>
 <td>
-44,298
+35,519
 </td>
 </tr>
 <tr>
@@ -811,22 +811,22 @@ Net Assets (1k)
 -178,870
 </td>
 <td>
-198
+187
 </td>
 <td>
-1,155
+1,139
 </td>
 <td>
-5,293
+4,910
 </td>
 <td>
-4,334
+4,222
 </td>
 <td>
-876,442
+564,542
 </td>
 <td>
-23,074
+18,163
 </td>
 </tr>
 <tr>
@@ -837,22 +837,22 @@ Liabiliies (1k)
 -2,707
 </td>
 <td>
-102
+109
 </td>
 <td>
-739
+776
 </td>
 <td>
-5,231
+5,174
 </td>
 <td>
-3,051
+3,084
 </td>
 <td>
 981,223
 </td>
 <td>
-27,684
+24,847
 </td>
 </tr>
 <tr>
@@ -872,7 +872,8 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb6-6" title="6">core2<span class="op">$</span>exp.q   &lt;-<span class="st"> </span><span class="kw">create_quantiles</span>( <span class="dt">var=</span>core2<span class="op">$</span>totfuncexpns,   <span class="dt">n.groups=</span><span class="dv">5</span> )</a>
 <a class="sourceLine" id="cb6-7" title="7">core2<span class="op">$</span>rev.q   &lt;-<span class="st"> </span><span class="kw">create_quantiles</span>( <span class="dt">var=</span>core2<span class="op">$</span>totrevenue,     <span class="dt">n.groups=</span><span class="dv">5</span> )</a>
 <a class="sourceLine" id="cb6-8" title="8">core2<span class="op">$</span>asset.q &lt;-<span class="st"> </span><span class="kw">create_quantiles</span>( <span class="dt">var=</span>core2<span class="op">$</span>totnetassetend, <span class="dt">n.groups=</span><span class="dv">5</span> )</a>
-<a class="sourceLine" id="cb6-9" title="9">core2<span class="op">$</span>age.q   &lt;-<span class="st"> </span><span class="kw">create_quantiles</span>( <span class="dt">var=</span>core2<span class="op">$</span>AGE,            <span class="dt">n.groups=</span><span class="dv">5</span> )</a></code></pre></div>
+<a class="sourceLine" id="cb6-9" title="9">core2<span class="op">$</span>age.q   &lt;-<span class="st"> </span><span class="kw">create_quantiles</span>( <span class="dt">var=</span>core2<span class="op">$</span>AGE,            <span class="dt">n.groups=</span><span class="dv">5</span> )</a>
+<a class="sourceLine" id="cb6-10" title="10">core2<span class="op">$</span>land.q  &lt;-<span class="st"> </span><span class="kw">create_quantiles</span>( <span class="dt">var=</span>core2<span class="op">$</span>lndbldgsequipend,     <span class="dt">n.groups=</span><span class="dv">5</span> )</a></code></pre></div>
 <div id="current-ratio-density" class="section level2">
 <h2>Current Ratio Density</h2>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1">min.x &lt;-<span class="st"> </span><span class="kw">min</span>( core2<span class="op">$</span>currentratio, <span class="dt">na.rm=</span>T )</a>
@@ -889,8 +890,8 @@ Liabiliies (1k)
 </div>
 <div id="current-ratio-by-ntee-major-code" class="section level2">
 <h2>Current Ratio by NTEE Major Code</h2>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1">core3 &lt;-<span class="st"> </span>core2 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>( <span class="op">!</span><span class="st"> </span><span class="kw">is.na</span>(NTMAJ12) )</a>
-<a class="sourceLine" id="cb8-2" title="2"><span class="kw">table</span>( core3<span class="op">$</span>NTMAJ12) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sort</span>(<span class="dt">decreasing=</span><span class="ot">TRUE</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">kable</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1">core3 &lt;-<span class="st"> </span>core2 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>( <span class="op">!</span><span class="st"> </span><span class="kw">is.na</span>(NTEE1) )</a>
+<a class="sourceLine" id="cb8-2" title="2"><span class="kw">table</span>( core3<span class="op">$</span>NTEE1) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sort</span>(<span class="dt">decreasing=</span><span class="ot">TRUE</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">kable</span>()</a></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -900,67 +901,31 @@ Liabiliies (1k)
 </thead>
 <tbody>
 <tr class="odd">
+<td align="left">Housing</td>
+<td align="right">2772</td>
+</tr>
+<tr class="even">
+<td align="left">Community Development</td>
+<td align="right">1683</td>
+</tr>
+<tr class="odd">
 <td align="left">Human Services</td>
-<td align="right">4007</td>
-</tr>
-<tr class="even">
-<td align="left">Public Benefit</td>
-<td align="right">1718</td>
-</tr>
-<tr class="odd">
-<td align="left">Health</td>
-<td align="right">165</td>
-</tr>
-<tr class="even">
-<td align="left">Environmental</td>
-<td align="right">94</td>
-</tr>
-<tr class="odd">
-<td align="left">Arts</td>
-<td align="right">85</td>
-</tr>
-<tr class="even">
-<td align="left">Religion</td>
-<td align="right">65</td>
-</tr>
-<tr class="odd">
-<td align="left">Education</td>
-<td align="right">6</td>
-</tr>
-<tr class="even">
-<td align="left">Hospitals</td>
-<td align="right">4</td>
-</tr>
-<tr class="odd">
-<td align="left">Mutual Benefit</td>
-<td align="right">3</td>
-</tr>
-<tr class="even">
-<td align="left">Unknown</td>
-<td align="right">1</td>
-</tr>
-<tr class="odd">
-<td align="left">International</td>
-<td align="right">0</td>
-</tr>
-<tr class="even">
-<td align="left">Universities</td>
-<td align="right">0</td>
+<td align="right">1091</td>
 </tr>
 </tbody>
 </table>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"></a>
-<a class="sourceLine" id="cb9-2" title="2">t &lt;-<span class="st"> </span><span class="kw">table</span>( <span class="kw">factor</span>(core3<span class="op">$</span>NTMAJ12) ) </a>
+<a class="sourceLine" id="cb9-2" title="2">t &lt;-<span class="st"> </span><span class="kw">table</span>( <span class="kw">factor</span>(core3<span class="op">$</span>NTEE1) ) </a>
 <a class="sourceLine" id="cb9-3" title="3">df &lt;-<span class="st"> </span><span class="kw">data.frame</span>( <span class="dt">x=</span><span class="ot">Inf</span>, <span class="dt">y=</span><span class="ot">Inf</span>, </a>
 <a class="sourceLine" id="cb9-4" title="4">                  <span class="dt">N=</span><span class="kw">paste0</span>( <span class="st">&quot;N=&quot;</span>, <span class="kw">as.character</span>(t) ), </a>
-<a class="sourceLine" id="cb9-5" title="5">                  <span class="dt">NTMAJ12=</span><span class="kw">names</span>(t) )</a>
+<a class="sourceLine" id="cb9-5" title="5">                  <span class="dt">NTEE1=</span><span class="kw">names</span>(t) )</a>
 <a class="sourceLine" id="cb9-6" title="6"></a>
 <a class="sourceLine" id="cb9-7" title="7"><span class="kw">ggplot</span>( core3, <span class="kw">aes</span>( <span class="dt">x=</span>currentratio ) ) <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb9-8" title="8"><span class="st">  </span><span class="kw">geom_density</span>( <span class="dt">alpha =</span> <span class="fl">0.5</span>, <span class="dt">fill=</span><span class="st">&quot;blue&quot;</span> ) <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb9-9" title="9"><span class="st">  </span><span class="co"># xlim( -0.1, 1 ) +</span></a>
 <a class="sourceLine" id="cb9-10" title="10"><span class="st">  </span><span class="kw">labs</span>( <span class="dt">title=</span><span class="st">&quot;Nonprofit Subsectors&quot;</span> ) <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb9-11" title="11"><span class="st">  </span><span class="kw">xlab</span>( variable.label ) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb9-12" title="12"><span class="st">  </span><span class="kw">facet_wrap</span>( <span class="op">~</span><span class="st"> </span>NTMAJ12, <span class="dt">nrow=</span><span class="dv">3</span> ) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb9-12" title="12"><span class="st">  </span><span class="kw">facet_wrap</span>( <span class="op">~</span><span class="st"> </span>NTEE1, <span class="dt">nrow=</span><span class="dv">1</span> ) <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb9-13" title="13"><span class="st">    </span><span class="kw">theme_minimal</span>( <span class="dt">base_size =</span> <span class="dv">15</span> )  <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb9-14" title="14"><span class="st">    </span><span class="kw">theme</span>( <span class="dt">axis.title.y=</span><span class="kw">element_blank</span>(),</a>
 <a class="sourceLine" id="cb9-15" title="15">           <span class="dt">axis.text.y=</span><span class="kw">element_blank</span>(), </a>
@@ -985,19 +950,19 @@ Liabiliies (1k)
 <tbody>
 <tr class="odd">
 <td align="left">Midwest</td>
-<td align="right">1582</td>
+<td align="right">1419</td>
 </tr>
 <tr class="even">
 <td align="left">Northeast</td>
-<td align="right">1501</td>
+<td align="right">1385</td>
 </tr>
 <tr class="odd">
 <td align="left">South</td>
-<td align="right">1815</td>
+<td align="right">1633</td>
 </tr>
 <tr class="even">
 <td align="left">West</td>
-<td align="right">1233</td>
+<td align="right">1094</td>
 </tr>
 </tbody>
 </table>
@@ -1033,39 +998,39 @@ Liabiliies (1k)
 <tbody>
 <tr class="odd">
 <td align="left">East North Central</td>
-<td align="right">1081</td>
+<td align="right">969</td>
 </tr>
 <tr class="even">
 <td align="left">East South Central</td>
-<td align="right">331</td>
+<td align="right">295</td>
 </tr>
 <tr class="odd">
 <td align="left">Middle Atlantic</td>
-<td align="right">998</td>
+<td align="right">917</td>
 </tr>
 <tr class="even">
 <td align="left">Mountain</td>
-<td align="right">340</td>
+<td align="right">294</td>
 </tr>
 <tr class="odd">
 <td align="left">New England</td>
-<td align="right">503</td>
+<td align="right">468</td>
 </tr>
 <tr class="even">
 <td align="left">Pacific</td>
-<td align="right">893</td>
+<td align="right">800</td>
 </tr>
 <tr class="odd">
 <td align="left">South Atlantic</td>
-<td align="right">1011</td>
+<td align="right">915</td>
 </tr>
 <tr class="even">
 <td align="left">West North Central</td>
-<td align="right">501</td>
+<td align="right">450</td>
 </tr>
 <tr class="odd">
 <td align="left">West South Central</td>
-<td align="right">473</td>
+<td align="right">423</td>
 </tr>
 </tbody>
 </table>
@@ -1287,12 +1252,49 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb28-12" title="12">           <span class="dt">axis.ticks.y=</span><span class="kw">element_blank</span>() )</a></code></pre></div>
 <p><img src="metric-02-current-ratio_files/figure-html/unnamed-chunk-29-1.png" width="960" /></p>
 </div>
+<div id="current-ratio-by-land-and-building-value" class="section level2">
+<h2>Current Ratio by Land and Building Value</h2>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" title="1"><span class="kw">ggplot</span>( core2, <span class="kw">aes</span>(<span class="dt">x =</span> lndbldgsequipend )) <span class="op">+</span><span class="st">  </span></a>
+<a class="sourceLine" id="cb29-2" title="2"><span class="st">  </span><span class="kw">geom_density</span>( <span class="dt">alpha =</span> <span class="fl">0.5</span> )  </a></code></pre></div>
+<p><img src="metric-02-current-ratio_files/figure-html/unnamed-chunk-30-1.png" width="960" /></p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" title="1">core2<span class="op">$</span>lndbldgsequipend[ core2<span class="op">$</span>lndbldgsequipend <span class="op">&lt;</span><span class="st"> </span><span class="dv">1</span> ] &lt;-<span class="st"> </span><span class="ot">NA</span></a>
+<a class="sourceLine" id="cb30-2" title="2"><span class="cf">if</span>( <span class="kw">nrow</span>(core2) <span class="op">&gt;</span><span class="st"> </span><span class="dv">10000</span> )</a>
+<a class="sourceLine" id="cb30-3" title="3">{</a>
+<a class="sourceLine" id="cb30-4" title="4">  core3 &lt;-<span class="st"> </span><span class="kw">sample_n</span>( core2, <span class="dv">10000</span> )</a>
+<a class="sourceLine" id="cb30-5" title="5">} <span class="cf">else</span></a>
+<a class="sourceLine" id="cb30-6" title="6">{</a>
+<a class="sourceLine" id="cb30-7" title="7">  core3 &lt;-<span class="st"> </span>core2</a>
+<a class="sourceLine" id="cb30-8" title="8"></a>
+<a class="sourceLine" id="cb30-9" title="9"></a>
+<a class="sourceLine" id="cb30-10" title="10"><span class="kw">jplot</span>( <span class="kw">log10</span>(core3<span class="op">$</span>lndbldgsequipend), core3<span class="op">$</span>currentratio, </a>
+<a class="sourceLine" id="cb30-11" title="11">       <span class="dt">xlab=</span><span class="st">&quot;Land and Building Value (logged)&quot;</span>, </a>
+<a class="sourceLine" id="cb30-12" title="12">       <span class="dt">ylab=</span>variable.label,</a>
+<a class="sourceLine" id="cb30-13" title="13">       <span class="dt">xaxt=</span><span class="st">&quot;n&quot;</span>, <span class="dt">xlim=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">10</span>) )</a>
+<a class="sourceLine" id="cb30-14" title="14"><span class="kw">axis</span>( <span class="dt">side=</span><span class="dv">1</span>, </a>
+<a class="sourceLine" id="cb30-15" title="15">      <span class="dt">at=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">10</span>), </a>
+<a class="sourceLine" id="cb30-16" title="16">      <span class="dt">labels=</span><span class="kw">c</span>(<span class="st">&quot;1k&quot;</span>,<span class="st">&quot;10k&quot;</span>,<span class="st">&quot;100k&quot;</span>,<span class="st">&quot;1m&quot;</span>,<span class="st">&quot;10m&quot;</span>,<span class="st">&quot;100m&quot;</span>,<span class="st">&quot;1b&quot;</span>,<span class="st">&quot;10b&quot;</span>) )</a>
+<a class="sourceLine" id="cb30-17" title="17">}</a></code></pre></div>
+<p><img src="metric-02-current-ratio_files/figure-html/unnamed-chunk-31-1.png" width="960" /></p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" title="1">core2 <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb31-2" title="2"><span class="st">  </span><span class="kw">filter</span>( <span class="op">!</span><span class="st"> </span><span class="kw">is.na</span>(land.q) ) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb31-3" title="3"><span class="st">  </span><span class="kw">ggplot</span>( <span class="kw">aes</span>(currentratio) )  <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb31-4" title="4"><span class="st">    </span><span class="kw">geom_density</span>( <span class="dt">alpha =</span> <span class="fl">0.5</span> ) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb31-5" title="5"><span class="st">    </span><span class="kw">labs</span>( <span class="dt">title=</span><span class="st">&quot;Land and Building Value&quot;</span> ) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb31-6" title="6"><span class="st">    </span><span class="kw">xlab</span>( variable.label ) <span class="op">+</span></a>
+<a class="sourceLine" id="cb31-7" title="7"><span class="st">    </span><span class="kw">ylab</span>( <span class="st">&quot;&quot;</span> ) <span class="op">+</span></a>
+<a class="sourceLine" id="cb31-8" title="8"><span class="st">    </span><span class="kw">facet_wrap</span>( <span class="op">~</span><span class="st"> </span>land.q, <span class="dt">nrow=</span><span class="dv">3</span> ) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb31-9" title="9"><span class="st">    </span><span class="kw">theme_minimal</span>( <span class="dt">base_size =</span> <span class="dv">22</span> )  <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb31-10" title="10"><span class="st">    </span><span class="kw">theme</span>( <span class="dt">axis.title.y=</span><span class="kw">element_blank</span>(),</a>
+<a class="sourceLine" id="cb31-11" title="11">           <span class="dt">axis.text.y=</span><span class="kw">element_blank</span>(), </a>
+<a class="sourceLine" id="cb31-12" title="12">           <span class="dt">axis.ticks.y=</span><span class="kw">element_blank</span>() )</a></code></pre></div>
+<p><img src="metric-02-current-ratio_files/figure-html/unnamed-chunk-32-1.png" width="960" /></p>
+</div>
 </div>
 <div id="save-metrics" class="section level1">
 <h1>Save Metrics</h1>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" title="1">core.currentratio &lt;-<span class="st"> </span><span class="kw">select</span>( core, ein, tax_pd, currentratio )</a>
-<a class="sourceLine" id="cb29-2" title="2"><span class="kw">saveRDS</span>( core.currentratio, <span class="st">&quot;03-data-ratios/m-02-current-ratio.rds&quot;</span> )</a>
-<a class="sourceLine" id="cb29-3" title="3"><span class="kw">write.csv</span>( core.currentratio, <span class="st">&quot;03-data-ratios/m-02-current-ratio.csv&quot;</span> )</a></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" title="1">core.currentratio &lt;-<span class="st"> </span><span class="kw">select</span>( core, ein, tax_pd, currentratio )</a>
+<a class="sourceLine" id="cb32-2" title="2"><span class="kw">saveRDS</span>( core.currentratio, <span class="st">&quot;03-data-ratios/m-02-current-ratio.rds&quot;</span> )</a>
+<a class="sourceLine" id="cb32-3" title="3"><span class="kw">write.csv</span>( core.currentratio, <span class="st">&quot;03-data-ratios/m-02-current-ratio.csv&quot;</span> )</a></code></pre></div>
 <br> <br>
 <hr>
 <p><br> <br></p>
