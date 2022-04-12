@@ -13,8 +13,8 @@
 
 <title>metric-02-current-ratio.knit</title>
 
-<script src="site_libs/header-attrs-2.9/header-attrs.js"></script>
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/header-attrs-2.13/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
@@ -43,6 +43,7 @@
   div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   ul.task-list{list-style: none;}
     </style>
+
 
 
 <style type="text/css">
@@ -176,6 +177,9 @@ button.code-folding-btn:focus {
 }
 summary {
   display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
 }
 pre code {
   padding: 0;
@@ -404,7 +408,7 @@ div.tocify {
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -417,7 +421,7 @@ div.tocify {
   <a href="data-step-00-wrangling.html">Data Wrangling</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Metrics
      
     <span class="caret"></span>
@@ -481,7 +485,7 @@ div.tocify {
 <div id="header">
 
 <div class="btn-group pull-right float-right">
-<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
 <ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
 <li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
 <li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
@@ -496,7 +500,8 @@ div.tocify {
 
 <hr>
 <p><br></p>
-<p><img src="img/logo.png" width="370" /></p>
+<p><img
+src="img/logo.png" /><!-- --></p>
 <br>
 <hr>
 <p><br></p>
@@ -504,19 +509,28 @@ div.tocify {
 <h1>Current Ratio</h1>
 <div id="definition-interpretation" class="section level2">
 <h2>Definition &amp; Interpretation</h2>
-<p><span class="math display">\[Current \: Asset \: Ratio = \frac{Current \: Assets}{Current \: Liabilities}\]</span></p>
-<p>The current ratio is used to measure the overall liquidity of a nonprofit organization.</p>
-<p>In its simplest form, it shows how many dollars of current assets an organization has to cover its current obligations. The higher the ratio, the more liquid the organization.</p>
-<p>As a rule of thumb, organizations should strive for a current ratio of 1.0 or higher. An organization with a ratio of 1.0 would have one dollar of assets to pay for every dollar of current liabilities.</p>
+<p><span class="math display">\[Current \: Asset \: Ratio =
+\frac{Current \: Assets}{Current \: Liabilities}\]</span></p>
+<p>The current ratio is used to measure the overall liquidity of a
+nonprofit organization.</p>
+<p>In its simplest form, it shows how many dollars of current assets an
+organization has to cover its current obligations. The higher the ratio,
+the more liquid the organization.</p>
+<p>As a rule of thumb, organizations should strive for a current ratio
+of 1.0 or higher. An organization with a ratio of 1.0 would have one
+dollar of assets to pay for every dollar of current liabilities.</p>
 </div>
 <div id="variables" class="section level2">
 <h2>Variables</h2>
 <p><br></p>
-<p><strong>Numerator:</strong> (Cash + short-term investments + current receivables + inventories + prepaid expenses)</p>
+<p><strong>Numerator:</strong> (Cash + short-term investments + current
+receivables + inventories + prepaid expenses)</p>
 <ul>
-<li>On 990: (Part X, line 1B) + (Part X, line 2B) + (Part X, line 3B) + (Part X, line 4B) + (Part X, line 8B) + (Part X, line 9B)<br />
+<li>On 990: (Part X, line 1B) + (Part X, line 2B) + (Part X, line 3B) +
+(Part X, line 4B) + (Part X, line 8B) + (Part X, line 9B)<br />
 </li>
-<li>SOI PC EXTRACTS: nonintcashend, svngstempinvend,pldgegrntrcvblend, accntsrcvblend, invntriesalesend, prepaidexpnsend<br />
+<li>SOI PC EXTRACTS: nonintcashend, svngstempinvend,pldgegrntrcvblend,
+accntsrcvblend, invntriesalesend, prepaidexpnsend<br />
 </li>
 <li>On EZ: Part I, line 22 [cash and short-term investments only]</li>
 </ul>
@@ -530,8 +544,14 @@ div.tocify {
 <li>On EZ: Not available</li>
 </ul>
 <p><br></p>
-<p><strong>Note:</strong> This data is only available for organizations that file a full 990, not for EZ filers.</p>
-<p><strong>Note:</strong> The EZ form only asks filers to report on cash, savings and investments; all receivable accounts, inventories, and prepaid expenses are reported in the line item “other assets” (Part II, line 24), and details are reported in Schedule O. Similarly, the EZ form asks filers to report on total liabilities, with details about payable accounts reported in Schedule O.</p>
+<p><strong>Note:</strong> This data is only available for organizations
+that file a full 990, not for EZ filers.</p>
+<p><strong>Note:</strong> The EZ form only asks filers to report on
+cash, savings and investments; all receivable accounts, inventories, and
+prepaid expenses are reported in the line item “other assets” (Part II,
+line 24), and details are reported in Schedule O. Similarly, the EZ form
+asks filers to report on total liabilities, with details about payable
+accounts reported in Schedule O.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>liquidity <span class="ot">&lt;-</span> ( core<span class="sc">$</span>nonintcashend <span class="sc">+</span> core<span class="sc">$</span>svngstempinvend <span class="sc">+</span> </span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>                         core<span class="sc">$</span>pldgegrntrcvblend <span class="sc">+</span> core<span class="sc">$</span>accntsrcvblend <span class="sc">+</span> </span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>                         core<span class="sc">$</span>invntriesalesend <span class="sc">+</span> core<span class="sc">$</span>prepaidexpnsend )</span>
@@ -558,17 +578,21 @@ div.tocify {
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># proportion of values that are negative</span></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>( core2<span class="sc">$</span>currentratio <span class="sc">&lt;</span> <span class="dv">0</span>, <span class="at">na.rm=</span>T ) </span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0.002962963</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0.002959205</span></span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>core2<span class="sc">$</span>currentratio[ core2<span class="sc">$</span>currentratio <span class="sc">&lt;</span> <span class="dv">0</span> ] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co"># proption of values above 200% </span></span>
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>( core2<span class="sc">$</span>currentratio <span class="sc">&gt;</span> <span class="dv">200</span>, <span class="at">na.rm=</span>T ) </span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0.03978836</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0.03804692</span></span>
 <span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>core2<span class="sc">$</span>currentratio[ core2<span class="sc">$</span>currentratio <span class="sc">&gt;</span> <span class="dv">200</span> ] <span class="ot">&lt;-</span> <span class="dv">200</span></span></code></pre></div>
 </div>
 <div id="metric-scope" class="section level2">
 <h2>Metric Scope</h2>
-<p>Tax data is available for full 990 filers, so this metric does not describe any organizations with Gross receipts &lt; $200,000 and Total assets &lt; $500,000. Some organizations with receipts or assets below those thresholds may have filed a full 990, but these would be exceptions.</p>
+<p>Tax data is available for full 990 filers, so this metric does not
+describe any organizations with Gross receipts &lt; $200,000 and Total
+assets &lt; $500,000. Some organizations with receipts or assets below
+those thresholds may have filed a full 990, but these would be
+exceptions.</p>
 </div>
 <div id="reference" class="section level2">
 <h2>Reference</h2>
@@ -648,19 +672,19 @@ Current Ratio
 2
 </td>
 <td>
-7
+6
 </td>
 <td>
-24
+23
 </td>
 <td>
-20
+19
 </td>
 <td>
 200
 </td>
 <td>
-45
+44
 </td>
 </tr>
 <tr>
@@ -683,7 +707,7 @@ Age
 41
 </td>
 <td>
-101
+95
 </td>
 <td>
 15
@@ -697,22 +721,22 @@ Revenue (1k)
 -5,377
 </td>
 <td>
-254
+259
 </td>
 <td>
-943
+909
 </td>
 <td>
-4,687
+4,522
 </td>
 <td>
-3,765
+3,672
 </td>
 <td>
 408,932
 </td>
 <td>
-15,071
+14,286
 </td>
 </tr>
 <tr>
@@ -723,22 +747,22 @@ Expenses(1k)
 0
 </td>
 <td>
-255
+263
 </td>
 <td>
-862
+840
 </td>
 <td>
-4,332
+4,192
 </td>
 <td>
-3,392
+3,328
 </td>
 <td>
 382,667
 </td>
 <td>
-14,055
+13,466
 </td>
 </tr>
 <tr>
@@ -749,22 +773,22 @@ Buildings (1k)
 -4
 </td>
 <td>
-68
+79
 </td>
 <td>
-781
+824
 </td>
 <td>
-3,499
+3,504
 </td>
 <td>
-2,876
+2,868
 </td>
 <td>
 513,509
 </td>
 <td>
-13,239
+13,210
 </td>
 </tr>
 <tr>
@@ -775,22 +799,22 @@ Total Assets (1k)
 -7,552
 </td>
 <td>
-747
+778
 </td>
 <td>
-2,502
+2,446
 </td>
 <td>
-10,085
+9,262
 </td>
 <td>
-7,682
+7,477
 </td>
 <td>
-1,212,784
+672,021
 </td>
 <td>
-35,519
+27,039
 </td>
 </tr>
 <tr>
@@ -801,22 +825,22 @@ Net Assets (1k)
 -178,870
 </td>
 <td>
-187
+156
 </td>
 <td>
-1,139
+1,094
 </td>
 <td>
-4,910
+4,553
 </td>
 <td>
-4,222
+4,079
 </td>
 <td>
-564,542
+531,068
 </td>
 <td>
-18,163
+15,470
 </td>
 </tr>
 <tr>
@@ -827,22 +851,22 @@ Liabiliies (1k)
 -2,707
 </td>
 <td>
-109
+115
 </td>
 <td>
-776
+816
 </td>
 <td>
-5,174
+4,709
 </td>
 <td>
-3,084
+3,133
 </td>
 <td>
-981,223
+705,623
 </td>
 <td>
-24,847
+18,722
 </td>
 </tr>
 <tr>
@@ -850,9 +874,14 @@ Liabiliies (1k)
 </td>
 </tr>
 </table>
-<p>What proportion of orgs have a Current Ratio of zero (no outstanding liabilities)?</p>
+<p>What proportion of orgs have a Current Ratio of zero (no outstanding
+liabilities)?</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>prop.zero <span class="ot">&lt;-</span> <span class="fu">mean</span>( core2<span class="sc">$</span>currentratio <span class="sc">==</span> <span class="dv">0</span>, <span class="at">na.rm=</span>T )</span></code></pre></div>
-<p>In the sample, 0 percent of the organizations have a Current Ratio of zero, meaning they carried no debt. These organizations are dropped from subsequent graphs to keep the visualizations clean. The interpretation of the graphics should be the distributions of Debt to Asset Ratio for organizations that carry debt.</p>
+<p>In the sample, 1 percent of the organizations have a Current Ratio of
+zero, meaning they carried no debt. These organizations are dropped from
+subsequent graphs to keep the visualizations clean. The interpretation
+of the graphics should be the distributions of Debt to Asset Ratio for
+organizations that carry debt.</p>
 <p>Create quantile groups:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="do">###</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="do">### ADD QUANTILES</span></span>
@@ -892,15 +921,15 @@ Liabiliies (1k)
 <tbody>
 <tr class="odd">
 <td align="left">Housing</td>
-<td align="right">2772</td>
+<td align="right">2837</td>
 </tr>
 <tr class="even">
 <td align="left">Community Development</td>
-<td align="right">1683</td>
+<td align="right">1585</td>
 </tr>
 <tr class="odd">
 <td align="left">Human Services</td>
-<td align="right">1091</td>
+<td align="right">1102</td>
 </tr>
 </tbody>
 </table>
@@ -940,19 +969,19 @@ Liabiliies (1k)
 <tbody>
 <tr class="odd">
 <td align="left">Midwest</td>
-<td align="right">1419</td>
+<td align="right">1444</td>
 </tr>
 <tr class="even">
 <td align="left">Northeast</td>
-<td align="right">1385</td>
+<td align="right">1368</td>
 </tr>
 <tr class="odd">
 <td align="left">South</td>
-<td align="right">1633</td>
+<td align="right">1610</td>
 </tr>
 <tr class="even">
 <td align="left">West</td>
-<td align="right">1094</td>
+<td align="right">1088</td>
 </tr>
 </tbody>
 </table>
@@ -988,39 +1017,39 @@ Liabiliies (1k)
 <tbody>
 <tr class="odd">
 <td align="left">East North Central</td>
-<td align="right">969</td>
+<td align="right">1038</td>
 </tr>
 <tr class="even">
 <td align="left">East South Central</td>
-<td align="right">295</td>
+<td align="right">289</td>
 </tr>
 <tr class="odd">
 <td align="left">Middle Atlantic</td>
-<td align="right">917</td>
+<td align="right">904</td>
 </tr>
 <tr class="even">
 <td align="left">Mountain</td>
-<td align="right">294</td>
+<td align="right">303</td>
 </tr>
 <tr class="odd">
 <td align="left">New England</td>
-<td align="right">468</td>
+<td align="right">464</td>
 </tr>
 <tr class="even">
 <td align="left">Pacific</td>
-<td align="right">800</td>
+<td align="right">785</td>
 </tr>
 <tr class="odd">
 <td align="left">South Atlantic</td>
-<td align="right">915</td>
+<td align="right">900</td>
 </tr>
 <tr class="even">
 <td align="left">West North Central</td>
-<td align="right">450</td>
+<td align="right">406</td>
 </tr>
 <tr class="odd">
 <td align="left">West South Central</td>
-<td align="right">423</td>
+<td align="right">421</td>
 </tr>
 </tbody>
 </table>
@@ -1046,7 +1075,8 @@ Liabiliies (1k)
 <span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>             <span class="at">color=</span><span class="st">&quot;gray60&quot;</span>, <span class="at">size=</span><span class="dv">6</span> ) </span></code></pre></div>
 <p><img src="metric-02-current-ratio_files/figure-html/unnamed-chunk-14-1.png" width="960" /></p>
 </div>
-<div id="current-ratio-by-nonprofit-size-expenses" class="section level2">
+<div id="current-ratio-by-nonprofit-size-expenses"
+class="section level2">
 <h2>Current Ratio by Nonprofit Size (Expenses)</h2>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>( core2, <span class="fu">aes</span>(<span class="at">x =</span> totfuncexpns )) <span class="sc">+</span>  </span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>( <span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">fill=</span><span class="st">&quot;darkorange&quot;</span> ) <span class="sc">+</span> </span>
@@ -1084,7 +1114,8 @@ Liabiliies (1k)
 <span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.ticks.y=</span><span class="fu">element_blank</span>() )</span></code></pre></div>
 <p><img src="metric-02-current-ratio_files/figure-html/unnamed-chunk-17-1.png" width="960" /></p>
 </div>
-<div id="current-ratio-by-nonprofit-size-revenue" class="section level2">
+<div id="current-ratio-by-nonprofit-size-revenue"
+class="section level2">
 <h2>Current Ratio by Nonprofit Size (Revenue)</h2>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>( core2, <span class="fu">aes</span>(<span class="at">x =</span> totrevenue )) <span class="sc">+</span>  </span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>( <span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">fill=</span><span class="st">&quot;darkorange&quot;</span> ) <span class="sc">+</span> </span>
@@ -1124,7 +1155,8 @@ Liabiliies (1k)
 <span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.ticks.y=</span><span class="fu">element_blank</span>() )</span></code></pre></div>
 <p><img src="metric-02-current-ratio_files/figure-html/unnamed-chunk-20-1.png" width="960" /></p>
 </div>
-<div id="current-ratio-by-nonprofit-size-net-assets" class="section level2">
+<div id="current-ratio-by-nonprofit-size-net-assets"
+class="section level2">
 <h2>Current Ratio by Nonprofit Size (Net Assets)</h2>
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>( core2, <span class="fu">aes</span>(<span class="at">x =</span> totnetassetend )) <span class="sc">+</span>  </span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>( <span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">fill=</span><span class="st">&quot;darkorange&quot;</span> ) <span class="sc">+</span> </span>
@@ -1242,7 +1274,8 @@ Liabiliies (1k)
 <span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.ticks.y=</span><span class="fu">element_blank</span>() )</span></code></pre></div>
 <p><img src="metric-02-current-ratio_files/figure-html/unnamed-chunk-29-1.png" width="960" /></p>
 </div>
-<div id="current-ratio-by-land-and-building-value" class="section level2">
+<div id="current-ratio-by-land-and-building-value"
+class="section level2">
 <h2>Current Ratio by Land and Building Value</h2>
 <div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>( core2, <span class="fu">aes</span>(<span class="at">x =</span> lndbldgsequipend )) <span class="sc">+</span>  </span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>( <span class="at">alpha =</span> <span class="fl">0.5</span> )  </span></code></pre></div>

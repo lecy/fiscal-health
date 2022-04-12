@@ -14,8 +14,8 @@
 
 <title>Metric 16 - Program Efficiency Ratio</title>
 
-<script src="site_libs/header-attrs-2.9/header-attrs.js"></script>
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/header-attrs-2.13/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
@@ -44,6 +44,7 @@
   div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   ul.task-list{list-style: none;}
     </style>
+
 
 
 <style type="text/css">
@@ -177,6 +178,9 @@ button.code-folding-btn:focus {
 }
 summary {
   display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
 }
 pre code {
   padding: 0;
@@ -405,7 +409,7 @@ div.tocify {
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -418,7 +422,7 @@ div.tocify {
   <a href="data-step-00-wrangling.html">Data Wrangling</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Metrics
      
     <span class="caret"></span>
@@ -482,7 +486,7 @@ div.tocify {
 <div id="header">
 
 <div class="btn-group pull-right float-right">
-<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
 <ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
 <li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
 <li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
@@ -498,7 +502,8 @@ div.tocify {
 </div>
 
 
-<p><img src="www/images/urban-institute-logo.png" width="740" /></p>
+<p><img
+src="www/images/urban-institute-logo.png" /><!-- --></p>
 <br>
 <hr>
 <p><br></p>
@@ -506,14 +511,23 @@ div.tocify {
 <h1>Metric Construction</h1>
 <div id="definition-interpretation" class="section level2">
 <h2>Definition &amp; Interpretation</h2>
-<p><span class="math display">\[Program\: Efficiency\:Ratio = \frac{Program\: Service\:Expenses}{Total \: Expenses} \]</span></p>
-<p>The program efficiency ratio measures the percentage of expenses that a nonprofit organization is spending on its core mission.</p>
-<p>High values in this ratio indicate that more of an organization’s expenses are going towards its core mission or program services while a lower number indicates that an organization’s expenses are comprised of other things like management or fundraising.</p>
-<p>Charity Navigator generally gives the highest rankings to those organizations whose ratio of program expenses is 85% or higher of their total expenses. Other agencies, such as the Better Business Bureau’s Wise Giving Alliance, recommend a ratio of 65% or higher.</p>
+<p><span class="math display">\[Program\: Efficiency\:Ratio =
+\frac{Program\: Service\:Expenses}{Total \: Expenses} \]</span></p>
+<p>The program efficiency ratio measures the percentage of expenses that
+a nonprofit organization is spending on its core mission.</p>
+<p>High values in this ratio indicate that more of an organization’s
+expenses are going towards its core mission or program services while a
+lower number indicates that an organization’s expenses are comprised of
+other things like management or fundraising.</p>
+<p>Charity Navigator generally gives the highest rankings to those
+organizations whose ratio of program expenses is 85% or higher of their
+total expenses. Other agencies, such as the Better Business Bureau’s
+Wise Giving Alliance, recommend a ratio of 65% or higher.</p>
 </div>
 <div id="variables" class="section level2">
 <h2>Variables</h2>
-<p>Note: This data is available only for organizations that filed 990s using e-file submissions. The data is sourced from AWS.</p>
+<p>Note: This data is available only for organizations that filed 990s
+using e-file submissions. The data is sourced from AWS.</p>
 <ul>
 <li><p><strong>Numerator:</strong> Program Service Expenses <br></p>
 <ul>
@@ -528,8 +542,10 @@ div.tocify {
 </ul></li>
 <li><p><strong>Denominator:</strong> Total Expenses</p>
 <ul>
-<li><p>On 990: Part 1, Line 18(B) -AWS Tax File Data: F9_01_EXP_TOT_CY</p></li>
-<li><p>On EZ: PART 1, Line 17 -AWS Tax File Data: F9_01_EXP_TOT_CY <br></p></li>
+<li><p>On 990: Part 1, Line 18(B) -AWS Tax File Data:
+F9_01_EXP_TOT_CY</p></li>
+<li><p>On EZ: PART 1, Line 17 -AWS Tax File Data: F9_01_EXP_TOT_CY
+<br></p></li>
 </ul></li>
 </ul>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
@@ -543,7 +559,7 @@ div.tocify {
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># SAVE RESULTS </span></span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>core<span class="sc">$</span>prog_efficiency_ratio <span class="ot">&lt;-</span>  progserv_exp <span class="sc">/</span> total_expense</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="do">## Error in `$&lt;-.data.frame`(`*tmp*`, prog_efficiency_ratio, value = numeric(0)): replacement has 0 rows, data has 5546</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="do">## Error in `$&lt;-.data.frame`(`*tmp*`, prog_efficiency_ratio, value = numeric(0)): replacement has 0 rows, data has 5524</span></span>
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>                     </span>
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># summary( core$prog_efficiency_ratio )</span></span></code></pre></div>
 </div>
@@ -584,19 +600,24 @@ div.tocify {
 <span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a><span class="co"># WINSORIZATION AT 5th and 95th PERCENTILES</span></span>
 <span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>core2<span class="sc">$</span>prog_efficiency_ratio[ core2<span class="sc">$</span>prog_efficiency_ratio <span class="sc">&lt;</span> x<span class="fl">.05</span> ] <span class="ot">&lt;-</span> x<span class="fl">.05</span></span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="do">## Error in `$&lt;-.data.frame`(`*tmp*`, prog_efficiency_ratio, value = numeric(0)): replacement has 0 rows, data has 5546</span></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="do">## Error in `$&lt;-.data.frame`(`*tmp*`, prog_efficiency_ratio, value = numeric(0)): replacement has 0 rows, data has 5524</span></span>
 <span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>core2<span class="sc">$</span>prog_efficiency_ratio[ core2<span class="sc">$</span>prog_efficiency_ratio <span class="sc">&gt;</span> x<span class="fl">.95</span> ] <span class="ot">&lt;-</span> x<span class="fl">.95</span></span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a><span class="do">## Error in `$&lt;-.data.frame`(`*tmp*`, prog_efficiency_ratio, value = numeric(0)): replacement has 0 rows, data has 5546</span></span></code></pre></div>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a><span class="do">## Error in `$&lt;-.data.frame`(`*tmp*`, prog_efficiency_ratio, value = numeric(0)): replacement has 0 rows, data has 5524</span></span></code></pre></div>
 </div>
 <div id="metric-scope" class="section level2">
 <h2>Metric Scope</h2>
-<p>Tax data is available for full 990 filers and 990EZ filers (organizations with Gross receipts &lt; $200,000 and Total assets &lt; $500,000).</p>
-<p>The data have been capped to those with values between 5% and 95% of the normal distribution to cut off outliers and exempt organizations with zero profitability (though negative values are allowed still).</p>
+<p>Tax data is available for full 990 filers and 990EZ filers
+(organizations with Gross receipts &lt; $200,000 and Total assets &lt;
+$500,000).</p>
+<p>The data have been capped to those with values between 5% and 95% of
+the normal distribution to cut off outliers and exempt organizations
+with zero profitability (though negative values are allowed still).</p>
 </div>
 </div>
 <div id="descriptive-statistics" class="section level1">
 <h1>Descriptive Statistics</h1>
-<p>Note: All monetary variables have been converted to thousands of dollars.</p>
+<p>Note: All monetary variables have been converted to thousands of
+dollars.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>core2 <span class="sc">%&gt;%</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>( <span class="co"># prog_efficiency_ratio = prog_efficiency_ratio * 10000,</span></span>
@@ -624,9 +645,15 @@ div.tocify {
 <span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a><span class="do">## Error in `select()`:</span></span>
 <span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a><span class="do">## ! Can&#39;t subset columns past the end.</span></span>
 <span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a><span class="do">## x Column `prog_efficiency_ratio` doesn&#39;t exist.</span></span></code></pre></div>
-<p>What proportion of orgs have program efficiency ratios equal to zero?</p>
+<p>What proportion of orgs have program efficiency ratios equal to
+zero?</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>prop.zero <span class="ot">&lt;-</span> <span class="fu">mean</span>( core2<span class="sc">$</span>prog_efficiency_ratio <span class="sc">==</span> <span class="dv">0</span>, <span class="at">na.rm=</span>T )</span></code></pre></div>
-<p>In the sample, NaN percent of the organizations have program efficiency ratios equal to zero, meaning they have no program service expenses. These organizations are dropped from subsequent graphs to keep the visualizations clean. The interpretation of the graphics should be the distributions of Program Efficiency ratios for organizations that have positive or negative values.</p>
+<p>In the sample, NaN percent of the organizations have program
+efficiency ratios equal to zero, meaning they have no program service
+expenses. These organizations are dropped from subsequent graphs to keep
+the visualizations clean. The interpretation of the graphics should be
+the distributions of Program Efficiency ratios for organizations that
+have positive or negative values.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="do">###</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="do">### ADD QUANTILES</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="do">###</span></span>
@@ -652,7 +679,8 @@ div.tocify {
 <span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="do">## Error in FUN(X[[i]], ...): object &#39;prog_efficiency_ratio&#39; not found</span></span></code></pre></div>
 <p><img src="metric-16-program-efficiency-ratio_files/figure-html/unnamed-chunk-8-1.png" width="960" /></p>
 </div>
-<div id="program-efficiency-ratio-by-ntee-major-code" class="section level2">
+<div id="program-efficiency-ratio-by-ntee-major-code"
+class="section level2">
 <h2>Program Efficiency Ratio by NTEE Major Code</h2>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>core3 <span class="ot">&lt;-</span> core2 <span class="sc">%&gt;%</span> <span class="fu">filter</span>( <span class="sc">!</span> <span class="fu">is.na</span>(NTEE1) )</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>( core3<span class="sc">$</span>NTEE1) <span class="sc">%&gt;%</span> <span class="fu">sort</span>(<span class="at">decreasing=</span><span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> <span class="fu">kable</span>()</span></code></pre></div>
@@ -666,15 +694,15 @@ div.tocify {
 <tbody>
 <tr class="odd">
 <td align="left">Housing</td>
-<td align="right">2772</td>
+<td align="right">2837</td>
 </tr>
 <tr class="even">
 <td align="left">Community Development</td>
-<td align="right">1683</td>
+<td align="right">1585</td>
 </tr>
 <tr class="odd">
 <td align="left">Human Services</td>
-<td align="right">1091</td>
+<td align="right">1102</td>
 </tr>
 </tbody>
 </table>
@@ -715,19 +743,19 @@ div.tocify {
 <tbody>
 <tr class="odd">
 <td align="left">Midwest</td>
-<td align="right">1419</td>
+<td align="right">1444</td>
 </tr>
 <tr class="even">
 <td align="left">Northeast</td>
-<td align="right">1385</td>
+<td align="right">1368</td>
 </tr>
 <tr class="odd">
 <td align="left">South</td>
-<td align="right">1633</td>
+<td align="right">1610</td>
 </tr>
 <tr class="even">
 <td align="left">West</td>
-<td align="right">1094</td>
+<td align="right">1088</td>
 </tr>
 </tbody>
 </table>
@@ -764,39 +792,39 @@ div.tocify {
 <tbody>
 <tr class="odd">
 <td align="left">East North Central</td>
-<td align="right">969</td>
+<td align="right">1038</td>
 </tr>
 <tr class="even">
 <td align="left">East South Central</td>
-<td align="right">295</td>
+<td align="right">289</td>
 </tr>
 <tr class="odd">
 <td align="left">Middle Atlantic</td>
-<td align="right">917</td>
+<td align="right">904</td>
 </tr>
 <tr class="even">
 <td align="left">Mountain</td>
-<td align="right">294</td>
+<td align="right">303</td>
 </tr>
 <tr class="odd">
 <td align="left">New England</td>
-<td align="right">468</td>
+<td align="right">464</td>
 </tr>
 <tr class="even">
 <td align="left">Pacific</td>
-<td align="right">800</td>
+<td align="right">785</td>
 </tr>
 <tr class="odd">
 <td align="left">South Atlantic</td>
-<td align="right">915</td>
+<td align="right">900</td>
 </tr>
 <tr class="even">
 <td align="left">West North Central</td>
-<td align="right">450</td>
+<td align="right">406</td>
 </tr>
 <tr class="odd">
 <td align="left">West South Central</td>
-<td align="right">423</td>
+<td align="right">421</td>
 </tr>
 </tbody>
 </table>
@@ -823,7 +851,8 @@ div.tocify {
 <span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a><span class="do">## Error in FUN(X[[i]], ...): object &#39;prog_efficiency_ratio&#39; not found</span></span></code></pre></div>
 <p><img src="metric-16-program-efficiency-ratio_files/figure-html/unnamed-chunk-14-1.png" width="960" /></p>
 </div>
-<div id="program-efficiency-ratio-by-nonprofit-size-expenses" class="section level2">
+<div id="program-efficiency-ratio-by-nonprofit-size-expenses"
+class="section level2">
 <h2>Program Efficiency Ratio by Nonprofit Size (Expenses)</h2>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>( core2, <span class="fu">aes</span>(<span class="at">x =</span> totfuncexpns )) <span class="sc">+</span>  </span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>( <span class="at">alpha =</span> <span class="fl">0.5</span> ) <span class="sc">+</span> </span>
@@ -863,7 +892,8 @@ div.tocify {
 <span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="do">## Error in FUN(X[[i]], ...): object &#39;prog_efficiency_ratio&#39; not found</span></span></code></pre></div>
 <p><img src="metric-16-program-efficiency-ratio_files/figure-html/unnamed-chunk-17-1.png" width="960" /></p>
 </div>
-<div id="program-efficiency-ratio-by-nonprofit-size-revenue" class="section level2">
+<div id="program-efficiency-ratio-by-nonprofit-size-revenue"
+class="section level2">
 <h2>Program Efficiency Ratio by Nonprofit Size (Revenue)</h2>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>( core2, <span class="fu">aes</span>(<span class="at">x =</span> totrevenue )) <span class="sc">+</span>  </span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>( <span class="at">alpha =</span> <span class="fl">0.5</span> ) <span class="sc">+</span> </span>
@@ -905,7 +935,8 @@ div.tocify {
 <span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a><span class="do">## Error in FUN(X[[i]], ...): object &#39;prog_efficiency_ratio&#39; not found</span></span></code></pre></div>
 <p><img src="metric-16-program-efficiency-ratio_files/figure-html/unnamed-chunk-20-1.png" width="960" /></p>
 </div>
-<div id="program-efficiency-ratio-by-nonprofit-size-net-assets" class="section level2">
+<div id="program-efficiency-ratio-by-nonprofit-size-net-assets"
+class="section level2">
 <h2>Program Efficiency Ratio by Nonprofit Size (Net Assets)</h2>
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>( core2, <span class="fu">aes</span>(<span class="at">x =</span> totnetassetend )) <span class="sc">+</span>  </span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>( <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span> </span>
@@ -994,7 +1025,8 @@ div.tocify {
 <span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a><span class="do">## Error in FUN(X[[i]], ...): object &#39;prog_efficiency_ratio&#39; not found</span></span></code></pre></div>
 <p><img src="metric-16-program-efficiency-ratio_files/figure-html/unnamed-chunk-26-1.png" width="960" /></p>
 </div>
-<div id="program-efficiency-ratio-by-nonprofit-age" class="section level2">
+<div id="program-efficiency-ratio-by-nonprofit-age"
+class="section level2">
 <h2>Program Efficiency Ratio by Nonprofit Age</h2>
 <div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>( core2, <span class="fu">aes</span>(<span class="at">x =</span> AGE )) <span class="sc">+</span>  </span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>( <span class="at">alpha =</span> <span class="fl">0.5</span> )  </span></code></pre></div>
@@ -1029,7 +1061,8 @@ div.tocify {
 <span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a><span class="do">## Error in FUN(X[[i]], ...): object &#39;prog_efficiency_ratio&#39; not found</span></span></code></pre></div>
 <p><img src="metric-16-program-efficiency-ratio_files/figure-html/unnamed-chunk-29-1.png" width="960" /></p>
 </div>
-<div id="program-efficiency-ratio-by-land-and-building-value" class="section level2">
+<div id="program-efficiency-ratio-by-land-and-building-value"
+class="section level2">
 <h2>Program Efficiency Ratio by Land and Building Value</h2>
 <div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>( core2, <span class="fu">aes</span>(<span class="at">x =</span> lndbldgsequipend )) <span class="sc">+</span>  </span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>( <span class="at">alpha =</span> <span class="fl">0.5</span> )  </span></code></pre></div>

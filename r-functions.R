@@ -110,3 +110,44 @@ create_quantiles <- function( var, n.groups=5 )
 #     ylab( "Debt to Asset Ratio" ) +
 #     facet_wrap( ~ size.q10, nrow=4 ) +
 #     theme_minimal()
+
+
+
+
+
+
+###
+###  COMBINE ALL METRIC FILES
+###
+###  untested function - not sure if 
+###  you can call choose.dir() inside a function 
+
+combine_metrics <- function()
+{
+
+  choose.dir()
+
+  x <- dir()
+  rds.files <- x[ grepl( ".rds", x ) ]
+
+
+  d <- readRDS( rds.files[1] )
+  d$id <- paste0( d$ein, "-", d$tax_pd )
+  d <- d[ ! duplicated(d$id) , ]
+
+  for( i in rds.files[-1] )
+  {
+    d.temp <- readRDS(i)
+    d.temp$id <- paste0( d.temp$ein, "-", d.temp$tax_pd )
+    d.temp <- d.temp[ ! duplicated(d.temp$id) , ]
+  
+    d <- merge( d, d.temp, by=c("id","ein","tax_pd"), all.x=T )
+  }
+
+
+  write.csv( d, "ALL-METRICS.csv", row.names=F )
+  saveRDS( d, "ALL-METRICS.rds" )
+
+  return(NULL) 
+
+}

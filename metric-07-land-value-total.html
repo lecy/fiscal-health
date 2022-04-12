@@ -14,8 +14,8 @@
 
 <title>Metric 06- Months of Cash on Hand</title>
 
-<script src="site_libs/header-attrs-2.9/header-attrs.js"></script>
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/header-attrs-2.13/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
@@ -44,6 +44,7 @@
   div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   ul.task-list{list-style: none;}
     </style>
+
 
 
 <style type="text/css">
@@ -177,6 +178,9 @@ button.code-folding-btn:focus {
 }
 summary {
   display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
 }
 pre code {
   padding: 0;
@@ -405,7 +409,7 @@ div.tocify {
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -418,7 +422,7 @@ div.tocify {
   <a href="data-step-00-wrangling.html">Data Wrangling</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Metrics
      
     <span class="caret"></span>
@@ -482,7 +486,7 @@ div.tocify {
 <div id="header">
 
 <div class="btn-group pull-right float-right">
-<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
 <ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
 <li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
 <li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
@@ -498,7 +502,8 @@ div.tocify {
 </div>
 
 
-<p><img src="img/logo.png" width="370" /></p>
+<p><img
+src="img/logo.png" /><!-- --></p>
 <br>
 <hr>
 <p><br></p>
@@ -506,16 +511,45 @@ div.tocify {
 <h1>Metric Construction</h1>
 <div id="definition-interpretation" class="section level2">
 <h2>Definition &amp; Interpretation</h2>
-<p><span class="math display">\[Months \: of \: Cash \: on \: Hand = \frac{Cash \: or \: Cash \: Equivalent}{[(Operating \: Expenses - Noncash \: Expenses) / 12]} \]</span></p>
-<p>MOnths of cash on hand is the number of months that an organization can continue to pay its operating expenses, given the amount of cash available.</p>
-<p>This metric is good to review at startup of organization, during periods of low revenues, and prior to undertaking new major activity.</p>
-<p>The metric is limited though in the following ways. First, it is based on an average monthly cash outflow, which is not really the case. Instead, cash tends to be spent in a lumpy manner, such as when rent or payroll are paid. Also, management tends to take drastic action to reduce expenses as cash reserves decline, so that the actual months of operation tend to be longer than indicated by this ratio. Thus, it is better to use a detailed cash flow analysis to determine the precise duration of the available cash, with regular updates.</p>
+<p><span class="math display">\[Months \: of \: Cash \: on \: Hand =
+\frac{Cash \: or \: Cash \: Equivalent}{[(Operating \: Expenses -
+Noncash \: Expenses) / 12]} \]</span></p>
+<p>MOnths of cash on hand is the number of months that an organization
+can continue to pay its operating expenses, given the amount of cash
+available.</p>
+<p>This metric is good to review at startup of organization, during
+periods of low revenues, and prior to undertaking new major
+activity.</p>
+<p>The metric is limited though in the following ways. First, it is
+based on an average monthly cash outflow, which is not really the case.
+Instead, cash tends to be spent in a lumpy manner, such as when rent or
+payroll are paid. Also, management tends to take drastic action to
+reduce expenses as cash reserves decline, so that the actual months of
+operation tend to be longer than indicated by this ratio. Thus, it is
+better to use a detailed cash flow analysis to determine the precise
+duration of the available cash, with regular updates.</p>
 </div>
 <div id="variables" class="section level2">
 <h2>Variables</h2>
-<p>Note: This data is available only for organizations that file full 990s. [Organizations with revenues &lt;$200,000 and total assets &lt;$500,000 have the option to not file a full 990 and file an EZ instead.]</p>
-<p><strong>Numerator:</strong> (Cash + short-term investments + current receivables) <br> * On 990: (Part X, line 1B) + (Part X, line 2B) + (Part X, line 3B) + (Part X, line 4B) - SOI PC EXTRACTS: nonintcashend, svngstempinvend, pldgegrntrcvblend, accntsrcvblend <br> * On EZ:Part I, line 22 [cash and short-term investments only] - SOI PC EXTRACTS: Not available <br> <strong>Denominator:</strong> ((Operating expenses – bad debts – depreciation) / 365) * On 990: Part IX, line 25A – Part IX, line 22A -SOI PC EXTRACTS: accntspayableend+grntspayableend * On EZ: Part I, line 17 [operating expenses only] <br></p>
-<p><strong>Note:</strong> The original ratio yields years of cash on hand. We divide the denominator by 12, or multiply the ratio by 12, to get months of cash on hand. o The 990 doesn’t record bad debts (the amount listed as uncollectible for receivable accounts); it just asks organizations to report grants/pledges/accounts receivable net of bad debts, so this term is missing from the denominator</p>
+<p>Note: This data is available only for organizations that file full
+990s. [Organizations with revenues &lt;$200,000 and total assets
+&lt;$500,000 have the option to not file a full 990 and file an EZ
+instead.]</p>
+<p><strong>Numerator:</strong> (Cash + short-term investments + current
+receivables) <br> * On 990: (Part X, line 1B) + (Part X, line 2B) +
+(Part X, line 3B) + (Part X, line 4B) - SOI PC EXTRACTS: nonintcashend,
+svngstempinvend, pldgegrntrcvblend, accntsrcvblend <br> * On EZ:Part I,
+line 22 [cash and short-term investments only] - SOI PC EXTRACTS: Not
+available <br> <strong>Denominator:</strong> ((Operating expenses – bad
+debts – depreciation) / 365) * On 990: Part IX, line 25A – Part IX, line
+22A -SOI PC EXTRACTS: accntspayableend+grntspayableend * On EZ: Part I,
+line 17 [operating expenses only] <br></p>
+<p><strong>Note:</strong> The original ratio yields years of cash on
+hand. We divide the denominator by 12, or multiply the ratio by 12, to
+get months of cash on hand. o The 990 doesn’t record bad debts (the
+amount listed as uncollectible for receivable accounts); it just asks
+organizations to report grants/pledges/accounts receivable net of bad
+debts, so this term is missing from the denominator</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># TEMPORARY VARIABLES </span></span>
@@ -544,17 +578,21 @@ div.tocify {
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># proportion of values that are negative</span></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>( core2<span class="sc">$</span>months_coh <span class="sc">&lt;</span> <span class="dv">0</span>, <span class="at">na.rm=</span>T ) </span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0.004444444</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0.004438808</span></span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>core2<span class="sc">$</span>months_coh[ core2<span class="sc">$</span>months_coh <span class="sc">&lt;</span> <span class="dv">0</span> ] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co"># proption of values above 200% </span></span>
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>( core2<span class="sc">$</span>months_coh <span class="sc">&gt;</span> <span class="dv">50</span>, <span class="at">na.rm=</span>T ) </span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0.09312169</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0.09025576</span></span>
 <span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>core2<span class="sc">$</span>months_coh[ core2<span class="sc">$</span>months_coh <span class="sc">&gt;</span> <span class="dv">50</span> ] <span class="ot">&lt;-</span> <span class="dv">50</span></span></code></pre></div>
 </div>
 <div id="metric-scope" class="section level2">
 <h2>Metric Scope</h2>
-<p>Tax data is available for full 990 filers, so this metric does not describe any organizations with Gross receipts &lt; $200,000 and Total assets &lt; $500,000. Some organizations with receipts or assets below those thresholds may have filed a full 990, but these would be exceptions.</p>
+<p>Tax data is available for full 990 filers, so this metric does not
+describe any organizations with Gross receipts &lt; $200,000 and Total
+assets &lt; $500,000. Some organizations with receipts or assets below
+those thresholds may have filed a full 990, but these would be
+exceptions.</p>
 </div>
 <div id="reference" class="section level2">
 <h2>Reference</h2>
@@ -640,13 +678,13 @@ Months of COH
 11
 </td>
 <td>
-14
+13
 </td>
 <td>
 50
 </td>
 <td>
-16
+15
 </td>
 </tr>
 <tr>
@@ -669,7 +707,7 @@ Age
 41
 </td>
 <td>
-101
+95
 </td>
 <td>
 15
@@ -683,22 +721,22 @@ Revenue (1k)
 -5,377
 </td>
 <td>
-254
+259
 </td>
 <td>
-943
+909
 </td>
 <td>
-4,687
+4,522
 </td>
 <td>
-3,765
+3,672
 </td>
 <td>
 408,932
 </td>
 <td>
-15,071
+14,286
 </td>
 </tr>
 <tr>
@@ -709,22 +747,22 @@ Expenses(1k)
 0
 </td>
 <td>
-255
+263
 </td>
 <td>
-862
+840
 </td>
 <td>
-4,332
+4,192
 </td>
 <td>
-3,392
+3,328
 </td>
 <td>
 382,667
 </td>
 <td>
-14,055
+13,466
 </td>
 </tr>
 <tr>
@@ -735,22 +773,22 @@ Buildings (1k)
 -4
 </td>
 <td>
-68
+79
 </td>
 <td>
-781
+824
 </td>
 <td>
-3,499
+3,504
 </td>
 <td>
-2,876
+2,868
 </td>
 <td>
 513,509
 </td>
 <td>
-13,239
+13,210
 </td>
 </tr>
 <tr>
@@ -761,22 +799,22 @@ Total Assets (1k)
 -7,552
 </td>
 <td>
-747
+778
 </td>
 <td>
-2,502
+2,446
 </td>
 <td>
-10,085
+9,262
 </td>
 <td>
-7,682
+7,477
 </td>
 <td>
-1,212,784
+672,021
 </td>
 <td>
-35,519
+27,039
 </td>
 </tr>
 <tr>
@@ -787,22 +825,22 @@ Net Assets (1k)
 -178,870
 </td>
 <td>
-187
+156
 </td>
 <td>
-1,139
+1,094
 </td>
 <td>
-4,910
+4,553
 </td>
 <td>
-4,222
+4,079
 </td>
 <td>
-564,542
+531,068
 </td>
 <td>
-18,163
+15,470
 </td>
 </tr>
 <tr>
@@ -813,22 +851,22 @@ Liabiliies (1k)
 -2,707
 </td>
 <td>
-109
+115
 </td>
 <td>
-776
+816
 </td>
 <td>
-5,174
+4,709
 </td>
 <td>
-3,084
+3,133
 </td>
 <td>
-981,223
+705,623
 </td>
 <td>
-24,847
+18,722
 </td>
 </tr>
 <tr>
@@ -836,9 +874,15 @@ Liabiliies (1k)
 </td>
 </tr>
 </table>
-<p>What proportion of orgs have Months of Cash equal to zero (no operating cash)?</p>
+<p>What proportion of orgs have Months of Cash equal to zero (no
+operating cash)?</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>prop.zero <span class="ot">&lt;-</span> <span class="fu">mean</span>( core2<span class="sc">$</span>months_coh <span class="sc">==</span> <span class="dv">0</span>, <span class="at">na.rm=</span>T )</span></code></pre></div>
-<p>In the sample, 1 percent of the organizations have zero months of cash on hand, meaning they could not survive without receivables and program service revenue. These organizations are dropped from subsequent graphs to keep the visualizations clean. The interpretation of the graphics should be the distributions of Months of Cash on Hand for organizations that have some cash on hand.</p>
+<p>In the sample, 1 percent of the organizations have zero months of
+cash on hand, meaning they could not survive without receivables and
+program service revenue. These organizations are dropped from subsequent
+graphs to keep the visualizations clean. The interpretation of the
+graphics should be the distributions of Months of Cash on Hand for
+organizations that have some cash on hand.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="do">###</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="do">### ADD QUANTILES</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="do">###</span></span>
@@ -862,7 +906,8 @@ Liabiliies (1k)
 <span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">axis.ticks.y=</span><span class="fu">element_blank</span>() )</span></code></pre></div>
 <p><img src="metric-07-land-value-total_files/figure-html/unnamed-chunk-8-1.png" width="960" /></p>
 </div>
-<div id="months-of-cash-on-hand-by-ntee-major-code" class="section level2">
+<div id="months-of-cash-on-hand-by-ntee-major-code"
+class="section level2">
 <h2>Months of Cash on Hand by NTEE Major Code</h2>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>core3 <span class="ot">&lt;-</span> core2 <span class="sc">%&gt;%</span> <span class="fu">filter</span>( <span class="sc">!</span> <span class="fu">is.na</span>(NTMAJ12) )</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>( core3<span class="sc">$</span>NTMAJ12) <span class="sc">%&gt;%</span> <span class="fu">sort</span>(<span class="at">decreasing=</span><span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> <span class="fu">kable</span>()</span></code></pre></div>
@@ -876,11 +921,11 @@ Liabiliies (1k)
 <tbody>
 <tr class="odd">
 <td align="left">Human Services</td>
-<td align="right">3863</td>
+<td align="right">3939</td>
 </tr>
 <tr class="even">
 <td align="left">Public Benefit</td>
-<td align="right">1683</td>
+<td align="right">1585</td>
 </tr>
 </tbody>
 </table>
@@ -920,19 +965,19 @@ Liabiliies (1k)
 <tbody>
 <tr class="odd">
 <td align="left">Midwest</td>
-<td align="right">1419</td>
+<td align="right">1444</td>
 </tr>
 <tr class="even">
 <td align="left">Northeast</td>
-<td align="right">1385</td>
+<td align="right">1368</td>
 </tr>
 <tr class="odd">
 <td align="left">South</td>
-<td align="right">1633</td>
+<td align="right">1610</td>
 </tr>
 <tr class="even">
 <td align="left">West</td>
-<td align="right">1094</td>
+<td align="right">1088</td>
 </tr>
 </tbody>
 </table>
@@ -968,39 +1013,39 @@ Liabiliies (1k)
 <tbody>
 <tr class="odd">
 <td align="left">East North Central</td>
-<td align="right">969</td>
+<td align="right">1038</td>
 </tr>
 <tr class="even">
 <td align="left">East South Central</td>
-<td align="right">295</td>
+<td align="right">289</td>
 </tr>
 <tr class="odd">
 <td align="left">Middle Atlantic</td>
-<td align="right">917</td>
+<td align="right">904</td>
 </tr>
 <tr class="even">
 <td align="left">Mountain</td>
-<td align="right">294</td>
+<td align="right">303</td>
 </tr>
 <tr class="odd">
 <td align="left">New England</td>
-<td align="right">468</td>
+<td align="right">464</td>
 </tr>
 <tr class="even">
 <td align="left">Pacific</td>
-<td align="right">800</td>
+<td align="right">785</td>
 </tr>
 <tr class="odd">
 <td align="left">South Atlantic</td>
-<td align="right">915</td>
+<td align="right">900</td>
 </tr>
 <tr class="even">
 <td align="left">West North Central</td>
-<td align="right">450</td>
+<td align="right">406</td>
 </tr>
 <tr class="odd">
 <td align="left">West South Central</td>
-<td align="right">423</td>
+<td align="right">421</td>
 </tr>
 </tbody>
 </table>
@@ -1026,7 +1071,8 @@ Liabiliies (1k)
 <span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>             <span class="at">color=</span><span class="st">&quot;gray60&quot;</span>, <span class="at">size=</span><span class="dv">6</span> ) </span></code></pre></div>
 <p><img src="metric-07-land-value-total_files/figure-html/unnamed-chunk-14-1.png" width="960" /></p>
 </div>
-<div id="months-of-cash-on-hand-by-nonprofit-size-expenses" class="section level2">
+<div id="months-of-cash-on-hand-by-nonprofit-size-expenses"
+class="section level2">
 <h2>Months of Cash on Hand by Nonprofit Size (Expenses)</h2>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>( core2, <span class="fu">aes</span>(<span class="at">x =</span> totfuncexpns )) <span class="sc">+</span>  </span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>( <span class="at">alpha =</span> <span class="fl">0.5</span> ) <span class="sc">+</span> </span>
@@ -1064,7 +1110,8 @@ Liabiliies (1k)
 <span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.ticks.y=</span><span class="fu">element_blank</span>() )</span></code></pre></div>
 <p><img src="metric-07-land-value-total_files/figure-html/unnamed-chunk-17-1.png" width="960" /></p>
 </div>
-<div id="months-of-cash-on-hand-by-nonprofit-size-revenue" class="section level2">
+<div id="months-of-cash-on-hand-by-nonprofit-size-revenue"
+class="section level2">
 <h2>Months of Cash on Hand by Nonprofit Size (Revenue)</h2>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>( core2, <span class="fu">aes</span>(<span class="at">x =</span> totrevenue )) <span class="sc">+</span>  </span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>( <span class="at">alpha =</span> <span class="fl">0.5</span> ) <span class="sc">+</span> </span>
@@ -1104,7 +1151,8 @@ Liabiliies (1k)
 <span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.ticks.y=</span><span class="fu">element_blank</span>() )</span></code></pre></div>
 <p><img src="metric-07-land-value-total_files/figure-html/unnamed-chunk-20-1.png" width="960" /></p>
 </div>
-<div id="months-of-cash-on-hand-by-nonprofit-size-net-assets" class="section level2">
+<div id="months-of-cash-on-hand-by-nonprofit-size-net-assets"
+class="section level2">
 <h2>Months of Cash on Hand by Nonprofit Size (Net Assets)</h2>
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>( core2, <span class="fu">aes</span>(<span class="at">x =</span> totnetassetend )) <span class="sc">+</span>  </span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>( <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span> </span>
@@ -1189,7 +1237,8 @@ Liabiliies (1k)
 <span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.ticks.y=</span><span class="fu">element_blank</span>() )</span></code></pre></div>
 <p><img src="metric-07-land-value-total_files/figure-html/unnamed-chunk-26-1.png" width="960" /></p>
 </div>
-<div id="months-of-cash-on-hand-by-nonprofit-age" class="section level2">
+<div id="months-of-cash-on-hand-by-nonprofit-age"
+class="section level2">
 <h2>Months of Cash on Hand by Nonprofit Age</h2>
 <div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>( core2, <span class="fu">aes</span>(<span class="at">x =</span> AGE )) <span class="sc">+</span>  </span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>( <span class="at">alpha =</span> <span class="fl">0.5</span> )  </span></code></pre></div>

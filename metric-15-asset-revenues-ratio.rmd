@@ -60,13 +60,12 @@ s.type <- "html"
 
 ## Load Data
 
-# local: 
-# core <- readRDS( "02-data-wrangled/core.rds" )
+local: 
+core <- readRDS( "02-data-wrangled/core.rds" )
 
 # from github: 
-URL <- "https://github.com/lecy/fiscal-health/raw/main/02-data-wrangled/core.rds"
-core <- readRDS(gzcon(url( URL )))
-
+# URL <- "https://github.com/lecy/fiscal-health/raw/main/02-data-wrangled/core.rds"
+# core <- readRDS(gzcon(url( URL )))
 
 
 # Preview the data: 
@@ -680,7 +679,7 @@ core2 %>%
 
 # Save Metrics 
 
-```{r, eval=F}
+```{r, eval=T}
 core.asset_rev_ratio <- select( core, ein, tax_pd, asset_rev_ratio )
 saveRDS( core.asset_rev_ratio, "03-data-ratios/m-15-asset-revenue-ratio.rds" )
 write.csv( core.asset_rev_ratio, "03-data-ratios/m-15-asset-revenue-ratio.csv" )
