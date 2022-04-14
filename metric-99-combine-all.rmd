@@ -1,0 +1,257 @@
+---
+title: ""
+font: Lato
+output:
+  html_document:
+    self_contained: TRUE
+    toc: TRUE
+    toc_float: TRUE
+    css: www/web_report.css
+    output_dir: "."
+---
+
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set( echo = TRUE, 
+                       message=F, 
+                       warning=F, 
+                       error = TRUE,
+                       fig.width = 10, 
+                       fig.height = 6, 
+                       collapse = TRUE )
+```
+
+
+```{r, echo=F}
+
+## Packages
+
+library( haven )        # importing data files 
+library( tidyr )        # data wrangling
+library( dplyr )        # data wrangling 
+library( ggplot2 )      # fancy plots 
+library( ggthemes )     # fancy plots
+library( scales )       # re-scaling numbers
+library( stargazer )    # nice tables 
+library( pander )       # format tables for HTML 
+library( knitr )        # formatting functions 
+library( corrplot )
+
+library( urbnthemes )   # setting the color scheme to Urban's
+set_urbn_defaults(style = "print")
+
+source( "r-functions.R" )
+
+# stargazer table print type
+# run chunk for live RMD sessions
+s.type <- "text"
+
+# stargazer table print type
+# resets to html when knitting
+s.type <- "html"
+
+
+## Load Data
+
+# local: 
+d <- readRDS( "03-data-ratios/ALL-METRICS.rds" )
+
+```
+
+
+```{r header-image, fig.width = 3.5, fig.height = 1, echo = FALSE}
+# All defaults
+knitr::include_graphics(here::here("img", "logo.png"))
+```
+
+
+<br>
+<hr>
+<br>
+
+
+```{r}
+d2 <- dplyr::select( d, -id, -ein, -tax_pd )
+```
+
+
+```{r, fig.width=10, fig.height=10}
+
+par( mfrow=c(4,4), mar=c(4,0,4,0) )
+
+for( i in names(d2) )
+{
+  hist( d2[,i], breaks=25,
+        col="darkgray", border="white", main=i,
+        yaxt="n", xlab="", ylab="" )
+}
+
+```
+
+
+```{r}
+rescale <- function(x)
+{
+   x[ is.na(x) ] <- median(x, na.rm=T )
+
+   x.05 <- quantile( x, 0.05 )
+   x.95 <- quantile( x, 0.95 )
+
+   x[ x < x.05 ] <- x.05
+   x[ x > x.95 ] <- x.95 
+   
+   x <- scales::rescale( x, to=c(1,100) )
+   
+   if( abs( mean(x) - median(x) ) > 5 )
+   { x <- log(x) }
+
+   x <- scale(x)
+
+   return(x)
+}
+
+
+dd <- sapply( d2, rescale, simplify=T )
+dd <- as.data.frame(dd)
+
+```
+
+```{r, fig.width=10, fig.height=10}
+
+par( mfrow=c(4,4), mar=c(4,0,4,0) )
+
+for( i in names(dd) )
+{
+  hist( dd[,i], breaks=25,
+        col="darkgray", border="white", main=i,
+        yaxt="n", xlab="", ylab="" )
+}
+
+```
+
+
+```{r, fig.width=10, fig.height=10}
+# library( corrplot )
+corrplot( cor(dd, use="complete.obs"), 
+          order = "hclust", tl.col='black', tl.cex=.75 ) 
+```
+
+
+
+
+
+```{r}
+library(corpcor)
+library(GPArotation)
+library(psych)
+
+pc3 <- principal( dd, nfactors = 3, rotate = "varimax", scores = TRUE )
+# fa3 <- fa( dd, nfactors = 3, rotate = "varimax", scores = TRUE )
+# fa3 <- factanal( dd, factors=3, rotation = "varimax", scores = "regression" )
+
+print.psych( pc3, cut = 0.3, sort = TRUE )
+# print.psych( fa3, cut = 0.3, sort = TRUE )
+```
+
+
+
+```{r, fig.width=10, fig.height=10}
+d.dim1 <- dplyr::select( dd, lb_to_assets, daysoperating_coh, 
+                         quick_ratio, currentratio, months_coh, dar )
+
+pairs( d.dim1, lower.panel=panel.smooth, upper.panel=panel.cor )
+```
+
+
+
+```{r, fig.width=10, fig.height=10}
+d.dim2 <- dplyr::select( dd, der, st_debt_ratio, debt_mgmnt_ratio,
+                             equity_ratio, pred_profitmargin, 
+                             postd_profitmargin, asset_rev_ratio )
+
+pairs( d.dim2, lower.panel=panel.smooth, upper.panel=panel.cor )
+```
+
+
+
+```{r, fig.width=10, fig.height=10}
+d.dim3 <- dplyr::select( dd, der, lb_to_assets, pred_profitmargin,
+                             selfsufficiency, donation_ratio,
+                             postd_profitmargin, asset_rev_ratio )
+
+pairs( d.dim3, lower.panel=panel.smooth, upper.panel=panel.cor )
+```
+
+
+
+```{r}
+d6 <- predict( pc3, dd ) %>% as.data.frame()
+dd <- dplyr::bind_cols( dd, d6 )
+
+write.csv(dd, "03-data-ratios/RESCALED-DATA.csv", row.names=F )
+```
+
+
+```{r, eval=F, echo=F}
+library(nFactors)
+
+ev <- eigen(cor(dd)) # get eigenvalues
+ap <- parallel(subject=nrow(dd),var=ncol(dd),
+  rep=100,cent=.05)
+nS <- nScree(x=ev$values, aparallel=ap$eigen$qevpea)
+plotnScree(nS)
+
+
+
+
+
+library(corpcor)
+library(GPArotation)
+library(psych)
+
+
+d5 <- dd
+
+pc3 <- principal( d5, nfactors = 3, rotate = "varimax", scores = TRUE )
+
+fa3 <- fa( d5, nfactors = 2, rotate = "varimax", scores = TRUE )
+
+
+d6 <- predict( fa3, dd ) %>% as.data.frame()
+
+
+fa3 <- factanal( d5, factors=2, rotation = "varimax", scores = "regression" )
+
+print.psych( pc5, cut = 0.3, sort = TRUE )
+
+library(psych)
+fit <- factor.pa( dd, nfactors=3, rotate="varimax")
+fit # print results
+
+
+# plot factor 1 by factor 2
+load <- fit$loadings[,2:3]
+plot(load) # set up plot
+text(load,labels=names(dd),cex=.7) # add variable names;
+
+
+
+
+```
+
+
+<br>
+<br>
+<hr>
+<br>
+<br>
+
+
+
+
+```{css, echo=F}
+
+div#TOC{ margin-top: 42px; }
+```
+

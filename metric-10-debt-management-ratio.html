@@ -15,7 +15,12 @@
 
 <title>Metric 10 - Debt Management Ratio</title>
 
+<<<<<<< HEAD
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+=======
+<script src="site_libs/header-attrs-2.13/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+>>>>>>> 2b54eb7a8b266f860a58fbeb740ecbec93f0a289
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
@@ -39,7 +44,19 @@
     </style>
 
 
+<<<<<<< HEAD
 <style type="text/css">code{white-space: pre;}</style>
+=======
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+>>>>>>> 2b54eb7a8b266f860a58fbeb740ecbec93f0a289
 <style type="text/css" data-origin="pandoc">
 a.sourceLine { display: inline-block; line-height: 1.25; }
 a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
@@ -196,6 +213,15 @@ button.code-folding-btn:focus {
 summary {
   display: list-item;
 }
+<<<<<<< HEAD
+=======
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+>>>>>>> 2b54eb7a8b266f860a58fbeb740ecbec93f0a289
 </style>
 
 
@@ -438,7 +464,7 @@ div.tocify {
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -451,7 +477,7 @@ div.tocify {
   <a href="data-step-00-wrangling.html">Data Wrangling</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Metrics
      
     <span class="caret"></span>
@@ -514,9 +540,15 @@ div.tocify {
 
 <div class="fluid-row" id="header">
 
+<<<<<<< HEAD
 <div class="btn-group pull-right">
 <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
 <ul class="dropdown-menu" style="min-width: 50px;">
+=======
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+>>>>>>> 2b54eb7a8b266f860a58fbeb740ecbec93f0a289
 <li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
 <li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
 </ul>
@@ -530,7 +562,13 @@ div.tocify {
 </div>
 
 
+<<<<<<< HEAD
 <p><img src="www/images/urban-institute-logo.png" /><!-- --></p>
+=======
+<pre><code>## Error in local:core &lt;- readRDS(&quot;02-data-wrangled/core.rds&quot;): could not find function &quot;:&lt;-&quot;</code></pre>
+<p><img
+src="www/images/urban-institute-logo.png" /><!-- --></p>
+>>>>>>> 2b54eb7a8b266f860a58fbeb740ecbec93f0a289
 <br>
 <hr>
 <p><br></p>
@@ -538,13 +576,23 @@ div.tocify {
 <h1>Metric Construction</h1>
 <div id="definition-interpretation" class="section level2">
 <h2>Definition &amp; Interpretation</h2>
-<p><span class="math display">\[Debt\: Management \: Ratio = \frac{Total \: Liabilities}{Unrestricted \: Net \: Assets} \]</span></p>
-<p>This metric measures how much an organization is relying on funding from lending entities and the amount of free, unrestricted cash it has to pay back those loans.</p>
-<p>A high value in this metric could mean an organization is highly leveraged and thus that it has reduced ability to borrow more money in the future. Conversely, a low value indicates the organization may not be leveraging its assets to achieve the most growth and impact it could or that there is a dearth of credit available from lending entities.</p>
+<p><span class="math display">\[Debt\: Management \: Ratio = \frac{Total
+\: Liabilities}{Unrestricted \: Net \: Assets} \]</span></p>
+<p>This metric measures how much an organization is relying on funding
+from lending entities and the amount of free, unrestricted cash it has
+to pay back those loans.</p>
+<p>A high value in this metric could mean an organization is highly
+leveraged and thus that it has reduced ability to borrow more money in
+the future. Conversely, a low value indicates the organization may not
+be leveraging its assets to achieve the most growth and impact it could
+or that there is a dearth of credit available from lending entities.</p>
 </div>
 <div id="variables" class="section level2">
 <h2>Variables</h2>
-<p>Note: This data is available only for organizations that file full 990s. [Organizations with revenues &lt;$200,000 and total assets &lt;$500,000 have the option to not file a full 990 and file an EZ instead.]</p>
+<p>Note: This data is available only for organizations that file full
+990s. [Organizations with revenues &lt;$200,000 and total assets
+&lt;$500,000 have the option to not file a full 990 and file an EZ
+instead.]</p>
 <ul>
 <li><p><strong>Numerator:</strong> Total LIabilities <br></p>
 <ul>
@@ -559,10 +607,13 @@ div.tocify {
 </ul></li>
 <li><p><strong>Denominator:</strong> Unrestricted Net Assets</p>
 <ul>
-<li><p>On 990: Part X, Line 27B -SOI PC EXTRACTS: unrstrctnetasstsend</p></li>
-<li><p>On EZ: Not Available -SOI PC EXTRACTS: Not Available <br></p></li>
+<li><p>On 990: Part X, Line 27B -SOI PC EXTRACTS:
+unrstrctnetasstsend</p></li>
+<li><p>On EZ: Not Available -SOI PC EXTRACTS: Not Available
+<br></p></li>
 </ul></li>
 </ul>
+<<<<<<< HEAD
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"></a>
 <a class="sourceLine" id="cb1-2" title="2"></a>
 <a class="sourceLine" id="cb1-3" title="3"><span class="co"># TEMPORARY VARIABLES </span></a>
@@ -576,10 +627,26 @@ div.tocify {
 <a class="sourceLine" id="cb1-11" title="11">core<span class="op">$</span>debt_mgmnt_ratio &lt;-<span class="st">  </span>liabilities <span class="op">/</span><span class="st"> </span>unres_nassets</a>
 <a class="sourceLine" id="cb1-12" title="12">                     </a>
 <a class="sourceLine" id="cb1-13" title="13"><span class="co"># summary( core$debt_mgmnt_ratio )</span></a></code></pre></div>
+=======
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># TEMPORARY VARIABLES </span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>liabilities  <span class="ot">&lt;-</span> ( core<span class="sc">$</span>totliabend)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>unres_nassets <span class="ot">&lt;-</span> ( core<span class="sc">$</span>unrstrctnetasstsend)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># can&#39;t divide by zero</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>unres_nassets[ unres_nassets <span class="sc">==</span> <span class="dv">0</span> ] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co"># SAVE RESULTS </span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>core<span class="sc">$</span>debt_mgmnt_ratio <span class="ot">&lt;-</span>  liabilities <span class="sc">/</span> unres_nassets</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>                     </span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co"># summary( core$debt_mgmnt_ratio )</span></span></code></pre></div>
+>>>>>>> 2b54eb7a8b266f860a58fbeb740ecbec93f0a289
 </div>
 <div id="standardize-scales" class="section level2">
 <h2>Standardize Scales</h2>
 <p>Check high and low values to see what makes sense.</p>
+<<<<<<< HEAD
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">x<span class="fl">.05</span> &lt;-<span class="st"> </span><span class="kw">quantile</span>( core<span class="op">$</span>debt_mgmnt_ratio, <span class="fl">0.05</span>, <span class="dt">na.rm=</span>T )</a>
 <a class="sourceLine" id="cb2-2" title="2">x<span class="fl">.95</span> &lt;-<span class="st"> </span><span class="kw">quantile</span>( core<span class="op">$</span>debt_mgmnt_ratio, <span class="fl">0.95</span>, <span class="dt">na.rm=</span>T )</a>
 <a class="sourceLine" id="cb2-3" title="3"></a>
@@ -616,11 +683,55 @@ div.tocify {
 <a class="sourceLine" id="cb3-27" title="27"></a>
 <a class="sourceLine" id="cb3-28" title="28">core2<span class="op">$</span>debt_mgmnt_ratio[ core2<span class="op">$</span>debt_mgmnt_ratio <span class="op">&lt;</span><span class="st"> </span>x<span class="fl">.05</span> ] &lt;-<span class="st"> </span>x<span class="fl">.05</span></a>
 <a class="sourceLine" id="cb3-29" title="29">core2<span class="op">$</span>debt_mgmnt_ratio[ core2<span class="op">$</span>debt_mgmnt_ratio <span class="op">&gt;</span><span class="st"> </span>x<span class="fl">.95</span> ] &lt;-<span class="st"> </span>x<span class="fl">.95</span></a></code></pre></div>
+=======
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>x<span class="fl">.05</span> <span class="ot">&lt;-</span> <span class="fu">quantile</span>( core<span class="sc">$</span>debt_mgmnt_ratio, <span class="fl">0.05</span>, <span class="at">na.rm=</span>T )</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>x<span class="fl">.95</span> <span class="ot">&lt;-</span> <span class="fu">quantile</span>( core<span class="sc">$</span>debt_mgmnt_ratio, <span class="fl">0.95</span>, <span class="at">na.rm=</span>T )</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>( core, <span class="fu">aes</span>(<span class="at">x =</span> debt_mgmnt_ratio ) ) <span class="sc">+</span>  </span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>( <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span> </span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>( x<span class="fl">.05</span>, x<span class="fl">.95</span> ) </span></code></pre></div>
+<p><img src="metric-10-debt-management-ratio_files/figure-html/unnamed-chunk-3-1.png" width="960" /></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>core2 <span class="ot">&lt;-</span> core</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># proportion of values that are negative</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>( core2<span class="sc">$</span>debt_mgmnt_ratio <span class="sc">&lt;</span> <span class="dv">0</span>, <span class="at">na.rm=</span>T ) </span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0.1700142</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>core2<span class="sc">$</span>debt_mgmnt_ratio[ core2<span class="sc">$</span>debt_mgmnt_ratio <span class="sc">&lt;</span> <span class="dv">0</span> ] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co"># proption of values above 200% </span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>( core2<span class="sc">$</span>debt_mgmnt_ratio <span class="sc">&gt;</span> <span class="dv">50</span>, <span class="at">na.rm=</span>T ) </span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0.009332522</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>core2<span class="sc">$</span>debt_mgmnt_ratio[ core2<span class="sc">$</span>debt_mgmnt_ratio <span class="sc">&gt;</span> <span class="dv">50</span> ] <span class="ot">&lt;-</span> <span class="dv">50</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>x<span class="fl">.05</span> <span class="ot">&lt;-</span> <span class="fu">quantile</span>( core<span class="sc">$</span>debt_mgmnt_ratio, <span class="fl">0.05</span>, <span class="at">na.rm=</span>T )</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>x<span class="fl">.95</span> <span class="ot">&lt;-</span> <span class="fu">quantile</span>( core<span class="sc">$</span>debt_mgmnt_ratio, <span class="fl">0.95</span>, <span class="at">na.rm=</span>T )</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>core2 <span class="ot">&lt;-</span> core</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="co"># proportion of values that are negative</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="co"># mean( core2$der &lt; 0, na.rm=T ) </span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="co"># proption of values above 1% </span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a><span class="co"># mean( core2$der &gt; 5, na.rm=T ) </span></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a><span class="co"># WINSORIZATION AT 5th and 95th PERCENTILES</span></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>core2<span class="sc">$</span>debt_mgmnt_ratio[ core2<span class="sc">$</span>debt_mgmnt_ratio <span class="sc">&lt;</span> x<span class="fl">.05</span> ] <span class="ot">&lt;-</span> x<span class="fl">.05</span></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>core2<span class="sc">$</span>debt_mgmnt_ratio[ core2<span class="sc">$</span>debt_mgmnt_ratio <span class="sc">&gt;</span> x<span class="fl">.95</span> ] <span class="ot">&lt;-</span> x<span class="fl">.95</span></span></code></pre></div>
+>>>>>>> 2b54eb7a8b266f860a58fbeb740ecbec93f0a289
 </div>
 <div id="metric-scope" class="section level2">
 <h2>Metric Scope</h2>
-<p>Tax data is available for full 990 filers, so this metric does not describe any organizations with Gross receipts &lt; $200,000 and Total assets &lt; $500,000. Some organizations with receipts or assets below those thresholds may have filed a full 990, but these would be exceptions.</p>
-<p>The data have been capped to those with values between 5% and 95% of the normal distribution to cut off outliers and exempt organizations with zero profitability (though negative values are allowed still).</p>
+<p>Tax data is available for full 990 filers, so this metric does not
+describe any organizations with Gross receipts &lt; $200,000 and Total
+assets &lt; $500,000. Some organizations with receipts or assets below
+those thresholds may have filed a full 990, but these would be
+exceptions.</p>
+<p>The data have been capped to those with values between 5% and 95% of
+the normal distribution to cut off outliers and exempt organizations
+with zero profitability (though negative values are allowed still).</p>
 </div>
 <div id="reference" class="section level2">
 <h2>Reference</h2>
@@ -629,6 +740,7 @@ div.tocify {
 </div>
 <div id="descriptive-statistics" class="section level1">
 <h1>Descriptive Statistics</h1>
+<<<<<<< HEAD
 <p>Convert all monetary variables to thousands of dollars. Scale up metric (multiply by 100) for readability.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"></a>
 <a class="sourceLine" id="cb4-2" title="2">core2 <span class="op">%&gt;%</span></a>
@@ -654,6 +766,33 @@ div.tocify {
 <a class="sourceLine" id="cb4-22" title="22">                                  <span class="st">&quot;Revenue ($1k)&quot;</span>, <span class="st">&quot;Expenses($1k)&quot;</span>, </a>
 <a class="sourceLine" id="cb4-23" title="23">                                  <span class="st">&quot;Buildings ($1k)&quot;</span>, <span class="st">&quot;Total Assets ($1k)&quot;</span>,</a>
 <a class="sourceLine" id="cb4-24" title="24">                                  <span class="st">&quot;Net Assets ($1k)&quot;</span>, <span class="st">&quot;Liabiliies ($1k)&quot;</span>))</a></code></pre></div>
+=======
+<p>Convert all monetary variables to thousands of dollars.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>core2 <span class="sc">%&gt;%</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>( <span class="co"># debt_mgmnt_ratio = debt_mgmnt_ratio * 10000,</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">totrevenue =</span> totrevenue <span class="sc">/</span> <span class="dv">1000</span>,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">totfuncexpns =</span> totfuncexpns <span class="sc">/</span> <span class="dv">1000</span>, </span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">lndbldgsequipend =</span> lndbldgsequipend <span class="sc">/</span> <span class="dv">1000</span>,</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">totassetsend =</span> totassetsend <span class="sc">/</span> <span class="dv">1000</span>,</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">totliabend =</span> totliabend <span class="sc">/</span> <span class="dv">1000</span>,</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">totnetassetend =</span> totnetassetend <span class="sc">/</span> <span class="dv">1000</span> ) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>( STATE,  NTEE1, NTMAJ12, </span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>          debt_mgmnt_ratio, </span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>          AGE, </span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>          totrevenue, totfuncexpns, </span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>          lndbldgsequipend, totassetsend, </span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>          totnetassetend, totliabend ) <span class="sc">%&gt;%</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stargazer</span>( <span class="at">type =</span> s.type, </span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>             <span class="at">digits=</span><span class="dv">0</span>, </span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>             <span class="at">summary.stat =</span> <span class="fu">c</span>(<span class="st">&quot;min&quot;</span>,<span class="st">&quot;p25&quot;</span>,<span class="st">&quot;median&quot;</span>,</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>                              <span class="st">&quot;mean&quot;</span>,<span class="st">&quot;p75&quot;</span>,<span class="st">&quot;max&quot;</span>, <span class="st">&quot;sd&quot;</span>),</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>             <span class="at">covariate.labels =</span> <span class="fu">c</span>(<span class="st">&quot;Debt Management Ratio&quot;</span>, <span class="st">&quot;Age&quot;</span>, </span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">&quot;Revenue ($1k)&quot;</span>, <span class="st">&quot;Expenses($1k)&quot;</span>, </span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">&quot;Buildings ($1k)&quot;</span>, <span class="st">&quot;Total Assets ($1k)&quot;</span>,</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">&quot;Net Assets ($1k)&quot;</span>, <span class="st">&quot;Liabiliies ($1k)&quot;</span>))</span></code></pre></div>
+>>>>>>> 2b54eb7a8b266f860a58fbeb740ecbec93f0a289
 <table style="text-align:center">
 <tr>
 <td colspan="8" style="border-bottom: 1px solid black">
@@ -902,6 +1041,7 @@ Liabiliies (1k)
 </td>
 </tr>
 </table>
+<<<<<<< HEAD
 <p>What proportion of orgs have debt management ratios equal to zero?</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1">prop.zero &lt;-<span class="st"> </span><span class="kw">mean</span>( core2<span class="op">$</span>debt_mgmnt_ratio <span class="op">==</span><span class="st"> </span><span class="dv">0</span>, <span class="dt">na.rm=</span>T )</a></code></pre></div>
 <p>In the sample, 3 percent of the organizations have debt management ratios equal to zero. These organizations are dropped from subsequent graphs to keep the visualizations clean. The interpretation of the graphics should be the distributions of debt management ratios for organizations that have positive or negative values.</p>
@@ -927,12 +1067,50 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb7-8" title="8"><span class="st">  </span><span class="kw">theme</span>( <span class="dt">axis.title.y=</span><span class="kw">element_blank</span>(),</a>
 <a class="sourceLine" id="cb7-9" title="9">         <span class="dt">axis.text.y=</span><span class="kw">element_blank</span>(), </a>
 <a class="sourceLine" id="cb7-10" title="10">         <span class="dt">axis.ticks.y=</span><span class="kw">element_blank</span>() )</a></code></pre></div>
+=======
+<p>What proportion of orgs have debt management ratios equal to
+zero?</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>prop.zero <span class="ot">&lt;-</span> <span class="fu">mean</span>( core2<span class="sc">$</span>debt_mgmnt_ratio <span class="sc">==</span> <span class="dv">0</span>, <span class="at">na.rm=</span>T )</span></code></pre></div>
+<p>In the sample, 3 percent of the organizations have debt management
+ratios equal to zero. These organizations are dropped from subsequent
+graphs to keep the visualizations clean. The interpretation of the
+graphics should be the distributions of debt management ratios for
+organizations that have positive or negative values.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="do">###</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="do">### ADD QUANTILES</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="do">###</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="do">###   function create_quantiles() defined in r-functions.R</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>core2<span class="sc">$</span>exp.q   <span class="ot">&lt;-</span> <span class="fu">create_quantiles</span>( <span class="at">var=</span>core2<span class="sc">$</span>totfuncexpns,   <span class="at">n.groups=</span><span class="dv">5</span> )</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>core2<span class="sc">$</span>rev.q   <span class="ot">&lt;-</span> <span class="fu">create_quantiles</span>( <span class="at">var=</span>core2<span class="sc">$</span>totrevenue,     <span class="at">n.groups=</span><span class="dv">5</span> )</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>core2<span class="sc">$</span>asset.q <span class="ot">&lt;-</span> <span class="fu">create_quantiles</span>( <span class="at">var=</span>core2<span class="sc">$</span>totnetassetend, <span class="at">n.groups=</span><span class="dv">5</span> )</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>core2<span class="sc">$</span>age.q   <span class="ot">&lt;-</span> <span class="fu">create_quantiles</span>( <span class="at">var=</span>core2<span class="sc">$</span>AGE,            <span class="at">n.groups=</span><span class="dv">5</span> )</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>core2<span class="sc">$</span>land.q   <span class="ot">&lt;-</span> <span class="fu">create_quantiles</span>( <span class="at">var=</span>core2<span class="sc">$</span>lndbldgsequipend,    <span class="at">n.groups=</span><span class="dv">5</span> )</span></code></pre></div>
+<div id="debt-management-ratio-density" class="section level2">
+<h2>Debt Management Ratio Density</h2>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>min.x <span class="ot">&lt;-</span> <span class="fu">min</span>( core2<span class="sc">$</span>debt_mgmnt_ratio, <span class="at">na.rm=</span>T )</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>max.x <span class="ot">&lt;-</span> <span class="fu">max</span>( core2<span class="sc">$</span>debt_mgmnt_ratio, <span class="at">na.rm=</span>T )</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>( core2, <span class="fu">aes</span>(<span class="at">x =</span> debt_mgmnt_ratio )) <span class="sc">+</span>  </span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>( <span class="at">alpha =</span> <span class="fl">0.5</span> ) <span class="sc">+</span> </span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>( min.x, max.x  ) <span class="sc">+</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>( variable.label ) <span class="sc">+</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>( <span class="at">axis.title.y=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">axis.text.y=</span><span class="fu">element_blank</span>(), </span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">axis.ticks.y=</span><span class="fu">element_blank</span>() )</span></code></pre></div>
+>>>>>>> 2b54eb7a8b266f860a58fbeb740ecbec93f0a289
 <p><img src="metric-10-debt-management-ratio_files/figure-html/unnamed-chunk-8-1.png" width="960" /></p>
 </div>
-<div id="debt-management-ratio-by-ntee-major-code" class="section level2">
+<div id="debt-management-ratio-by-ntee-major-code"
+class="section level2">
 <h2>Debt Management Ratio by NTEE Major Code</h2>
+<<<<<<< HEAD
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1">core3 &lt;-<span class="st"> </span>core2 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>( <span class="op">!</span><span class="st"> </span><span class="kw">is.na</span>(NTEE1) )</a>
 <a class="sourceLine" id="cb8-2" title="2"><span class="kw">table</span>( core3<span class="op">$</span>NTEE1) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sort</span>(<span class="dt">decreasing=</span><span class="ot">TRUE</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">kable</span>()</a></code></pre></div>
+=======
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>core3 <span class="ot">&lt;-</span> core2 <span class="sc">%&gt;%</span> <span class="fu">filter</span>( <span class="sc">!</span> <span class="fu">is.na</span>(NTEE1) )</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>( core3<span class="sc">$</span>NTEE1) <span class="sc">%&gt;%</span> <span class="fu">sort</span>(<span class="at">decreasing=</span><span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> <span class="fu">kable</span>()</span></code></pre></div>
+>>>>>>> 2b54eb7a8b266f860a58fbeb740ecbec93f0a289
 <table>
 <thead>
 <tr class="header">
@@ -955,6 +1133,7 @@ Liabiliies (1k)
 </tr>
 </tbody>
 </table>
+<<<<<<< HEAD
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"></a>
 <a class="sourceLine" id="cb9-2" title="2">t &lt;-<span class="st"> </span><span class="kw">table</span>( <span class="kw">factor</span>(core3<span class="op">$</span>NTEE1) ) </a>
 <a class="sourceLine" id="cb9-3" title="3">df &lt;-<span class="st"> </span><span class="kw">data.frame</span>( <span class="dt">x=</span><span class="ot">Inf</span>, <span class="dt">y=</span><span class="ot">Inf</span>, </a>
@@ -976,11 +1155,38 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb9-19" title="19">             <span class="kw">aes</span>(x, y, <span class="dt">label=</span>N ), </a>
 <a class="sourceLine" id="cb9-20" title="20">             <span class="dt">hjust=</span><span class="dv">2</span>, <span class="dt">vjust=</span><span class="dv">3</span>, </a>
 <a class="sourceLine" id="cb9-21" title="21">             <span class="dt">color=</span><span class="st">&quot;gray60&quot;</span>, <span class="dt">size=</span><span class="dv">6</span> )</a></code></pre></div>
+=======
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>t <span class="ot">&lt;-</span> <span class="fu">table</span>( <span class="fu">factor</span>(core3<span class="sc">$</span>NTEE1) ) </span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>( <span class="at">x=</span><span class="cn">Inf</span>, <span class="at">y=</span><span class="cn">Inf</span>, </span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">N=</span><span class="fu">paste0</span>( <span class="st">&quot;N=&quot;</span>, <span class="fu">as.character</span>(t) ), </span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>                  <span class="at">NTEE1=</span><span class="fu">names</span>(t) )</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>( core3, <span class="fu">aes</span>( <span class="at">x=</span>debt_mgmnt_ratio ) ) <span class="sc">+</span> </span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>( <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span> </span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># xlim( -0.1, 1 ) +</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>( <span class="at">title=</span><span class="st">&quot;Nonprofit Subsectors&quot;</span> ) <span class="sc">+</span> </span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>( variable.label ) <span class="sc">+</span> </span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>( <span class="sc">~</span> NTEE1, <span class="at">nrow=</span><span class="dv">1</span> ) <span class="sc">+</span> </span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>( <span class="at">base_size =</span> <span class="dv">15</span> )  <span class="sc">+</span> </span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>( <span class="at">axis.title.y=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.text.y=</span><span class="fu">element_blank</span>(), </span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.ticks.y=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>           <span class="at">strip.text =</span> <span class="fu">element_text</span>( <span class="at">face=</span><span class="st">&quot;bold&quot;</span>) ) <span class="sc">+</span>  <span class="co"># size=20 </span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>( <span class="at">data=</span>df, </span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(x, y, <span class="at">label=</span>N ), </span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>             <span class="at">hjust=</span><span class="dv">2</span>, <span class="at">vjust=</span><span class="dv">3</span>, </span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>             <span class="at">color=</span><span class="st">&quot;gray60&quot;</span>, <span class="at">size=</span><span class="dv">6</span> )</span></code></pre></div>
+>>>>>>> 2b54eb7a8b266f860a58fbeb740ecbec93f0a289
 <p><img src="metric-10-debt-management-ratio_files/figure-html/unnamed-chunk-10-1.png" width="960" /></p>
 </div>
 <div id="debt-management-ratio-by-region" class="section level2">
 <h2>Debt Management Ratio by Region</h2>
+<<<<<<< HEAD
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="kw">table</span>( core2<span class="op">$</span>Region) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">kable</span>()</a></code></pre></div>
+=======
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>( core2<span class="sc">$</span>Region) <span class="sc">%&gt;%</span> <span class="fu">kable</span>()</span></code></pre></div>
+>>>>>>> 2b54eb7a8b266f860a58fbeb740ecbec93f0a289
 <table>
 <thead>
 <tr class="header">
@@ -1007,6 +1213,7 @@ Liabiliies (1k)
 </tr>
 </tbody>
 </table>
+<<<<<<< HEAD
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1">t &lt;-<span class="st"> </span><span class="kw">table</span>( <span class="kw">factor</span>(core2<span class="op">$</span>Region) ) </a>
 <a class="sourceLine" id="cb11-2" title="2">df &lt;-<span class="st"> </span><span class="kw">data.frame</span>( <span class="dt">x=</span><span class="ot">Inf</span>, <span class="dt">y=</span><span class="ot">Inf</span>, </a>
 <a class="sourceLine" id="cb11-3" title="3">                  <span class="dt">N=</span><span class="kw">paste0</span>( <span class="st">&quot;N=&quot;</span>, <span class="kw">as.character</span>(t) ), </a>
@@ -1029,6 +1236,30 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb11-20" title="20">             <span class="dt">color=</span><span class="st">&quot;gray60&quot;</span>, <span class="dt">size=</span><span class="dv">6</span> )</a></code></pre></div>
 <p><img src="metric-10-debt-management-ratio_files/figure-html/unnamed-chunk-12-1.png" width="960" /></p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="kw">table</span>( core2<span class="op">$</span>Division ) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">kable</span>()</a></code></pre></div>
+=======
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>t <span class="ot">&lt;-</span> <span class="fu">table</span>( <span class="fu">factor</span>(core2<span class="sc">$</span>Region) ) </span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>( <span class="at">x=</span><span class="cn">Inf</span>, <span class="at">y=</span><span class="cn">Inf</span>, </span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">N=</span><span class="fu">paste0</span>( <span class="st">&quot;N=&quot;</span>, <span class="fu">as.character</span>(t) ), </span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">Region=</span><span class="fu">names</span>(t) )</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>core2 <span class="sc">%&gt;%</span> </span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>( <span class="sc">!</span> <span class="fu">is.na</span>(Region) ) <span class="sc">%&gt;%</span> </span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>( <span class="fu">aes</span>(debt_mgmnt_ratio) )  <span class="sc">+</span> </span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_density</span>( <span class="at">alpha =</span> <span class="fl">0.5</span> ) <span class="sc">+</span> </span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>( <span class="st">&quot;Census Regions&quot;</span> ) <span class="sc">+</span> </span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ylab</span>( variable.label ) <span class="sc">+</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>( <span class="sc">~</span> Region, <span class="at">nrow=</span><span class="dv">3</span> ) <span class="sc">+</span> </span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>( <span class="at">base_size =</span> <span class="dv">22</span> )  <span class="sc">+</span> </span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>( <span class="at">axis.title.y=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.text.y=</span><span class="fu">element_blank</span>(), </span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.ticks.y=</span><span class="fu">element_blank</span>() ) <span class="sc">+</span> </span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_text</span>( <span class="at">data=</span>df, </span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(x, y, <span class="at">label=</span>N ), </span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>             <span class="at">hjust=</span><span class="dv">2</span>, <span class="at">vjust=</span><span class="dv">3</span>, </span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>             <span class="at">color=</span><span class="st">&quot;gray60&quot;</span>, <span class="at">size=</span><span class="dv">6</span> )</span></code></pre></div>
+<p><img src="metric-10-debt-management-ratio_files/figure-html/unnamed-chunk-12-1.png" width="960" /></p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>( core2<span class="sc">$</span>Division ) <span class="sc">%&gt;%</span> <span class="fu">kable</span>()</span></code></pre></div>
+>>>>>>> 2b54eb7a8b266f860a58fbeb740ecbec93f0a289
 <table>
 <thead>
 <tr class="header">
@@ -1075,6 +1306,7 @@ Liabiliies (1k)
 </tr>
 </tbody>
 </table>
+<<<<<<< HEAD
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1">t &lt;-<span class="st"> </span><span class="kw">table</span>( <span class="kw">factor</span>(core2<span class="op">$</span>Division) ) </a>
 <a class="sourceLine" id="cb13-2" title="2">df &lt;-<span class="st"> </span><span class="kw">data.frame</span>( <span class="dt">x=</span><span class="ot">Inf</span>, <span class="dt">y=</span><span class="ot">Inf</span>, </a>
 <a class="sourceLine" id="cb13-3" title="3">                  <span class="dt">N=</span><span class="kw">paste0</span>( <span class="st">&quot;N=&quot;</span>, <span class="kw">as.character</span>(t) ), </a>
@@ -1095,10 +1327,34 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb13-18" title="18">             <span class="kw">aes</span>(x, y, <span class="dt">label=</span>N ), </a>
 <a class="sourceLine" id="cb13-19" title="19">             <span class="dt">hjust=</span><span class="dv">2</span>, <span class="dt">vjust=</span><span class="dv">3</span>, </a>
 <a class="sourceLine" id="cb13-20" title="20">             <span class="dt">color=</span><span class="st">&quot;gray60&quot;</span>, <span class="dt">size=</span><span class="dv">6</span> ) </a></code></pre></div>
+=======
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>t <span class="ot">&lt;-</span> <span class="fu">table</span>( <span class="fu">factor</span>(core2<span class="sc">$</span>Division) ) </span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>( <span class="at">x=</span><span class="cn">Inf</span>, <span class="at">y=</span><span class="cn">Inf</span>, </span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">N=</span><span class="fu">paste0</span>( <span class="st">&quot;N=&quot;</span>, <span class="fu">as.character</span>(t) ), </span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">Division=</span><span class="fu">names</span>(t) )</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>core2 <span class="sc">%&gt;%</span> </span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>( <span class="sc">!</span> <span class="fu">is.na</span>(Division) ) <span class="sc">%&gt;%</span> </span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>( <span class="fu">aes</span>(debt_mgmnt_ratio) )  <span class="sc">+</span> </span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_density</span>( <span class="at">alpha =</span> <span class="fl">0.5</span> ) <span class="sc">+</span> </span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>( <span class="st">&quot;Census Sub-Regions (10)&quot;</span> ) <span class="sc">+</span> </span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ylab</span>( variable.label ) <span class="sc">+</span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>( <span class="sc">~</span> Division, <span class="at">nrow=</span><span class="dv">3</span> ) <span class="sc">+</span> </span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>( <span class="at">base_size =</span> <span class="dv">22</span> )  <span class="sc">+</span> </span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>( <span class="at">axis.title.y=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.text.y=</span><span class="fu">element_blank</span>(), </span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.ticks.y=</span><span class="fu">element_blank</span>() ) <span class="sc">+</span> </span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_text</span>( <span class="at">data=</span>df, </span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(x, y, <span class="at">label=</span>N ), </span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>             <span class="at">hjust=</span><span class="dv">2</span>, <span class="at">vjust=</span><span class="dv">3</span>, </span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>             <span class="at">color=</span><span class="st">&quot;gray60&quot;</span>, <span class="at">size=</span><span class="dv">6</span> ) </span></code></pre></div>
+>>>>>>> 2b54eb7a8b266f860a58fbeb740ecbec93f0a289
 <p><img src="metric-10-debt-management-ratio_files/figure-html/unnamed-chunk-14-1.png" width="960" /></p>
 </div>
-<div id="debt-management-ratio-by-nonprofit-size-expenses" class="section level2">
+<div id="debt-management-ratio-by-nonprofit-size-expenses"
+class="section level2">
 <h2>Debt Management Ratio by Nonprofit Size (Expenses)</h2>
+<<<<<<< HEAD
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1"><span class="kw">ggplot</span>( core2, <span class="kw">aes</span>(<span class="dt">x =</span> totfuncexpns )) <span class="op">+</span><span class="st">  </span></a>
 <a class="sourceLine" id="cb14-2" title="2"><span class="st">  </span><span class="kw">geom_density</span>( <span class="dt">alpha =</span> <span class="fl">0.5</span> ) <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb14-3" title="3"><span class="st">  </span><span class="kw">xlim</span>( <span class="kw">quantile</span>(core2<span class="op">$</span>totfuncexpns, <span class="kw">c</span>(<span class="fl">0.02</span>,<span class="fl">0.98</span>), <span class="dt">na.rm=</span>T ) )</a></code></pre></div>
@@ -1133,10 +1389,48 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb16-9" title="9"><span class="st">    </span><span class="kw">theme</span>( <span class="dt">axis.title.y=</span><span class="kw">element_blank</span>(),</a>
 <a class="sourceLine" id="cb16-10" title="10">           <span class="dt">axis.text.y=</span><span class="kw">element_blank</span>(), </a>
 <a class="sourceLine" id="cb16-11" title="11">           <span class="dt">axis.ticks.y=</span><span class="kw">element_blank</span>() )</a></code></pre></div>
+=======
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>( core2, <span class="fu">aes</span>(<span class="at">x =</span> totfuncexpns )) <span class="sc">+</span>  </span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>( <span class="at">alpha =</span> <span class="fl">0.5</span> ) <span class="sc">+</span> </span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>( <span class="fu">quantile</span>(core2<span class="sc">$</span>totfuncexpns, <span class="fu">c</span>(<span class="fl">0.02</span>,<span class="fl">0.98</span>), <span class="at">na.rm=</span>T ) )</span></code></pre></div>
+<p><img src="metric-10-debt-management-ratio_files/figure-html/unnamed-chunk-15-1.png" width="960" /></p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>core2<span class="sc">$</span>totfuncexpns[ core2<span class="sc">$</span>totfuncexpns <span class="sc">&lt;</span> <span class="dv">1</span> ] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co"># core2$totfuncexpns[ is.na(core2$totfuncexpns) ] &lt;- 1</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>( <span class="fu">nrow</span>(core2) <span class="sc">&gt;</span> <span class="dv">10000</span> )</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  core3 <span class="ot">&lt;-</span> <span class="fu">sample_n</span>( core2, <span class="dv">10000</span> )</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>  core3 <span class="ot">&lt;-</span> core2</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="fu">jplot</span>( <span class="fu">log10</span>(core3<span class="sc">$</span>totfuncexpns), core3<span class="sc">$</span>debt_mgmnt_ratio, </span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">xlab=</span><span class="st">&quot;Nonprofit Size (logged Expenses)&quot;</span>, </span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">ylab=</span>variable.label,</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>       <span class="at">xaxt=</span><span class="st">&quot;n&quot;</span>, <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">10</span>) )</span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a><span class="fu">axis</span>( <span class="at">side=</span><span class="dv">1</span>, </span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>      <span class="at">at=</span><span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">10</span>), </span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>      <span class="at">labels=</span><span class="fu">c</span>(<span class="st">&quot;1k&quot;</span>,<span class="st">&quot;10k&quot;</span>,<span class="st">&quot;100k&quot;</span>,<span class="st">&quot;1m&quot;</span>,<span class="st">&quot;10m&quot;</span>,<span class="st">&quot;100m&quot;</span>,<span class="st">&quot;1b&quot;</span>,<span class="st">&quot;10b&quot;</span>) )</span></code></pre></div>
+<p><img src="metric-10-debt-management-ratio_files/figure-html/unnamed-chunk-16-1.png" width="960" /></p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>core2 <span class="sc">%&gt;%</span> </span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>( <span class="sc">!</span> <span class="fu">is.na</span>(exp.q) ) <span class="sc">%&gt;%</span> </span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>( <span class="fu">aes</span>(debt_mgmnt_ratio) )  <span class="sc">+</span> </span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_density</span>( <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span> </span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>( <span class="at">title=</span><span class="st">&quot;Nonprofit Size (logged expenses)&quot;</span> ) <span class="sc">+</span> </span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>( variable.label ) <span class="sc">+</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>( <span class="sc">~</span> exp.q, <span class="at">nrow=</span><span class="dv">3</span> ) <span class="sc">+</span> </span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>( <span class="at">base_size =</span> <span class="dv">22</span> )  <span class="sc">+</span> </span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>( <span class="at">axis.title.y=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.text.y=</span><span class="fu">element_blank</span>(), </span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.ticks.y=</span><span class="fu">element_blank</span>() )</span></code></pre></div>
+>>>>>>> 2b54eb7a8b266f860a58fbeb740ecbec93f0a289
 <p><img src="metric-10-debt-management-ratio_files/figure-html/unnamed-chunk-17-1.png" width="960" /></p>
 </div>
-<div id="debt-management-ratio-by-nonprofit-size-revenue" class="section level2">
+<div id="debt-management-ratio-by-nonprofit-size-revenue"
+class="section level2">
 <h2>Debt Management Ratio by Nonprofit Size (Revenue)</h2>
+<<<<<<< HEAD
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1"><span class="kw">ggplot</span>( core2, <span class="kw">aes</span>(<span class="dt">x =</span> totrevenue )) <span class="op">+</span><span class="st">  </span></a>
 <a class="sourceLine" id="cb17-2" title="2"><span class="st">  </span><span class="kw">geom_density</span>( <span class="dt">alpha =</span> <span class="fl">0.5</span> ) <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb17-3" title="3"><span class="st">  </span><span class="kw">xlim</span>( <span class="kw">quantile</span>(core2<span class="op">$</span>totrevenue, <span class="kw">c</span>(<span class="fl">0.02</span>,<span class="fl">0.98</span>), <span class="dt">na.rm=</span>T ) ) <span class="op">+</span><span class="st"> </span></a>
@@ -1173,10 +1467,50 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb19-9" title="9"><span class="st">    </span><span class="kw">theme</span>( <span class="dt">axis.title.y=</span><span class="kw">element_blank</span>(),</a>
 <a class="sourceLine" id="cb19-10" title="10">           <span class="dt">axis.text.y=</span><span class="kw">element_blank</span>(), </a>
 <a class="sourceLine" id="cb19-11" title="11">           <span class="dt">axis.ticks.y=</span><span class="kw">element_blank</span>() )</a></code></pre></div>
+=======
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>( core2, <span class="fu">aes</span>(<span class="at">x =</span> totrevenue )) <span class="sc">+</span>  </span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>( <span class="at">alpha =</span> <span class="fl">0.5</span> ) <span class="sc">+</span> </span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>( <span class="fu">quantile</span>(core2<span class="sc">$</span>totrevenue, <span class="fu">c</span>(<span class="fl">0.02</span>,<span class="fl">0.98</span>), <span class="at">na.rm=</span>T ) ) <span class="sc">+</span> </span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>( <span class="at">axis.title.y=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.text.y=</span><span class="fu">element_blank</span>(), </span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.ticks.y=</span><span class="fu">element_blank</span>() )</span></code></pre></div>
+<p><img src="metric-10-debt-management-ratio_files/figure-html/unnamed-chunk-18-1.png" width="960" /></p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>core2<span class="sc">$</span>totrevenue[ core2<span class="sc">$</span>totrevenue <span class="sc">&lt;</span> <span class="dv">1</span> ] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>( <span class="fu">nrow</span>(core2) <span class="sc">&gt;</span> <span class="dv">10000</span> )</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  core3 <span class="ot">&lt;-</span> <span class="fu">sample_n</span>( core2, <span class="dv">10000</span> )</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>  core3 <span class="ot">&lt;-</span> core2</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="fu">jplot</span>( <span class="fu">log10</span>(core3<span class="sc">$</span>totrevenue), core3<span class="sc">$</span>debt_mgmnt_ratio, </span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">xlab=</span><span class="st">&quot;Nonprofit Size (logged Revenue)&quot;</span>, </span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">ylab=</span>variable.label,</span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">xaxt=</span><span class="st">&quot;n&quot;</span>, <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">10</span>) )</span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a><span class="fu">axis</span>( <span class="at">side=</span><span class="dv">1</span>, </span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>      <span class="at">at=</span><span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">10</span>), </span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>      <span class="at">labels=</span><span class="fu">c</span>(<span class="st">&quot;1k&quot;</span>,<span class="st">&quot;10k&quot;</span>,<span class="st">&quot;100k&quot;</span>,<span class="st">&quot;1m&quot;</span>,<span class="st">&quot;10m&quot;</span>,<span class="st">&quot;100m&quot;</span>,<span class="st">&quot;1b&quot;</span>,<span class="st">&quot;10b&quot;</span>) )</span></code></pre></div>
+<p><img src="metric-10-debt-management-ratio_files/figure-html/unnamed-chunk-19-1.png" width="960" /></p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>core2 <span class="sc">%&gt;%</span> </span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>( <span class="sc">!</span> <span class="fu">is.na</span>(rev.q) ) <span class="sc">%&gt;%</span> </span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>( <span class="fu">aes</span>(debt_mgmnt_ratio) )  <span class="sc">+</span> </span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_density</span>( <span class="at">alpha =</span> <span class="fl">0.5</span> ) <span class="sc">+</span> </span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>( <span class="at">title=</span><span class="st">&quot;Nonprofit Size (logged revenues)&quot;</span> ) <span class="sc">+</span> </span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>( variable.label ) <span class="sc">+</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>( <span class="sc">~</span> rev.q, <span class="at">nrow=</span><span class="dv">3</span> ) <span class="sc">+</span> </span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>( <span class="at">base_size =</span> <span class="dv">22</span> )  <span class="sc">+</span> </span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>( <span class="at">axis.title.y=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.text.y=</span><span class="fu">element_blank</span>(), </span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.ticks.y=</span><span class="fu">element_blank</span>() )</span></code></pre></div>
+>>>>>>> 2b54eb7a8b266f860a58fbeb740ecbec93f0a289
 <p><img src="metric-10-debt-management-ratio_files/figure-html/unnamed-chunk-20-1.png" width="960" /></p>
 </div>
-<div id="debt-management-ratio-by-nonprofit-size-net-assets" class="section level2">
+<div id="debt-management-ratio-by-nonprofit-size-net-assets"
+class="section level2">
 <h2>Debt Management Ratio by Nonprofit Size (Net Assets)</h2>
+<<<<<<< HEAD
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1"><span class="kw">ggplot</span>( core2, <span class="kw">aes</span>(<span class="dt">x =</span> totnetassetend )) <span class="op">+</span><span class="st">  </span></a>
 <a class="sourceLine" id="cb20-2" title="2"><span class="st">  </span><span class="kw">geom_density</span>( <span class="dt">alpha =</span> <span class="fl">0.5</span>) <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb20-3" title="3"><span class="st">  </span><span class="kw">xlim</span>( <span class="kw">quantile</span>(core2<span class="op">$</span>totnetassetend, <span class="kw">c</span>(<span class="fl">0.02</span>,<span class="fl">0.98</span>), <span class="dt">na.rm=</span>T ) ) <span class="op">+</span><span class="st"> </span></a>
@@ -1258,10 +1592,94 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb25-9" title="9"><span class="st">    </span><span class="kw">theme</span>( <span class="dt">axis.title.y=</span><span class="kw">element_blank</span>(),</a>
 <a class="sourceLine" id="cb25-10" title="10">           <span class="dt">axis.text.y=</span><span class="kw">element_blank</span>(), </a>
 <a class="sourceLine" id="cb25-11" title="11">           <span class="dt">axis.ticks.y=</span><span class="kw">element_blank</span>() )</a></code></pre></div>
+=======
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>( core2, <span class="fu">aes</span>(<span class="at">x =</span> totnetassetend )) <span class="sc">+</span>  </span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>( <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span> </span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>( <span class="fu">quantile</span>(core2<span class="sc">$</span>totnetassetend, <span class="fu">c</span>(<span class="fl">0.02</span>,<span class="fl">0.98</span>), <span class="at">na.rm=</span>T ) ) <span class="sc">+</span> </span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>( <span class="st">&quot;Net Assets&quot;</span> ) <span class="sc">+</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>( <span class="at">axis.title.y=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.text.y=</span><span class="fu">element_blank</span>(), </span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.ticks.y=</span><span class="fu">element_blank</span>() )</span></code></pre></div>
+<p><img src="metric-10-debt-management-ratio_files/figure-html/unnamed-chunk-21-1.png" width="960" /></p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>core2<span class="sc">$</span>totnetassetend[ core2<span class="sc">$</span>totnetassetend <span class="sc">&lt;</span> <span class="dv">1</span> ] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>( <span class="fu">nrow</span>(core2) <span class="sc">&gt;</span> <span class="dv">10000</span> )</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  core3 <span class="ot">&lt;-</span> <span class="fu">sample_n</span>( core2, <span class="dv">10000</span> )</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>  core3 <span class="ot">&lt;-</span> core2</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a><span class="fu">jplot</span>( <span class="fu">log10</span>(core3<span class="sc">$</span>totnetassetend), core3<span class="sc">$</span>debt_mgmnt_ratio, </span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">xlab=</span><span class="st">&quot;Nonprofit Size (logged Net Assets)&quot;</span>, </span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">ylab=</span>variable.label,</span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">xaxt=</span><span class="st">&quot;n&quot;</span>, <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">10</span>) )</span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a><span class="fu">axis</span>( <span class="at">side=</span><span class="dv">1</span>, </span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>      <span class="at">at=</span><span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">10</span>), </span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>      <span class="at">labels=</span><span class="fu">c</span>(<span class="st">&quot;1k&quot;</span>,<span class="st">&quot;10k&quot;</span>,<span class="st">&quot;100k&quot;</span>,<span class="st">&quot;1m&quot;</span>,<span class="st">&quot;10m&quot;</span>,<span class="st">&quot;100m&quot;</span>,<span class="st">&quot;1b&quot;</span>,<span class="st">&quot;10b&quot;</span>) )</span></code></pre></div>
+<p><img src="metric-10-debt-management-ratio_files/figure-html/unnamed-chunk-22-1.png" width="960" /></p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>core2<span class="sc">$</span>totnetassetend[ core2<span class="sc">$</span>totnetassetend <span class="sc">&lt;</span> <span class="dv">1</span> ] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>core2<span class="sc">$</span>asset.q <span class="ot">&lt;-</span> <span class="fu">create_quantiles</span>( <span class="at">var=</span>core2<span class="sc">$</span>totnetassetend, <span class="at">n.groups=</span><span class="dv">5</span> )</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>core2 <span class="sc">%&gt;%</span> </span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>( <span class="sc">!</span> <span class="fu">is.na</span>(asset.q) ) <span class="sc">%&gt;%</span> </span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>( <span class="fu">aes</span>(debt_mgmnt_ratio) )  <span class="sc">+</span> </span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_density</span>( <span class="at">alpha =</span> <span class="fl">0.5</span> ) <span class="sc">+</span> </span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>( <span class="at">title=</span><span class="st">&quot;Nonprofit Size (logged net assets, if assets &gt; 0)&quot;</span> ) <span class="sc">+</span> </span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>( variable.label ) <span class="sc">+</span> </span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ylab</span>( <span class="st">&quot;&quot;</span> ) <span class="sc">+</span> </span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>( <span class="sc">~</span> asset.q, <span class="at">nrow=</span><span class="dv">3</span> ) <span class="sc">+</span> </span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>( <span class="at">base_size =</span> <span class="dv">22</span> )  <span class="sc">+</span> </span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>( <span class="at">axis.title.y=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.text.y=</span><span class="fu">element_blank</span>(), </span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.ticks.y=</span><span class="fu">element_blank</span>() )</span></code></pre></div>
+<p><img src="metric-10-debt-management-ratio_files/figure-html/unnamed-chunk-23-1.png" width="960" /></p>
+<p>Total Assets for Comparison</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>core2<span class="sc">$</span>totassetsend[ core2<span class="sc">$</span>totassetsend <span class="sc">&lt;</span> <span class="dv">1</span> ] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>core2<span class="sc">$</span>tot.asset.q <span class="ot">&lt;-</span> <span class="fu">create_quantiles</span>( <span class="at">var=</span>core2<span class="sc">$</span>totassetsend, <span class="at">n.groups=</span><span class="dv">5</span> )</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>( <span class="fu">nrow</span>(core2) <span class="sc">&gt;</span> <span class="dv">10000</span> )</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>  core3 <span class="ot">&lt;-</span> <span class="fu">sample_n</span>( core2, <span class="dv">10000</span> )</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>  core3 <span class="ot">&lt;-</span> core2</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a><span class="fu">jplot</span>( <span class="fu">log10</span>(core3<span class="sc">$</span>totassetsend), core3<span class="sc">$</span>debt_mgmnt_ratio, </span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">xlab=</span><span class="st">&quot;Nonprofit Size (logged Total Assets)&quot;</span>, </span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">ylab=</span>variable.label,</span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>       <span class="at">xaxt=</span><span class="st">&quot;n&quot;</span>, <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">10</span>) )</span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a><span class="fu">axis</span>( <span class="at">side=</span><span class="dv">1</span>, </span>
+<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>      <span class="at">at=</span><span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">10</span>), </span>
+<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a>      <span class="at">labels=</span><span class="fu">c</span>(<span class="st">&quot;1k&quot;</span>,<span class="st">&quot;10k&quot;</span>,<span class="st">&quot;100k&quot;</span>,<span class="st">&quot;1m&quot;</span>,<span class="st">&quot;10m&quot;</span>,<span class="st">&quot;100m&quot;</span>,<span class="st">&quot;1b&quot;</span>,<span class="st">&quot;10b&quot;</span>) )</span></code></pre></div>
+<p><img src="metric-10-debt-management-ratio_files/figure-html/unnamed-chunk-24-1.png" width="960" /></p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>( core2, <span class="fu">aes</span>(<span class="at">x =</span> totassetsend )) <span class="sc">+</span>  </span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>( <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span> </span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>( <span class="fu">quantile</span>(core2<span class="sc">$</span>totassetsend, <span class="fu">c</span>(<span class="fl">0.02</span>,<span class="fl">0.98</span>), <span class="at">na.rm=</span>T ) ) <span class="sc">+</span> </span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>( <span class="st">&quot;Net Assets&quot;</span> ) <span class="sc">+</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>( <span class="at">axis.title.y=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.text.y=</span><span class="fu">element_blank</span>(), </span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.ticks.y=</span><span class="fu">element_blank</span>() )</span></code></pre></div>
+<p><img src="metric-10-debt-management-ratio_files/figure-html/unnamed-chunk-25-1.png" width="960" /></p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>core2 <span class="sc">%&gt;%</span> </span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>( <span class="sc">!</span> <span class="fu">is.na</span>(tot.asset.q) ) <span class="sc">%&gt;%</span> </span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>( <span class="fu">aes</span>(debt_mgmnt_ratio) )  <span class="sc">+</span> </span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_density</span>( <span class="at">alpha =</span> <span class="fl">0.5</span> ) <span class="sc">+</span> </span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>( <span class="st">&quot;Nonprofit Size (logged total assets, if assets &gt; 0)&quot;</span> ) <span class="sc">+</span> </span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ylab</span>( variable.label ) <span class="sc">+</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>( <span class="sc">~</span> tot.asset.q, <span class="at">nrow=</span><span class="dv">3</span> ) <span class="sc">+</span> </span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>( <span class="at">base_size =</span> <span class="dv">22</span> )  <span class="sc">+</span> </span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>( <span class="at">axis.title.y=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.text.y=</span><span class="fu">element_blank</span>(), </span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.ticks.y=</span><span class="fu">element_blank</span>() )</span></code></pre></div>
+>>>>>>> 2b54eb7a8b266f860a58fbeb740ecbec93f0a289
 <p><img src="metric-10-debt-management-ratio_files/figure-html/unnamed-chunk-26-1.png" width="960" /></p>
 </div>
 <div id="debt-management-ratio-by-nonprofit-age" class="section level2">
 <h2>Debt Management Ratio by Nonprofit Age</h2>
+<<<<<<< HEAD
 <div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" title="1"><span class="kw">ggplot</span>( core2, <span class="kw">aes</span>(<span class="dt">x =</span> AGE )) <span class="op">+</span><span class="st">  </span></a>
 <a class="sourceLine" id="cb26-2" title="2"><span class="st">  </span><span class="kw">geom_density</span>( <span class="dt">alpha =</span> <span class="fl">0.5</span> )  </a></code></pre></div>
 <p><img src="metric-10-debt-management-ratio_files/figure-html/unnamed-chunk-27-1.png" width="960" /></p>
@@ -1291,10 +1709,43 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb28-10" title="10"><span class="st">    </span><span class="kw">theme</span>( <span class="dt">axis.title.y=</span><span class="kw">element_blank</span>(),</a>
 <a class="sourceLine" id="cb28-11" title="11">           <span class="dt">axis.text.y=</span><span class="kw">element_blank</span>(), </a>
 <a class="sourceLine" id="cb28-12" title="12">           <span class="dt">axis.ticks.y=</span><span class="kw">element_blank</span>() )</a></code></pre></div>
+=======
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>( core2, <span class="fu">aes</span>(<span class="at">x =</span> AGE )) <span class="sc">+</span>  </span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>( <span class="at">alpha =</span> <span class="fl">0.5</span> )  </span></code></pre></div>
+<p><img src="metric-10-debt-management-ratio_files/figure-html/unnamed-chunk-27-1.png" width="960" /></p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>core2<span class="sc">$</span>AGE[ core2<span class="sc">$</span>AGE <span class="sc">&lt;</span> <span class="dv">1</span> ] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>( <span class="fu">nrow</span>(core2) <span class="sc">&gt;</span> <span class="dv">10000</span> )</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>  core3 <span class="ot">&lt;-</span> <span class="fu">sample_n</span>( core2, <span class="dv">10000</span> )</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>  core3 <span class="ot">&lt;-</span> core2</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a><span class="fu">jplot</span>( core3<span class="sc">$</span>AGE, core3<span class="sc">$</span>debt_mgmnt_ratio, </span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">xlab=</span><span class="st">&quot;Nonprofit Age&quot;</span>, </span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">ylab=</span>variable.label ) </span></code></pre></div>
+<p><img src="metric-10-debt-management-ratio_files/figure-html/unnamed-chunk-28-1.png" width="960" /></p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>core2 <span class="sc">%&gt;%</span> </span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>( <span class="sc">!</span> <span class="fu">is.na</span>(age.q) ) <span class="sc">%&gt;%</span> </span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>( <span class="fu">aes</span>(debt_mgmnt_ratio) )  <span class="sc">+</span> </span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_density</span>( <span class="at">alpha =</span> <span class="fl">0.5</span> ) <span class="sc">+</span> </span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>( <span class="at">title=</span><span class="st">&quot;Nonprofit Age&quot;</span> ) <span class="sc">+</span> </span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>( variable.label ) <span class="sc">+</span></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ylab</span>( <span class="st">&quot;&quot;</span> ) <span class="sc">+</span></span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>( <span class="sc">~</span> age.q, <span class="at">nrow=</span><span class="dv">3</span> ) <span class="sc">+</span> </span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>( <span class="at">base_size =</span> <span class="dv">22</span> )  <span class="sc">+</span> </span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>( <span class="at">axis.title.y=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.text.y=</span><span class="fu">element_blank</span>(), </span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.ticks.y=</span><span class="fu">element_blank</span>() )</span></code></pre></div>
+>>>>>>> 2b54eb7a8b266f860a58fbeb740ecbec93f0a289
 <p><img src="metric-10-debt-management-ratio_files/figure-html/unnamed-chunk-29-1.png" width="960" /></p>
 </div>
-<div id="debt-management-ratio-by-land-and-building-value" class="section level2">
+<div id="debt-management-ratio-by-land-and-building-value"
+class="section level2">
 <h2>Debt Management Ratio by Land and Building Value</h2>
+<<<<<<< HEAD
 <div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" title="1"><span class="kw">ggplot</span>( core2, <span class="kw">aes</span>(<span class="dt">x =</span> lndbldgsequipend )) <span class="op">+</span><span class="st">  </span></a>
 <a class="sourceLine" id="cb29-2" title="2"><span class="st">  </span><span class="kw">geom_density</span>( <span class="dt">alpha =</span> <span class="fl">0.5</span> )  </a></code></pre></div>
 <p><img src="metric-10-debt-management-ratio_files/figure-html/unnamed-chunk-30-1.png" width="960" /></p>
@@ -1328,14 +1779,55 @@ Liabiliies (1k)
 <a class="sourceLine" id="cb31-10" title="10"><span class="st">    </span><span class="kw">theme</span>( <span class="dt">axis.title.y=</span><span class="kw">element_blank</span>(),</a>
 <a class="sourceLine" id="cb31-11" title="11">           <span class="dt">axis.text.y=</span><span class="kw">element_blank</span>(), </a>
 <a class="sourceLine" id="cb31-12" title="12">           <span class="dt">axis.ticks.y=</span><span class="kw">element_blank</span>() )</a></code></pre></div>
+=======
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>( core2, <span class="fu">aes</span>(<span class="at">x =</span> lndbldgsequipend )) <span class="sc">+</span>  </span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>( <span class="at">alpha =</span> <span class="fl">0.5</span> )  </span></code></pre></div>
+<p><img src="metric-10-debt-management-ratio_files/figure-html/unnamed-chunk-30-1.png" width="960" /></p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>core2<span class="sc">$</span>lndbldgsequipend[ core2<span class="sc">$</span>lndbldgsequipend <span class="sc">&lt;</span> <span class="dv">1</span> ] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>( <span class="fu">nrow</span>(core2) <span class="sc">&gt;</span> <span class="dv">10000</span> )</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>  core3 <span class="ot">&lt;-</span> <span class="fu">sample_n</span>( core2, <span class="dv">10000</span> )</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>  core3 <span class="ot">&lt;-</span> core2</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a><span class="fu">jplot</span>( <span class="fu">log10</span>(core3<span class="sc">$</span>lndbldgsequipend), core3<span class="sc">$</span>debt_mgmnt_ratio, </span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">xlab=</span><span class="st">&quot;Land and Building Value (logged)&quot;</span>, </span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">ylab=</span>variable.label,</span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">xaxt=</span><span class="st">&quot;n&quot;</span>, <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">10</span>) )</span>
+<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a><span class="fu">axis</span>( <span class="at">side=</span><span class="dv">1</span>, </span>
+<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a>      <span class="at">at=</span><span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">10</span>), </span>
+<span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a>      <span class="at">labels=</span><span class="fu">c</span>(<span class="st">&quot;1k&quot;</span>,<span class="st">&quot;10k&quot;</span>,<span class="st">&quot;100k&quot;</span>,<span class="st">&quot;1m&quot;</span>,<span class="st">&quot;10m&quot;</span>,<span class="st">&quot;100m&quot;</span>,<span class="st">&quot;1b&quot;</span>,<span class="st">&quot;10b&quot;</span>) )</span>
+<span id="cb31-17"><a href="#cb31-17" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p><img src="metric-10-debt-management-ratio_files/figure-html/unnamed-chunk-31-1.png" width="960" /></p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>core2 <span class="sc">%&gt;%</span> </span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>( <span class="sc">!</span> <span class="fu">is.na</span>(land.q) ) <span class="sc">%&gt;%</span> </span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>( <span class="fu">aes</span>(debt_mgmnt_ratio) )  <span class="sc">+</span> </span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_density</span>( <span class="at">alpha =</span> <span class="fl">0.5</span> ) <span class="sc">+</span> </span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>( <span class="at">title=</span><span class="st">&quot;Land and Building Value&quot;</span> ) <span class="sc">+</span> </span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>( variable.label ) <span class="sc">+</span></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ylab</span>( <span class="st">&quot;&quot;</span> ) <span class="sc">+</span></span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>( <span class="sc">~</span> land.q, <span class="at">nrow=</span><span class="dv">3</span> ) <span class="sc">+</span> </span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>( <span class="at">base_size =</span> <span class="dv">22</span> )  <span class="sc">+</span> </span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>( <span class="at">axis.title.y=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.text.y=</span><span class="fu">element_blank</span>(), </span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.ticks.y=</span><span class="fu">element_blank</span>() )</span></code></pre></div>
+>>>>>>> 2b54eb7a8b266f860a58fbeb740ecbec93f0a289
 <p><img src="metric-10-debt-management-ratio_files/figure-html/unnamed-chunk-32-1.png" width="960" /></p>
 </div>
 </div>
 <div id="save-metrics" class="section level1">
 <h1>Save Metrics</h1>
+<<<<<<< HEAD
 <div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" title="1">core.debt_mgmnt_ratio &lt;-<span class="st"> </span><span class="kw">select</span>( core, ein, tax_pd, debt_mgmnt_ratio )</a>
 <a class="sourceLine" id="cb32-2" title="2"><span class="kw">saveRDS</span>( core.debt_mgmnt_ratio, <span class="st">&quot;03-data-ratios/m-10-debt-management-ratio.rds&quot;</span> )</a>
 <a class="sourceLine" id="cb32-3" title="3"><span class="kw">write.csv</span>( core.debt_mgmnt_ratio, <span class="st">&quot;03-data-ratios/m-10-debt-management-ratio.csv&quot;</span> )</a></code></pre></div>
+=======
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>core.debt_mgmnt_ratio <span class="ot">&lt;-</span> <span class="fu">select</span>( core, ein, tax_pd, debt_mgmnt_ratio )</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>( core.debt_mgmnt_ratio, <span class="st">&quot;03-data-ratios/m-10-debt-management-ratio.rds&quot;</span> )</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>( core.debt_mgmnt_ratio, <span class="st">&quot;03-data-ratios/m-10-debt-management-ratio.csv&quot;</span> )</span></code></pre></div>
+>>>>>>> 2b54eb7a8b266f860a58fbeb740ecbec93f0a289
 <br> <br>
 <hr>
 <p><br> <br></p>
