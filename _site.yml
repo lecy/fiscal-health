@@ -20,8 +20,8 @@ navbar:
         href: metric-06-months-of-COH.html      
       - text: "M7 Land to Assets Ratio"
         href: metric-07-land-to-assets-ratio.html      
-      - text: "M8 Debt to Equity Ratio"
-        href: metric-08-debt-to-equity-ratio.html  
+      - text: "M8 Pre-Depreciation Profitability"
+        href: metric-08-pre-depreciation-profitability-margin.html  
       - text: "M9 Post-Depreciation Profitability"
         href: metric-09-post-depreciation-profitability-margin.html 
       - text: "M10 Debt Management Ratio"
