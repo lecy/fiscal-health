@@ -669,7 +669,7 @@ core2 %>%
 
 # Save Metrics 
 
-```{r, eval=F}
+```{r, eval=T}
 core.currentratio <- select( core, ein, tax_pd, currentratio )
 saveRDS( core.currentratio, "03-data-ratios/m-02-current-ratio.rds" )
 write.csv( core.currentratio, "03-data-ratios/m-02-current-ratio.csv" )

@@ -63,7 +63,7 @@ s.type <- "html"
 
 ## Load Data
 
-# local: 
+local: 
 core <- readRDS( "02-data-wrangled/core.rds" )
 
 # from github: 
@@ -2416,7 +2416,7 @@ core2 %>%
 
 # Save Metrics 
 
-```{r, eval=F}
+```{r, eval=T}
 core.donation_ratio <- select( core, ein, tax_pd, donation_ratio )
 saveRDS( core.donation_ratio, "03-data-ratios/m-14-income-reliance-ratios.rds" )
 write.csv( core.donation_ratio, "03-data-ratios/m-14-income-reliance-ratios.csv" )
