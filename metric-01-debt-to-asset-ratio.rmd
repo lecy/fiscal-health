@@ -1,7 +1,5 @@
 ---
-title: "Metric 01 - Debt to Asset Ratio"
-author: ""
-date: "April 8, 2022"
+title: "" 
 font: Lato
 output:
   html_document:
@@ -24,9 +22,20 @@ knitr::opts_chunk$set( echo = TRUE, message=F, warning=F,
 
 
 
-# Setup
+<hr>
+<br>
+
+
+```{r header-image, fig.width = 3.5, fig.height = 1, echo = FALSE}
+# All defaults
+knitr::include_graphics(here::here("img", "logo.png"))
+```
+
+
 
 ```{r, echo=F}
+
+# Setup
 
 ## Packages
 
@@ -79,9 +88,8 @@ core <- readRDS(gzcon(url( URL )))
 <br>
 
 
+# Debt to Asset Ratio
 
-
-# Metric Construction
 
 
 ## Definition

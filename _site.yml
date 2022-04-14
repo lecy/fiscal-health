@@ -4,26 +4,38 @@ navbar:
   left:
     - text: "Data Wrangling"
       href: data-step-00-wrangling.html
-    - text: "M1"
-      href: metric-01-debt-to-asset-ratio.html
-    - text: "M2"
-      href: metric-02-current-ratio.html
-    - text: "M3"
-      href: metric-03-days-operating-COH.html
-    - text: "M4"
-      href: metric-04-debt-to-equity-ratio.html
-    - text: "M5"
-      href: metric-05-self-sufficiency-ratio.html      
-    - text: "M6"
-      href: metric-06-months-of-COH.html      
-    - text: "M7"
-      href: metric-07-land-to-assets-ratio.html      
-    - text: "M8"
-      href: metric-08-debt-to-equity-ratio.html  
-    - text: "M9"
-      href: metric-09-post-depreciation-profitability-margin.html 
-    - text: "M10"
-      href: metric-10-debt-management-ratio.html    
+    - text: "Metrics"
+      menu:
+      - text: "M1 Debt to Asset Ratio"
+        href: metric-01-debt-to-asset-ratio.html
+      - text: "M2 Current Ratio"
+        href: metric-02-current-ratio.html
+      - text: "M3 Cash on Hand (Days)"
+        href: metric-03-days-operating-COH.html
+      - text: "M4 Debt to Equity Ratio"
+        href: metric-04-debt-to-equity-ratio.html
+      - text: "M5 Self-Sufficiency Ratio"
+        href: metric-05-self-sufficiency-ratio.html      
+      - text: "M6 Cash on Hand (Months)"
+        href: metric-06-months-of-COH.html      
+      - text: "M7 Land to Assets Ratio"
+        href: metric-07-land-to-assets-ratio.html      
+      - text: "M8 Debt to Equity Ratio"
+        href: metric-08-debt-to-equity-ratio.html  
+      - text: "M9 Post-Depreciation Profitability"
+        href: metric-09-post-depreciation-profitability-margin.html 
+      - text: "M10 Debt Management Ratio"
+        href: metric-10-debt-management-ratio.html   
+      - text: "M11 Equity Ratio"
+        href: metric-11-equity-ratio.html 
+      - text: "M12 Quick Ratio"
+        href: metric-12-quick-ratio.html 
+      - text: "M13 Short Term Debt Ratio"
+        href: metric-13-short-term-debt-ratio.html  
+      - text: "M14 Income Reliance Ratio"
+        href: metric-14-income-reliance-ratios.html  
+      - text: "M15 Asset Revenue Ratio"
+        href: metric-15-asset-revenues-ratio.html  
 output:
   html_document:
     theme: cosmo

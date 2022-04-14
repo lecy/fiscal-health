@@ -9,25 +9,31 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content="" />
 
-<meta name="date" content="2022-04-08" />
 
-<title>Metric 05 - Self Sufficiency Ratio</title>
+<title>metric-05-self-sufficiency-ratio.knit</title>
 
+<script src="site_libs/header-attrs-2.9/header-attrs.js"></script>
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
 <script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <script src="site_libs/navigation-1.1/codefolding.js"></script>
-<link href="site_libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
-<script src="site_libs/anchor-sections-1.0/anchor-sections.js"></script>
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -39,28 +45,37 @@
     </style>
 
 
-<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
 <style type="text/css" data-origin="pandoc">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(title);
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -69,9 +84,9 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  { background-color: #f8f8f8; }
+  {  background-color: #f8f8f8; }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ef2929; } /* Alert */
 code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
@@ -133,39 +148,9 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   }
 })();
 </script>
-<style type="text/css">
-  pre:not([class]) {
-    background-color: white;
-  }
-</style>
 
 
-<style type="text/css">
-h1 {
-  font-size: 34px;
-}
-h1.title {
-  font-size: 38px;
-}
-h2 {
-  font-size: 30px;
-}
-h3 {
-  font-size: 24px;
-}
-h4 {
-  font-size: 18px;
-}
-h5 {
-  font-size: 16px;
-}
-h6 {
-  font-size: 12px;
-}
-.table th:not([align]) {
-  text-align: left;
-}
-</style>
+
 
 <link rel="stylesheet" href="www/web_report.css" type="text/css" />
 
@@ -176,10 +161,6 @@ h6 {
   max-width: 940px;
   margin-left: auto;
   margin-right: auto;
-}
-code {
-  color: inherit;
-  background-color: rgba(0, 0, 0, 0.04);
 }
 img {
   max-width:100%;
@@ -196,40 +177,13 @@ button.code-folding-btn:focus {
 summary {
   display: list-item;
 }
+pre code {
+  padding: 0;
+}
 </style>
 
 
 <style type="text/css">
-/* padding for bootstrap navbar */
-body {
-  padding-top: 51px;
-  padding-bottom: 40px;
-}
-/* offset scroll position for anchor links (for fixed navbar)  */
-.section h1 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h2 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h3 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h4 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h5 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h6 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
 .dropdown-submenu {
   position: relative;
 }
@@ -257,7 +211,7 @@ body {
   margin-right: -10px;
 }
 .dropdown-submenu:hover>a:after {
-  border-left-color: #ffffff;
+  border-left-color: #adb5bd;
 }
 .dropdown-submenu.pull-left {
   float: none;
@@ -269,7 +223,7 @@ body {
 }
 </style>
 
-<script>
+<script type="text/javascript">
 // manage active state of menu based on current page
 $(document).ready(function () {
   // active menu anchor
@@ -280,10 +234,23 @@ $(document).ready(function () {
   var menuAnchor = $('a[href="' + href + '"]');
 
   // mark it active
-  menuAnchor.parent().addClass('active');
+  menuAnchor.tab('show');
 
   // if it's got a parent navbar menu mark it active as well
   menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
 });
 </script>
 
@@ -295,7 +262,6 @@ $(document).ready(function () {
   max-height: 500px;
   min-height: 44px;
   overflow-y: auto;
-  background: white;
   border: 1px solid #ddd;
   border-radius: 4px;
 }
@@ -424,7 +390,7 @@ div.tocify {
 
 
 <!-- setup 3col/9col grid for toc_float and main content  -->
-<div class="row-fluid">
+<div class="row">
 <div class="col-xs-12 col-sm-4 col-md-3">
 <div id="TOC" class="tocify">
 </div>
@@ -450,35 +416,59 @@ div.tocify {
         <li>
   <a href="data-step-00-wrangling.html">Data Wrangling</a>
 </li>
-<li>
-  <a href="metric-01-debt-to-asset-ratio.html">M1</a>
-</li>
-<li>
-  <a href="metric-02-current-ratio.html">M2</a>
-</li>
-<li>
-  <a href="metric-03-days-operating-COH.html">M3</a>
-</li>
-<li>
-  <a href="metric-04-debt-to-equity-ratio.html">M4</a>
-</li>
-<li>
-  <a href="metric-05-self-sufficiency-ratio.html">M5</a>
-</li>
-<li>
-  <a href="metric-06-months-of-COH.html">M6</a>
-</li>
-<li>
-  <a href="metric-07-land-to-assets-ratio.html">M7</a>
-</li>
-<li>
-  <a href="metric-08-debt-to-equity-ratio.html">M8</a>
-</li>
-<li>
-  <a href="metric-09-post-depreciation-profitability-margin.html">M9</a>
-</li>
-<li>
-  <a href="metric-10-debt-management-ratio.html">M10</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Metrics
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="metric-01-debt-to-asset-ratio.html">M1 Debt to Asset Ratio</a>
+    </li>
+    <li>
+      <a href="metric-02-current-ratio.html">M2 Current Ratio</a>
+    </li>
+    <li>
+      <a href="metric-03-days-operating-COH.html">M3 Cash on Hand (Days)</a>
+    </li>
+    <li>
+      <a href="metric-04-debt-to-equity-ratio.html">M4 Debt to Equity Ratio</a>
+    </li>
+    <li>
+      <a href="metric-05-self-sufficiency-ratio.html">M5 Self-Sufficiency Ratio</a>
+    </li>
+    <li>
+      <a href="metric-06-months-of-COH.html">M6 Cash on Hand (Months)</a>
+    </li>
+    <li>
+      <a href="metric-07-land-to-assets-ratio.html">M7 Land to Assets Ratio</a>
+    </li>
+    <li>
+      <a href="metric-08-debt-to-equity-ratio.html">M8 Debt to Equity Ratio</a>
+    </li>
+    <li>
+      <a href="metric-09-post-depreciation-profitability-margin.html">M9 Post-Depreciation Profitability</a>
+    </li>
+    <li>
+      <a href="metric-10-debt-management-ratio.html">M10 Debt Management Ratio</a>
+    </li>
+    <li>
+      <a href="metric-11-equity-ratio.html">M11 Equity Ratio</a>
+    </li>
+    <li>
+      <a href="metric-12-quick-ratio.html">M12 Quick Ratio</a>
+    </li>
+    <li>
+      <a href="metric-13-short-term-debt-ratio.html">M13 Short Term Debt Ratio</a>
+    </li>
+    <li>
+      <a href="metric-14-income-reliance-ratios.html">M14 Income Reliance Ratio</a>
+    </li>
+    <li>
+      <a href="metric-15-asset-revenues-ratio.html">M15 Asset Revenue Ratio</a>
+    </li>
+  </ul>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -488,11 +478,11 @@ div.tocify {
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-<div class="fluid-row" id="header">
+<div id="header">
 
-<div class="btn-group pull-right">
-<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
-<ul class="dropdown-menu" style="min-width: 50px;">
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
 <li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
 <li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
 </ul>
@@ -500,16 +490,17 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Metric 05 - Self Sufficiency Ratio</h1>
-<h4 class="date">April 8, 2022</h4>
 
 </div>
 
 
-<p><img src="img/logo.png" /><!-- --></p>
+<p><img src="img/logo.png" width="370" /></p>
 <br>
 <hr>
 <p><br></p>
+<div id="self-sufficiency-ratio" class="section level1">
+<h1>Self Sufficiency Ratio</h1>
+</div>
 <div id="metric-construction" class="section level1">
 <h1>Metric Construction</h1>
 <div id="definition-interpretation" class="section level2">
@@ -523,43 +514,43 @@ div.tocify {
 <p>Note: This data is available for both 990EZ and full 990 filers.</p>
 <p><strong>Numerator:</strong> Program service revenue, EOY <br> * On 990: Part 8, Line 2g, Column A - SOI PC EXTRACTS: totprgmrevnue * On EZ: Part 1, Line 2 - SOI PC EXTRACTS: prgmservrev</p>
 <p><br> <strong>Denominator:</strong> Total Expenses, EOY * On 990: Part 9, line 25A -SOI PC EXTRACTS: totfuncexpns * On EZ: Part 1, Line 17 -SOI PC EXTRACTS: totexpns <br></p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="co"># TEMPORARY VARIABLES </span></a>
-<a class="sourceLine" id="cb1-2" title="2">earned_income  &lt;-<span class="st"> </span>core<span class="op">$</span>totprgmrevnue </a>
-<a class="sourceLine" id="cb1-3" title="3">total_expenses &lt;-<span class="st"> </span>core<span class="op">$</span>totfuncexpns</a>
-<a class="sourceLine" id="cb1-4" title="4"></a>
-<a class="sourceLine" id="cb1-5" title="5"><span class="co"># can&#39;t divide by zero</span></a>
-<a class="sourceLine" id="cb1-6" title="6">total_expenses[ total_expenses <span class="op">==</span><span class="st"> </span><span class="dv">0</span> ] &lt;-<span class="st"> </span><span class="ot">NA</span></a>
-<a class="sourceLine" id="cb1-7" title="7"></a>
-<a class="sourceLine" id="cb1-8" title="8"><span class="co"># SAVE RESULTS </span></a>
-<a class="sourceLine" id="cb1-9" title="9">core<span class="op">$</span>selfsufficiency &lt;-<span class="st"> </span>( earned_income <span class="op">/</span><span class="st"> </span>total_expenses )             </a>
-<a class="sourceLine" id="cb1-10" title="10"><span class="co"># summary( core$selfsufficiency )</span></a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># TEMPORARY VARIABLES </span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>earned_income  <span class="ot">&lt;-</span> core<span class="sc">$</span>totprgmrevnue </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>total_expenses <span class="ot">&lt;-</span> core<span class="sc">$</span>totfuncexpns</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># can&#39;t divide by zero</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>total_expenses[ total_expenses <span class="sc">==</span> <span class="dv">0</span> ] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># SAVE RESULTS </span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>core<span class="sc">$</span>selfsufficiency <span class="ot">&lt;-</span> ( earned_income <span class="sc">/</span> total_expenses )             </span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># summary( core$selfsufficiency )</span></span></code></pre></div>
 </div>
 <div id="standardize-scales" class="section level2">
 <h2>Standardize Scales</h2>
 <p>Check high and low values to see what makes sense.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">x<span class="fl">.05</span> &lt;-<span class="st"> </span><span class="kw">quantile</span>( core<span class="op">$</span>selfsufficiency, <span class="fl">0.05</span>, <span class="dt">na.rm=</span>T )</a>
-<a class="sourceLine" id="cb2-2" title="2">x<span class="fl">.95</span> &lt;-<span class="st"> </span><span class="kw">quantile</span>( core<span class="op">$</span>selfsufficiency, <span class="fl">0.95</span>, <span class="dt">na.rm=</span>T )</a>
-<a class="sourceLine" id="cb2-3" title="3"></a>
-<a class="sourceLine" id="cb2-4" title="4"><span class="kw">ggplot</span>( core, <span class="kw">aes</span>(<span class="dt">x =</span> selfsufficiency ) ) <span class="op">+</span><span class="st">  </span></a>
-<a class="sourceLine" id="cb2-5" title="5"><span class="st">  </span><span class="kw">geom_density</span>( <span class="dt">alpha =</span> <span class="fl">0.5</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb2-6" title="6"><span class="st">  </span><span class="kw">xlim</span>( x<span class="fl">.05</span>, x<span class="fl">.95</span> ) </a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>x<span class="fl">.05</span> <span class="ot">&lt;-</span> <span class="fu">quantile</span>( core<span class="sc">$</span>selfsufficiency, <span class="fl">0.05</span>, <span class="at">na.rm=</span>T )</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>x<span class="fl">.95</span> <span class="ot">&lt;-</span> <span class="fu">quantile</span>( core<span class="sc">$</span>selfsufficiency, <span class="fl">0.95</span>, <span class="at">na.rm=</span>T )</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>( core, <span class="fu">aes</span>(<span class="at">x =</span> selfsufficiency ) ) <span class="sc">+</span>  </span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>( <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span> </span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>( x<span class="fl">.05</span>, x<span class="fl">.95</span> ) </span></code></pre></div>
 <p><img src="metric-05-self-sufficiency-ratio_files/figure-html/unnamed-chunk-3-1.png" width="960" /></p>
 <p>Winsorization:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">x<span class="fl">.05</span> &lt;-<span class="st"> </span><span class="kw">quantile</span>( core<span class="op">$</span>selfsufficiency, <span class="fl">0.05</span>, <span class="dt">na.rm=</span>T )</a>
-<a class="sourceLine" id="cb3-2" title="2">x<span class="fl">.95</span> &lt;-<span class="st"> </span><span class="kw">quantile</span>( core<span class="op">$</span>selfsufficiency, <span class="fl">0.95</span>, <span class="dt">na.rm=</span>T )</a>
-<a class="sourceLine" id="cb3-3" title="3"></a>
-<a class="sourceLine" id="cb3-4" title="4">core2 &lt;-<span class="st"> </span>core</a>
-<a class="sourceLine" id="cb3-5" title="5"></a>
-<a class="sourceLine" id="cb3-6" title="6"><span class="co"># proportion of values that are negative</span></a>
-<a class="sourceLine" id="cb3-7" title="7"><span class="co"># mean( core$selfsufficiency &lt; 0, na.rm=T ) </span></a>
-<a class="sourceLine" id="cb3-8" title="8"></a>
-<a class="sourceLine" id="cb3-9" title="9"><span class="co"># proption of values above 1% </span></a>
-<a class="sourceLine" id="cb3-10" title="10"><span class="co"># mean( core$selfsufficiency &gt; 5, na.rm=T ) </span></a>
-<a class="sourceLine" id="cb3-11" title="11"></a>
-<a class="sourceLine" id="cb3-12" title="12"><span class="co"># WINSORIZATION AT 5th and 95th PERCENTILES</span></a>
-<a class="sourceLine" id="cb3-13" title="13"></a>
-<a class="sourceLine" id="cb3-14" title="14">core2<span class="op">$</span>selfsufficiency[ core2<span class="op">$</span>selfsufficiency <span class="op">&lt;</span><span class="st"> </span>x<span class="fl">.05</span> ] &lt;-<span class="st"> </span>x<span class="fl">.05</span></a>
-<a class="sourceLine" id="cb3-15" title="15">core2<span class="op">$</span>selfsufficiency[ core2<span class="op">$</span>selfsufficiency <span class="op">&gt;</span><span class="st"> </span>x<span class="fl">.95</span> ] &lt;-<span class="st"> </span>x<span class="fl">.95</span></a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>x<span class="fl">.05</span> <span class="ot">&lt;-</span> <span class="fu">quantile</span>( core<span class="sc">$</span>selfsufficiency, <span class="fl">0.05</span>, <span class="at">na.rm=</span>T )</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>x<span class="fl">.95</span> <span class="ot">&lt;-</span> <span class="fu">quantile</span>( core<span class="sc">$</span>selfsufficiency, <span class="fl">0.95</span>, <span class="at">na.rm=</span>T )</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>core2 <span class="ot">&lt;-</span> core</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># proportion of values that are negative</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># mean( core$selfsufficiency &lt; 0, na.rm=T ) </span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co"># proption of values above 1% </span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co"># mean( core$selfsufficiency &gt; 5, na.rm=T ) </span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co"># WINSORIZATION AT 5th and 95th PERCENTILES</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>core2<span class="sc">$</span>selfsufficiency[ core2<span class="sc">$</span>selfsufficiency <span class="sc">&lt;</span> x<span class="fl">.05</span> ] <span class="ot">&lt;-</span> x<span class="fl">.05</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>core2<span class="sc">$</span>selfsufficiency[ core2<span class="sc">$</span>selfsufficiency <span class="sc">&gt;</span> x<span class="fl">.95</span> ] <span class="ot">&lt;-</span> x<span class="fl">.95</span></span></code></pre></div>
 </div>
 <div id="metric-scope" class="section level2">
 <h2>Metric Scope</h2>
@@ -573,30 +564,30 @@ div.tocify {
 <div id="descriptive-statistics" class="section level1">
 <h1>Descriptive Statistics</h1>
 <p>Convert all monetary variables to thousands of dollars.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"></a>
-<a class="sourceLine" id="cb4-2" title="2">core2 <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb4-3" title="3"><span class="st">  </span><span class="kw">mutate</span>( <span class="co"># selfsufficiency = selfsufficiency * 10000,</span></a>
-<a class="sourceLine" id="cb4-4" title="4">    <span class="dt">totrevenue =</span> totrevenue <span class="op">/</span><span class="st"> </span><span class="dv">1000</span>,</a>
-<a class="sourceLine" id="cb4-5" title="5">    <span class="dt">totfuncexpns =</span> totfuncexpns <span class="op">/</span><span class="st"> </span><span class="dv">1000</span>, </a>
-<a class="sourceLine" id="cb4-6" title="6">    <span class="dt">lndbldgsequipend =</span> lndbldgsequipend <span class="op">/</span><span class="st"> </span><span class="dv">1000</span>,</a>
-<a class="sourceLine" id="cb4-7" title="7">    <span class="dt">totassetsend =</span> totassetsend <span class="op">/</span><span class="st"> </span><span class="dv">1000</span>,</a>
-<a class="sourceLine" id="cb4-8" title="8">    <span class="dt">totliabend =</span> totliabend <span class="op">/</span><span class="st"> </span><span class="dv">1000</span>,</a>
-<a class="sourceLine" id="cb4-9" title="9">    <span class="dt">totnetassetend =</span> totnetassetend <span class="op">/</span><span class="st"> </span><span class="dv">1000</span> ) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb4-10" title="10"><span class="st">  </span><span class="kw">select</span>( STATE,  NTEE1, NTMAJ12, </a>
-<a class="sourceLine" id="cb4-11" title="11">          selfsufficiency, </a>
-<a class="sourceLine" id="cb4-12" title="12">          AGE, </a>
-<a class="sourceLine" id="cb4-13" title="13">          totrevenue, totfuncexpns, </a>
-<a class="sourceLine" id="cb4-14" title="14">          lndbldgsequipend, totassetsend, </a>
-<a class="sourceLine" id="cb4-15" title="15">          totnetassetend, totliabend ) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb4-16" title="16"></a>
-<a class="sourceLine" id="cb4-17" title="17"><span class="st">  </span><span class="kw">stargazer</span>( <span class="dt">type =</span> s.type, </a>
-<a class="sourceLine" id="cb4-18" title="18">             <span class="dt">digits=</span><span class="dv">0</span>, </a>
-<a class="sourceLine" id="cb4-19" title="19">             <span class="dt">summary.stat =</span> <span class="kw">c</span>(<span class="st">&quot;min&quot;</span>,<span class="st">&quot;p25&quot;</span>,<span class="st">&quot;median&quot;</span>,</a>
-<a class="sourceLine" id="cb4-20" title="20">                              <span class="st">&quot;mean&quot;</span>,<span class="st">&quot;p75&quot;</span>,<span class="st">&quot;max&quot;</span>, <span class="st">&quot;sd&quot;</span>),</a>
-<a class="sourceLine" id="cb4-21" title="21">             <span class="dt">covariate.labels =</span> <span class="kw">c</span>(<span class="st">&quot;Self Sufficiency Ratio&quot;</span>, <span class="st">&quot;Age&quot;</span>, </a>
-<a class="sourceLine" id="cb4-22" title="22">                                  <span class="st">&quot;Revenue ($1k)&quot;</span>, <span class="st">&quot;Expenses($1k)&quot;</span>, </a>
-<a class="sourceLine" id="cb4-23" title="23">                                  <span class="st">&quot;Buildings ($1k)&quot;</span>, <span class="st">&quot;Total Assets ($1k)&quot;</span>,</a>
-<a class="sourceLine" id="cb4-24" title="24">                                  <span class="st">&quot;Net Assets ($1k)&quot;</span>, <span class="st">&quot;Liabiliies ($1k)&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>core2 <span class="sc">%&gt;%</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>( <span class="co"># selfsufficiency = selfsufficiency * 10000,</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">totrevenue =</span> totrevenue <span class="sc">/</span> <span class="dv">1000</span>,</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">totfuncexpns =</span> totfuncexpns <span class="sc">/</span> <span class="dv">1000</span>, </span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">lndbldgsequipend =</span> lndbldgsequipend <span class="sc">/</span> <span class="dv">1000</span>,</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">totassetsend =</span> totassetsend <span class="sc">/</span> <span class="dv">1000</span>,</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">totliabend =</span> totliabend <span class="sc">/</span> <span class="dv">1000</span>,</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">totnetassetend =</span> totnetassetend <span class="sc">/</span> <span class="dv">1000</span> ) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>( STATE,  NTEE1, NTMAJ12, </span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>          selfsufficiency, </span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>          AGE, </span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>          totrevenue, totfuncexpns, </span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>          lndbldgsequipend, totassetsend, </span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>          totnetassetend, totliabend ) <span class="sc">%&gt;%</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stargazer</span>( <span class="at">type =</span> s.type, </span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>             <span class="at">digits=</span><span class="dv">0</span>, </span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>             <span class="at">summary.stat =</span> <span class="fu">c</span>(<span class="st">&quot;min&quot;</span>,<span class="st">&quot;p25&quot;</span>,<span class="st">&quot;median&quot;</span>,</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>                              <span class="st">&quot;mean&quot;</span>,<span class="st">&quot;p75&quot;</span>,<span class="st">&quot;max&quot;</span>, <span class="st">&quot;sd&quot;</span>),</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>             <span class="at">covariate.labels =</span> <span class="fu">c</span>(<span class="st">&quot;Self Sufficiency Ratio&quot;</span>, <span class="st">&quot;Age&quot;</span>, </span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">&quot;Revenue ($1k)&quot;</span>, <span class="st">&quot;Expenses($1k)&quot;</span>, </span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">&quot;Buildings ($1k)&quot;</span>, <span class="st">&quot;Total Assets ($1k)&quot;</span>,</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">&quot;Net Assets ($1k)&quot;</span>, <span class="st">&quot;Liabiliies ($1k)&quot;</span>))</span></code></pre></div>
 <table style="text-align:center">
 <tr>
 <td colspan="8" style="border-bottom: 1px solid black">
@@ -846,35 +837,36 @@ Liabiliies (1k)
 </tr>
 </table>
 <p>What proportion of orgs have Self Sufficiency Ratios equal to zero (no income)?</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1">prop.zero &lt;-<span class="st"> </span><span class="kw">mean</span>( core2<span class="op">$</span>selfsufficiency <span class="op">==</span><span class="st"> </span><span class="dv">0</span>, <span class="dt">na.rm=</span>T )</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>prop.zero <span class="ot">&lt;-</span> <span class="fu">mean</span>( core2<span class="sc">$</span>selfsufficiency <span class="sc">==</span> <span class="dv">0</span>, <span class="at">na.rm=</span>T )</span></code></pre></div>
 <p>In the sample, 18 percent of the organizations have Self Sufficiency ratios equal to zero, meaning they have no earned income. These organizations are dropped from subsequent graphs to keep the visualizations clean. The interpretation of the graphics should be the distributions of Self Sufficiency ratios for organizations that are earning at least $1 of income.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="co">###</span></a>
-<a class="sourceLine" id="cb6-2" title="2"><span class="co">### ADD QUANTILES</span></a>
-<a class="sourceLine" id="cb6-3" title="3"><span class="co">###</span></a>
-<a class="sourceLine" id="cb6-4" title="4"><span class="co">###   function create_quantiles() defined in r-functions.R</span></a>
-<a class="sourceLine" id="cb6-5" title="5"></a>
-<a class="sourceLine" id="cb6-6" title="6">core2<span class="op">$</span>exp.q   &lt;-<span class="st"> </span><span class="kw">create_quantiles</span>( <span class="dt">var=</span>core2<span class="op">$</span>totfuncexpns,   <span class="dt">n.groups=</span><span class="dv">5</span> )</a>
-<a class="sourceLine" id="cb6-7" title="7">core2<span class="op">$</span>rev.q   &lt;-<span class="st"> </span><span class="kw">create_quantiles</span>( <span class="dt">var=</span>core2<span class="op">$</span>totrevenue,     <span class="dt">n.groups=</span><span class="dv">5</span> )</a>
-<a class="sourceLine" id="cb6-8" title="8">core2<span class="op">$</span>asset.q &lt;-<span class="st"> </span><span class="kw">create_quantiles</span>( <span class="dt">var=</span>core2<span class="op">$</span>totnetassetend, <span class="dt">n.groups=</span><span class="dv">5</span> )</a>
-<a class="sourceLine" id="cb6-9" title="9">core2<span class="op">$</span>age.q   &lt;-<span class="st"> </span><span class="kw">create_quantiles</span>( <span class="dt">var=</span>core2<span class="op">$</span>AGE,            <span class="dt">n.groups=</span><span class="dv">5</span> )</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="do">###</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="do">### ADD QUANTILES</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="do">###</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="do">###   function create_quantiles() defined in r-functions.R</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>core2<span class="sc">$</span>exp.q   <span class="ot">&lt;-</span> <span class="fu">create_quantiles</span>( <span class="at">var=</span>core2<span class="sc">$</span>totfuncexpns,   <span class="at">n.groups=</span><span class="dv">5</span> )</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>core2<span class="sc">$</span>rev.q   <span class="ot">&lt;-</span> <span class="fu">create_quantiles</span>( <span class="at">var=</span>core2<span class="sc">$</span>totrevenue,     <span class="at">n.groups=</span><span class="dv">5</span> )</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>core2<span class="sc">$</span>asset.q <span class="ot">&lt;-</span> <span class="fu">create_quantiles</span>( <span class="at">var=</span>core2<span class="sc">$</span>totnetassetend, <span class="at">n.groups=</span><span class="dv">5</span> )</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>core2<span class="sc">$</span>age.q   <span class="ot">&lt;-</span> <span class="fu">create_quantiles</span>( <span class="at">var=</span>core2<span class="sc">$</span>AGE,            <span class="at">n.groups=</span><span class="dv">5</span> )</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>core2<span class="sc">$</span>land.q  <span class="ot">&lt;-</span> <span class="fu">create_quantiles</span>( <span class="at">var=</span>core2<span class="sc">$</span>lndbldgsequipend,    <span class="at">n.groups=</span><span class="dv">5</span> )</span></code></pre></div>
 <div id="self-sufficiency-ratio-density" class="section level2">
-<h2>Self Sufficiency Ratio Density</h2>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1">min.x &lt;-<span class="st"> </span><span class="kw">min</span>( core<span class="op">$</span>selfsufficiency, <span class="dt">na.rm=</span>T )</a>
-<a class="sourceLine" id="cb7-2" title="2">max.x &lt;-<span class="st"> </span><span class="kw">max</span>( core<span class="op">$</span>selfsufficiency, <span class="dt">na.rm=</span>T )</a>
-<a class="sourceLine" id="cb7-3" title="3"></a>
-<a class="sourceLine" id="cb7-4" title="4"><span class="kw">ggplot</span>( core2, <span class="kw">aes</span>(<span class="dt">x =</span> selfsufficiency )) <span class="op">+</span><span class="st">  </span></a>
-<a class="sourceLine" id="cb7-5" title="5"><span class="st">  </span><span class="kw">geom_density</span>( <span class="dt">alpha =</span> <span class="fl">0.5</span> ) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb7-6" title="6"><span class="st">  </span><span class="kw">xlim</span>( min.x, max.x  ) <span class="op">+</span></a>
-<a class="sourceLine" id="cb7-7" title="7"><span class="st">  </span><span class="kw">xlab</span>( variable.label ) <span class="op">+</span></a>
-<a class="sourceLine" id="cb7-8" title="8"><span class="st">  </span><span class="kw">theme</span>( <span class="dt">axis.title.y=</span><span class="kw">element_blank</span>(),</a>
-<a class="sourceLine" id="cb7-9" title="9">         <span class="dt">axis.text.y=</span><span class="kw">element_blank</span>(), </a>
-<a class="sourceLine" id="cb7-10" title="10">         <span class="dt">axis.ticks.y=</span><span class="kw">element_blank</span>() )</a></code></pre></div>
+<h2>Self-Sufficiency Ratio Density</h2>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>min.x <span class="ot">&lt;-</span> <span class="fu">min</span>( core<span class="sc">$</span>selfsufficiency, <span class="at">na.rm=</span>T )</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>max.x <span class="ot">&lt;-</span> <span class="fu">max</span>( core<span class="sc">$</span>selfsufficiency, <span class="at">na.rm=</span>T )</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>( core2, <span class="fu">aes</span>(<span class="at">x =</span> selfsufficiency )) <span class="sc">+</span>  </span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>( <span class="at">alpha =</span> <span class="fl">0.5</span> ) <span class="sc">+</span> </span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>( min.x, max.x  ) <span class="sc">+</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>( variable.label ) <span class="sc">+</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>( <span class="at">axis.title.y=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">axis.text.y=</span><span class="fu">element_blank</span>(), </span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">axis.ticks.y=</span><span class="fu">element_blank</span>() )</span></code></pre></div>
 <p><img src="metric-05-self-sufficiency-ratio_files/figure-html/unnamed-chunk-8-1.png" width="960" /></p>
 </div>
 <div id="self-sufficiency-ratio-by-ntee-major-code" class="section level2">
-<h2>Self Sufficiency Ratio by NTEE Major Code</h2>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1">core3 &lt;-<span class="st"> </span>core2 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>( <span class="op">!</span><span class="st"> </span><span class="kw">is.na</span>(NTEE1) )</a>
-<a class="sourceLine" id="cb8-2" title="2"><span class="kw">table</span>( core3<span class="op">$</span>NTEE1) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sort</span>(<span class="dt">decreasing=</span><span class="ot">TRUE</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">kable</span>()</a></code></pre></div>
+<h2>Self-Sufficiency Ratio by NTEE Major Code</h2>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>core3 <span class="ot">&lt;-</span> core2 <span class="sc">%&gt;%</span> <span class="fu">filter</span>( <span class="sc">!</span> <span class="fu">is.na</span>(NTEE1) )</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>( core3<span class="sc">$</span>NTEE1) <span class="sc">%&gt;%</span> <span class="fu">sort</span>(<span class="at">decreasing=</span><span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> <span class="fu">kable</span>()</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -897,32 +889,32 @@ Liabiliies (1k)
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"></a>
-<a class="sourceLine" id="cb9-2" title="2">t &lt;-<span class="st"> </span><span class="kw">table</span>( <span class="kw">factor</span>(core3<span class="op">$</span>NTEE1) ) </a>
-<a class="sourceLine" id="cb9-3" title="3">df &lt;-<span class="st"> </span><span class="kw">data.frame</span>( <span class="dt">x=</span><span class="ot">Inf</span>, <span class="dt">y=</span><span class="ot">Inf</span>, </a>
-<a class="sourceLine" id="cb9-4" title="4">                  <span class="dt">N=</span><span class="kw">paste0</span>( <span class="st">&quot;N=&quot;</span>, <span class="kw">as.character</span>(t) ), </a>
-<a class="sourceLine" id="cb9-5" title="5">                  <span class="dt">NTEE1=</span><span class="kw">names</span>(t) )</a>
-<a class="sourceLine" id="cb9-6" title="6"></a>
-<a class="sourceLine" id="cb9-7" title="7"><span class="kw">ggplot</span>( core3, <span class="kw">aes</span>( <span class="dt">x=</span>selfsufficiency ) ) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb9-8" title="8"><span class="st">  </span><span class="kw">geom_density</span>( <span class="dt">alpha =</span> <span class="fl">0.5</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb9-9" title="9"><span class="st">  </span><span class="co"># xlim( -0.1, 1 ) +</span></a>
-<a class="sourceLine" id="cb9-10" title="10"><span class="st">  </span><span class="kw">labs</span>( <span class="dt">title=</span><span class="st">&quot;Nonprofit Subsectors&quot;</span> ) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb9-11" title="11"><span class="st">  </span><span class="kw">xlab</span>( variable.label ) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb9-12" title="12"><span class="st">  </span><span class="kw">facet_wrap</span>( <span class="op">~</span><span class="st"> </span>NTEE1, <span class="dt">nrow=</span><span class="dv">1</span> ) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb9-13" title="13"><span class="st">    </span><span class="kw">theme_minimal</span>( <span class="dt">base_size =</span> <span class="dv">15</span> )  <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb9-14" title="14"><span class="st">    </span><span class="kw">theme</span>( <span class="dt">axis.title.y=</span><span class="kw">element_blank</span>(),</a>
-<a class="sourceLine" id="cb9-15" title="15">           <span class="dt">axis.text.y=</span><span class="kw">element_blank</span>(), </a>
-<a class="sourceLine" id="cb9-16" title="16">           <span class="dt">axis.ticks.y=</span><span class="kw">element_blank</span>(),</a>
-<a class="sourceLine" id="cb9-17" title="17">           <span class="dt">strip.text =</span> <span class="kw">element_text</span>( <span class="dt">face=</span><span class="st">&quot;bold&quot;</span>) ) <span class="op">+</span><span class="st">  </span><span class="co"># size=20 </span></a>
-<a class="sourceLine" id="cb9-18" title="18"><span class="st">  </span><span class="kw">geom_text</span>( <span class="dt">data=</span>df, </a>
-<a class="sourceLine" id="cb9-19" title="19">             <span class="kw">aes</span>(x, y, <span class="dt">label=</span>N ), </a>
-<a class="sourceLine" id="cb9-20" title="20">             <span class="dt">hjust=</span><span class="dv">2</span>, <span class="dt">vjust=</span><span class="dv">3</span>, </a>
-<a class="sourceLine" id="cb9-21" title="21">             <span class="dt">color=</span><span class="st">&quot;gray60&quot;</span>, <span class="dt">size=</span><span class="dv">6</span> )</a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>t <span class="ot">&lt;-</span> <span class="fu">table</span>( <span class="fu">factor</span>(core3<span class="sc">$</span>NTEE1) ) </span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>( <span class="at">x=</span><span class="cn">Inf</span>, <span class="at">y=</span><span class="cn">Inf</span>, </span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">N=</span><span class="fu">paste0</span>( <span class="st">&quot;N=&quot;</span>, <span class="fu">as.character</span>(t) ), </span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>                  <span class="at">NTEE1=</span><span class="fu">names</span>(t) )</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>( core3, <span class="fu">aes</span>( <span class="at">x=</span>selfsufficiency ) ) <span class="sc">+</span> </span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>( <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span> </span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># xlim( -0.1, 1 ) +</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>( <span class="at">title=</span><span class="st">&quot;Nonprofit Subsectors&quot;</span> ) <span class="sc">+</span> </span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>( variable.label ) <span class="sc">+</span> </span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>( <span class="sc">~</span> NTEE1, <span class="at">nrow=</span><span class="dv">1</span> ) <span class="sc">+</span> </span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>( <span class="at">base_size =</span> <span class="dv">15</span> )  <span class="sc">+</span> </span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>( <span class="at">axis.title.y=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.text.y=</span><span class="fu">element_blank</span>(), </span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.ticks.y=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>           <span class="at">strip.text =</span> <span class="fu">element_text</span>( <span class="at">face=</span><span class="st">&quot;bold&quot;</span>) ) <span class="sc">+</span>  <span class="co"># size=20 </span></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>( <span class="at">data=</span>df, </span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(x, y, <span class="at">label=</span>N ), </span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>             <span class="at">hjust=</span><span class="dv">2</span>, <span class="at">vjust=</span><span class="dv">3</span>, </span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>             <span class="at">color=</span><span class="st">&quot;gray60&quot;</span>, <span class="at">size=</span><span class="dv">6</span> )</span></code></pre></div>
 <p><img src="metric-05-self-sufficiency-ratio_files/figure-html/unnamed-chunk-10-1.png" width="960" /></p>
 </div>
 <div id="self-sufficiency-ratio-by-region" class="section level2">
-<h2>Self Sufficiency Ratio by Region</h2>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="kw">table</span>( core2<span class="op">$</span>Region) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">kable</span>()</a></code></pre></div>
+<h2>Self-Sufficiency Ratio by Region</h2>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>( core2<span class="sc">$</span>Region) <span class="sc">%&gt;%</span> <span class="fu">kable</span>()</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -949,28 +941,28 @@ Liabiliies (1k)
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1">t &lt;-<span class="st"> </span><span class="kw">table</span>( <span class="kw">factor</span>(core2<span class="op">$</span>Region) ) </a>
-<a class="sourceLine" id="cb11-2" title="2">df &lt;-<span class="st"> </span><span class="kw">data.frame</span>( <span class="dt">x=</span><span class="ot">Inf</span>, <span class="dt">y=</span><span class="ot">Inf</span>, </a>
-<a class="sourceLine" id="cb11-3" title="3">                  <span class="dt">N=</span><span class="kw">paste0</span>( <span class="st">&quot;N=&quot;</span>, <span class="kw">as.character</span>(t) ), </a>
-<a class="sourceLine" id="cb11-4" title="4">                  <span class="dt">Region=</span><span class="kw">names</span>(t) )</a>
-<a class="sourceLine" id="cb11-5" title="5"></a>
-<a class="sourceLine" id="cb11-6" title="6">core2 <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb11-7" title="7"><span class="st">  </span><span class="kw">filter</span>( <span class="op">!</span><span class="st"> </span><span class="kw">is.na</span>(Region) ) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb11-8" title="8"><span class="st">  </span><span class="kw">ggplot</span>( <span class="kw">aes</span>(selfsufficiency) )  <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb11-9" title="9"><span class="st">    </span><span class="kw">geom_density</span>( <span class="dt">alpha =</span> <span class="fl">0.5</span> ) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb11-10" title="10"><span class="st">    </span><span class="kw">xlab</span>( <span class="st">&quot;Census Regions&quot;</span> ) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb11-11" title="11"><span class="st">    </span><span class="kw">ylab</span>( variable.label ) <span class="op">+</span></a>
-<a class="sourceLine" id="cb11-12" title="12"><span class="st">    </span><span class="kw">facet_wrap</span>( <span class="op">~</span><span class="st"> </span>Region, <span class="dt">nrow=</span><span class="dv">3</span> ) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb11-13" title="13"><span class="st">    </span><span class="kw">theme_minimal</span>( <span class="dt">base_size =</span> <span class="dv">22</span> )  <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb11-14" title="14"><span class="st">    </span><span class="kw">theme</span>( <span class="dt">axis.title.y=</span><span class="kw">element_blank</span>(),</a>
-<a class="sourceLine" id="cb11-15" title="15">           <span class="dt">axis.text.y=</span><span class="kw">element_blank</span>(), </a>
-<a class="sourceLine" id="cb11-16" title="16">           <span class="dt">axis.ticks.y=</span><span class="kw">element_blank</span>() ) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb11-17" title="17"><span class="st">    </span><span class="kw">geom_text</span>( <span class="dt">data=</span>df, </a>
-<a class="sourceLine" id="cb11-18" title="18">             <span class="kw">aes</span>(x, y, <span class="dt">label=</span>N ), </a>
-<a class="sourceLine" id="cb11-19" title="19">             <span class="dt">hjust=</span><span class="dv">2</span>, <span class="dt">vjust=</span><span class="dv">3</span>, </a>
-<a class="sourceLine" id="cb11-20" title="20">             <span class="dt">color=</span><span class="st">&quot;gray60&quot;</span>, <span class="dt">size=</span><span class="dv">6</span> )</a></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>t <span class="ot">&lt;-</span> <span class="fu">table</span>( <span class="fu">factor</span>(core2<span class="sc">$</span>Region) ) </span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>( <span class="at">x=</span><span class="cn">Inf</span>, <span class="at">y=</span><span class="cn">Inf</span>, </span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">N=</span><span class="fu">paste0</span>( <span class="st">&quot;N=&quot;</span>, <span class="fu">as.character</span>(t) ), </span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">Region=</span><span class="fu">names</span>(t) )</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>core2 <span class="sc">%&gt;%</span> </span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>( <span class="sc">!</span> <span class="fu">is.na</span>(Region) ) <span class="sc">%&gt;%</span> </span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>( <span class="fu">aes</span>(selfsufficiency) )  <span class="sc">+</span> </span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_density</span>( <span class="at">alpha =</span> <span class="fl">0.5</span> ) <span class="sc">+</span> </span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>( <span class="st">&quot;Census Regions&quot;</span> ) <span class="sc">+</span> </span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ylab</span>( variable.label ) <span class="sc">+</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>( <span class="sc">~</span> Region, <span class="at">nrow=</span><span class="dv">3</span> ) <span class="sc">+</span> </span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>( <span class="at">base_size =</span> <span class="dv">22</span> )  <span class="sc">+</span> </span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>( <span class="at">axis.title.y=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.text.y=</span><span class="fu">element_blank</span>(), </span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.ticks.y=</span><span class="fu">element_blank</span>() ) <span class="sc">+</span> </span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_text</span>( <span class="at">data=</span>df, </span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(x, y, <span class="at">label=</span>N ), </span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>             <span class="at">hjust=</span><span class="dv">2</span>, <span class="at">vjust=</span><span class="dv">3</span>, </span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>             <span class="at">color=</span><span class="st">&quot;gray60&quot;</span>, <span class="at">size=</span><span class="dv">6</span> )</span></code></pre></div>
 <p><img src="metric-05-self-sufficiency-ratio_files/figure-html/unnamed-chunk-12-1.png" width="960" /></p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="kw">table</span>( core2<span class="op">$</span>Division ) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">kable</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>( core2<span class="sc">$</span>Division ) <span class="sc">%&gt;%</span> <span class="fu">kable</span>()</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -1017,230 +1009,267 @@ Liabiliies (1k)
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1">t &lt;-<span class="st"> </span><span class="kw">table</span>( <span class="kw">factor</span>(core2<span class="op">$</span>Division) ) </a>
-<a class="sourceLine" id="cb13-2" title="2">df &lt;-<span class="st"> </span><span class="kw">data.frame</span>( <span class="dt">x=</span><span class="ot">Inf</span>, <span class="dt">y=</span><span class="ot">Inf</span>, </a>
-<a class="sourceLine" id="cb13-3" title="3">                  <span class="dt">N=</span><span class="kw">paste0</span>( <span class="st">&quot;N=&quot;</span>, <span class="kw">as.character</span>(t) ), </a>
-<a class="sourceLine" id="cb13-4" title="4">                  <span class="dt">Division=</span><span class="kw">names</span>(t) )</a>
-<a class="sourceLine" id="cb13-5" title="5"></a>
-<a class="sourceLine" id="cb13-6" title="6">core2 <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb13-7" title="7"><span class="st">  </span><span class="kw">filter</span>( <span class="op">!</span><span class="st"> </span><span class="kw">is.na</span>(Division) ) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb13-8" title="8"><span class="st">  </span><span class="kw">ggplot</span>( <span class="kw">aes</span>(selfsufficiency) )  <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb13-9" title="9"><span class="st">    </span><span class="kw">geom_density</span>( <span class="dt">alpha =</span> <span class="fl">0.5</span> ) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb13-10" title="10"><span class="st">    </span><span class="kw">xlab</span>( <span class="st">&quot;Census Sub-Regions (10)&quot;</span> ) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb13-11" title="11"><span class="st">    </span><span class="kw">ylab</span>( variable.label ) <span class="op">+</span></a>
-<a class="sourceLine" id="cb13-12" title="12"><span class="st">    </span><span class="kw">facet_wrap</span>( <span class="op">~</span><span class="st"> </span>Division, <span class="dt">nrow=</span><span class="dv">3</span> ) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb13-13" title="13"><span class="st">    </span><span class="kw">theme_minimal</span>( <span class="dt">base_size =</span> <span class="dv">22</span> )  <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb13-14" title="14"><span class="st">    </span><span class="kw">theme</span>( <span class="dt">axis.title.y=</span><span class="kw">element_blank</span>(),</a>
-<a class="sourceLine" id="cb13-15" title="15">           <span class="dt">axis.text.y=</span><span class="kw">element_blank</span>(), </a>
-<a class="sourceLine" id="cb13-16" title="16">           <span class="dt">axis.ticks.y=</span><span class="kw">element_blank</span>() ) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb13-17" title="17"><span class="st">    </span><span class="kw">geom_text</span>( <span class="dt">data=</span>df, </a>
-<a class="sourceLine" id="cb13-18" title="18">             <span class="kw">aes</span>(x, y, <span class="dt">label=</span>N ), </a>
-<a class="sourceLine" id="cb13-19" title="19">             <span class="dt">hjust=</span><span class="dv">2</span>, <span class="dt">vjust=</span><span class="dv">3</span>, </a>
-<a class="sourceLine" id="cb13-20" title="20">             <span class="dt">color=</span><span class="st">&quot;gray60&quot;</span>, <span class="dt">size=</span><span class="dv">6</span> ) </a></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>t <span class="ot">&lt;-</span> <span class="fu">table</span>( <span class="fu">factor</span>(core2<span class="sc">$</span>Division) ) </span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>( <span class="at">x=</span><span class="cn">Inf</span>, <span class="at">y=</span><span class="cn">Inf</span>, </span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">N=</span><span class="fu">paste0</span>( <span class="st">&quot;N=&quot;</span>, <span class="fu">as.character</span>(t) ), </span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">Division=</span><span class="fu">names</span>(t) )</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>core2 <span class="sc">%&gt;%</span> </span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>( <span class="sc">!</span> <span class="fu">is.na</span>(Division) ) <span class="sc">%&gt;%</span> </span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>( <span class="fu">aes</span>(selfsufficiency) )  <span class="sc">+</span> </span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_density</span>( <span class="at">alpha =</span> <span class="fl">0.5</span> ) <span class="sc">+</span> </span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>( <span class="st">&quot;Census Sub-Regions (10)&quot;</span> ) <span class="sc">+</span> </span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ylab</span>( variable.label ) <span class="sc">+</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>( <span class="sc">~</span> Division, <span class="at">nrow=</span><span class="dv">3</span> ) <span class="sc">+</span> </span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>( <span class="at">base_size =</span> <span class="dv">22</span> )  <span class="sc">+</span> </span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>( <span class="at">axis.title.y=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.text.y=</span><span class="fu">element_blank</span>(), </span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.ticks.y=</span><span class="fu">element_blank</span>() ) <span class="sc">+</span> </span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_text</span>( <span class="at">data=</span>df, </span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(x, y, <span class="at">label=</span>N ), </span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>             <span class="at">hjust=</span><span class="dv">2</span>, <span class="at">vjust=</span><span class="dv">3</span>, </span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>             <span class="at">color=</span><span class="st">&quot;gray60&quot;</span>, <span class="at">size=</span><span class="dv">6</span> ) </span></code></pre></div>
 <p><img src="metric-05-self-sufficiency-ratio_files/figure-html/unnamed-chunk-14-1.png" width="960" /></p>
 </div>
 <div id="self-sufficiency-ratio-by-nonprofit-size-expenses" class="section level2">
-<h2>Self Sufficiency Ratio by Nonprofit Size (Expenses)</h2>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1"><span class="kw">ggplot</span>( core2, <span class="kw">aes</span>(<span class="dt">x =</span> totfuncexpns )) <span class="op">+</span><span class="st">  </span></a>
-<a class="sourceLine" id="cb14-2" title="2"><span class="st">  </span><span class="kw">geom_density</span>( <span class="dt">alpha =</span> <span class="fl">0.5</span> ) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb14-3" title="3"><span class="st">  </span><span class="kw">xlim</span>( <span class="kw">quantile</span>(core2<span class="op">$</span>totfuncexpns, <span class="kw">c</span>(<span class="fl">0.02</span>,<span class="fl">0.98</span>), <span class="dt">na.rm=</span>T ) )</a></code></pre></div>
+<h2>Self-Sufficiency Ratio by Nonprofit Size (Expenses)</h2>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>( core2, <span class="fu">aes</span>(<span class="at">x =</span> totfuncexpns )) <span class="sc">+</span>  </span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>( <span class="at">alpha =</span> <span class="fl">0.5</span> ) <span class="sc">+</span> </span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>( <span class="fu">quantile</span>(core2<span class="sc">$</span>totfuncexpns, <span class="fu">c</span>(<span class="fl">0.02</span>,<span class="fl">0.98</span>), <span class="at">na.rm=</span>T ) )</span></code></pre></div>
 <p><img src="metric-05-self-sufficiency-ratio_files/figure-html/unnamed-chunk-15-1.png" width="960" /></p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1">core2<span class="op">$</span>totfuncexpns[ core2<span class="op">$</span>totfuncexpns <span class="op">&lt;</span><span class="st"> </span><span class="dv">1</span> ] &lt;-<span class="st"> </span><span class="dv">1</span></a>
-<a class="sourceLine" id="cb15-2" title="2"><span class="co"># core2$totfuncexpns[ is.na(core2$totfuncexpns) ] &lt;- 1</span></a>
-<a class="sourceLine" id="cb15-3" title="3"></a>
-<a class="sourceLine" id="cb15-4" title="4"><span class="cf">if</span>( <span class="kw">nrow</span>(core2) <span class="op">&gt;</span><span class="st"> </span><span class="dv">10000</span> )</a>
-<a class="sourceLine" id="cb15-5" title="5">{</a>
-<a class="sourceLine" id="cb15-6" title="6">  core3 &lt;-<span class="st"> </span><span class="kw">sample_n</span>( core2, <span class="dv">10000</span> )</a>
-<a class="sourceLine" id="cb15-7" title="7">} <span class="cf">else</span></a>
-<a class="sourceLine" id="cb15-8" title="8">{</a>
-<a class="sourceLine" id="cb15-9" title="9">  core3 &lt;-<span class="st"> </span>core2</a>
-<a class="sourceLine" id="cb15-10" title="10">}</a>
-<a class="sourceLine" id="cb15-11" title="11"></a>
-<a class="sourceLine" id="cb15-12" title="12"><span class="kw">jplot</span>( <span class="kw">log10</span>(core3<span class="op">$</span>totfuncexpns), core3<span class="op">$</span>selfsufficiency, </a>
-<a class="sourceLine" id="cb15-13" title="13">       <span class="dt">xlab=</span><span class="st">&quot;Nonprofit Size (logged Expenses)&quot;</span>, </a>
-<a class="sourceLine" id="cb15-14" title="14">       <span class="dt">ylab=</span>variable.label,</a>
-<a class="sourceLine" id="cb15-15" title="15">       <span class="dt">xaxt=</span><span class="st">&quot;n&quot;</span>, <span class="dt">xlim=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">10</span>) )</a>
-<a class="sourceLine" id="cb15-16" title="16"><span class="kw">axis</span>( <span class="dt">side=</span><span class="dv">1</span>, </a>
-<a class="sourceLine" id="cb15-17" title="17">      <span class="dt">at=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">10</span>), </a>
-<a class="sourceLine" id="cb15-18" title="18">      <span class="dt">labels=</span><span class="kw">c</span>(<span class="st">&quot;1k&quot;</span>,<span class="st">&quot;10k&quot;</span>,<span class="st">&quot;100k&quot;</span>,<span class="st">&quot;1m&quot;</span>,<span class="st">&quot;10m&quot;</span>,<span class="st">&quot;100m&quot;</span>,<span class="st">&quot;1b&quot;</span>,<span class="st">&quot;10b&quot;</span>) )</a></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>core2<span class="sc">$</span>totfuncexpns[ core2<span class="sc">$</span>totfuncexpns <span class="sc">&lt;</span> <span class="dv">1</span> ] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co"># core2$totfuncexpns[ is.na(core2$totfuncexpns) ] &lt;- 1</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>( <span class="fu">nrow</span>(core2) <span class="sc">&gt;</span> <span class="dv">10000</span> )</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  core3 <span class="ot">&lt;-</span> <span class="fu">sample_n</span>( core2, <span class="dv">10000</span> )</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>  core3 <span class="ot">&lt;-</span> core2</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="fu">jplot</span>( <span class="fu">log10</span>(core3<span class="sc">$</span>totfuncexpns), core3<span class="sc">$</span>selfsufficiency, </span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">xlab=</span><span class="st">&quot;Nonprofit Size (logged Expenses)&quot;</span>, </span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">ylab=</span>variable.label,</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>       <span class="at">xaxt=</span><span class="st">&quot;n&quot;</span>, <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">10</span>) )</span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a><span class="fu">axis</span>( <span class="at">side=</span><span class="dv">1</span>, </span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>      <span class="at">at=</span><span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">10</span>), </span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>      <span class="at">labels=</span><span class="fu">c</span>(<span class="st">&quot;1k&quot;</span>,<span class="st">&quot;10k&quot;</span>,<span class="st">&quot;100k&quot;</span>,<span class="st">&quot;1m&quot;</span>,<span class="st">&quot;10m&quot;</span>,<span class="st">&quot;100m&quot;</span>,<span class="st">&quot;1b&quot;</span>,<span class="st">&quot;10b&quot;</span>) )</span></code></pre></div>
 <p><img src="metric-05-self-sufficiency-ratio_files/figure-html/unnamed-chunk-16-1.png" width="960" /></p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1">core2 <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb16-2" title="2"><span class="st">  </span><span class="kw">filter</span>( <span class="op">!</span><span class="st"> </span><span class="kw">is.na</span>(exp.q) ) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb16-3" title="3"><span class="st">  </span><span class="kw">ggplot</span>( <span class="kw">aes</span>(selfsufficiency) )  <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb16-4" title="4"><span class="st">    </span><span class="kw">geom_density</span>( <span class="dt">alpha =</span> <span class="fl">0.5</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb16-5" title="5"><span class="st">    </span><span class="kw">labs</span>( <span class="dt">title=</span><span class="st">&quot;Nonprofit Size (logged expenses)&quot;</span> ) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb16-6" title="6"><span class="st">    </span><span class="kw">xlab</span>( variable.label ) <span class="op">+</span></a>
-<a class="sourceLine" id="cb16-7" title="7"><span class="st">    </span><span class="kw">facet_wrap</span>( <span class="op">~</span><span class="st"> </span>exp.q, <span class="dt">nrow=</span><span class="dv">3</span> ) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb16-8" title="8"><span class="st">    </span><span class="kw">theme_minimal</span>( <span class="dt">base_size =</span> <span class="dv">22</span> )  <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb16-9" title="9"><span class="st">    </span><span class="kw">theme</span>( <span class="dt">axis.title.y=</span><span class="kw">element_blank</span>(),</a>
-<a class="sourceLine" id="cb16-10" title="10">           <span class="dt">axis.text.y=</span><span class="kw">element_blank</span>(), </a>
-<a class="sourceLine" id="cb16-11" title="11">           <span class="dt">axis.ticks.y=</span><span class="kw">element_blank</span>() )</a></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>core2 <span class="sc">%&gt;%</span> </span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>( <span class="sc">!</span> <span class="fu">is.na</span>(exp.q) ) <span class="sc">%&gt;%</span> </span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>( <span class="fu">aes</span>(selfsufficiency) )  <span class="sc">+</span> </span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_density</span>( <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span> </span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>( <span class="at">title=</span><span class="st">&quot;Nonprofit Size (logged expenses)&quot;</span> ) <span class="sc">+</span> </span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>( variable.label ) <span class="sc">+</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>( <span class="sc">~</span> exp.q, <span class="at">nrow=</span><span class="dv">3</span> ) <span class="sc">+</span> </span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>( <span class="at">base_size =</span> <span class="dv">22</span> )  <span class="sc">+</span> </span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>( <span class="at">axis.title.y=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.text.y=</span><span class="fu">element_blank</span>(), </span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.ticks.y=</span><span class="fu">element_blank</span>() )</span></code></pre></div>
 <p><img src="metric-05-self-sufficiency-ratio_files/figure-html/unnamed-chunk-17-1.png" width="960" /></p>
 </div>
 <div id="self-sufficiency-ratio-by-nonprofit-size-revenue" class="section level2">
-<h2>Self Sufficiency Ratio by Nonprofit Size (Revenue)</h2>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1"><span class="kw">ggplot</span>( core2, <span class="kw">aes</span>(<span class="dt">x =</span> totrevenue )) <span class="op">+</span><span class="st">  </span></a>
-<a class="sourceLine" id="cb17-2" title="2"><span class="st">  </span><span class="kw">geom_density</span>( <span class="dt">alpha =</span> <span class="fl">0.5</span> ) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb17-3" title="3"><span class="st">  </span><span class="kw">xlim</span>( <span class="kw">quantile</span>(core2<span class="op">$</span>totrevenue, <span class="kw">c</span>(<span class="fl">0.02</span>,<span class="fl">0.98</span>), <span class="dt">na.rm=</span>T ) ) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb17-4" title="4"><span class="st">  </span><span class="kw">theme</span>( <span class="dt">axis.title.y=</span><span class="kw">element_blank</span>(),</a>
-<a class="sourceLine" id="cb17-5" title="5">           <span class="dt">axis.text.y=</span><span class="kw">element_blank</span>(), </a>
-<a class="sourceLine" id="cb17-6" title="6">           <span class="dt">axis.ticks.y=</span><span class="kw">element_blank</span>() )</a></code></pre></div>
+<h2>Self-Sufficiency Ratio by Nonprofit Size (Revenue)</h2>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>( core2, <span class="fu">aes</span>(<span class="at">x =</span> totrevenue )) <span class="sc">+</span>  </span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>( <span class="at">alpha =</span> <span class="fl">0.5</span> ) <span class="sc">+</span> </span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>( <span class="fu">quantile</span>(core2<span class="sc">$</span>totrevenue, <span class="fu">c</span>(<span class="fl">0.02</span>,<span class="fl">0.98</span>), <span class="at">na.rm=</span>T ) ) <span class="sc">+</span> </span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>( <span class="at">axis.title.y=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.text.y=</span><span class="fu">element_blank</span>(), </span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.ticks.y=</span><span class="fu">element_blank</span>() )</span></code></pre></div>
 <p><img src="metric-05-self-sufficiency-ratio_files/figure-html/unnamed-chunk-18-1.png" width="960" /></p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1">core2<span class="op">$</span>totrevenue[ core2<span class="op">$</span>totrevenue <span class="op">&lt;</span><span class="st"> </span><span class="dv">1</span> ] &lt;-<span class="st"> </span><span class="dv">1</span></a>
-<a class="sourceLine" id="cb18-2" title="2"></a>
-<a class="sourceLine" id="cb18-3" title="3"><span class="cf">if</span>( <span class="kw">nrow</span>(core2) <span class="op">&gt;</span><span class="st"> </span><span class="dv">10000</span> )</a>
-<a class="sourceLine" id="cb18-4" title="4">{</a>
-<a class="sourceLine" id="cb18-5" title="5">  core3 &lt;-<span class="st"> </span><span class="kw">sample_n</span>( core2, <span class="dv">10000</span> )</a>
-<a class="sourceLine" id="cb18-6" title="6">} <span class="cf">else</span></a>
-<a class="sourceLine" id="cb18-7" title="7">{</a>
-<a class="sourceLine" id="cb18-8" title="8">  core3 &lt;-<span class="st"> </span>core2</a>
-<a class="sourceLine" id="cb18-9" title="9">}</a>
-<a class="sourceLine" id="cb18-10" title="10"></a>
-<a class="sourceLine" id="cb18-11" title="11"><span class="kw">jplot</span>( <span class="kw">log10</span>(core3<span class="op">$</span>totrevenue), core3<span class="op">$</span>selfsufficiency, </a>
-<a class="sourceLine" id="cb18-12" title="12">       <span class="dt">xlab=</span><span class="st">&quot;Nonprofit Size (logged Revenue)&quot;</span>, </a>
-<a class="sourceLine" id="cb18-13" title="13">       <span class="dt">ylab=</span>variable.label,</a>
-<a class="sourceLine" id="cb18-14" title="14">       <span class="dt">xaxt=</span><span class="st">&quot;n&quot;</span>, <span class="dt">xlim=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">10</span>) )</a>
-<a class="sourceLine" id="cb18-15" title="15"><span class="kw">axis</span>( <span class="dt">side=</span><span class="dv">1</span>, </a>
-<a class="sourceLine" id="cb18-16" title="16">      <span class="dt">at=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">10</span>), </a>
-<a class="sourceLine" id="cb18-17" title="17">      <span class="dt">labels=</span><span class="kw">c</span>(<span class="st">&quot;1k&quot;</span>,<span class="st">&quot;10k&quot;</span>,<span class="st">&quot;100k&quot;</span>,<span class="st">&quot;1m&quot;</span>,<span class="st">&quot;10m&quot;</span>,<span class="st">&quot;100m&quot;</span>,<span class="st">&quot;1b&quot;</span>,<span class="st">&quot;10b&quot;</span>) )</a></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>core2<span class="sc">$</span>totrevenue[ core2<span class="sc">$</span>totrevenue <span class="sc">&lt;</span> <span class="dv">1</span> ] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>( <span class="fu">nrow</span>(core2) <span class="sc">&gt;</span> <span class="dv">10000</span> )</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  core3 <span class="ot">&lt;-</span> <span class="fu">sample_n</span>( core2, <span class="dv">10000</span> )</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>  core3 <span class="ot">&lt;-</span> core2</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="fu">jplot</span>( <span class="fu">log10</span>(core3<span class="sc">$</span>totrevenue), core3<span class="sc">$</span>selfsufficiency, </span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">xlab=</span><span class="st">&quot;Nonprofit Size (logged Revenue)&quot;</span>, </span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">ylab=</span>variable.label,</span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">xaxt=</span><span class="st">&quot;n&quot;</span>, <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">10</span>) )</span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a><span class="fu">axis</span>( <span class="at">side=</span><span class="dv">1</span>, </span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>      <span class="at">at=</span><span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">10</span>), </span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>      <span class="at">labels=</span><span class="fu">c</span>(<span class="st">&quot;1k&quot;</span>,<span class="st">&quot;10k&quot;</span>,<span class="st">&quot;100k&quot;</span>,<span class="st">&quot;1m&quot;</span>,<span class="st">&quot;10m&quot;</span>,<span class="st">&quot;100m&quot;</span>,<span class="st">&quot;1b&quot;</span>,<span class="st">&quot;10b&quot;</span>) )</span></code></pre></div>
 <p><img src="metric-05-self-sufficiency-ratio_files/figure-html/unnamed-chunk-19-1.png" width="960" /></p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" title="1">core2 <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb19-2" title="2"><span class="st">  </span><span class="kw">filter</span>( <span class="op">!</span><span class="st"> </span><span class="kw">is.na</span>(rev.q) ) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb19-3" title="3"><span class="st">  </span><span class="kw">ggplot</span>( <span class="kw">aes</span>(selfsufficiency) )  <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb19-4" title="4"><span class="st">    </span><span class="kw">geom_density</span>( <span class="dt">alpha =</span> <span class="fl">0.5</span> ) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb19-5" title="5"><span class="st">    </span><span class="kw">labs</span>( <span class="dt">title=</span><span class="st">&quot;Nonprofit Size (logged revenues)&quot;</span> ) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb19-6" title="6"><span class="st">    </span><span class="kw">xlab</span>( variable.label ) <span class="op">+</span></a>
-<a class="sourceLine" id="cb19-7" title="7"><span class="st">    </span><span class="kw">facet_wrap</span>( <span class="op">~</span><span class="st"> </span>rev.q, <span class="dt">nrow=</span><span class="dv">3</span> ) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb19-8" title="8"><span class="st">    </span><span class="kw">theme_minimal</span>( <span class="dt">base_size =</span> <span class="dv">22</span> )  <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb19-9" title="9"><span class="st">    </span><span class="kw">theme</span>( <span class="dt">axis.title.y=</span><span class="kw">element_blank</span>(),</a>
-<a class="sourceLine" id="cb19-10" title="10">           <span class="dt">axis.text.y=</span><span class="kw">element_blank</span>(), </a>
-<a class="sourceLine" id="cb19-11" title="11">           <span class="dt">axis.ticks.y=</span><span class="kw">element_blank</span>() )</a></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>core2 <span class="sc">%&gt;%</span> </span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>( <span class="sc">!</span> <span class="fu">is.na</span>(rev.q) ) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>( <span class="fu">aes</span>(selfsufficiency) )  <span class="sc">+</span> </span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_density</span>( <span class="at">alpha =</span> <span class="fl">0.5</span> ) <span class="sc">+</span> </span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>( <span class="at">title=</span><span class="st">&quot;Nonprofit Size (logged revenues)&quot;</span> ) <span class="sc">+</span> </span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>( variable.label ) <span class="sc">+</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>( <span class="sc">~</span> rev.q, <span class="at">nrow=</span><span class="dv">3</span> ) <span class="sc">+</span> </span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>( <span class="at">base_size =</span> <span class="dv">22</span> )  <span class="sc">+</span> </span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>( <span class="at">axis.title.y=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.text.y=</span><span class="fu">element_blank</span>(), </span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.ticks.y=</span><span class="fu">element_blank</span>() )</span></code></pre></div>
 <p><img src="metric-05-self-sufficiency-ratio_files/figure-html/unnamed-chunk-20-1.png" width="960" /></p>
 </div>
 <div id="self-sufficiency-ratio-by-nonprofit-size-net-assets" class="section level2">
-<h2>Self Sufficiency Ratio by Nonprofit Size (Net Assets)</h2>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1"><span class="kw">ggplot</span>( core2, <span class="kw">aes</span>(<span class="dt">x =</span> totnetassetend )) <span class="op">+</span><span class="st">  </span></a>
-<a class="sourceLine" id="cb20-2" title="2"><span class="st">  </span><span class="kw">geom_density</span>( <span class="dt">alpha =</span> <span class="fl">0.5</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb20-3" title="3"><span class="st">  </span><span class="kw">xlim</span>( <span class="kw">quantile</span>(core2<span class="op">$</span>totnetassetend, <span class="kw">c</span>(<span class="fl">0.02</span>,<span class="fl">0.98</span>), <span class="dt">na.rm=</span>T ) ) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb20-4" title="4"><span class="st">  </span><span class="kw">xlab</span>( <span class="st">&quot;Net Assets&quot;</span> ) <span class="op">+</span></a>
-<a class="sourceLine" id="cb20-5" title="5"><span class="st">    </span><span class="kw">theme</span>( <span class="dt">axis.title.y=</span><span class="kw">element_blank</span>(),</a>
-<a class="sourceLine" id="cb20-6" title="6">           <span class="dt">axis.text.y=</span><span class="kw">element_blank</span>(), </a>
-<a class="sourceLine" id="cb20-7" title="7">           <span class="dt">axis.ticks.y=</span><span class="kw">element_blank</span>() )</a></code></pre></div>
+<h2>Self-Sufficiency Ratio by Nonprofit Size (Net Assets)</h2>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>( core2, <span class="fu">aes</span>(<span class="at">x =</span> totnetassetend )) <span class="sc">+</span>  </span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>( <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span> </span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>( <span class="fu">quantile</span>(core2<span class="sc">$</span>totnetassetend, <span class="fu">c</span>(<span class="fl">0.02</span>,<span class="fl">0.98</span>), <span class="at">na.rm=</span>T ) ) <span class="sc">+</span> </span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>( <span class="st">&quot;Net Assets&quot;</span> ) <span class="sc">+</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>( <span class="at">axis.title.y=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.text.y=</span><span class="fu">element_blank</span>(), </span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.ticks.y=</span><span class="fu">element_blank</span>() )</span></code></pre></div>
 <p><img src="metric-05-self-sufficiency-ratio_files/figure-html/unnamed-chunk-21-1.png" width="960" /></p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" title="1">core2<span class="op">$</span>totnetassetend[ core2<span class="op">$</span>totnetassetend <span class="op">&lt;</span><span class="st"> </span><span class="dv">1</span> ] &lt;-<span class="st"> </span><span class="ot">NA</span></a>
-<a class="sourceLine" id="cb21-2" title="2"></a>
-<a class="sourceLine" id="cb21-3" title="3"><span class="cf">if</span>( <span class="kw">nrow</span>(core2) <span class="op">&gt;</span><span class="st"> </span><span class="dv">10000</span> )</a>
-<a class="sourceLine" id="cb21-4" title="4">{</a>
-<a class="sourceLine" id="cb21-5" title="5">  core3 &lt;-<span class="st"> </span><span class="kw">sample_n</span>( core2, <span class="dv">10000</span> )</a>
-<a class="sourceLine" id="cb21-6" title="6">} <span class="cf">else</span></a>
-<a class="sourceLine" id="cb21-7" title="7">{</a>
-<a class="sourceLine" id="cb21-8" title="8">  core3 &lt;-<span class="st"> </span>core2</a>
-<a class="sourceLine" id="cb21-9" title="9">}</a>
-<a class="sourceLine" id="cb21-10" title="10"></a>
-<a class="sourceLine" id="cb21-11" title="11"><span class="kw">jplot</span>( <span class="kw">log10</span>(core3<span class="op">$</span>totnetassetend), core3<span class="op">$</span>selfsufficiency, </a>
-<a class="sourceLine" id="cb21-12" title="12">       <span class="dt">xlab=</span><span class="st">&quot;Nonprofit Size (logged Net Assets)&quot;</span>, </a>
-<a class="sourceLine" id="cb21-13" title="13">       <span class="dt">ylab=</span>variable.label,</a>
-<a class="sourceLine" id="cb21-14" title="14">       <span class="dt">xaxt=</span><span class="st">&quot;n&quot;</span>, <span class="dt">xlim=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">10</span>) )</a>
-<a class="sourceLine" id="cb21-15" title="15"><span class="kw">axis</span>( <span class="dt">side=</span><span class="dv">1</span>, </a>
-<a class="sourceLine" id="cb21-16" title="16">      <span class="dt">at=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">10</span>), </a>
-<a class="sourceLine" id="cb21-17" title="17">      <span class="dt">labels=</span><span class="kw">c</span>(<span class="st">&quot;1k&quot;</span>,<span class="st">&quot;10k&quot;</span>,<span class="st">&quot;100k&quot;</span>,<span class="st">&quot;1m&quot;</span>,<span class="st">&quot;10m&quot;</span>,<span class="st">&quot;100m&quot;</span>,<span class="st">&quot;1b&quot;</span>,<span class="st">&quot;10b&quot;</span>) )</a></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>core2<span class="sc">$</span>totnetassetend[ core2<span class="sc">$</span>totnetassetend <span class="sc">&lt;</span> <span class="dv">1</span> ] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>( <span class="fu">nrow</span>(core2) <span class="sc">&gt;</span> <span class="dv">10000</span> )</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  core3 <span class="ot">&lt;-</span> <span class="fu">sample_n</span>( core2, <span class="dv">10000</span> )</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>  core3 <span class="ot">&lt;-</span> core2</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a><span class="fu">jplot</span>( <span class="fu">log10</span>(core3<span class="sc">$</span>totnetassetend), core3<span class="sc">$</span>selfsufficiency, </span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">xlab=</span><span class="st">&quot;Nonprofit Size (logged Net Assets)&quot;</span>, </span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">ylab=</span>variable.label,</span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">xaxt=</span><span class="st">&quot;n&quot;</span>, <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">10</span>) )</span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a><span class="fu">axis</span>( <span class="at">side=</span><span class="dv">1</span>, </span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>      <span class="at">at=</span><span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">10</span>), </span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>      <span class="at">labels=</span><span class="fu">c</span>(<span class="st">&quot;1k&quot;</span>,<span class="st">&quot;10k&quot;</span>,<span class="st">&quot;100k&quot;</span>,<span class="st">&quot;1m&quot;</span>,<span class="st">&quot;10m&quot;</span>,<span class="st">&quot;100m&quot;</span>,<span class="st">&quot;1b&quot;</span>,<span class="st">&quot;10b&quot;</span>) )</span></code></pre></div>
 <p><img src="metric-05-self-sufficiency-ratio_files/figure-html/unnamed-chunk-22-1.png" width="960" /></p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" title="1">core2<span class="op">$</span>totnetassetend[ core2<span class="op">$</span>totnetassetend <span class="op">&lt;</span><span class="st"> </span><span class="dv">1</span> ] &lt;-<span class="st"> </span><span class="ot">NA</span></a>
-<a class="sourceLine" id="cb22-2" title="2">core2<span class="op">$</span>asset.q &lt;-<span class="st"> </span><span class="kw">create_quantiles</span>( <span class="dt">var=</span>core2<span class="op">$</span>totnetassetend, <span class="dt">n.groups=</span><span class="dv">5</span> )</a>
-<a class="sourceLine" id="cb22-3" title="3"></a>
-<a class="sourceLine" id="cb22-4" title="4">core2 <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb22-5" title="5"><span class="st">  </span><span class="kw">filter</span>( <span class="op">!</span><span class="st"> </span><span class="kw">is.na</span>(asset.q) ) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb22-6" title="6"><span class="st">  </span><span class="kw">ggplot</span>( <span class="kw">aes</span>(selfsufficiency) )  <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb22-7" title="7"><span class="st">    </span><span class="kw">geom_density</span>( <span class="dt">alpha =</span> <span class="fl">0.5</span> ) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb22-8" title="8"><span class="st">    </span><span class="kw">labs</span>( <span class="dt">title=</span><span class="st">&quot;Nonprofit Size (logged net assets, if assets &gt; 0)&quot;</span> ) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb22-9" title="9"><span class="st">    </span><span class="kw">xlab</span>( variable.label ) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb22-10" title="10"><span class="st">    </span><span class="kw">ylab</span>( <span class="st">&quot;&quot;</span> ) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb22-11" title="11"><span class="st">    </span><span class="kw">facet_wrap</span>( <span class="op">~</span><span class="st"> </span>asset.q, <span class="dt">nrow=</span><span class="dv">3</span> ) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb22-12" title="12"><span class="st">    </span><span class="kw">theme_minimal</span>( <span class="dt">base_size =</span> <span class="dv">22</span> )  <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb22-13" title="13"><span class="st">    </span><span class="kw">theme</span>( <span class="dt">axis.title.y=</span><span class="kw">element_blank</span>(),</a>
-<a class="sourceLine" id="cb22-14" title="14">           <span class="dt">axis.text.y=</span><span class="kw">element_blank</span>(), </a>
-<a class="sourceLine" id="cb22-15" title="15">           <span class="dt">axis.ticks.y=</span><span class="kw">element_blank</span>() )</a></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>core2<span class="sc">$</span>totnetassetend[ core2<span class="sc">$</span>totnetassetend <span class="sc">&lt;</span> <span class="dv">1</span> ] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>core2<span class="sc">$</span>asset.q <span class="ot">&lt;-</span> <span class="fu">create_quantiles</span>( <span class="at">var=</span>core2<span class="sc">$</span>totnetassetend, <span class="at">n.groups=</span><span class="dv">5</span> )</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>core2 <span class="sc">%&gt;%</span> </span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>( <span class="sc">!</span> <span class="fu">is.na</span>(asset.q) ) <span class="sc">%&gt;%</span> </span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>( <span class="fu">aes</span>(selfsufficiency) )  <span class="sc">+</span> </span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_density</span>( <span class="at">alpha =</span> <span class="fl">0.5</span> ) <span class="sc">+</span> </span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>( <span class="at">title=</span><span class="st">&quot;Nonprofit Size (logged net assets, if assets &gt; 0)&quot;</span> ) <span class="sc">+</span> </span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>( variable.label ) <span class="sc">+</span> </span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ylab</span>( <span class="st">&quot;&quot;</span> ) <span class="sc">+</span> </span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>( <span class="sc">~</span> asset.q, <span class="at">nrow=</span><span class="dv">3</span> ) <span class="sc">+</span> </span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>( <span class="at">base_size =</span> <span class="dv">22</span> )  <span class="sc">+</span> </span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>( <span class="at">axis.title.y=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.text.y=</span><span class="fu">element_blank</span>(), </span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.ticks.y=</span><span class="fu">element_blank</span>() )</span></code></pre></div>
 <p><img src="metric-05-self-sufficiency-ratio_files/figure-html/unnamed-chunk-23-1.png" width="960" /></p>
 <p>Total Assets for Comparison</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" title="1">core2<span class="op">$</span>totassetsend[ core2<span class="op">$</span>totassetsend <span class="op">&lt;</span><span class="st"> </span><span class="dv">1</span> ] &lt;-<span class="st"> </span><span class="ot">NA</span></a>
-<a class="sourceLine" id="cb23-2" title="2">core2<span class="op">$</span>tot.asset.q &lt;-<span class="st"> </span><span class="kw">create_quantiles</span>( <span class="dt">var=</span>core2<span class="op">$</span>totassetsend, <span class="dt">n.groups=</span><span class="dv">5</span> )</a>
-<a class="sourceLine" id="cb23-3" title="3"></a>
-<a class="sourceLine" id="cb23-4" title="4"><span class="cf">if</span>( <span class="kw">nrow</span>(core2) <span class="op">&gt;</span><span class="st"> </span><span class="dv">10000</span> )</a>
-<a class="sourceLine" id="cb23-5" title="5">{</a>
-<a class="sourceLine" id="cb23-6" title="6">  core3 &lt;-<span class="st"> </span><span class="kw">sample_n</span>( core2, <span class="dv">10000</span> )</a>
-<a class="sourceLine" id="cb23-7" title="7">} <span class="cf">else</span></a>
-<a class="sourceLine" id="cb23-8" title="8">{</a>
-<a class="sourceLine" id="cb23-9" title="9">  core3 &lt;-<span class="st"> </span>core2</a>
-<a class="sourceLine" id="cb23-10" title="10">}</a>
-<a class="sourceLine" id="cb23-11" title="11"></a>
-<a class="sourceLine" id="cb23-12" title="12"><span class="kw">jplot</span>( <span class="kw">log10</span>(core3<span class="op">$</span>totassetsend), core3<span class="op">$</span>selfsufficiency, </a>
-<a class="sourceLine" id="cb23-13" title="13">       <span class="dt">xlab=</span><span class="st">&quot;Nonprofit Size (logged Total Assets)&quot;</span>, </a>
-<a class="sourceLine" id="cb23-14" title="14">       <span class="dt">ylab=</span>variable.label,</a>
-<a class="sourceLine" id="cb23-15" title="15">       <span class="dt">xaxt=</span><span class="st">&quot;n&quot;</span>, <span class="dt">xlim=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">10</span>) )</a>
-<a class="sourceLine" id="cb23-16" title="16"><span class="kw">axis</span>( <span class="dt">side=</span><span class="dv">1</span>, </a>
-<a class="sourceLine" id="cb23-17" title="17">      <span class="dt">at=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">10</span>), </a>
-<a class="sourceLine" id="cb23-18" title="18">      <span class="dt">labels=</span><span class="kw">c</span>(<span class="st">&quot;1k&quot;</span>,<span class="st">&quot;10k&quot;</span>,<span class="st">&quot;100k&quot;</span>,<span class="st">&quot;1m&quot;</span>,<span class="st">&quot;10m&quot;</span>,<span class="st">&quot;100m&quot;</span>,<span class="st">&quot;1b&quot;</span>,<span class="st">&quot;10b&quot;</span>) )</a></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>core2<span class="sc">$</span>totassetsend[ core2<span class="sc">$</span>totassetsend <span class="sc">&lt;</span> <span class="dv">1</span> ] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>core2<span class="sc">$</span>tot.asset.q <span class="ot">&lt;-</span> <span class="fu">create_quantiles</span>( <span class="at">var=</span>core2<span class="sc">$</span>totassetsend, <span class="at">n.groups=</span><span class="dv">5</span> )</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>( <span class="fu">nrow</span>(core2) <span class="sc">&gt;</span> <span class="dv">10000</span> )</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>  core3 <span class="ot">&lt;-</span> <span class="fu">sample_n</span>( core2, <span class="dv">10000</span> )</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>  core3 <span class="ot">&lt;-</span> core2</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a><span class="fu">jplot</span>( <span class="fu">log10</span>(core3<span class="sc">$</span>totassetsend), core3<span class="sc">$</span>selfsufficiency, </span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">xlab=</span><span class="st">&quot;Nonprofit Size (logged Total Assets)&quot;</span>, </span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">ylab=</span>variable.label,</span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>       <span class="at">xaxt=</span><span class="st">&quot;n&quot;</span>, <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">10</span>) )</span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a><span class="fu">axis</span>( <span class="at">side=</span><span class="dv">1</span>, </span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>      <span class="at">at=</span><span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">10</span>), </span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>      <span class="at">labels=</span><span class="fu">c</span>(<span class="st">&quot;1k&quot;</span>,<span class="st">&quot;10k&quot;</span>,<span class="st">&quot;100k&quot;</span>,<span class="st">&quot;1m&quot;</span>,<span class="st">&quot;10m&quot;</span>,<span class="st">&quot;100m&quot;</span>,<span class="st">&quot;1b&quot;</span>,<span class="st">&quot;10b&quot;</span>) )</span></code></pre></div>
 <p><img src="metric-05-self-sufficiency-ratio_files/figure-html/unnamed-chunk-24-1.png" width="960" /></p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" title="1"><span class="kw">ggplot</span>( core2, <span class="kw">aes</span>(<span class="dt">x =</span> totassetsend )) <span class="op">+</span><span class="st">  </span></a>
-<a class="sourceLine" id="cb24-2" title="2"><span class="st">  </span><span class="kw">geom_density</span>( <span class="dt">alpha =</span> <span class="fl">0.5</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb24-3" title="3"><span class="st">  </span><span class="kw">xlim</span>( <span class="kw">quantile</span>(core2<span class="op">$</span>totassetsend, <span class="kw">c</span>(<span class="fl">0.02</span>,<span class="fl">0.98</span>), <span class="dt">na.rm=</span>T ) ) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb24-4" title="4"><span class="st">  </span><span class="kw">xlab</span>( <span class="st">&quot;Net Assets&quot;</span> ) <span class="op">+</span></a>
-<a class="sourceLine" id="cb24-5" title="5"><span class="st">    </span><span class="kw">theme</span>( <span class="dt">axis.title.y=</span><span class="kw">element_blank</span>(),</a>
-<a class="sourceLine" id="cb24-6" title="6">           <span class="dt">axis.text.y=</span><span class="kw">element_blank</span>(), </a>
-<a class="sourceLine" id="cb24-7" title="7">           <span class="dt">axis.ticks.y=</span><span class="kw">element_blank</span>() )</a></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>( core2, <span class="fu">aes</span>(<span class="at">x =</span> totassetsend )) <span class="sc">+</span>  </span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>( <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span> </span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>( <span class="fu">quantile</span>(core2<span class="sc">$</span>totassetsend, <span class="fu">c</span>(<span class="fl">0.02</span>,<span class="fl">0.98</span>), <span class="at">na.rm=</span>T ) ) <span class="sc">+</span> </span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>( <span class="st">&quot;Net Assets&quot;</span> ) <span class="sc">+</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>( <span class="at">axis.title.y=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.text.y=</span><span class="fu">element_blank</span>(), </span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.ticks.y=</span><span class="fu">element_blank</span>() )</span></code></pre></div>
 <p><img src="metric-05-self-sufficiency-ratio_files/figure-html/unnamed-chunk-25-1.png" width="960" /></p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" title="1">core2 <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb25-2" title="2"><span class="st">  </span><span class="kw">filter</span>( <span class="op">!</span><span class="st"> </span><span class="kw">is.na</span>(tot.asset.q) ) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb25-3" title="3"><span class="st">  </span><span class="kw">ggplot</span>( <span class="kw">aes</span>(selfsufficiency) )  <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb25-4" title="4"><span class="st">    </span><span class="kw">geom_density</span>( <span class="dt">alpha =</span> <span class="fl">0.5</span> ) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb25-5" title="5"><span class="st">    </span><span class="kw">xlab</span>( <span class="st">&quot;Nonprofit Size (logged total assets, if assets &gt; 0)&quot;</span> ) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb25-6" title="6"><span class="st">    </span><span class="kw">ylab</span>( variable.label ) <span class="op">+</span></a>
-<a class="sourceLine" id="cb25-7" title="7"><span class="st">    </span><span class="kw">facet_wrap</span>( <span class="op">~</span><span class="st"> </span>tot.asset.q, <span class="dt">nrow=</span><span class="dv">3</span> ) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb25-8" title="8"><span class="st">    </span><span class="kw">theme_minimal</span>( <span class="dt">base_size =</span> <span class="dv">22</span> )  <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb25-9" title="9"><span class="st">    </span><span class="kw">theme</span>( <span class="dt">axis.title.y=</span><span class="kw">element_blank</span>(),</a>
-<a class="sourceLine" id="cb25-10" title="10">           <span class="dt">axis.text.y=</span><span class="kw">element_blank</span>(), </a>
-<a class="sourceLine" id="cb25-11" title="11">           <span class="dt">axis.ticks.y=</span><span class="kw">element_blank</span>() )</a></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>core2 <span class="sc">%&gt;%</span> </span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>( <span class="sc">!</span> <span class="fu">is.na</span>(tot.asset.q) ) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>( <span class="fu">aes</span>(selfsufficiency) )  <span class="sc">+</span> </span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_density</span>( <span class="at">alpha =</span> <span class="fl">0.5</span> ) <span class="sc">+</span> </span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>( <span class="st">&quot;Nonprofit Size (logged total assets, if assets &gt; 0)&quot;</span> ) <span class="sc">+</span> </span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ylab</span>( variable.label ) <span class="sc">+</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>( <span class="sc">~</span> tot.asset.q, <span class="at">nrow=</span><span class="dv">3</span> ) <span class="sc">+</span> </span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>( <span class="at">base_size =</span> <span class="dv">22</span> )  <span class="sc">+</span> </span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>( <span class="at">axis.title.y=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.text.y=</span><span class="fu">element_blank</span>(), </span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.ticks.y=</span><span class="fu">element_blank</span>() )</span></code></pre></div>
 <p><img src="metric-05-self-sufficiency-ratio_files/figure-html/unnamed-chunk-26-1.png" width="960" /></p>
 </div>
 <div id="self-sufficiency-ratio-by-nonprofit-age" class="section level2">
-<h2>Self Sufficiency Ratio by Nonprofit Age</h2>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" title="1"><span class="kw">ggplot</span>( core2, <span class="kw">aes</span>(<span class="dt">x =</span> AGE )) <span class="op">+</span><span class="st">  </span></a>
-<a class="sourceLine" id="cb26-2" title="2"><span class="st">  </span><span class="kw">geom_density</span>( <span class="dt">alpha =</span> <span class="fl">0.5</span> )  </a></code></pre></div>
+<h2>Self-Sufficiency Ratio by Nonprofit Age</h2>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>( core2, <span class="fu">aes</span>(<span class="at">x =</span> AGE )) <span class="sc">+</span>  </span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>( <span class="at">alpha =</span> <span class="fl">0.5</span> )  </span></code></pre></div>
 <p><img src="metric-05-self-sufficiency-ratio_files/figure-html/unnamed-chunk-27-1.png" width="960" /></p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" title="1">core2<span class="op">$</span>AGE[ core2<span class="op">$</span>AGE <span class="op">&lt;</span><span class="st"> </span><span class="dv">1</span> ] &lt;-<span class="st"> </span><span class="ot">NA</span></a>
-<a class="sourceLine" id="cb27-2" title="2"></a>
-<a class="sourceLine" id="cb27-3" title="3"><span class="cf">if</span>( <span class="kw">nrow</span>(core2) <span class="op">&gt;</span><span class="st"> </span><span class="dv">10000</span> )</a>
-<a class="sourceLine" id="cb27-4" title="4">{</a>
-<a class="sourceLine" id="cb27-5" title="5">  core3 &lt;-<span class="st"> </span><span class="kw">sample_n</span>( core2, <span class="dv">10000</span> )</a>
-<a class="sourceLine" id="cb27-6" title="6">} <span class="cf">else</span></a>
-<a class="sourceLine" id="cb27-7" title="7">{</a>
-<a class="sourceLine" id="cb27-8" title="8">  core3 &lt;-<span class="st"> </span>core2</a>
-<a class="sourceLine" id="cb27-9" title="9">}</a>
-<a class="sourceLine" id="cb27-10" title="10"></a>
-<a class="sourceLine" id="cb27-11" title="11"><span class="kw">jplot</span>( core3<span class="op">$</span>AGE, core3<span class="op">$</span>selfsufficiency, </a>
-<a class="sourceLine" id="cb27-12" title="12">       <span class="dt">xlab=</span><span class="st">&quot;Nonprofit Age&quot;</span>, </a>
-<a class="sourceLine" id="cb27-13" title="13">       <span class="dt">ylab=</span>variable.label ) </a></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>core2<span class="sc">$</span>AGE[ core2<span class="sc">$</span>AGE <span class="sc">&lt;</span> <span class="dv">1</span> ] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>( <span class="fu">nrow</span>(core2) <span class="sc">&gt;</span> <span class="dv">10000</span> )</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  core3 <span class="ot">&lt;-</span> <span class="fu">sample_n</span>( core2, <span class="dv">10000</span> )</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>  core3 <span class="ot">&lt;-</span> core2</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a><span class="fu">jplot</span>( core3<span class="sc">$</span>AGE, core3<span class="sc">$</span>selfsufficiency, </span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">xlab=</span><span class="st">&quot;Nonprofit Age&quot;</span>, </span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">ylab=</span>variable.label ) </span></code></pre></div>
 <p><img src="metric-05-self-sufficiency-ratio_files/figure-html/unnamed-chunk-28-1.png" width="960" /></p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" title="1">core2 <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb28-2" title="2"><span class="st">  </span><span class="kw">filter</span>( <span class="op">!</span><span class="st"> </span><span class="kw">is.na</span>(age.q) ) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb28-3" title="3"><span class="st">  </span><span class="kw">ggplot</span>( <span class="kw">aes</span>(selfsufficiency) )  <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb28-4" title="4"><span class="st">    </span><span class="kw">geom_density</span>( <span class="dt">alpha =</span> <span class="fl">0.5</span> ) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb28-5" title="5"><span class="st">    </span><span class="kw">labs</span>( <span class="dt">title=</span><span class="st">&quot;Nonprofit Age&quot;</span> ) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb28-6" title="6"><span class="st">    </span><span class="kw">xlab</span>( variable.label ) <span class="op">+</span></a>
-<a class="sourceLine" id="cb28-7" title="7"><span class="st">    </span><span class="kw">ylab</span>( <span class="st">&quot;&quot;</span> ) <span class="op">+</span></a>
-<a class="sourceLine" id="cb28-8" title="8"><span class="st">    </span><span class="kw">facet_wrap</span>( <span class="op">~</span><span class="st"> </span>age.q, <span class="dt">nrow=</span><span class="dv">3</span> ) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb28-9" title="9"><span class="st">    </span><span class="kw">theme_minimal</span>( <span class="dt">base_size =</span> <span class="dv">22</span> )  <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb28-10" title="10"><span class="st">    </span><span class="kw">theme</span>( <span class="dt">axis.title.y=</span><span class="kw">element_blank</span>(),</a>
-<a class="sourceLine" id="cb28-11" title="11">           <span class="dt">axis.text.y=</span><span class="kw">element_blank</span>(), </a>
-<a class="sourceLine" id="cb28-12" title="12">           <span class="dt">axis.ticks.y=</span><span class="kw">element_blank</span>() )</a></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>core2 <span class="sc">%&gt;%</span> </span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>( <span class="sc">!</span> <span class="fu">is.na</span>(age.q) ) <span class="sc">%&gt;%</span> </span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>( <span class="fu">aes</span>(selfsufficiency) )  <span class="sc">+</span> </span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_density</span>( <span class="at">alpha =</span> <span class="fl">0.5</span> ) <span class="sc">+</span> </span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>( <span class="at">title=</span><span class="st">&quot;Nonprofit Age&quot;</span> ) <span class="sc">+</span> </span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>( variable.label ) <span class="sc">+</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ylab</span>( <span class="st">&quot;&quot;</span> ) <span class="sc">+</span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>( <span class="sc">~</span> age.q, <span class="at">nrow=</span><span class="dv">3</span> ) <span class="sc">+</span> </span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>( <span class="at">base_size =</span> <span class="dv">22</span> )  <span class="sc">+</span> </span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>( <span class="at">axis.title.y=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.text.y=</span><span class="fu">element_blank</span>(), </span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.ticks.y=</span><span class="fu">element_blank</span>() )</span></code></pre></div>
 <p><img src="metric-05-self-sufficiency-ratio_files/figure-html/unnamed-chunk-29-1.png" width="960" /></p>
+</div>
+<div id="self-sufficiency-ratio-by-land-and-building-value" class="section level2">
+<h2>Self-Sufficiency Ratio by Land and Building Value</h2>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>( core2, <span class="fu">aes</span>(<span class="at">x =</span> lndbldgsequipend )) <span class="sc">+</span>  </span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>( <span class="at">alpha =</span> <span class="fl">0.5</span> )  </span></code></pre></div>
+<p><img src="metric-05-self-sufficiency-ratio_files/figure-html/unnamed-chunk-30-1.png" width="960" /></p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>core2<span class="sc">$</span>lndbldgsequipend[ core2<span class="sc">$</span>lndbldgsequipend <span class="sc">&lt;</span> <span class="dv">1</span> ] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>( <span class="fu">nrow</span>(core2) <span class="sc">&gt;</span> <span class="dv">10000</span> )</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>  core3 <span class="ot">&lt;-</span> <span class="fu">sample_n</span>( core2, <span class="dv">10000</span> )</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>  core3 <span class="ot">&lt;-</span> core2</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a><span class="fu">jplot</span>( <span class="fu">log10</span>(core3<span class="sc">$</span>lndbldgsequipend), core3<span class="sc">$</span>selfsufficiency, </span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">xlab=</span><span class="st">&quot;Land and Building Value (logged)&quot;</span>, </span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">ylab=</span>variable.label,</span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">xaxt=</span><span class="st">&quot;n&quot;</span>, <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">10</span>) )</span>
+<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a><span class="fu">axis</span>( <span class="at">side=</span><span class="dv">1</span>, </span>
+<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a>      <span class="at">at=</span><span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">10</span>), </span>
+<span id="cb30-16"><a href="#cb30-16" aria-hidden="true" tabindex="-1"></a>      <span class="at">labels=</span><span class="fu">c</span>(<span class="st">&quot;1k&quot;</span>,<span class="st">&quot;10k&quot;</span>,<span class="st">&quot;100k&quot;</span>,<span class="st">&quot;1m&quot;</span>,<span class="st">&quot;10m&quot;</span>,<span class="st">&quot;100m&quot;</span>,<span class="st">&quot;1b&quot;</span>,<span class="st">&quot;10b&quot;</span>) )</span>
+<span id="cb30-17"><a href="#cb30-17" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p><img src="metric-05-self-sufficiency-ratio_files/figure-html/unnamed-chunk-31-1.png" width="960" /></p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>core2 <span class="sc">%&gt;%</span> </span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>( <span class="sc">!</span> <span class="fu">is.na</span>(land.q) ) <span class="sc">%&gt;%</span> </span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>( <span class="fu">aes</span>(selfsufficiency) )  <span class="sc">+</span> </span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_density</span>( <span class="at">alpha =</span> <span class="fl">0.5</span> ) <span class="sc">+</span> </span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>( <span class="at">title=</span><span class="st">&quot;Land and Building Value&quot;</span> ) <span class="sc">+</span> </span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>( variable.label ) <span class="sc">+</span></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ylab</span>( <span class="st">&quot;&quot;</span> ) <span class="sc">+</span></span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>( <span class="sc">~</span> land.q, <span class="at">nrow=</span><span class="dv">3</span> ) <span class="sc">+</span> </span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>( <span class="at">base_size =</span> <span class="dv">22</span> )  <span class="sc">+</span> </span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>( <span class="at">axis.title.y=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.text.y=</span><span class="fu">element_blank</span>(), </span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>           <span class="at">axis.ticks.y=</span><span class="fu">element_blank</span>() )</span></code></pre></div>
+<p><img src="metric-05-self-sufficiency-ratio_files/figure-html/unnamed-chunk-32-1.png" width="960" /></p>
 </div>
 </div>
 <div id="save-metrics" class="section level1">
 <h1>Save Metrics</h1>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" title="1">core.selfsufficiency &lt;-<span class="st"> </span><span class="kw">select</span>( core, ein, tax_pd, selfsufficiency )</a>
-<a class="sourceLine" id="cb29-2" title="2"><span class="kw">saveRDS</span>( core.selfsufficiency, <span class="st">&quot;03-data-ratios/m-05-self-sufficiency-ratio.rds&quot;</span> )</a>
-<a class="sourceLine" id="cb29-3" title="3"><span class="kw">write.csv</span>( core.selfsufficiency, <span class="st">&quot;03-data-ratios/m-05-self-suffiency-ratio.csv&quot;</span> )</a></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>core.selfsufficiency <span class="ot">&lt;-</span> <span class="fu">select</span>( core, ein, tax_pd, selfsufficiency )</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>( core.selfsufficiency, <span class="st">&quot;03-data-ratios/m-05-self-sufficiency-ratio.rds&quot;</span> )</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>( core.selfsufficiency, <span class="st">&quot;03-data-ratios/m-05-self-suffiency-ratio.csv&quot;</span> )</span></code></pre></div>
 <br> <br>
 <hr>
 <p><br> <br></p>
@@ -1365,6 +1394,7 @@ footer.body{
 </style>
 
 
+
 </div>
 </div>
 
@@ -1392,7 +1422,7 @@ $(document).ready(function () {
 
 $(document).ready(function () {
   $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
+    $(this).parent().toggleClass('nav-tabs-open');
   });
 });
 </script>
@@ -1406,6 +1436,9 @@ $(document).ready(function () {
 
 <script>
 $(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
 
     // move toc-ignore selectors from section div to header
     $('div.section.toc-ignore')

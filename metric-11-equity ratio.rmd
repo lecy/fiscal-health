@@ -267,6 +267,7 @@ core2$exp.q   <- create_quantiles( var=core2$totfuncexpns,   n.groups=5 )
 core2$rev.q   <- create_quantiles( var=core2$totrevenue,     n.groups=5 )
 core2$asset.q <- create_quantiles( var=core2$totnetassetend, n.groups=5 )
 core2$age.q   <- create_quantiles( var=core2$AGE,            n.groups=5 )
+core2$land.q  <- create_quantiles( var=core2$lndbldgsequipend,            n.groups=5 )
 ```
 
 
@@ -275,7 +276,7 @@ core2$age.q   <- create_quantiles( var=core2$AGE,            n.groups=5 )
 
 
 
-## `r variable.label` Density 
+## Equity Ratio, Capital Ratio Density 
 
 ```{r, fig.height=4}
 min.x <- min( core2$equity_ratio, na.rm=T )
@@ -292,7 +293,7 @@ ggplot( core2, aes(x = equity_ratio )) +
 
 
 
-## `r variable.label` by NTEE Major Code
+## Equity Ratio, Capital Ratio by NTEE Major Code
 
 
 
@@ -329,7 +330,7 @@ ggplot( core3, aes( x=equity_ratio ) ) +
 
 
 
-## `r variable.label` by Region 
+## Equity Ratio, Capital Ratio by Region 
 
 ```{r}
 table( core2$Region) %>% kable()
@@ -390,7 +391,7 @@ core2 %>%
 
 
 
-## `r variable.label` by Nonprofit Size (Expenses)
+## Equity Ratio, Capital Ratio by Nonprofit Size (Expenses)
 
 
 ```{r, fig.height=4}
@@ -441,7 +442,7 @@ core2 %>%
 
 
 
-## `r variable.label` by Nonprofit Size (Revenue)
+## Equity Ratio, Capital Ratio by Nonprofit Size (Revenue)
 
 
 ```{r, fig.height=4}
@@ -493,7 +494,7 @@ core2 %>%
 
 
 
-## `r variable.label` by Nonprofit Size (Net Assets)
+## Equity Ratio, Capital Ratio by Nonprofit Size (Net Assets)
 
 ```{r, fig.height=4}
 ggplot( core2, aes(x = totnetassetend )) +  
@@ -601,7 +602,7 @@ core2 %>%
 ```
 
 
-## `r variable.label` by Nonprofit Age
+## Equity Ratio, Capital Ratio by Nonprofit Age
 
 ```{r, fig.height=4}
 ggplot( core2, aes(x = AGE )) +  
@@ -645,6 +646,50 @@ core2 %>%
 ```
 
 
+## Equity Ratio, Capital Ratio by Land and Building Value
+
+```{r, fig.height=4}
+ggplot( core2, aes(x = lndbldgsequipend )) +  
+  geom_density( alpha = 0.5 )  
+```
+
+
+```{r, fig.height=5}
+core2$lndbldgsequipend[ core2$lndbldgsequipend < 1 ] <- NA
+if( nrow(core2) > 10000 )
+{
+  core3 <- sample_n( core2, 10000 )
+} else
+{
+  core3 <- core2
+
+
+jplot( log10(core3$lndbldgsequipend), core3$equity_ratio, 
+       xlab="Land and Building Value (logged)", 
+       ylab=variable.label,
+       xaxt="n", xlim=c(3,10) )
+axis( side=1, 
+      at=c(3,4,5,6,7,8,9,10), 
+      labels=c("1k","10k","100k","1m","10m","100m","1b","10b") )
+}
+
+```
+
+```{r}
+core2 %>% 
+  filter( ! is.na(land.q) ) %>% 
+  ggplot( aes(equity_ratio) )  + 
+    geom_density( alpha = 0.5 ) + 
+    labs( title="Land and Building Value" ) + 
+    xlab( variable.label ) +
+    ylab( "" ) +
+    facet_wrap( ~ land.q, nrow=3 ) + 
+    theme_minimal( base_size = 22 )  + 
+    theme( axis.title.y=element_blank(),
+           axis.text.y=element_blank(), 
+           axis.ticks.y=element_blank() )
+
+```
 
 
 # Save Metrics 

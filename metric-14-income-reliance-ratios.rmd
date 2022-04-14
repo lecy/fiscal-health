@@ -696,6 +696,51 @@ core2 %>%
            axis.ticks.y=element_blank() )
 ```
 
+## `r variable.label` by Land and Building Value
+
+```{r, fig.height=4}
+ggplot( core2, aes(x = lndbldgsequipend )) +  
+  geom_density( alpha = 0.5 )  
+```
+
+
+```{r, fig.height=5}
+core2$lndbldgsequipend[ core2$lndbldgsequipend < 1 ] <- NA
+if( nrow(core2) > 10000 )
+{
+  core3 <- sample_n( core2, 10000 )
+} else
+{
+  core3 <- core2
+
+
+jplot( log10(core3$lndbldgsequipend), core3$donation_ratio, 
+       xlab="Land and Building Value (logged)", 
+       ylab=variable.label,
+       xaxt="n", xlim=c(3,10) )
+axis( side=1, 
+      at=c(3,4,5,6,7,8,9,10), 
+      labels=c("1k","10k","100k","1m","10m","100m","1b","10b") )
+}
+
+```
+
+```{r}
+core2 %>% 
+  filter( ! is.na(land.q) ) %>% 
+  ggplot( aes(donation_ratio) )  + 
+    geom_density( alpha = 0.5 ) + 
+    labs( title="Land and Building Value" ) + 
+    xlab( variable.label ) +
+    ylab( "" ) +
+    facet_wrap( ~ land.q, nrow=3 ) + 
+    theme_minimal( base_size = 22 )  + 
+    theme( axis.title.y=element_blank(),
+           axis.text.y=element_blank(), 
+           axis.ticks.y=element_blank() )
+
+```
+
 
 # Earned Income Reliance Ratio Analysis 
 
@@ -830,6 +875,7 @@ core2$exp.q   <- create_quantiles( var=core2$totfuncexpns,   n.groups=5 )
 core2$rev.q   <- create_quantiles( var=core2$totrevenue,     n.groups=5 )
 core2$asset.q <- create_quantiles( var=core2$totnetassetend, n.groups=5 )
 core2$age.q   <- create_quantiles( var=core2$AGE,            n.groups=5 )
+core2$land.q   <- create_quantiles( var=core2$lndbldgsequipend,  n.groups=5 )
 ```
 
 
@@ -1207,6 +1253,52 @@ core2 %>%
            axis.ticks.y=element_blank() )
 ```
 
+## `r variable.label` by Land and Building Value
+
+```{r, fig.height=4}
+ggplot( core2, aes(x = lndbldgsequipend )) +  
+  geom_density( alpha = 0.5 )  
+```
+
+
+```{r, fig.height=5}
+core2$lndbldgsequipend[ core2$lndbldgsequipend < 1 ] <- NA
+if( nrow(core2) > 10000 )
+{
+  core3 <- sample_n( core2, 10000 )
+} else
+{
+  core3 <- core2
+
+
+jplot( log10(core3$lndbldgsequipend), core3$earned_income_ratio, 
+       xlab="Land and Building Value (logged)", 
+       ylab=variable.label,
+       xaxt="n", xlim=c(3,10) )
+axis( side=1, 
+      at=c(3,4,5,6,7,8,9,10), 
+      labels=c("1k","10k","100k","1m","10m","100m","1b","10b") )
+}
+
+```
+
+```{r}
+core2 %>% 
+  filter( ! is.na(land.q) ) %>% 
+  ggplot( aes(earned_income_ratio) )  + 
+    geom_density( alpha = 0.5 ) + 
+    labs( title="Land and Building Value" ) + 
+    xlab( variable.label ) +
+    ylab( "" ) +
+    facet_wrap( ~ land.q, nrow=3 ) + 
+    theme_minimal( base_size = 22 )  + 
+    theme( axis.title.y=element_blank(),
+           axis.text.y=element_blank(), 
+           axis.ticks.y=element_blank() )
+
+```
+
+
 <<<<<<< HEAD
 # Investment Income Reliance Ratio Analysis 
 =======
@@ -1343,6 +1435,7 @@ core2$exp.q   <- create_quantiles( var=core2$totfuncexpns,   n.groups=5 )
 core2$rev.q   <- create_quantiles( var=core2$totrevenue,     n.groups=5 )
 core2$asset.q <- create_quantiles( var=core2$totnetassetend, n.groups=5 )
 core2$age.q   <- create_quantiles( var=core2$AGE,            n.groups=5 )
+core2$land.q   <- create_quantiles( var=core2$lndbldgsequipend,   n.groups=5 )
 ```
 
 
@@ -1719,7 +1812,52 @@ core2 %>%
            axis.text.y=element_blank(), 
            axis.ticks.y=element_blank() )
 ```
- 
+
+## `r variable.label` by Land and Building Value
+
+```{r, fig.height=4}
+ggplot( core2, aes(x = lndbldgsequipend )) +  
+  geom_density( alpha = 0.5 )  
+```
+
+
+```{r, fig.height=5}
+core2$lndbldgsequipend[ core2$lndbldgsequipend < 1 ] <- NA
+if( nrow(core2) > 10000 )
+{
+  core3 <- sample_n( core2, 10000 )
+} else
+{
+  core3 <- core2
+
+
+jplot( log10(core3$lndbldgsequipend), core3$investment_income_ratio, 
+       xlab="Land and Building Value (logged)", 
+       ylab=variable.label,
+       xaxt="n", xlim=c(3,10) )
+axis( side=1, 
+      at=c(3,4,5,6,7,8,9,10), 
+      labels=c("1k","10k","100k","1m","10m","100m","1b","10b") )
+}
+
+```
+
+```{r}
+core2 %>% 
+  filter( ! is.na(land.q) ) %>% 
+  ggplot( aes(investment_income_ratio) )  + 
+    geom_density( alpha = 0.5 ) + 
+    labs( title="Land and Building Value" ) + 
+    xlab( variable.label ) +
+    ylab( "" ) +
+    facet_wrap( ~ land.q, nrow=3 ) + 
+    theme_minimal( base_size = 22 )  + 
+    theme( axis.title.y=element_blank(),
+           axis.text.y=element_blank(), 
+           axis.ticks.y=element_blank() )
+
+```
+
 
 <<<<<<< HEAD
 =======
@@ -1853,6 +1991,7 @@ core2$exp.q   <- create_quantiles( var=core2$totfuncexpns,   n.groups=5 )
 core2$rev.q   <- create_quantiles( var=core2$totrevenue,     n.groups=5 )
 core2$asset.q <- create_quantiles( var=core2$totnetassetend, n.groups=5 )
 core2$age.q   <- create_quantiles( var=core2$AGE,            n.groups=5 )
+core2$land.q   <- create_quantiles( var=core2$lndbldgsequipend,   n.groups=5 )
 ```
 
 
@@ -2228,6 +2367,51 @@ core2 %>%
     theme( axis.title.y=element_blank(),
            axis.text.y=element_blank(), 
            axis.ticks.y=element_blank() )
+```
+
+## `r variable.label` by Land and Building Value
+
+```{r, fig.height=4}
+ggplot( core2, aes(x = lndbldgsequipend )) +  
+  geom_density( alpha = 0.5 )  
+```
+
+
+```{r, fig.height=5}
+core2$lndbldgsequipend[ core2$lndbldgsequipend < 1 ] <- NA
+if( nrow(core2) > 10000 )
+{
+  core3 <- sample_n( core2, 10000 )
+} else
+{
+  core3 <- core2
+
+
+jplot( log10(core3$lndbldgsequipend), core3$income_reliance_ratio, 
+       xlab="Land and Building Value (logged)", 
+       ylab=variable.label,
+       xaxt="n", xlim=c(3,10) )
+axis( side=1, 
+      at=c(3,4,5,6,7,8,9,10), 
+      labels=c("1k","10k","100k","1m","10m","100m","1b","10b") )
+}
+
+```
+
+```{r}
+core2 %>% 
+  filter( ! is.na(land.q) ) %>% 
+  ggplot( aes(income_reliance_ratio) )  + 
+    geom_density( alpha = 0.5 ) + 
+    labs( title="Land and Building Value" ) + 
+    xlab( variable.label ) +
+    ylab( "" ) +
+    facet_wrap( ~ land.q, nrow=3 ) + 
+    theme_minimal( base_size = 22 )  + 
+    theme( axis.title.y=element_blank(),
+           axis.text.y=element_blank(), 
+           axis.ticks.y=element_blank() )
+
 ```
 
 # Save Metrics 
