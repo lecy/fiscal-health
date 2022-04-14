@@ -1,0 +1,156 @@
+---
+title: "Panel Data Analysis"
+font: Lato
+output:
+  html_document:
+    self_contained: TRUE
+    toc: TRUE
+    toc_float: TRUE
+    css: www/web_report.css
+    output_dir: "."
+---
+
+This page is used to create a set of metric variables for a panel dataset of our organizations (years = 2001, 2004, 2007, 2010, 2013, 2016, and 2019)
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set( echo = TRUE, 
+                       message=F, 
+                       warning=F, 
+                       error = TRUE,
+                       fig.width = 10, 
+                       fig.height = 6, 
+                       collapse = TRUE )
+```
+
+
+```{r, echo=F}
+
+## Packages
+
+library( haven )        # importing data files 
+library( tidyr )        # data wrangling
+library( dplyr )        # data wrangling 
+library( ggplot2 )      # fancy plots 
+library( ggthemes )     # fancy plots
+library( scales )       # re-scaling numbers
+library( stargazer )    # nice tables 
+library( pander )       # format tables for HTML 
+library( knitr )        # formatting functions 
+#library( corrplot )
+
+library( urbnthemes )   # setting the color scheme to Urban's
+set_urbn_defaults(style = "print")
+
+source( "r-functions.R" )
+
+# stargazer table print type
+# run chunk for live RMD sessions
+s.type <- "text"
+
+# stargazer table print type
+# resets to html when knitting
+s.type <- "html"
+
+
+## Load Data
+
+# local: 
+d <- readRDS( "03-data-ratios/ALL-METRICS.rds" )
+
+```
+
+
+```{r header-image, fig.width = 3.5, fig.height = 1, echo = FALSE}
+# All defaults
+knitr::include_graphics(here::here("img", "logo.png"))
+```
+
+
+<br>
+<hr>
+<br>
+
+
+```{r}
+full_dataset<- read.csv("C:/Users/LLo/Documents/GitHub/fiscal-health/04-Panel-Datasets/org_panel_data.csv")
+
+#Create the Debt to Asset Ratio Metric
+
+zero.these <- full_dataset$totassetsend == 0 
+full_dataset$totassetsend[ full_dataset$totassetsend == 0 ] <- NA 
+
+full_dataset$dar <- full_dataset$totliabend / full_dataset$totassetsend
+
+
+#Create Days of Operating Cash Metric
+operating_cash <- ( full_dataset$nonintcashend + full_dataset$svngstempinvend + 
+                         full_dataset$pldgegrntrcvblend + full_dataset$accntsrcvblend)
+
+# can't divide by zero
+payables <- ( full_dataset$accntspayableend + full_dataset$grntspayableend )/365
+payables[ payables == 0 ] <- NA
+
+full_dataset$daysoperating_coh <-  operating_cash / payables
+
+#Create Debt Management Ratio 
+
+liabilities  <- ( full_dataset$totliabend)
+unres_nassets <- ( full_dataset$unrstrctnetasstsend)
+
+# can't divide by zero
+unres_nassets[ unres_nassets == 0 ] <- NA
+
+# SAVE RESULTS 
+full_dataset$debt_mgmnt_ratio <-  liabilities / unres_nassets
+
+
+
+
+#Create Self-Sufficiency Ratio 
+earned_income  <- full_dataset$totprgmrevnue 
+total_expenses <- full_dataset$totfuncexpns
+
+# can't divide by zero
+total_expenses[ total_expenses == 0 ] <- NA
+
+# SAVE RESULTS 
+full_dataset$selfsufficiency <- ( earned_income / total_expenses )    
+
+
+#Create Asset-Revenue Ratio
+
+
+
+````
+
+
+
+
+
+```{r}
+jplot( full_dataset$dar, full_datset$year,
+       xlab="Debt to Asset Ratio", 
+       ylab= "Year",
+       xaxt="n", xlim=c(2000,2020))
+
+
+
+```
+
+```
+
+
+<br>
+<br>
+<hr>
+<br>
+<br>
+
+
+
+
+```{css, echo=F}
+
+div#TOC{ margin-top: 42px; }
+```
+
