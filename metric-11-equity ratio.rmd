@@ -93,7 +93,7 @@ $$Equity\:Ratio = \frac{Net \: Assets}{Total \: Assets} $$
 
 This metric indicates how much of an organization's assets are owned free and clear or how much equity it has in its total assets. Nonprofits with greater amounts of equity are more flexible in the face of financial shocks than organizations with comparatively lesser amounts of equity because they can (1) borrow money from capital markets and (2) convert those assets to cash to offset financial shocks.
 
-High values in this indicator are generally better, as they show that an organization has substantial equity in its assets. Low or negative values indicate an organization has higher liabilities and is generally more leveraged and thus more vulnerable to shocks. 
+High values in this indicator are generally better, as they show that an organization has substantial equity in its assets. Low or negative values indicate an organization has higher liabilities and is generally more leveraged and thus more vulnerable to shocks. However, low values also indicate that an organization may be investing more of its equity for growth. 
 
 ## Variables 
 

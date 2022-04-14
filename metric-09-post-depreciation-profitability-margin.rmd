@@ -213,7 +213,7 @@ Any cited works here...
 # Descriptive Statistics
 
 
-Convert all monetary variables to thousands of dollars. 
+Convert all monetary variables to thousands of dollars. Scale metric up (multiply by 100) for readability.
 
 ```{r, results="asis"}
 
@@ -236,7 +236,7 @@ core2 %>%
              digits=0, 
              summary.stat = c("min","p25","median",
                               "mean","p75","max", "sd"),
-             covariate.labels = c("Post-Depreciation Profitability Margin", "Age", 
+             covariate.labels = c("Post-Depreciation Profitability Margin (x100)", "Age", 
                                   "Revenue ($1k)", "Expenses($1k)", 
                                   "Buildings ($1k)", "Total Assets ($1k)",
                                   "Net Assets ($1k)", "Liabiliies ($1k)"))

@@ -262,7 +262,7 @@ core2$land.q <- create_quantiles(var=core2$lndbldgsequipend,            n.groups
 
 
 
-## Operating Margin Density 
+## Assets to Revenue Density 
 
 ```{r, fig.height=4}
 min.x <- min( core2$asset_rev_ratio, na.rm=T )
@@ -279,7 +279,7 @@ ggplot( core2, aes(x = asset_rev_ratio )) +
 
 
 
-## Operating Margin by NTEE Major Code
+## Assets to Revenue by NTEE Major Code
 
 
 
@@ -316,7 +316,7 @@ ggplot( core3, aes( x=asset_rev_ratio ) ) +
 
 
 
-## Operating Margin by Region 
+## Assets to Revenue by Region 
 
 ```{r}
 table( core2$Region) %>% kable()
@@ -377,7 +377,7 @@ core2 %>%
 
 
 
-## Operating Margin by Nonprofit Size (Expenses)
+## Assets to Revenue by Nonprofit Size (Expenses)
 
 
 ```{r, fig.height=4}
@@ -428,7 +428,7 @@ core2 %>%
 
 
 
-## Operating Margin by Nonprofit Size (Revenue)
+## Assets to Revenue by Nonprofit Size (Revenue)
 
 
 ```{r, fig.height=4}
@@ -480,7 +480,7 @@ core2 %>%
 
 
 
-## Operating Margin by Nonprofit Size (Net Assets)
+## Assets to Revenue by Nonprofit Size (Net Assets)
 
 ```{r, fig.height=4}
 ggplot( core2, aes(x = totnetassetend )) +  
@@ -588,7 +588,7 @@ core2 %>%
 ```
 
 
-## Operating Margin by Nonprofit Age
+## Assets to Revenue by Nonprofit Age
 
 ```{r, fig.height=4}
 ggplot( core2, aes(x = AGE )) +  
@@ -632,7 +632,7 @@ core2 %>%
 ```
 
 
-## Operating Margin by Land and Building Value
+## Assets to Revenue by Land and Building Value
 
 ```{r, fig.height=4}
 ggplot( core2, aes(x = lndbldgsequipend )) +  

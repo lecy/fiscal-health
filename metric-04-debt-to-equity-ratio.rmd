@@ -98,7 +98,9 @@ $$Debt \: to \: Equity \: Ratio = \frac{Total \: Debt}{Unrestricted \: Net \: As
 
 Debt to Equity Ratio is a a leverage ratio that defines the total amount of debt relative to the unrestricted assets owned by an organization. 
 
-This metric shows the big picture view of how much an organization owes relative to what it owns. Higher values mean it is more highly leveraged, meaning it has low capacity for future borrowing. As an example: if an organization has a total-debt-to-net-assets ratio of 0.4, 40% of its assets are financed by creditors, and 60% are its own unrestricted, available equity. As this percentage creeps up near the 50% mark, it can call into question the organization’s ability to manage debt, which could jeopardize the delivery of programs and services.
+This metric shows the big picture view of how much an organization owes relative to what it owns. Higher values mean it is more highly leveraged, meaning it has low capacity for future borrowing. As an example: if an organization has a total-debt-to-net-assets ratio of 0.4, 40% of its assets are financed by creditors, and 60% are its own unrestricted, available equity. As this percentage creeps above the 50% mark, it can call into question the organization’s ability to manage debt, which could jeopardize the delivery of programs and services. However, for developers, extremely low values may mean the organization is not capitalizing enough on its equity to expand. 
+
+This value can be negative if an organization has either overpaid on its debts or if it has negative unrestricted net assets. 
 
 One limitation of this metric is that it does not provide any indication of asset quality or liquidity since it lumps tangible and intangible assets together. 
 
@@ -153,7 +155,7 @@ ggplot( core, aes(x = der ) ) +
 
 
 
-Winsorization: 
+Winsorization: All extreme values have been capped by replacing any values below the 5% distribution and above the 95% distribution with the 5% and 95% values. Consequently the end tails to all density charts may be slightly higher than normal but the tails will not show outliers.
 
 ```{r}
 x.05 <- quantile( core$der, 0.05, na.rm=T )
@@ -182,16 +184,6 @@ Tax data is available for full 990 filers, so this metric does not describe any 
 Total assets < $500,000. Some organizations with receipts or assets below those thresholds may have filed a full 990, but these would be exceptions. 
 
 
-## Reference
-
-
-Any cited works here...
-
-
-
-
-
-
 
 
 
@@ -203,7 +195,7 @@ Convert all monetary variables to thousands of dollars.
 ```{r, results="asis"}
 
 core2 %>%
-  mutate( # der = der * 10000,
+  mutate( der = der * 10000,
     totrevenue = totrevenue / 1000,
     totfuncexpns = totfuncexpns / 1000, 
     lndbldgsequipend = lndbldgsequipend / 1000,
@@ -221,12 +213,12 @@ core2 %>%
              digits=0, 
              summary.stat = c("min","p25","median",
                               "mean","p75","max", "sd"),
-             covariate.labels = c("Debt Equity Ratio", "Age", 
+             covariate.labels = c("Debt Equity Ratio*", "Age", 
                                   "Revenue ($1k)", "Expenses($1k)", 
                                   "Buildings ($1k)", "Total Assets ($1k)",
                                   "Net Assets ($1k)", "Liabiliies ($1k)"))
 ```
-
+* Debt Equity Ratio has been multiplied by 100 to improve readability. Ordinarily this a 0 to 1 ratio, though negative values are possible if an organizaiton has overpaid on its debts. 
 
 
 What proportion of orgs have Debt Equity Ratios equal to zero (no debt or payables)?

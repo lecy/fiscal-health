@@ -90,11 +90,11 @@ core <- readRDS( "02-data-wrangled/core.rds" )
 
 There are three indicators to construct that show the relationship between types of income to overall revenue, and one final indicator that analyzes across all three of those indicators, picking the largest of them for any organization, which ultimately shows what the average degree of dependence on any one source of income is across all organizations. 
 
-### Donation Dependence Ratio
+### Donation/Grant Dependence Ratio
 
-$$Donation\: Dependence \:Ratio = \frac{Donation\: Revenues}{Total \: Revenues} $$
+$$Donation/Grant\: Dependence \:Ratio = \frac{Donation\: or \: Grant\: Revenues}{Total \: Revenues} $$
 
-This metric shows how much of an organization's total revenues come from contributions and special event reveues. High levels in this indicator are undesirable since that means that an organization's revenues are volatile insofar as it is dependent on  contributions that are highly likely to contract during economic downturns. Low values in this indicator mean an organization is not dependent on donations.
+This metric shows how much of an organization's total revenues come from contributions, government grants, and special event reveues. High levels in this indicator are undesirable since that means that an organization's revenues are volatile insofar as it is dependent on  contributions that are highly likely to contract during economic downturns. Low values in this indicator mean an organization is not dependent on donations.
 
 <br>
 ### Earned Income Dependence Ratio
@@ -122,7 +122,7 @@ This metric is limited because it doesn't indicate which source of revenue organ
 Note: This data is available only for organizations that file full 990s. [Organizations with revenues <$200,000 and total assets <$500,000 have the option to not file a full 990 and file an EZ instead.]
 
 
-### Donation Dependence Ratio 
+### Donation/Grant Dependence Ratio 
 
 * **Numerator:** Donation Revenues [total contributions and net special event revenue] 
   <br>
@@ -185,7 +185,7 @@ Note: This data is available only for organizations that file full 990s. [Organi
   <br>
 
 
-# Donation Reliance Ratio Analysis 
+# Donation/Grant Reliance Ratio Analysis 
 
 ```{r, eval=T}
 # TEMPORARY VARIABLES 
@@ -263,12 +263,12 @@ The data have been capped to those with values between 5% and 95% of the normal 
 ## Descriptive Statistics
 
 
-Note: All monetary variables have been converted to thousands of dollars. 
+Note: All monetary variables have been converted to thousands of dollars. Metric has been scaled/multiplied by 100 for readability. 
 
 ```{r, results="asis"}
 
 core2 %>%
-  mutate( # donation_ratio = donation_ratio * 10000,
+  mutate( donation_ratio = donation_ratio * 100,
     totrevenue = totrevenue / 1000,
     totfuncexpns = totfuncexpns / 1000, 
     lndbldgsequipend = lndbldgsequipend / 1000,
@@ -286,7 +286,7 @@ core2 %>%
              digits=2, 
              summary.stat = c("min","p25","median",
                               "mean","p75","max", "sd"),
-             covariate.labels = c("Donation Reliance Ratio", "Age", 
+             covariate.labels = c("Donation/Grant Reliance Ratio", "Age", 
                                   "Revenue ($1k)", "Expenses($1k)", 
                                   "Buildings ($1k)", "Total Assets ($1k)",
                                   "Net Assets ($1k)", "Liabiliies ($1k)"))
@@ -294,7 +294,7 @@ core2 %>%
 
 
 
-What proportion of orgs have Donation Reliance Ratios equal to zero?
+What proportion of orgs have Donation/Grant Reliance Ratios equal to zero?
 
 
 ```{r}
@@ -302,7 +302,7 @@ prop.zero <- mean( core2$donation_ratio == 0, na.rm=T )
 ```
 
 
-In the sample, `r 100*round(prop.zero,2)` percent of the organizations have Donation Reliance Ratios equal to zero, meaning they have no donation revenues. These organizations are dropped from subsequent graphs to keep the visualizations clean. The interpretation of the graphics should be the distributions of Donation Reliance Ratios for organizations that have positive or negative values.  
+In the sample, `r 100*round(prop.zero,2)` percent of the organizations have Donation/Grant Reliance Ratios equal to zero, meaning they have no donation revenues. These organizations are dropped from subsequent graphs to keep the visualizations clean. The interpretation of the graphics should be the distributions of Donation/Grant Reliance Ratios for organizations that have positive or negative values.  
 
 
 
@@ -327,7 +327,7 @@ core2$land.q   <- create_quantiles( var=core2$lndbldgsequipend,  n.groups=5 )
 
 
 
-## `r variable.label3` Density 
+## `r variable.label1` Density 
 
 ```{r, fig.height=4}
 min.x <- min( core2$donation_ratio, na.rm=T )

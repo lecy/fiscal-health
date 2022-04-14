@@ -132,7 +132,7 @@ operating_cash <- ( core$nonintcashend + core$svngstempinvend +
                          core$pldgegrntrcvblend + core$accntsrcvblend)
 
 # can't divide by zero
-payables <- ( core$accntspayableend + core$grntspayableend )
+payables <- ( core$accntspayableend + core$grntspayableend )/365
 payables[ payables == 0 ] <- NA
 
 core$daysoperating_coh <-  operating_cash / payables
@@ -165,8 +165,8 @@ mean( core2$daysoperating_coh < 0, na.rm=T )
 core2$daysoperating_coh[ core2$daysoperating_coh < 0 ] <- 0
 
 # proption of values above 200% 
-mean( core2$daysoperating_coh > 50, na.rm=T ) 
-core2$daysoperating_coh[ core2$daysoperating_coh > 50 ] <- 50
+#mean( core2$daysoperating_coh > 50, na.rm=T ) 
+#core2$daysoperating_coh[ core2$daysoperating_coh > 50 ] <- 50
 ```
 
 
@@ -176,16 +176,6 @@ core2$daysoperating_coh[ core2$daysoperating_coh > 50 ] <- 50
 
 Tax data is available for full 990 filers, so this metric does not describe any organizations with Gross receipts < $200,000 and
 Total assets < $500,000. Some organizations with receipts or assets below those thresholds may have filed a full 990, but these would be exceptions. 
-
-
-## Reference
-
-
-Any cited works here...
-
-
-
-
 
 
 

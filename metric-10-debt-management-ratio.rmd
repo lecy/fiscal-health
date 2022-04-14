@@ -213,12 +213,12 @@ Any cited works here...
 # Descriptive Statistics
 
 
-Convert all monetary variables to thousands of dollars. 
+Convert all monetary variables to thousands of dollars. Scale up metric (multiply by 100) for readability.
 
 ```{r, results="asis"}
 
 core2 %>%
-  mutate( # debt_mgmnt_ratio = debt_mgmnt_ratio * 10000,
+  mutate( debt_mgmnt_ratio = debt_mgmnt_ratio * 100,
     totrevenue = totrevenue / 1000,
     totfuncexpns = totfuncexpns / 1000, 
     lndbldgsequipend = lndbldgsequipend / 1000,
@@ -236,7 +236,7 @@ core2 %>%
              digits=0, 
              summary.stat = c("min","p25","median",
                               "mean","p75","max", "sd"),
-             covariate.labels = c("Debt Management Ratio", "Age", 
+             covariate.labels = c("Debt Management Ratio (x100)", "Age", 
                                   "Revenue ($1k)", "Expenses($1k)", 
                                   "Buildings ($1k)", "Total Assets ($1k)",
                                   "Net Assets ($1k)", "Liabiliies ($1k)"))

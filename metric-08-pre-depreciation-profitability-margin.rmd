@@ -154,7 +154,7 @@ ggplot( core, aes(x = pred_profitmargin ) ) +
 ```
 
 
-
+Winsorization: All extreme values have been capped by replacing any values below the 5% distribution and above the 95% distribution with the 5% and 95% values. Consequently the end tails to all density charts may be slightly higher than reality but the visuals will be scaled for better viewing (not skewed by outliers).
 
 ```{r}
 core2 <- core
@@ -197,28 +197,16 @@ Total assets < $500,000. Some organizations with receipts or assets below those 
 The data have been capped to those with values between 5% and 95% of the normal distribution to cut off outliers and exempt organizations with zero profitability (though negative values are allowed still). 
 
 
-## Reference
-
-
-Any cited works here...
-
-
-
-
-
-
-
-
 
 # Descriptive Statistics
 
 
-Convert all monetary variables to thousands of dollars. 
+Convert all monetary variables to thousands of dollars. Scale margin (multiply it by 100) for readability
 
 ```{r, results="asis"}
 
 core2 %>%
-  mutate( # pred_profitmargin = pred_profitmargin * 10000,
+  mutate( pred_profitmargin = pred_profitmargin * 100,
     totrevenue = totrevenue / 1000,
     totfuncexpns = totfuncexpns / 1000, 
     lndbldgsequipend = lndbldgsequipend / 1000,
@@ -236,7 +224,7 @@ core2 %>%
              digits=0, 
              summary.stat = c("min","p25","median",
                               "mean","p75","max", "sd"),
-             covariate.labels = c("Pre-Depreciation Profitability Margin", "Age", 
+             covariate.labels = c("Pre-Depreciation Profitability Margin (x100)", "Age", 
                                   "Revenue ($1k)", "Expenses($1k)", 
                                   "Buildings ($1k)", "Total Assets ($1k)",
                                   "Net Assets ($1k)", "Liabiliies ($1k)"))

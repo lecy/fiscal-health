@@ -1,4 +1,7 @@
 ---
+title: "Metric 05 - Self Sufficiency Ratio"
+author: ""
+date: "April 8, 2022"
 font: Lato
 output:
   html_document:
@@ -83,21 +86,18 @@ knitr::include_graphics(here::here("img", "logo.png"))
 <br>
 
 
-# Self Sufficiency Ratio
+
+# Metric Construction 
 
 
-
-# Metric Construction
-
-
-## Definition & Interpretation
+## Definition & Interpretation 
 
 
 $$Self \: Sufficiency \: Ratio = \frac{Earned \: Income}{Total \: Expenses} $$
 
 The Self Sufficiency Ratio measures the proportion of operating expenses that are covered by earned income. 
 
-This metric is a good measure of how long an organization can survive without grants. Higher values mean it is more self-sufficient, meaning it could cover its costs longer without collecting any grants, rents, royalties, or sales of inventory. This ratio is primarily useful for organizations that have earned revenue through memberships, fees or tuition. Higher values mean organizations have more autonomy and flexibility. They generally improve over time as an organization grows. In the early stages, these ratios tend to be lower but the goal is to make them as high as possible. 
+This metric is a good measure of how long an organization can survive without grants. Higher values mean it is more self-sufficient, meaning it could cover its costs longer without collecting any grants, rents, royalties, or sales of inventory. This ratio is primarily useful for organizations that have earned revenue through developers' fees, management fees, memberships, or tuition. Higher values mean organizations have more autonomy and flexibility. They generally improve over time as an organization grows. In the early stages, these ratios tend to be lower but the goal is to make them as high as possible. 
 
 
 
@@ -105,19 +105,26 @@ This metric is a good measure of how long an organization can survive without gr
 
 Note: This data is available for both 990EZ and full 990 filers. 
 
-**Numerator:** Program service revenue, EOY
-<br>
-*	On 990: Part 8, Line 2g, Column A
-  - SOI PC EXTRACTS: totprgmrevnue
-*	On EZ: Part 1, Line 2
-  - SOI PC EXTRACTS: prgmservrev
+* **Numerator:** Program service revenue, EOY
+  <br>
+
+  *	On 990: Part 8, Line 2g, Column A 
+    - SOI PC EXTRACTS: totprgmrevnue  
+        <br>
+
+  *	On EZ: Part 1, Line 2 
+    - SOI PC EXTRACTS: prgmservrev 
 
 <br>
-**Denominator:** Total Expenses, EOY
-*	On 990: Part 9, line 25A
-  -SOI PC EXTRACTS: totfuncexpns
-*	On EZ: Part 1, Line 17
-  -SOI PC EXTRACTS: totexpns
+* **Denominator:** Total Expenses, EOY 
+  <br>
+
+  *	On 990: Part 9, line 25A 
+    - SOI PC EXTRACTS: totfuncexpns 
+      <br>
+
+  *	On EZ: Part 1, Line 17 
+    - SOI PC EXTRACTS: totexpns 
 <br>
 
 
@@ -137,7 +144,6 @@ core$selfsufficiency <- ( earned_income / total_expenses )
 
 ## Standardize Scales
 
-Check high and low values to see what makes sense. 
 
 ```{r, fig.height=4}
 x.05 <- quantile( core$selfsufficiency, 0.05, na.rm=T )
@@ -150,7 +156,7 @@ ggplot( core, aes(x = selfsufficiency ) ) +
 
 
 
-Winsorization: 
+Winsorization: All extreme values have been capped by replacing any values below the 5% distribution and above the 95% distribution with the 5% and 95% values. Consequently the end tails to all density charts may be slightly higher than reality but the visuals will be scaled for better viewing (not skewed by outliers).
 
 ```{r}
 x.05 <- quantile( core$selfsufficiency, 0.05, na.rm=T )
@@ -181,17 +187,6 @@ Tax data is available for full 990 filers, so this metric does not describe any 
 Total assets < $500,000. Some organizations with receipts or assets below those thresholds may have filed a full 990, but these would be exceptions. 
 
 
-## Reference
-
-
-Any cited works here...
-
-
-
-
-
-
-
 
 
 # Descriptive Statistics
@@ -202,7 +197,7 @@ Convert all monetary variables to thousands of dollars.
 ```{r, results="asis"}
 
 core2 %>%
-  mutate( # selfsufficiency = selfsufficiency * 10000,
+  mutate( selfsufficiency = selfsufficiency * 100,
     totrevenue = totrevenue / 1000,
     totfuncexpns = totfuncexpns / 1000, 
     lndbldgsequipend = lndbldgsequipend / 1000,
@@ -220,14 +215,14 @@ core2 %>%
              digits=0, 
              summary.stat = c("min","p25","median",
                               "mean","p75","max", "sd"),
-             covariate.labels = c("Self Sufficiency Ratio", "Age", 
+             covariate.labels = c("Self Sufficiency Ratio*", "Age", 
                                   "Revenue ($1k)", "Expenses($1k)", 
                                   "Buildings ($1k)", "Total Assets ($1k)",
                                   "Net Assets ($1k)", "Liabiliies ($1k)"))
 ```
+| *Note: The Self Sufficiency Ratio has been scaled up (multiplied by 100) to improve readability for this table alone. 
 
-
-
+<br>
 What proportion of orgs have Self Sufficiency Ratios equal to zero (no income)?
 
 
