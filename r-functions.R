@@ -125,7 +125,9 @@ create_quantiles <- function( var, n.groups=5 )
 combine_metrics <- function()
 {
 
-  choose.dir()
+  original.dir <- getwd()
+  dir <- choose.dir()
+  setwd( dir )
 
   x <- dir()
   rds.files <- x[ grepl( ".rds", x ) ]
@@ -147,7 +149,20 @@ combine_metrics <- function()
 
   write.csv( d, "ALL-METRICS.csv", row.names=F )
   saveRDS( d, "ALL-METRICS.rds" )
+  
+  setwd( original.dir )
 
   return(NULL) 
 
 }
+
+
+
+inflation <- 
+structure(list(year = c(2019L, 2020L, 2019L, 2020L, 2019L, 2020L, 
+2019L, 2020L, 2019L, 2020L, 2019L, 2020L, 2019L, 2020L, 2019L, 
+2020L, 2019L, 2020L, 2019L, 2020L), inflation.factor = c(1, 1.0244, 
+1.0457, 1.0583, 1.0595, 1.0757, 1.0903, 1.111, 1.1426, 1.159, 
+1.1554, 1.1938, 1.2223, 1.2546, 1.2885, 1.3153, 1.338, 1.3539, 
+1.3822, 1.416)), class = "data.frame", row.names = c(NA, -20L
+))
