@@ -117,7 +117,7 @@ Note: This data is available only for organizations that file full 990s. [Organi
 <br>
 **Denominator:** ((Operating expenses – bad debts – depreciation) / 365)
 *	On 990: Part IX, line 25A – Part IX, line 22A
-  -SOI PC EXTRACTS: accntspayableend+grntspayableend
+  -SOI PC EXTRACTS: totfuncexpns-deprcatndepletn
 *	On EZ: Part I, line 17 [operating expenses only]
 <br>
 
@@ -132,7 +132,7 @@ operating_cash <- ( core$nonintcashend + core$svngstempinvend +
                          core$pldgegrntrcvblend + core$accntsrcvblend)
 
 # can't divide by zero
-payables <- ( core$accntspayableend + core$grntspayableend )/365
+payables <- ( core$totfuncexpns + core$deprcatndepletn )/365
 payables[ payables == 0 ] <- NA
 
 core$daysoperating_coh <-  operating_cash / payables
