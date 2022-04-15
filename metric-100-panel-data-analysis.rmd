@@ -76,55 +76,96 @@ full_dataset<- read.csv("C:/Users/LLo/Documents/GitHub/fiscal-health/04-Panel-Da
 
 #Create the Debt to Asset Ratio Metric
 
-zero.these <- full_dataset$totassetsend == 0 
-full_dataset$totassetsend[ full_dataset$totassetsend == 0 ] <- NA 
+  zero.these <- full_dataset$totassetsend == 0 
+  full_dataset$totassetsend[ full_dataset$totassetsend == 0 ] <- NA 
 
-full_dataset$dar <- full_dataset$totliabend / full_dataset$totassetsend
+  metric_analysis$dar <- full_dataset$totliabend / full_dataset$totassetsend
+  
+  #standardize DAR scale
+  full_dataset$dar[ full_dataset$dar < 0 ] <- 0
+  full_dataset$dar[ full_dataset$dar >  1 ] <-  1
 
 
 #Create Days of Operating Cash Metric
-operating_cash <- ( full_dataset$nonintcashend + full_dataset$svngstempinvend + 
+  operating_cash <- ( full_dataset$nonintcashend + full_dataset$svngstempinvend + 
                          full_dataset$pldgegrntrcvblend + full_dataset$accntsrcvblend)
 
-# can't divide by zero
-payables <- ( full_dataset$accntspayableend + full_dataset$grntspayableend )/365
-payables[ payables == 0 ] <- NA
+  # can't divide by zero
+  days_payables <- ( full_dataset$accntspayableend + full_dataset$grntspayableend )/365
+  days_payables[ payables == 0 ] <- NA
 
-full_dataset$daysoperating_coh <-  operating_cash / payables
+  metric_analysis$daysoperating_coh <-  operating_cash / days_payables
+  
+  #winsorize at 0 days and 95%
+    metric_analysis$daysoperating_coh[ core2$daysoperating_coh < 0 ] <- 0
+  metric_analysis$daysoperating_coh[ core2$daysoperating_coh > x.95 ] <- x.95
 
 #Create Debt Management Ratio 
+  liabilities  <- ( full_dataset$totliabend)
+  unres_nassets <- ( full_dataset$unrstrctnetasstsend)
 
-liabilities  <- ( full_dataset$totliabend)
-unres_nassets <- ( full_dataset$unrstrctnetasstsend)
+  # can't divide by zero
+  unres_nassets[ unres_nassets == 0 ] <- NA
+    
+  # SAVE RESULTS 
+  metric_analysis$debt_mgmnt_ratio <-  liabilities / unres_nassets
 
-# can't divide by zero
-unres_nassets[ unres_nassets == 0 ] <- NA
-
-# SAVE RESULTS 
-full_dataset$debt_mgmnt_ratio <-  liabilities / unres_nassets
-
-
+  #Winsorization at 5% and 95%
+  metric_analysis$debt_mgmnt_ratio[ core2$debt_mgmnt_ratio < x.05 ] <- x.05
+  metric_analysis$debt_mgmnt_ratio[ core2$debt_mgmnt_ratio > x.95 ] <- x.95
 
 
 #Create Self-Sufficiency Ratio 
-earned_income  <- full_dataset$totprgmrevnue 
-total_expenses <- full_dataset$totfuncexpns
+    earned_income  <- full_dataset$totprgmrevnue 
+    total_expenses <- full_dataset$totfuncexpns
 
-# can't divide by zero
-total_expenses[ total_expenses == 0 ] <- NA
+    # can't divide by zero
+    total_expenses[ total_expenses == 0 ] <- NA
 
-# SAVE RESULTS 
-full_dataset$selfsufficiency <- ( earned_income / total_expenses )    
+    # SAVE RESULTS 
+    full_dataset$selfsufficiency <- ( earned_income / total_expenses )    
 
-
+    #Winsorize metric at 5% and 95%
+    metric_analysis$selfsufficiency[ core2$selfsufficiency < x.05 ] <- x.05
+    metric_analysis$selfsufficiency[ core2$selfsufficiency > x.95 ] <- x.95
+    
 #Create Asset-Revenue Ratio
+    # TEMPORARY VARIABLES 
+    total_assets  <- full_dataset$totassetsend
+    total_revenues <- full_dataset$totrevenue
+
+    # can't divide by zero
+    total_revenues[ total_revenues == 0 ] <- NA
+
+    # SAVE RESULTS 
+    full_dataset$asset_rev_ratio <-  total_assets / total_revenues
 
 
-
-````
-
+```
 
 
+```{r}
+#Setting the means to be within-organization analysis
+
+  #for DAR
+full_dataset  <- 
+  full_dataset %>%
+  group_by( EIN ) %>% 
+  mutate( mean.dar=mean( dar, na.rm=T ) ) %>% 
+  ungroup() %>% 
+  mutate( dar.centered = dar - mean.dar )
+
+
+  #for Days Operating CoH
+
+full_dataset  <- 
+  full_dataset %>%
+  group_by( EIN ) %>% 
+  mutate( mean.daysoperating_coh=mean( daysoperating_coh, na.rm=T ) ) %>% 
+  ungroup() %>% 
+  mutate( daysoperating_coh.centered = daysoperating_coh - mean.daysoperating_coh)
+
+```
 
 
 ```{r}
