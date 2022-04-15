@@ -107,7 +107,7 @@ metric_analysis <- full_dataset
   #winsorize at 0 days and 95%
   x.05 <- quantile( metric_analysis$docoh, 0.05, na.rm=T )
   x.95 <- quantile( metric_analysis$docoh, 0.95, na.rm=T )
-  metric_analysis$docoh[ metric_analysis$docoh < 0 ] <- 0
+  metric_analysis$docoh[ metric_analysis$docoh <= 0 ] <- 0
   metric_analysis$docoh[ metric_analysis$docoh > x.95 ] <- x.95
   #Eliminate 0 values
   metric_analysis$docoh[ metric_analysis$docoh == 0 ] <- NA
@@ -233,31 +233,32 @@ metric_analysis  <-
 jplot(metric_analysis$year.y, metric_analysis$dar.centered,
        xlab= "Year",
        ylab= "Debt to Asset Ratio",
-       xaxt="n", xlim=c(2000,2020))
+       xaxt="n", xlim=c(2000,2020), ylim=c(0, 0.2)
+        )
 
 
 
 jplot(metric_analysis$year.y, metric_analysis$docoh.centered,
        xlab= "Year",
        ylab= "Days of Operating Cash on Hand",
-       xaxt="n", xlim=c(2000,2020))
+       xaxt="n", xlim=c(2000,2020), ylim=c(-20,50))
 
 
 jplot(metric_analysis$year.y, metric_analysis$debt_mgmnt_ratio.centered,
        xlab= "Year",
        ylab= "Debt Management Ratio",
-       xaxt="n", xlim=c(2000,2020))
+       xaxt="n", xlim=c(2000,2020), ylim=c(-1,1))
 
 
 jplot(metric_analysis$year.y, metric_analysis$selfsufficiency.centered,
        xlab= "Year",
        ylab= "Self Sufficiency Ratio",
-       xaxt="n", xlim=c(2000,2020))
+       xaxt="n", xlim=c(2000,2020), ylim=c(-0.2, 0.2))
 
 jplot(metric_analysis$year.y, metric_analysis$asset_rev_ratio.centered,
        xlab= "Year",
        ylab= "Assets to Revenue Ratio",
-       xaxt="n", xlim=c(2000,2020))
+       xaxt="n", xlim=c(2000,2020), ylim=c(-0.5,0.5))
 
 ```
 
