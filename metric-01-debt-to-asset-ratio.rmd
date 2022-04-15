@@ -162,18 +162,6 @@ Tax data is available for both full 990 and 990-EZ filers, so this metric descri
 
 
 
-## Reference
-
-
-Any cited works here...
-
-
-
-
-
-
-
-
 
 # Descriptive Statistics
 
