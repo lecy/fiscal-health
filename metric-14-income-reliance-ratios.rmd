@@ -696,7 +696,7 @@ core2 %>%
            axis.ticks.y=element_blank() )
 ```
 
-## `r variable.label` by Land and Building Value
+## `r variable.label1` by Land and Building Value
 
 ```{r, fig.height=4}
 ggplot( core2, aes(x = lndbldgsequipend )) +  
@@ -716,7 +716,7 @@ if( nrow(core2) > 10000 )
 
 jplot( log10(core3$lndbldgsequipend), core3$donation_ratio, 
        xlab="Land and Building Value (logged)", 
-       ylab=variable.label,
+       ylab=variable.label1,
        xaxt="n", xlim=c(3,10) )
 axis( side=1, 
       at=c(3,4,5,6,7,8,9,10), 
@@ -731,7 +731,7 @@ core2 %>%
   ggplot( aes(donation_ratio) )  + 
     geom_density( alpha = 0.5 ) + 
     labs( title="Land and Building Value" ) + 
-    xlab( variable.label ) +
+    xlab( variable.label1 ) +
     ylab( "" ) +
     facet_wrap( ~ land.q, nrow=3 ) + 
     theme_minimal( base_size = 22 )  + 
@@ -1253,7 +1253,7 @@ core2 %>%
            axis.ticks.y=element_blank() )
 ```
 
-## `r variable.label` by Land and Building Value
+## `r variable.label2` by Land and Building Value
 
 ```{r, fig.height=4}
 ggplot( core2, aes(x = lndbldgsequipend )) +  
@@ -1273,7 +1273,7 @@ if( nrow(core2) > 10000 )
 
 jplot( log10(core3$lndbldgsequipend), core3$earned_income_ratio, 
        xlab="Land and Building Value (logged)", 
-       ylab=variable.label,
+       ylab=variable.label2,
        xaxt="n", xlim=c(3,10) )
 axis( side=1, 
       at=c(3,4,5,6,7,8,9,10), 
@@ -1288,7 +1288,7 @@ core2 %>%
   ggplot( aes(earned_income_ratio) )  + 
     geom_density( alpha = 0.5 ) + 
     labs( title="Land and Building Value" ) + 
-    xlab( variable.label ) +
+    xlab( variable.label2 ) +
     ylab( "" ) +
     facet_wrap( ~ land.q, nrow=3 ) + 
     theme_minimal( base_size = 22 )  + 
@@ -1299,11 +1299,11 @@ core2 %>%
 ```
 
 
-<<<<<<< HEAD
+
 # Investment Income Reliance Ratio Analysis 
-=======
-# Investment Income Reliance Ratio Analysis
->>>>>>> ea6639c1fcc054606dc4dc47cd247bc43111ae3f
+
+
+
 
 ```{r, eval=T}
 # TEMPORARY VARIABLES 
@@ -1813,7 +1813,7 @@ core2 %>%
            axis.ticks.y=element_blank() )
 ```
 
-## `r variable.label` by Land and Building Value
+## `r variable.label3` by Land and Building Value
 
 ```{r, fig.height=4}
 ggplot( core2, aes(x = lndbldgsequipend )) +  
@@ -1833,7 +1833,7 @@ if( nrow(core2) > 10000 )
 
 jplot( log10(core3$lndbldgsequipend), core3$investment_income_ratio, 
        xlab="Land and Building Value (logged)", 
-       ylab=variable.label,
+       ylab=variable.label3,
        xaxt="n", xlim=c(3,10) )
 axis( side=1, 
       at=c(3,4,5,6,7,8,9,10), 
@@ -1848,7 +1848,7 @@ core2 %>%
   ggplot( aes(investment_income_ratio) )  + 
     geom_density( alpha = 0.5 ) + 
     labs( title="Land and Building Value" ) + 
-    xlab( variable.label ) +
+    xlab( variable.label3 ) +
     ylab( "" ) +
     facet_wrap( ~ land.q, nrow=3 ) + 
     theme_minimal( base_size = 22 )  + 
@@ -1859,10 +1859,7 @@ core2 %>%
 ```
 
 
-<<<<<<< HEAD
-=======
 
->>>>>>> ea6639c1fcc054606dc4dc47cd247bc43111ae3f
 # Income Reliance Ratio Analysis
 
 ```{r, eval=T}
@@ -2369,7 +2366,7 @@ core2 %>%
            axis.ticks.y=element_blank() )
 ```
 
-## `r variable.label` by Land and Building Value
+## `r variable.label4` by Land and Building Value
 
 ```{r, fig.height=4}
 ggplot( core2, aes(x = lndbldgsequipend )) +  
@@ -2389,7 +2386,7 @@ if( nrow(core2) > 10000 )
 
 jplot( log10(core3$lndbldgsequipend), core3$income_reliance_ratio, 
        xlab="Land and Building Value (logged)", 
-       ylab=variable.label,
+       ylab=variable.label4,
        xaxt="n", xlim=c(3,10) )
 axis( side=1, 
       at=c(3,4,5,6,7,8,9,10), 
@@ -2404,7 +2401,7 @@ core2 %>%
   ggplot( aes(income_reliance_ratio) )  + 
     geom_density( alpha = 0.5 ) + 
     labs( title="Land and Building Value" ) + 
-    xlab( variable.label ) +
+    xlab( variable.label4 ) +
     ylab( "" ) +
     facet_wrap( ~ land.q, nrow=3 ) + 
     theme_minimal( base_size = 22 )  + 
