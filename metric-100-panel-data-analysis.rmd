@@ -36,6 +36,8 @@ library( scales )       # re-scaling numbers
 library( stargazer )    # nice tables 
 library( pander )       # format tables for HTML 
 library( knitr )        # formatting functions 
+library( DT )           # embed datasets in HTML docs
+
 #library( corrplot )
 
 library( urbnthemes )   # setting the color scheme to Urban's
@@ -74,6 +76,9 @@ knitr::include_graphics(here::here("img", "logo.png"))
 ```{r}
 full_dataset<- read.csv("C:/Users/LLo/Documents/GitHub/fiscal-health/04-Panel-Datasets/org_panel_data.csv")
 
+metric_analysis <- full_dataset
+
+
 #Create the Debt to Asset Ratio Metric
 
   zero.these <- full_dataset$totassetsend == 0 
@@ -82,8 +87,11 @@ full_dataset<- read.csv("C:/Users/LLo/Documents/GitHub/fiscal-health/04-Panel-Da
   metric_analysis$dar <- full_dataset$totliabend / full_dataset$totassetsend
   
   #standardize DAR scale
-  full_dataset$dar[ full_dataset$dar < 0 ] <- 0
-  full_dataset$dar[ full_dataset$dar >  1 ] <-  1
+  metric_analysis$dar[ full_dataset$dar < 0 ] <- 0
+  metric_analysis$dar[ full_dataset$dar >  1 ] <-  1
+  #Eliminate zero values
+  metric_analysis$dar[ metric_analysis$dar == 0 ] <- NA
+
 
 
 #Create Days of Operating Cash Metric
@@ -91,15 +99,20 @@ full_dataset<- read.csv("C:/Users/LLo/Documents/GitHub/fiscal-health/04-Panel-Da
                          full_dataset$pldgegrntrcvblend + full_dataset$accntsrcvblend)
 
   # can't divide by zero
-  days_payables <- ( full_dataset$accntspayableend + full_dataset$grntspayableend )/365
-  days_payables[ payables == 0 ] <- NA
+  days_payable <- ( full_dataset$totfuncexpns - full_dataset$deprcatndepletn )/365
+  days_payable[ days_payable == 0 ] <- NA
 
-  metric_analysis$daysoperating_coh <-  operating_cash / days_payables
+  metric_analysis$docoh <-  operating_cash / days_payable
   
   #winsorize at 0 days and 95%
-    metric_analysis$daysoperating_coh[ core2$daysoperating_coh < 0 ] <- 0
-  metric_analysis$daysoperating_coh[ core2$daysoperating_coh > x.95 ] <- x.95
+  x.05 <- quantile( metric_analysis$docoh, 0.05, na.rm=T )
+  x.95 <- quantile( metric_analysis$docoh, 0.95, na.rm=T )
+  metric_analysis$docoh[ metric_analysis$docoh < 0 ] <- 0
+  metric_analysis$docoh[ metric_analysis$docoh > x.95 ] <- x.95
+  #Eliminate 0 values
+  metric_analysis$docoh[ metric_analysis$docoh == 0 ] <- NA
 
+  
 #Create Debt Management Ratio 
   liabilities  <- ( full_dataset$totliabend)
   unres_nassets <- ( full_dataset$unrstrctnetasstsend)
@@ -111,9 +124,15 @@ full_dataset<- read.csv("C:/Users/LLo/Documents/GitHub/fiscal-health/04-Panel-Da
   metric_analysis$debt_mgmnt_ratio <-  liabilities / unres_nassets
 
   #Winsorization at 5% and 95%
-  metric_analysis$debt_mgmnt_ratio[ core2$debt_mgmnt_ratio < x.05 ] <- x.05
-  metric_analysis$debt_mgmnt_ratio[ core2$debt_mgmnt_ratio > x.95 ] <- x.95
+  x.05 <- quantile( metric_analysis$debt_mgmnt_ratio, 0.05, na.rm=T )
+  x.95 <- quantile( metric_analysis$debt_mgmnt_ratio, 0.95, na.rm=T )
+  metric_analysis$debt_mgmnt_ratio[ metric_analysis$debt_mgmnt_ratio < x.05 ] <- x.05
+  metric_analysis$debt_mgmnt_ratio[ metric_analysis$debt_mgmnt_ratio > x.95 ] <- x.95
+#Eliminate 0 values
+    metric_analysis$debt_mgmnt_ratio[ metric_analysis$debt_mgmnt_ratio == 0 ] <- NA
 
+  
+  
 
 #Create Self-Sufficiency Ratio 
     earned_income  <- full_dataset$totprgmrevnue 
@@ -123,11 +142,17 @@ full_dataset<- read.csv("C:/Users/LLo/Documents/GitHub/fiscal-health/04-Panel-Da
     total_expenses[ total_expenses == 0 ] <- NA
 
     # SAVE RESULTS 
-    full_dataset$selfsufficiency <- ( earned_income / total_expenses )    
+    metric_analysis$selfsufficiency <- ( earned_income / total_expenses )    
 
     #Winsorize metric at 5% and 95%
-    metric_analysis$selfsufficiency[ core2$selfsufficiency < x.05 ] <- x.05
-    metric_analysis$selfsufficiency[ core2$selfsufficiency > x.95 ] <- x.95
+    x.05 <- quantile( metric_analysis$selfsufficiency, 0.05, na.rm=T )
+    x.95 <- quantile( metric_analysis$selfsufficiency, 0.95, na.rm=T )
+    metric_analysis$selfsufficiency[ metric_analysis$selfsufficiency < x.05 ] <- x.05
+    metric_analysis$selfsufficiency[ metric_analysis$selfsufficiency > x.95 ] <- x.95
+    #Eliminate 0 values
+        metric_analysis$selfsufficiency[ metric_analysis$selfsufficiency == 0 ] <- NA
+
+    
     
 #Create Asset-Revenue Ratio
     # TEMPORARY VARIABLES 
@@ -138,9 +163,18 @@ full_dataset<- read.csv("C:/Users/LLo/Documents/GitHub/fiscal-health/04-Panel-Da
     total_revenues[ total_revenues == 0 ] <- NA
 
     # SAVE RESULTS 
-    full_dataset$asset_rev_ratio <-  total_assets / total_revenues
+    metric_analysis$asset_rev_ratio <-  total_assets / total_revenues
+    
+    #Winsorize metric at 5% and 95%
+    x.05 <- quantile( metric_analysis$asset_rev_ratio, 0.05, na.rm=T )
+    x.95 <- quantile( metric_analysis$asset_rev_ratio, 0.95, na.rm=T )
+    metric_analysis$asset_rev_ratio[ metric_analysis$asset_rev_ratio < x.05 ] <- x.05
+    metric_analysis$asset_rev_ratio[ metric_analysis$asset_rev_ratio > x.95 ] <- x.95
 
+    #Eliminate 0 values
+    metric_analysis$asset_rev_ratio[ metric_analysis$asset_rev_ratio == 0 ] <- NA
 
+    
 ```
 
 
@@ -148,8 +182,8 @@ full_dataset<- read.csv("C:/Users/LLo/Documents/GitHub/fiscal-health/04-Panel-Da
 #Setting the means to be within-organization analysis
 
   #for DAR
-full_dataset  <- 
-  full_dataset %>%
+metric_analysis  <- 
+  metric_analysis %>%
   group_by( EIN ) %>% 
   mutate( mean.dar=mean( dar, na.rm=T ) ) %>% 
   ungroup() %>% 
@@ -157,24 +191,73 @@ full_dataset  <-
 
 
   #for Days Operating CoH
-
-full_dataset  <- 
-  full_dataset %>%
+metric_analysis  <- 
+  metric_analysis %>%
   group_by( EIN ) %>% 
-  mutate( mean.daysoperating_coh=mean( daysoperating_coh, na.rm=T ) ) %>% 
+  mutate( mean.docoh=mean(docoh, na.rm=T ) ) %>% 
   ungroup() %>% 
-  mutate( daysoperating_coh.centered = daysoperating_coh - mean.daysoperating_coh)
+  mutate(docoh.centered = docoh - mean.docoh)
+
+
+  #for Debt Management Ratio
+metric_analysis  <- 
+  metric_analysis %>%
+  group_by( EIN ) %>% 
+  mutate( mean.debt_mgmnt_ratio=mean(debt_mgmnt_ratio, na.rm=T ) ) %>% 
+  ungroup() %>% 
+  mutate(debt_mgmnt_ratio.centered = debt_mgmnt_ratio - mean.debt_mgmnt_ratio)
+
+  #for self Sufficiency Ratio
+metric_analysis  <- 
+  metric_analysis %>%
+  group_by( EIN ) %>% 
+  mutate( mean.selfsufficiency=mean(selfsufficiency, na.rm=T ) ) %>% 
+  ungroup() %>% 
+  mutate(selfsufficiency.centered = selfsufficiency - mean.selfsufficiency)
+
+
+  #for Asset Revenue Ratio
+metric_analysis  <- 
+  metric_analysis %>%
+  group_by( EIN ) %>% 
+  mutate( mean.asset_rev_ratio=mean(asset_rev_ratio, na.rm=T ) ) %>% 
+  ungroup() %>% 
+  mutate(asset_rev_ratio.centered = asset_rev_ratio - mean.asset_rev_ratio)
+
+
 
 ```
 
 
 ```{r}
-jplot( full_dataset$dar, full_datset$year,
-       xlab="Debt to Asset Ratio", 
-       ylab= "Year",
+jplot(metric_analysis$year.y, metric_analysis$dar.centered,
+       xlab= "Year",
+       ylab= "Debt to Asset Ratio",
        xaxt="n", xlim=c(2000,2020))
 
 
+
+jplot(metric_analysis$year.y, metric_analysis$docoh.centered,
+       xlab= "Year",
+       ylab= "Days of Operating Cash on Hand",
+       xaxt="n", xlim=c(2000,2020))
+
+
+jplot(metric_analysis$year.y, metric_analysis$debt_mgmnt_ratio.centered,
+       xlab= "Year",
+       ylab= "Debt Management Ratio",
+       xaxt="n", xlim=c(2000,2020))
+
+
+jplot(metric_analysis$year.y, metric_analysis$selfsufficiency.centered,
+       xlab= "Year",
+       ylab= "Self Sufficiency Ratio",
+       xaxt="n", xlim=c(2000,2020))
+
+jplot(metric_analysis$year.y, metric_analysis$asset_rev_ratio.centered,
+       xlab= "Year",
+       ylab= "Assets to Revenue Ratio",
+       xaxt="n", xlim=c(2000,2020))
 
 ```
 
