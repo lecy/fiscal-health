@@ -63,7 +63,7 @@ s.type <- "html"
 
 ## Load Data
 
-local: 
+# local: 
 core <- readRDS( "02-data-wrangled/core.rds" )
 
 # from github: 
