@@ -450,7 +450,7 @@ div.tocify {
       <a href="metric-07-land-to-assets-ratio.html">M7 Land to Assets Ratio</a>
     </li>
     <li>
-      <a href="metric-08-debt-to-equity-ratio.html">M8 Debt to Equity Ratio</a>
+      <a href="metric-08-pre-depreciation-profitability-margin.html">M8 Pre-Depreciation Profitability</a>
     </li>
     <li>
       <a href="metric-09-post-depreciation-profitability-margin.html">M9 Post-Depreciation Profitability</a>
@@ -542,7 +542,7 @@ receivables) <br> * On 990: (Part X, line 1B) + (Part X, line 2B) +
 svngstempinvend, pldgegrntrcvblend, accntsrcvblend <br> * On EZ:Part I,
 line 22 [cash and short-term investments only] - SOI PC EXTRACTS: Not
 available <br> <strong>Denominator:</strong> ((Operating expenses – bad
-debts – depreciation) / 365) * On 990: Part IX, line 25A – Part IX, line
+debts – depreciation) / 12) * On 990: Part IX, line 25A – Part IX, line
 22A -SOI PC EXTRACTS: accntspayableend+grntspayableend * On EZ: Part I,
 line 17 [operating expenses only] <br></p>
 <p><strong>Note:</strong> The original ratio yields years of cash on
@@ -554,8 +554,8 @@ debts, so this term is missing from the denominator</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># TEMPORARY VARIABLES </span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>operating_cash  <span class="ot">&lt;-</span> ( core<span class="sc">$</span>nonintcashend <span class="sc">+</span> core<span class="sc">$</span>svngstempinvend)</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>payables <span class="ot">&lt;-</span> ( core<span class="sc">$</span>accntspayableend <span class="sc">+</span> core<span class="sc">$</span>grntspayableend )</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>operating_cash  <span class="ot">&lt;-</span> ( core<span class="sc">$</span>nonintcashend <span class="sc">+</span> core<span class="sc">$</span>svngstempinvend <span class="sc">+</span> core<span class="sc">$</span>pldgegrntrcvblend <span class="sc">+</span> core<span class="sc">$</span>accntsrcvblend)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>payables <span class="ot">&lt;-</span> ( core<span class="sc">$</span>accntspayableend <span class="sc">+</span> core<span class="sc">$</span>grntspayableend )<span class="sc">/</span><span class="dv">12</span></span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># can&#39;t divide by zero</span></span>
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>payables[ payables <span class="sc">==</span> <span class="dv">0</span> ] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
@@ -579,12 +579,12 @@ debts, so this term is missing from the denominator</p>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># proportion of values that are negative</span></span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>( core2<span class="sc">$</span>months_coh <span class="sc">&lt;</span> <span class="dv">0</span>, <span class="at">na.rm=</span>T ) </span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0.004438808</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0.003170577</span></span>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>core2<span class="sc">$</span>months_coh[ core2<span class="sc">$</span>months_coh <span class="sc">&lt;</span> <span class="dv">0</span> ] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co"># proption of values above 200% </span></span>
 <span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>( core2<span class="sc">$</span>months_coh <span class="sc">&gt;</span> <span class="dv">50</span>, <span class="at">na.rm=</span>T ) </span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0.09025576</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0.5774678</span></span>
 <span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>core2<span class="sc">$</span>months_coh[ core2<span class="sc">$</span>months_coh <span class="sc">&gt;</span> <span class="dv">50</span> ] <span class="ot">&lt;-</span> <span class="dv">50</span></span></code></pre></div>
 </div>
 <div id="metric-scope" class="section level2">
@@ -670,22 +670,22 @@ Months of COH
 0
 </td>
 <td>
-1
-</td>
-<td>
-4
-</td>
-<td>
-11
-</td>
-<td>
-13
+25
 </td>
 <td>
 50
 </td>
 <td>
-15
+38
+</td>
+<td>
+50
+</td>
+<td>
+50
+</td>
+<td>
+16
 </td>
 </tr>
 <tr>

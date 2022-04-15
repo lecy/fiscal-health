@@ -450,7 +450,7 @@ div.tocify {
       <a href="metric-07-land-to-assets-ratio.html">M7 Land to Assets Ratio</a>
     </li>
     <li>
-      <a href="metric-08-debt-to-equity-ratio.html">M8 Debt to Equity Ratio</a>
+      <a href="metric-08-pre-depreciation-profitability-margin.html">M8 Pre-Depreciation Profitability</a>
     </li>
     <li>
       <a href="metric-09-post-depreciation-profitability-margin.html">M9 Post-Depreciation Profitability</a>
@@ -622,7 +622,8 @@ with zero profitability (though negative values are allowed still).</p>
 </div>
 <div id="descriptive-statistics" class="section level1">
 <h1>Descriptive Statistics</h1>
-<p>Convert all monetary variables to thousands of dollars.</p>
+<p>Convert all monetary variables to thousands of dollars. Scale metric
+up (multiply by 100) for readability.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>core2 <span class="sc">%&gt;%</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>( <span class="co"># postd_profitmargin = postd_profitmargin * 10000,</span></span>
@@ -643,7 +644,7 @@ with zero profitability (though negative values are allowed still).</p>
 <span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>             <span class="at">digits=</span><span class="dv">0</span>, </span>
 <span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>             <span class="at">summary.stat =</span> <span class="fu">c</span>(<span class="st">&quot;min&quot;</span>,<span class="st">&quot;p25&quot;</span>,<span class="st">&quot;median&quot;</span>,</span>
 <span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>                              <span class="st">&quot;mean&quot;</span>,<span class="st">&quot;p75&quot;</span>,<span class="st">&quot;max&quot;</span>, <span class="st">&quot;sd&quot;</span>),</span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>             <span class="at">covariate.labels =</span> <span class="fu">c</span>(<span class="st">&quot;Post-Depreciation Profitability Margin&quot;</span>, <span class="st">&quot;Age&quot;</span>, </span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>             <span class="at">covariate.labels =</span> <span class="fu">c</span>(<span class="st">&quot;Post-Depreciation Profitability Margin (x100)&quot;</span>, <span class="st">&quot;Age&quot;</span>, </span>
 <span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">&quot;Revenue ($1k)&quot;</span>, <span class="st">&quot;Expenses($1k)&quot;</span>, </span>
 <span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">&quot;Buildings ($1k)&quot;</span>, <span class="st">&quot;Total Assets ($1k)&quot;</span>,</span>
 <span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">&quot;Net Assets ($1k)&quot;</span>, <span class="st">&quot;Liabiliies ($1k)&quot;</span>))</span></code></pre></div>
@@ -684,7 +685,7 @@ St. Dev.
 </tr>
 <tr>
 <td style="text-align:left">
-Post-Depreciation Profitability Margin
+Post-Depreciation Profitability Margin (x100)
 </td>
 <td>
 -1

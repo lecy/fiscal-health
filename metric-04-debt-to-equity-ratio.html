@@ -450,7 +450,7 @@ div.tocify {
       <a href="metric-07-land-to-assets-ratio.html">M7 Land to Assets Ratio</a>
     </li>
     <li>
-      <a href="metric-08-debt-to-equity-ratio.html">M8 Debt to Equity Ratio</a>
+      <a href="metric-08-pre-depreciation-profitability-margin.html">M8 Pre-Depreciation Profitability</a>
     </li>
     <li>
       <a href="metric-09-post-depreciation-profitability-margin.html">M9 Post-Depreciation Profitability</a>
@@ -522,9 +522,13 @@ owes relative to what it owns. Higher values mean it is more highly
 leveraged, meaning it has low capacity for future borrowing. As an
 example: if an organization has a total-debt-to-net-assets ratio of 0.4,
 40% of its assets are financed by creditors, and 60% are its own
-unrestricted, available equity. As this percentage creeps up near the
-50% mark, it can call into question the organization’s ability to manage
-debt, which could jeopardize the delivery of programs and services.</p>
+unrestricted, available equity. As this percentage creeps above the 50%
+mark, it can call into question the organization’s ability to manage
+debt, which could jeopardize the delivery of programs and services.
+However, for developers, extremely low values may mean the organization
+is not capitalizing enough on its equity to expand.</p>
+<p>This value can be negative if an organization has either overpaid on
+its debts or if it has negative unrestricted net assets.</p>
 <p>One limitation of this metric is that it does not provide any
 indication of asset quality or liquidity since it lumps tangible and
 intangible assets together.</p>
@@ -565,7 +569,10 @@ available for EZ filers.</p>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>( <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span> </span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>( x<span class="fl">.05</span>, x<span class="fl">.95</span> ) </span></code></pre></div>
 <p><img src="metric-04-debt-to-equity-ratio_files/figure-html/unnamed-chunk-3-1.png" width="960" /></p>
-<p>Winsorization:</p>
+<p>Winsorization: All extreme values have been capped by replacing any
+values below the 5% distribution and above the 95% distribution with the
+5% and 95% values. Consequently the end tails to all density charts may
+be slightly higher than normal but the tails will not show outliers.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>x<span class="fl">.05</span> <span class="ot">&lt;-</span> <span class="fu">quantile</span>( core<span class="sc">$</span>der, <span class="fl">0.05</span>, <span class="at">na.rm=</span>T )</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>x<span class="fl">.95</span> <span class="ot">&lt;-</span> <span class="fu">quantile</span>( core<span class="sc">$</span>der, <span class="fl">0.95</span>, <span class="at">na.rm=</span>T )</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -590,17 +597,13 @@ assets &lt; $500,000. Some organizations with receipts or assets below
 those thresholds may have filed a full 990, but these would be
 exceptions.</p>
 </div>
-<div id="reference" class="section level2">
-<h2>Reference</h2>
-<p>Any cited works here…</p>
-</div>
 </div>
 <div id="descriptive-statistics" class="section level1">
 <h1>Descriptive Statistics</h1>
 <p>Convert all monetary variables to thousands of dollars.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>core2 <span class="sc">%&gt;%</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>( <span class="co"># der = der * 10000,</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>( <span class="at">der =</span> der <span class="sc">*</span> <span class="dv">10000</span>,</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">totrevenue =</span> totrevenue <span class="sc">/</span> <span class="dv">1000</span>,</span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">totfuncexpns =</span> totfuncexpns <span class="sc">/</span> <span class="dv">1000</span>, </span>
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">lndbldgsequipend =</span> lndbldgsequipend <span class="sc">/</span> <span class="dv">1000</span>,</span>
@@ -618,7 +621,7 @@ exceptions.</p>
 <span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>             <span class="at">digits=</span><span class="dv">0</span>, </span>
 <span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>             <span class="at">summary.stat =</span> <span class="fu">c</span>(<span class="st">&quot;min&quot;</span>,<span class="st">&quot;p25&quot;</span>,<span class="st">&quot;median&quot;</span>,</span>
 <span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>                              <span class="st">&quot;mean&quot;</span>,<span class="st">&quot;p75&quot;</span>,<span class="st">&quot;max&quot;</span>, <span class="st">&quot;sd&quot;</span>),</span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>             <span class="at">covariate.labels =</span> <span class="fu">c</span>(<span class="st">&quot;Debt Equity Ratio&quot;</span>, <span class="st">&quot;Age&quot;</span>, </span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>             <span class="at">covariate.labels =</span> <span class="fu">c</span>(<span class="st">&quot;Debt Equity Ratio*&quot;</span>, <span class="st">&quot;Age&quot;</span>, </span>
 <span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">&quot;Revenue ($1k)&quot;</span>, <span class="st">&quot;Expenses($1k)&quot;</span>, </span>
 <span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">&quot;Buildings ($1k)&quot;</span>, <span class="st">&quot;Total Assets ($1k)&quot;</span>,</span>
 <span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">&quot;Net Assets ($1k)&quot;</span>, <span class="st">&quot;Liabiliies ($1k)&quot;</span>))</span></code></pre></div>
@@ -659,28 +662,28 @@ St. Dev.
 </tr>
 <tr>
 <td style="text-align:left">
-Debt Equity Ratio
+Debt Equity Ratio*
 </td>
 <td>
--0
-</td>
-<td>
-0
-</td>
-<td>
-0
-</td>
-<td>
-0
-</td>
-<td>
-0
+-2,641
 </td>
 <td>
 1
 </td>
 <td>
-0
+282
+</td>
+<td>
+1,057
+</td>
+<td>
+1,340
+</td>
+<td>
+8,114
+</td>
+<td>
+2,347
 </td>
 </tr>
 <tr>
@@ -870,6 +873,11 @@ Liabiliies (1k)
 </td>
 </tr>
 </table>
+<ul>
+<li>Debt Equity Ratio has been multiplied by 100 to improve readability.
+Ordinarily this a 0 to 1 ratio, though negative values are possible if
+an organizaiton has overpaid on its debts.</li>
+</ul>
 <p>What proportion of orgs have Debt Equity Ratios equal to zero (no
 debt or payables)?</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>prop.zero <span class="ot">&lt;-</span> <span class="fu">mean</span>( core2<span class="sc">$</span>der <span class="sc">==</span> <span class="dv">0</span>, <span class="at">na.rm=</span>T )</span></code></pre></div>
