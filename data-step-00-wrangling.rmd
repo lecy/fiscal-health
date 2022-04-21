@@ -156,7 +156,7 @@ core.2019.pc <-
           miscrevtot11e)  
 
 
-
+core.2019.pc$tax.form <- "990PC"
 
 # F9_01_EXP_REV_LESS_EXP_CY
 # F9_01_EXP_TOT_CY
@@ -215,6 +215,9 @@ core.2019.ez <- dplyr::rename( core.2019.ez,
                         totassetsend = totassetsend,
                         totliabend = totliabend,
                         totcntrbgfts = totcntrbs )
+
+
+core.2019.ez$tax.form <- "990EZ"
 
 
 

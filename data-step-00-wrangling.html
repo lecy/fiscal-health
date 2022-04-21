@@ -500,8 +500,7 @@ div.tocify {
 
 <hr>
 <p><br></p>
-<p><img
-src="img/logo.png" /><!-- --></p>
+<p><img src="C:/Users/jdlec/Dropbox (Personal)/00 - URBAN/github/fiscal-health/img/logo.png" width="370" /></p>
 <br>
 <hr>
 <p><br></p>
@@ -619,7 +618,7 @@ src="img/logo.png" /><!-- --></p>
 <span id="cb2-94"><a href="#cb2-94" aria-hidden="true" tabindex="-1"></a>          miscrevtot11e)  </span>
 <span id="cb2-95"><a href="#cb2-95" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-96"><a href="#cb2-96" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-97"><a href="#cb2-97" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-97"><a href="#cb2-97" aria-hidden="true" tabindex="-1"></a>core.<span class="fl">2019.</span>pc<span class="sc">$</span>tax.form <span class="ot">&lt;-</span> <span class="st">&quot;990PC&quot;</span></span>
 <span id="cb2-98"><a href="#cb2-98" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-99"><a href="#cb2-99" aria-hidden="true" tabindex="-1"></a><span class="co"># F9_01_EXP_REV_LESS_EXP_CY</span></span>
 <span id="cb2-100"><a href="#cb2-100" aria-hidden="true" tabindex="-1"></a><span class="co"># F9_01_EXP_TOT_CY</span></span>
@@ -680,55 +679,58 @@ src="img/logo.png" /><!-- --></p>
 <span id="cb2-155"><a href="#cb2-155" aria-hidden="true" tabindex="-1"></a>                        <span class="at">totcntrbgfts =</span> totcntrbs )</span>
 <span id="cb2-156"><a href="#cb2-156" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-157"><a href="#cb2-157" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-158"><a href="#cb2-158" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-159"><a href="#cb2-159" aria-hidden="true" tabindex="-1"></a><span class="do">###</span></span>
-<span id="cb2-160"><a href="#cb2-160" aria-hidden="true" tabindex="-1"></a><span class="do">###  STACK PC AND EZ FILES </span></span>
-<span id="cb2-161"><a href="#cb2-161" aria-hidden="true" tabindex="-1"></a><span class="do">###  </span></span>
-<span id="cb2-162"><a href="#cb2-162" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-163"><a href="#cb2-163" aria-hidden="true" tabindex="-1"></a>core <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">bind_rows</span>( core.<span class="fl">2019.</span>pc, core.<span class="fl">2019.</span>ez )</span>
-<span id="cb2-164"><a href="#cb2-164" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-165"><a href="#cb2-165" aria-hidden="true" tabindex="-1"></a>core<span class="sc">$</span>taxyr <span class="ot">&lt;-</span> <span class="fu">substr</span>( core<span class="sc">$</span>tax_pd, <span class="dv">1</span>, <span class="dv">4</span> )</span>
-<span id="cb2-166"><a href="#cb2-166" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-158"><a href="#cb2-158" aria-hidden="true" tabindex="-1"></a>core.<span class="fl">2019.</span>ez<span class="sc">$</span>tax.form <span class="ot">&lt;-</span> <span class="st">&quot;990EZ&quot;</span></span>
+<span id="cb2-159"><a href="#cb2-159" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-160"><a href="#cb2-160" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-161"><a href="#cb2-161" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-162"><a href="#cb2-162" aria-hidden="true" tabindex="-1"></a><span class="do">###</span></span>
+<span id="cb2-163"><a href="#cb2-163" aria-hidden="true" tabindex="-1"></a><span class="do">###  STACK PC AND EZ FILES </span></span>
+<span id="cb2-164"><a href="#cb2-164" aria-hidden="true" tabindex="-1"></a><span class="do">###  </span></span>
+<span id="cb2-165"><a href="#cb2-165" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-166"><a href="#cb2-166" aria-hidden="true" tabindex="-1"></a>core <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">bind_rows</span>( core.<span class="fl">2019.</span>pc, core.<span class="fl">2019.</span>ez )</span>
 <span id="cb2-167"><a href="#cb2-167" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-168"><a href="#cb2-168" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-168"><a href="#cb2-168" aria-hidden="true" tabindex="-1"></a>core<span class="sc">$</span>taxyr <span class="ot">&lt;-</span> <span class="fu">substr</span>( core<span class="sc">$</span>tax_pd, <span class="dv">1</span>, <span class="dv">4</span> )</span>
 <span id="cb2-169"><a href="#cb2-169" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-170"><a href="#cb2-170" aria-hidden="true" tabindex="-1"></a><span class="do">### </span></span>
-<span id="cb2-171"><a href="#cb2-171" aria-hidden="true" tabindex="-1"></a><span class="do">###  ADD BMF META-DATA GEO, NTEE, AND AGE FIELDS</span></span>
-<span id="cb2-172"><a href="#cb2-172" aria-hidden="true" tabindex="-1"></a><span class="do">### </span></span>
-<span id="cb2-173"><a href="#cb2-173" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-174"><a href="#cb2-174" aria-hidden="true" tabindex="-1"></a><span class="co"># check for leading zeros problem</span></span>
-<span id="cb2-175"><a href="#cb2-175" aria-hidden="true" tabindex="-1"></a><span class="co"># class( core.2019.pc$ein )</span></span>
-<span id="cb2-176"><a href="#cb2-176" aria-hidden="true" tabindex="-1"></a><span class="co"># [1] &quot;integer&quot;</span></span>
-<span id="cb2-177"><a href="#cb2-177" aria-hidden="true" tabindex="-1"></a><span class="co"># class( bmf$EIN )</span></span>
-<span id="cb2-178"><a href="#cb2-178" aria-hidden="true" tabindex="-1"></a><span class="co"># [1] &quot;integer&quot;</span></span>
-<span id="cb2-179"><a href="#cb2-179" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-180"><a href="#cb2-180" aria-hidden="true" tabindex="-1"></a>core <span class="ot">&lt;-</span> <span class="fu">merge</span>( core, bmf, <span class="at">by.x=</span><span class="st">&quot;ein&quot;</span>, <span class="at">by.y=</span><span class="st">&quot;EIN&quot;</span>, <span class="at">all.x=</span><span class="cn">TRUE</span> )</span>
-<span id="cb2-181"><a href="#cb2-181" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-170"><a href="#cb2-170" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-171"><a href="#cb2-171" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-172"><a href="#cb2-172" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-173"><a href="#cb2-173" aria-hidden="true" tabindex="-1"></a><span class="do">### </span></span>
+<span id="cb2-174"><a href="#cb2-174" aria-hidden="true" tabindex="-1"></a><span class="do">###  ADD BMF META-DATA GEO, NTEE, AND AGE FIELDS</span></span>
+<span id="cb2-175"><a href="#cb2-175" aria-hidden="true" tabindex="-1"></a><span class="do">### </span></span>
+<span id="cb2-176"><a href="#cb2-176" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-177"><a href="#cb2-177" aria-hidden="true" tabindex="-1"></a><span class="co"># check for leading zeros problem</span></span>
+<span id="cb2-178"><a href="#cb2-178" aria-hidden="true" tabindex="-1"></a><span class="co"># class( core.2019.pc$ein )</span></span>
+<span id="cb2-179"><a href="#cb2-179" aria-hidden="true" tabindex="-1"></a><span class="co"># [1] &quot;integer&quot;</span></span>
+<span id="cb2-180"><a href="#cb2-180" aria-hidden="true" tabindex="-1"></a><span class="co"># class( bmf$EIN )</span></span>
+<span id="cb2-181"><a href="#cb2-181" aria-hidden="true" tabindex="-1"></a><span class="co"># [1] &quot;integer&quot;</span></span>
 <span id="cb2-182"><a href="#cb2-182" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-183"><a href="#cb2-183" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-183"><a href="#cb2-183" aria-hidden="true" tabindex="-1"></a>core <span class="ot">&lt;-</span> <span class="fu">merge</span>( core, bmf, <span class="at">by.x=</span><span class="st">&quot;ein&quot;</span>, <span class="at">by.y=</span><span class="st">&quot;EIN&quot;</span>, <span class="at">all.x=</span><span class="cn">TRUE</span> )</span>
 <span id="cb2-184"><a href="#cb2-184" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-185"><a href="#cb2-185" aria-hidden="true" tabindex="-1"></a><span class="do">###</span></span>
-<span id="cb2-186"><a href="#cb2-186" aria-hidden="true" tabindex="-1"></a><span class="do">### ADD NTEE CODES LABELS </span></span>
-<span id="cb2-187"><a href="#cb2-187" aria-hidden="true" tabindex="-1"></a><span class="do">### </span></span>
-<span id="cb2-188"><a href="#cb2-188" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-189"><a href="#cb2-189" aria-hidden="true" tabindex="-1"></a>core<span class="sc">$</span>NTMAJ12v1 <span class="ot">&lt;-</span> core<span class="sc">$</span>NTMAJ12</span>
-<span id="cb2-190"><a href="#cb2-190" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-191"><a href="#cb2-191" aria-hidden="true" tabindex="-1"></a>core<span class="sc">$</span>NTMAJ12[ core<span class="sc">$</span>NTMAJ12 <span class="sc">==</span> <span class="st">&quot;AR&quot;</span> ] <span class="ot">&lt;-</span> <span class="st">&quot;Arts&quot;</span></span>
-<span id="cb2-192"><a href="#cb2-192" aria-hidden="true" tabindex="-1"></a>core<span class="sc">$</span>NTMAJ12[ core<span class="sc">$</span>NTMAJ12 <span class="sc">==</span> <span class="st">&quot;BH&quot;</span> ] <span class="ot">&lt;-</span> <span class="st">&quot;Universities&quot;</span></span>
-<span id="cb2-193"><a href="#cb2-193" aria-hidden="true" tabindex="-1"></a>core<span class="sc">$</span>NTMAJ12[ core<span class="sc">$</span>NTMAJ12 <span class="sc">==</span> <span class="st">&quot;ED&quot;</span> ] <span class="ot">&lt;-</span> <span class="st">&quot;Education&quot;</span></span>
-<span id="cb2-194"><a href="#cb2-194" aria-hidden="true" tabindex="-1"></a>core<span class="sc">$</span>NTMAJ12[ core<span class="sc">$</span>NTMAJ12 <span class="sc">==</span> <span class="st">&quot;EH&quot;</span> ] <span class="ot">&lt;-</span> <span class="st">&quot;Hospitals&quot;</span></span>
-<span id="cb2-195"><a href="#cb2-195" aria-hidden="true" tabindex="-1"></a>core<span class="sc">$</span>NTMAJ12[ core<span class="sc">$</span>NTMAJ12 <span class="sc">==</span> <span class="st">&quot;EN&quot;</span> ] <span class="ot">&lt;-</span> <span class="st">&quot;Environmental&quot;</span></span>
-<span id="cb2-196"><a href="#cb2-196" aria-hidden="true" tabindex="-1"></a>core<span class="sc">$</span>NTMAJ12[ core<span class="sc">$</span>NTMAJ12 <span class="sc">==</span> <span class="st">&quot;HE&quot;</span> ] <span class="ot">&lt;-</span> <span class="st">&quot;Health&quot;</span></span>
-<span id="cb2-197"><a href="#cb2-197" aria-hidden="true" tabindex="-1"></a>core<span class="sc">$</span>NTMAJ12[ core<span class="sc">$</span>NTMAJ12 <span class="sc">==</span> <span class="st">&quot;HU&quot;</span> ] <span class="ot">&lt;-</span> <span class="st">&quot;Human Services&quot;</span></span>
-<span id="cb2-198"><a href="#cb2-198" aria-hidden="true" tabindex="-1"></a>core<span class="sc">$</span>NTMAJ12[ core<span class="sc">$</span>NTMAJ12 <span class="sc">==</span> <span class="st">&quot;IN&quot;</span> ] <span class="ot">&lt;-</span> <span class="st">&quot;International&quot;</span></span>
-<span id="cb2-199"><a href="#cb2-199" aria-hidden="true" tabindex="-1"></a>core<span class="sc">$</span>NTMAJ12[ core<span class="sc">$</span>NTMAJ12 <span class="sc">==</span> <span class="st">&quot;MU&quot;</span> ] <span class="ot">&lt;-</span> <span class="st">&quot;Mutual Benefit&quot;</span></span>
-<span id="cb2-200"><a href="#cb2-200" aria-hidden="true" tabindex="-1"></a>core<span class="sc">$</span>NTMAJ12[ core<span class="sc">$</span>NTMAJ12 <span class="sc">==</span> <span class="st">&quot;PU&quot;</span> ] <span class="ot">&lt;-</span> <span class="st">&quot;Public Benefit&quot;</span></span>
-<span id="cb2-201"><a href="#cb2-201" aria-hidden="true" tabindex="-1"></a>core<span class="sc">$</span>NTMAJ12[ core<span class="sc">$</span>NTMAJ12 <span class="sc">==</span> <span class="st">&quot;RE&quot;</span> ] <span class="ot">&lt;-</span> <span class="st">&quot;Religion&quot;</span></span>
-<span id="cb2-202"><a href="#cb2-202" aria-hidden="true" tabindex="-1"></a>core<span class="sc">$</span>NTMAJ12[ core<span class="sc">$</span>NTMAJ12 <span class="sc">==</span> <span class="st">&quot;UN&quot;</span> ] <span class="ot">&lt;-</span> <span class="st">&quot;Unknown&quot;</span></span>
-<span id="cb2-203"><a href="#cb2-203" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-204"><a href="#cb2-204" aria-hidden="true" tabindex="-1"></a>core<span class="sc">$</span>NTMAJ12 <span class="ot">&lt;-</span> <span class="fu">factor</span>( core<span class="sc">$</span>NTMAJ12 )</span>
-<span id="cb2-205"><a href="#cb2-205" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-206"><a href="#cb2-206" aria-hidden="true" tabindex="-1"></a><span class="co"># table( core$NTMAJ12 )</span></span></code></pre></div>
+<span id="cb2-185"><a href="#cb2-185" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-186"><a href="#cb2-186" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-187"><a href="#cb2-187" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-188"><a href="#cb2-188" aria-hidden="true" tabindex="-1"></a><span class="do">###</span></span>
+<span id="cb2-189"><a href="#cb2-189" aria-hidden="true" tabindex="-1"></a><span class="do">### ADD NTEE CODES LABELS </span></span>
+<span id="cb2-190"><a href="#cb2-190" aria-hidden="true" tabindex="-1"></a><span class="do">### </span></span>
+<span id="cb2-191"><a href="#cb2-191" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-192"><a href="#cb2-192" aria-hidden="true" tabindex="-1"></a>core<span class="sc">$</span>NTMAJ12v1 <span class="ot">&lt;-</span> core<span class="sc">$</span>NTMAJ12</span>
+<span id="cb2-193"><a href="#cb2-193" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-194"><a href="#cb2-194" aria-hidden="true" tabindex="-1"></a>core<span class="sc">$</span>NTMAJ12[ core<span class="sc">$</span>NTMAJ12 <span class="sc">==</span> <span class="st">&quot;AR&quot;</span> ] <span class="ot">&lt;-</span> <span class="st">&quot;Arts&quot;</span></span>
+<span id="cb2-195"><a href="#cb2-195" aria-hidden="true" tabindex="-1"></a>core<span class="sc">$</span>NTMAJ12[ core<span class="sc">$</span>NTMAJ12 <span class="sc">==</span> <span class="st">&quot;BH&quot;</span> ] <span class="ot">&lt;-</span> <span class="st">&quot;Universities&quot;</span></span>
+<span id="cb2-196"><a href="#cb2-196" aria-hidden="true" tabindex="-1"></a>core<span class="sc">$</span>NTMAJ12[ core<span class="sc">$</span>NTMAJ12 <span class="sc">==</span> <span class="st">&quot;ED&quot;</span> ] <span class="ot">&lt;-</span> <span class="st">&quot;Education&quot;</span></span>
+<span id="cb2-197"><a href="#cb2-197" aria-hidden="true" tabindex="-1"></a>core<span class="sc">$</span>NTMAJ12[ core<span class="sc">$</span>NTMAJ12 <span class="sc">==</span> <span class="st">&quot;EH&quot;</span> ] <span class="ot">&lt;-</span> <span class="st">&quot;Hospitals&quot;</span></span>
+<span id="cb2-198"><a href="#cb2-198" aria-hidden="true" tabindex="-1"></a>core<span class="sc">$</span>NTMAJ12[ core<span class="sc">$</span>NTMAJ12 <span class="sc">==</span> <span class="st">&quot;EN&quot;</span> ] <span class="ot">&lt;-</span> <span class="st">&quot;Environmental&quot;</span></span>
+<span id="cb2-199"><a href="#cb2-199" aria-hidden="true" tabindex="-1"></a>core<span class="sc">$</span>NTMAJ12[ core<span class="sc">$</span>NTMAJ12 <span class="sc">==</span> <span class="st">&quot;HE&quot;</span> ] <span class="ot">&lt;-</span> <span class="st">&quot;Health&quot;</span></span>
+<span id="cb2-200"><a href="#cb2-200" aria-hidden="true" tabindex="-1"></a>core<span class="sc">$</span>NTMAJ12[ core<span class="sc">$</span>NTMAJ12 <span class="sc">==</span> <span class="st">&quot;HU&quot;</span> ] <span class="ot">&lt;-</span> <span class="st">&quot;Human Services&quot;</span></span>
+<span id="cb2-201"><a href="#cb2-201" aria-hidden="true" tabindex="-1"></a>core<span class="sc">$</span>NTMAJ12[ core<span class="sc">$</span>NTMAJ12 <span class="sc">==</span> <span class="st">&quot;IN&quot;</span> ] <span class="ot">&lt;-</span> <span class="st">&quot;International&quot;</span></span>
+<span id="cb2-202"><a href="#cb2-202" aria-hidden="true" tabindex="-1"></a>core<span class="sc">$</span>NTMAJ12[ core<span class="sc">$</span>NTMAJ12 <span class="sc">==</span> <span class="st">&quot;MU&quot;</span> ] <span class="ot">&lt;-</span> <span class="st">&quot;Mutual Benefit&quot;</span></span>
+<span id="cb2-203"><a href="#cb2-203" aria-hidden="true" tabindex="-1"></a>core<span class="sc">$</span>NTMAJ12[ core<span class="sc">$</span>NTMAJ12 <span class="sc">==</span> <span class="st">&quot;PU&quot;</span> ] <span class="ot">&lt;-</span> <span class="st">&quot;Public Benefit&quot;</span></span>
+<span id="cb2-204"><a href="#cb2-204" aria-hidden="true" tabindex="-1"></a>core<span class="sc">$</span>NTMAJ12[ core<span class="sc">$</span>NTMAJ12 <span class="sc">==</span> <span class="st">&quot;RE&quot;</span> ] <span class="ot">&lt;-</span> <span class="st">&quot;Religion&quot;</span></span>
+<span id="cb2-205"><a href="#cb2-205" aria-hidden="true" tabindex="-1"></a>core<span class="sc">$</span>NTMAJ12[ core<span class="sc">$</span>NTMAJ12 <span class="sc">==</span> <span class="st">&quot;UN&quot;</span> ] <span class="ot">&lt;-</span> <span class="st">&quot;Unknown&quot;</span></span>
+<span id="cb2-206"><a href="#cb2-206" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-207"><a href="#cb2-207" aria-hidden="true" tabindex="-1"></a>core<span class="sc">$</span>NTMAJ12 <span class="ot">&lt;-</span> <span class="fu">factor</span>( core<span class="sc">$</span>NTMAJ12 )</span>
+<span id="cb2-208"><a href="#cb2-208" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-209"><a href="#cb2-209" aria-hidden="true" tabindex="-1"></a><span class="co"># table( core$NTMAJ12 )</span></span></code></pre></div>
 </div>
 <div id="filter-by-study-sample" class="section level2">
 <h2>Filter by Study Sample</h2>
@@ -1126,17 +1128,19 @@ src="img/logo.png" /><!-- --></p>
 </tr>
 </tbody>
 </table>
-<table style="width:90%;">
+<table>
 <caption>Table continues below</caption>
 <colgroup>
-<col width="22%" />
-<col width="11%" />
-<col width="11%" />
-<col width="45%" />
+<col width="21%" />
+<col width="14%" />
+<col width="10%" />
+<col width="10%" />
+<col width="43%" />
 </colgroup>
 <thead>
 <tr class="header">
 <th align="center">miscrevtot11e</th>
+<th align="center">tax.form</th>
 <th align="center">taxyr</th>
 <th align="center">STATE</th>
 <th align="center">NAME</th>
@@ -1145,36 +1149,42 @@ src="img/logo.png" /><!-- --></p>
 <tbody>
 <tr class="odd">
 <td align="center">0</td>
+<td align="center">990PC</td>
 <td align="center">2019</td>
 <td align="center">ME</td>
 <td align="center">THE OPPORTUNITY ALLIANCE</td>
 </tr>
 <tr class="even">
 <td align="center">85592</td>
+<td align="center">990PC</td>
 <td align="center">2018</td>
 <td align="center">ME</td>
 <td align="center">WESTERN MAINE COMMUNITY ACTION INC</td>
 </tr>
 <tr class="odd">
 <td align="center">65094</td>
+<td align="center">990PC</td>
 <td align="center">2018</td>
 <td align="center">ME</td>
 <td align="center">KENNEBEC VALLEY COMMUNITY ACTION PROGRAM</td>
 </tr>
 <tr class="even">
 <td align="center">0</td>
+<td align="center">990PC</td>
 <td align="center">2018</td>
 <td align="center">ME</td>
 <td align="center">EASTERN MAINE DEVELOPMENT CORPORATION</td>
 </tr>
 <tr class="odd">
 <td align="center">22119</td>
+<td align="center">990PC</td>
 <td align="center">2018</td>
 <td align="center">ME</td>
 <td align="center">H O M E INC</td>
 </tr>
 <tr class="even">
 <td align="center">0</td>
+<td align="center">990PC</td>
 <td align="center">2018</td>
 <td align="center">ME</td>
 <td align="center">AVESTA HOUSING DEVELOPMENT CORPORATION</td>
@@ -1404,7 +1414,7 @@ src="img/logo.png" /><!-- --></p>
 </div>
 <div id="save-wrangled-data" class="section level2">
 <h2>Save Wrangled Data</h2>
-<p>The output file has 5524 rows and 50 variables:</p>
+<p>The output file has 5524 rows and 51 variables:</p>
 <pre><code>##  [1] &quot;ein&quot;                 &quot;tax_pd&quot;              &quot;accntspayableend&quot;   
 ##  [4] &quot;accntsrcvblend&quot;      &quot;deprcatndepletn&quot;     &quot;grntspayableend&quot;    
 ##  [7] &quot;invntriesalesend&quot;    &quot;lndbldgsequipend&quot;    &quot;nonintcashend&quot;      
@@ -1414,14 +1424,14 @@ src="img/logo.png" /><!-- --></p>
 ## [19] &quot;unrstrctnetasstsend&quot; &quot;totcntrbgfts&quot;        &quot;netincfndrsng&quot;      
 ## [22] &quot;invstmntinc&quot;         &quot;txexmptbndsproceeds&quot; &quot;netrntlinc&quot;         
 ## [25] &quot;netgnls&quot;             &quot;royaltsinc&quot;          &quot;netincsales&quot;        
-## [28] &quot;miscrevtot11e&quot;       &quot;taxyr&quot;               &quot;STATE&quot;              
-## [31] &quot;NAME&quot;                &quot;ADDRESS&quot;             &quot;CITY&quot;               
-## [34] &quot;FIPS&quot;                &quot;RULEDATE&quot;            &quot;NTEEFINAL&quot;          
-## [37] &quot;NTEECC&quot;              &quot;NTEE1&quot;               &quot;NTMAJ5&quot;             
-## [40] &quot;NTMAJ10&quot;             &quot;NTMAJ12&quot;             &quot;LEVEL1&quot;             
-## [43] &quot;LEVEL2&quot;              &quot;LEVEL3&quot;              &quot;LEVEL4&quot;             
-## [46] &quot;AGE&quot;                 &quot;State&quot;               &quot;Region&quot;             
-## [49] &quot;Division&quot;            &quot;NTMAJ12v1&quot;</code></pre>
+## [28] &quot;miscrevtot11e&quot;       &quot;tax.form&quot;            &quot;taxyr&quot;              
+## [31] &quot;STATE&quot;               &quot;NAME&quot;                &quot;ADDRESS&quot;            
+## [34] &quot;CITY&quot;                &quot;FIPS&quot;                &quot;RULEDATE&quot;           
+## [37] &quot;NTEEFINAL&quot;           &quot;NTEECC&quot;              &quot;NTEE1&quot;              
+## [40] &quot;NTMAJ5&quot;              &quot;NTMAJ10&quot;             &quot;NTMAJ12&quot;            
+## [43] &quot;LEVEL1&quot;              &quot;LEVEL2&quot;              &quot;LEVEL3&quot;             
+## [46] &quot;LEVEL4&quot;              &quot;AGE&quot;                 &quot;State&quot;              
+## [49] &quot;Region&quot;              &quot;Division&quot;            &quot;NTMAJ12v1&quot;</code></pre>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>( core, <span class="st">&quot;02-data-wrangled/core.rds&quot;</span> )</span></code></pre></div>
 </div>
 </div>
