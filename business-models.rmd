@@ -347,6 +347,14 @@ plot( fit, what = "classification" )
 ```
 
 
+```{r, fig.width=10, fig.height=10}
+md2 <- sample_n( model.dat, 1000 )
+md2.scaled <- apply( md2, 2, scale ) 
+fit2 <- Mclust( md2.scaled )
+plot( fit2, what = "classification" )
+```
+
+
 
 ```{r}
 summary( fit )

@@ -774,7 +774,12 @@ div.tocify {
 <span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">Mclust</span>( model.dat.scaled )</span>
 <span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>( fit, <span class="at">what =</span> <span class="st">&quot;classification&quot;</span> )</span></code></pre></div>
 <p><img src="business-models_files/figure-html/unnamed-chunk-10-1.png" width="960" /></p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>( fit )</span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>md2 <span class="ot">&lt;-</span> <span class="fu">sample_n</span>( model.dat, <span class="dv">1000</span> )</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>md2.scaled <span class="ot">&lt;-</span> <span class="fu">apply</span>( md2, <span class="dv">2</span>, scale ) </span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>fit2 <span class="ot">&lt;-</span> <span class="fu">Mclust</span>( md2.scaled )</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>( fit2, <span class="at">what =</span> <span class="st">&quot;classification&quot;</span> )</span></code></pre></div>
+<p><img src="business-models_files/figure-html/unnamed-chunk-11-1.png" width="960" /></p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>( fit )</span></code></pre></div>
 <pre><code>## ---------------------------------------------------- 
 ## Gaussian finite mixture model fitted by EM algorithm 
 ## ---------------------------------------------------- 
@@ -787,7 +792,7 @@ div.tocify {
 ## Clustering table:
 ##    1    2    3    4    5    6    7    8    9 
 ##  942  548  215 1168  515  401  109  681  243</code></pre>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>( fit, <span class="at">parameters =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>( fit, <span class="at">parameters =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <pre><code>## ---------------------------------------------------- 
 ## Gaussian finite mixture model fitted by EM algorithm 
 ## ---------------------------------------------------- 
@@ -885,18 +890,18 @@ div.tocify {
 ## dep.r    0.06813985  0.002359406  0.153546500  0.0301985 -0.001246516
 ## land.r   0.13896554  0.024667698  0.030198502  1.0674449 -0.001923000
 ## asset.r -0.00245336 -0.014007284 -0.001246516 -0.0019230  0.015055278</code></pre>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>ave <span class="ot">&lt;-</span> fit<span class="sc">$</span>parameters<span class="sc">$</span>mean</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>ave <span class="ot">&lt;-</span> <span class="fu">round</span>(ave,<span class="dv">2</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>group.ids <span class="ot">&lt;-</span> <span class="fu">as.character</span>( fit<span class="sc">$</span>classification )</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>labels <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Asset Ratio&quot;</span>, <span class="st">&quot;Land Ratio&quot;</span>,<span class="st">&quot;Depreciation Ratio&quot;</span>,<span class="st">&quot;Government Rev Ratio&quot;</span>,<span class="st">&quot;Salary Ratio&quot;</span>)</span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>data.dictionary <span class="ot">&lt;-</span> <span class="fu">data.frame</span>( <span class="at">VARIABLE=</span><span class="fu">names</span>(dd), <span class="at">LABEL=</span>labels )</span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>( <span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">2</span>) )</span>
-<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="fu">view_cluster_data</span>( <span class="at">model.dat=</span>model.dat, </span>
-<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>                   <span class="at">group.ids=</span>group.ids, </span>
-<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>                   <span class="at">data.dictionary=</span>data.dictionary )</span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>ave <span class="ot">&lt;-</span> fit<span class="sc">$</span>parameters<span class="sc">$</span>mean</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>ave <span class="ot">&lt;-</span> <span class="fu">round</span>(ave,<span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>group.ids <span class="ot">&lt;-</span> <span class="fu">as.character</span>( fit<span class="sc">$</span>classification )</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>labels <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Asset Ratio&quot;</span>, <span class="st">&quot;Land Ratio&quot;</span>,<span class="st">&quot;Depreciation Ratio&quot;</span>,<span class="st">&quot;Government Rev Ratio&quot;</span>,<span class="st">&quot;Salary Ratio&quot;</span>)</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>data.dictionary <span class="ot">&lt;-</span> <span class="fu">data.frame</span>( <span class="at">VARIABLE=</span><span class="fu">names</span>(dd), <span class="at">LABEL=</span>labels )</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>( <span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">2</span>) )</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a><span class="fu">view_cluster_data</span>( <span class="at">model.dat=</span>model.dat, </span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>                   <span class="at">group.ids=</span>group.ids, </span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>                   <span class="at">data.dictionary=</span>data.dictionary )</span></code></pre></div>
 <pre><code>## [1]   0  50 100</code></pre>
 <pre><code>## [1]   0  50 100</code></pre>
 <pre><code>## [1]   0  50 100</code></pre>
@@ -904,19 +909,19 @@ div.tocify {
 <pre><code>## [1]   0  50 100</code></pre>
 <pre><code>## [1]   0  50 100</code></pre>
 <pre><code>## [1]   0  50 100</code></pre>
-<p><img src="business-models_files/figure-html/unnamed-chunk-12-1.png" width="768" /></p>
+<p><img src="business-models_files/figure-html/unnamed-chunk-13-1.png" width="768" /></p>
 <pre><code>## [1]   0  50 100</code></pre>
 <pre><code>## [1]   0  50 100</code></pre>
-<p><img src="business-models_files/figure-html/unnamed-chunk-12-2.png" width="768" /></p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>d.save <span class="ot">&lt;-</span> d[ id , ]</span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>( d.save )</span></code></pre></div>
+<p><img src="business-models_files/figure-html/unnamed-chunk-13-2.png" width="768" /></p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>d.save <span class="ot">&lt;-</span> d[ id , ]</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>( d.save )</span></code></pre></div>
 <pre><code>## [1] 4822</code></pre>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>( group.ids )</span></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>( group.ids )</span></code></pre></div>
 <pre><code>## [1] 4822</code></pre>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>d.save <span class="ot">&lt;-</span> <span class="fu">cbind</span>( d.save, group.ids)</span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>( d.save, <span class="st">&quot;03-data-ratios/clustering-data.csv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>d.save <span class="ot">&lt;-</span> <span class="fu">cbind</span>( d.save, group.ids)</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>( d.save, <span class="st">&quot;03-data-ratios/clustering-data.csv&quot;</span>)</span></code></pre></div>
 <br> <br>
 <hr>
 <p><br> <br></p>
