@@ -1,0 +1,408 @@
+---
+title: "Business Models"
+author: ""
+font: Lato
+output:
+  html_document:
+    self_contained: TRUE
+    toc: TRUE
+    toc_float: TRUE
+    output_dir: "."
+    css: simple.css
+---
+
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set( echo = TRUE, 
+                       message=F, 
+                       warning=F, 
+                       fig.width = 10, 
+                       fig.height = 6)
+
+# editor_options:
+#     chunk_output_type: console
+```
+
+
+```{r, echo=T}
+
+## Packages
+
+library( tidyr )        # data wrangling
+library( dplyr )        # data wrangling 
+library( scales )       # re-scaling numbers
+library( mclust )
+set.seed(1234)
+
+
+# library( urbnthemes )   # setting the color scheme to Urban's
+# set_urbn_defaults(style = "print")
+
+source( "r-functions.R" )
+
+
+# stargazer table print type
+# run chunk for live RMD sessions
+s.type <- "text"
+
+# stargazer table print type
+# resets to html when knitting
+s.type <- "html"
+
+
+## Load Data
+
+# local: 
+core <- readRDS( "02-data-wrangled/core.rds" )
+
+# from github: 
+# URL <- "https://github.com/lecy/fiscal-health/raw/main/02-data-wrangled/core.rds"
+# core <- readRDS(gzcon(url( URL )))
+
+
+
+# Preview the data: 
+# table( core$NTEE1 ) %>% kable()
+# head(core) %>% pander()
+```
+
+
+
+```{r}
+
+view_cluster_data <- function( model.dat, group.ids, data.dictionary )
+{
+  num.groups <- length( unique( as.character( group.ids ) ) )
+  num.vars <- ncol( model.dat )
+  
+  df.ntile <- sapply( model.dat, ntile, 100 )
+  df.ntile <- as.data.frame( df.ntile )
+  df.ntile$cluster <- as.factor( paste0("GROUP-", group.ids ) )
+  
+  stats <- 
+    df.ntile %>% 
+    group_by( cluster ) %>% 
+    summarise_each( funs(mean) )
+  
+  group.size <- table(group.ids)
+  
+  df.stats <- data.frame( t(stats), stringsAsFactors=F )
+  names(df.stats) <- paste0( "GROUP.", 1:num.groups )
+  df.stats <- df.stats[-1,]
+  
+  for( i in 1:num.groups )
+  {
+    z <- df.stats[,i]
+    
+    print({
+      
+      plot( rep(1,num.vars), 1:num.vars, bty="n", xlim=c(-75,100), 
+            type="n", xaxt="n", yaxt="n",
+            xlab="Percentile", 
+            ylab="", col.lab="gray40",
+            main=paste( "GROUP", i, ": ( n=", group.size[i],")" ) )
+      rect( xleft=0, ybottom=0, xright=20, ytop=(num.vars+1), col=gray(0.75,0.5), border="gray80" )
+      rect( xleft=40, ybottom=0, xright=60, ytop=(num.vars+1), col=gray(0.75,0.5), border="gray80" )
+      rect( xleft=80, ybottom=0, xright=100, ytop=(num.vars+1), col=gray(0.75,0.5), border="gray80" )
+      abline( v=seq(0,100,25), lty=3, lwd=1.5, col="gray90" )
+      segments( y0=1:num.vars, x0=0, x1=100, col="gray70", lwd=2 )
+      text( -0.2, 1:num.vars, data.dictionary$LABEL, cex=1.2, pos=2 )
+      points( z, 1:num.vars, pch=19, col="firebrick", cex=1.5 )
+      axis( side=1, at=c(0,50,100), col.axis="gray", col="gray" )
+      
+    }) # end print
+  }   # end loop
+  
+}
+
+```
+
+
+
+# CORE Data
+
+```{r, eval=T}
+
+x1 <- core$lndbldgsequipend / core$totassetsend
+x1[ x1 > 1 ] <- 1
+
+
+x2 <- core$netincfndrsng / core$totrevenue
+x3 <- core$totprgmrevnue / core$totrevenue 
+x3[ x3 < 0 ] <- 0 
+x3[ x3 > 1 ] <- 1 
+hist( x3, breaks=25 )
+
+x4 <- core$totassetsend / core$totrevenue 
+x4[ core$totrevenue == 0 ] <- 0
+x4[ x4 > 10 ] <- 10
+x4[ x4 < -1 ] <- -1
+
+x5 <- log( core$totassetsend )
+x5[ core$totassetsend <= 0 ] <- 5
+
+x6 <- ( core$totrevenue - core$totfuncexpns ) / core$totfuncexpns
+x6[ core$totfuncexpns == 0 ] <- 0
+x6[ x6 > 1  ] <-  1 
+x6[ x6 < -1 ] <- -1
+hist(x6, breaks=25 )
+```
+
+
+
+
+
+```{r}
+rescale <- function(x)
+{
+   x[ is.na(x) ] <- median(x, na.rm=T )
+
+   x.05 <- quantile( x, 0.05 )
+   x.95 <- quantile( x, 0.95 )
+
+   x[ x < x.05 ] <- x.05
+   x[ x > x.95 ] <- x.95 
+   
+   x <- scales::rescale( x, to=c(1,100) )
+   
+   if( abs( mean(x) - median(x) ) > 5 )
+   { x <- log(x) }
+
+   x <- scale(x)
+
+   return(x)
+}
+```
+
+
+```{r, fig.width=10, fig.height=10}
+
+
+
+d <- data.frame(x1,x3,x4,x5)
+d2 <- sapply( d, rescale ) %>% as.data.frame()
+d3 <- sample_n( d2, 1000 )
+d1 <- sample_n( d, 1000 )
+
+d1 <- na.omit(d1)
+fit <- Mclust( d1 )
+plot( fit, what = "classification" )
+summary( fit )
+
+
+
+cluster <- as.factor( fit$classification )
+```
+
+
+
+```{r, fig.height=16, fig.width=8}
+
+group.ids <- as.character( fit$classification )
+
+labels <- c("Land Ratio","Fundraising Ratio","Assets Ratio","Total Assets (logged)")
+data.dictionary <- data.frame( VARIABLE=names(d1), LABEL=labels )
+
+par( mfrow=c(4,2) )
+
+view_cluster_data( model.dat=d1, 
+                   group.ids=group.ids, 
+                   data.dictionary=data.dictionary )
+```
+
+
+
+
+# EFILE DATA 
+
+
+```{r}
+sum    <- read.csv("EFILE/F9-P01-T00-SUMMARY.csv")
+rev    <- read.csv("EFILE/F9-P08-T00-REVENUE.csv")
+exp    <- read.csv("EFILE/F9-P09-T00-EXPENSES.csv")
+assets <- read.csv("EFILE/F9-P10-T00-BALANCE-SHEET.csv")
+
+d2 <- merge( rev, exp )
+d3 <- merge( d2, assets )
+d4 <- merge( d3, sum )
+
+d <- dplyr::filter( d4, TAX_YEAR == 2018 )
+```
+
+
+
+
+```{r}
+rescale <- function(x)
+{
+   x[ is.na(x) ] <- median(x, na.rm=T )
+
+   x.05 <- quantile( x, 0.05 )
+   x.95 <- quantile( x, 0.95 )
+
+   x[ x < x.05 ] <- x.05
+   x[ x > x.95 ] <- x.95 
+   
+   x <- scales::rescale( x, to=c(1,100) )
+   
+   if( abs( mean(x) - median(x) ) > 5 )
+   { x <- log(x) }
+
+   x <- scale(x)
+
+   return(x)
+}
+```
+
+
+
+```{r}
+
+tot.rev <- d$F9_08_REV_TOT_TOT
+
+
+rent <- d$F9_08_REV_OTH_RENT_NET_TOT
+
+
+volunteers    <- d$F9_01_ACT_GVRN_VOL_TOT
+
+num.emp       <- d$F9_01_ACT_GVRN_EMPL_TOT
+
+grants        <- d$F9_01_REV_CONTR_TOT_CY
+
+prog.rev      <- d$F9_01_REV_PROG_TOT_CY
+
+tot.rev       <- d$F9_01_REV_TOT_CY
+
+grants.paid   <- d$F9_01_EXP_GRANT_SIMILAR_CY
+
+mem.benefits  <- d$F9_01_EXP_BEN_PAID_MEMB_CY
+
+salaries      <- d$F9_01_EXP_SAL_ETC_CY
+
+fundraise     <- d$F9_01_EXP_FUNDR_TOT_CY
+
+tot.exp       <- d$F9_01_EXP_TOT_CY
+
+depreciation  <- d$F9_09_EXP_DEPREC_TOT
+depreciation[ is.na(depreciation) ] <- 0
+
+gov.grants <- d$F9_08_REV_CONTR_GOVT_GRANT 
+gov.grants[ is.na(gov.grants ) ] <- 0
+
+land.bldg    <- d$F9_10_ASSET_LAND_BLDG_NET_EOY
+land.bldg[ is.na(land.bldg) ] <- 0
+tot.assets   <- d$F9_10_ASSET_TOT_EOY
+
+land.r <- land.bldg / tot.assets
+land.r[ land.r < 0 ] <- 0
+land.r[ land.r > 1 ] <- 1
+
+grant.r <- grants / tot.rev
+grant.r[ grant.r < 0 ] <- 0
+grant.r[ grant.r > 1 ] <- 1
+
+prog.r <- prog.rev / tot.rev
+prog.r[ prog.r < 0 ] <- 0
+prog.r[ prog.r > 1 ] <- 1
+
+sal.r <- salaries  /  tot.exp
+sal.r[ sal.r < 0 ] <- 0
+sal.r[ sal.r > 1 ] <- 1
+
+gov.r <- gov.grants / tot.rev 
+gov.r[ gov.r < 0 ] <- 0
+gov.r[ gov.r > 1 ] <- 1
+
+dep.r <- depreciation / tot.exp
+dep.r[ dep.r < 0 ] <- 0
+dep.r[ dep.r > 0.5 ] <- 0.5
+dep.r <- log( dep.r*100 + 1 )
+
+tot.exp[ tot.exp == 0 ] <- NA
+asset.r <- tot.assets / tot.exp
+asset.r[ asset.r < 0 ] <- 0
+asset.r[ asset.r > 10 ] <- 10
+
+
+dd <- data.frame( sal.r, gov.r, dep.r, land.r, asset.r, id=1:length(sal.r) )
+dd <- na.omit(dd)
+
+id <- dd$id
+dd <- dplyr::select( dd, -id )
+
+
+```
+
+
+
+```{r, fig.width=10, fig.height=10}
+model.dat <- dd          # select variables for clustering
+model.dat.scaled <- apply( model.dat, 2, scale )     # transform raw measures into z scores
+
+fit <- Mclust( model.dat.scaled )
+plot( fit, what = "classification" )
+
+```
+
+
+
+```{r}
+summary( fit )
+summary( fit, parameters = TRUE)
+
+
+ave <- fit$parameters$mean
+ave <- round(ave,2)
+
+```
+
+
+
+
+
+```{r, fig.height=16, fig.width=8}
+
+group.ids <- as.character( fit$classification )
+
+labels <- c("Asset Ratio", "Land Ratio","Depreciation Ratio","Government Rev Ratio","Salary Ratio")
+data.dictionary <- data.frame( VARIABLE=names(dd), LABEL=labels )
+
+par( mfrow=c(4,2) )
+
+view_cluster_data( model.dat=model.dat, 
+                   group.ids=group.ids, 
+                   data.dictionary=data.dictionary )
+```
+
+
+
+
+
+```{r}
+d.save <- d[ id , ]
+
+nrow( d.save )
+length( group.ids )
+d.save <- cbind( d.save, group.ids)
+
+write.csv( d.save, "03-data-ratios/clustering-data.csv")
+```
+
+
+
+<br>
+<br>
+<hr>
+<br>
+<br>
+
+
+
+
+```{css, echo=F}
+
+div#TOC{ margin-top: 42px; }
+```
+

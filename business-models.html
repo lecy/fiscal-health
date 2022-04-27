@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Business Models</title>
+
+<script src="site_libs/header-attrs-2.9/header-attrs.js"></script>
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  background-color: #f8f8f8; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #c4a000; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #000000; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #000000; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #000000; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+
+.sourceCode .row {
+  width: 100%;
+}
+.sourceCode {
+  overflow-x: auto;
+}
+.code-folding-btn {
+  margin-right: -30px;
+}
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<link rel="stylesheet" href="simple.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Fiscal Health Indicators</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="data-step-00-wrangling.html">Data Wrangling</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Metrics
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="metric-01-debt-to-asset-ratio.html">M1 Debt to Asset Ratio</a>
+    </li>
+    <li>
+      <a href="metric-02-current-ratio.html">M2 Current Ratio</a>
+    </li>
+    <li>
+      <a href="metric-03-days-operating-COH.html">M3 Cash on Hand (Days)</a>
+    </li>
+    <li>
+      <a href="metric-04-debt-to-equity-ratio.html">M4 Debt to Equity Ratio</a>
+    </li>
+    <li>
+      <a href="metric-05-self-sufficiency-ratio.html">M5 Self-Sufficiency Ratio</a>
+    </li>
+    <li>
+      <a href="metric-06-months-of-COH.html">M6 Cash on Hand (Months)</a>
+    </li>
+    <li>
+      <a href="metric-07-land-to-assets-ratio.html">M7 Land to Assets Ratio</a>
+    </li>
+    <li>
+      <a href="metric-08-pre-depreciation-profitability-margin.html">M8 Pre-Depreciation Profitability</a>
+    </li>
+    <li>
+      <a href="metric-09-post-depreciation-profitability-margin.html">M9 Post-Depreciation Profitability</a>
+    </li>
+    <li>
+      <a href="metric-10-debt-management-ratio.html">M10 Debt Management Ratio</a>
+    </li>
+    <li>
+      <a href="metric-11-equity-ratio.html">M11 Equity Ratio</a>
+    </li>
+    <li>
+      <a href="metric-12-quick-ratio.html">M12 Quick Ratio</a>
+    </li>
+    <li>
+      <a href="metric-13-short-term-debt-ratio.html">M13 Short Term Debt Ratio</a>
+    </li>
+    <li>
+      <a href="metric-14-income-reliance-ratios.html">M14 Income Reliance Ratio</a>
+    </li>
+    <li>
+      <a href="metric-15-asset-revenues-ratio.html">M15 Asset Revenue Ratio</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">Business Models</h1>
+<h4 class="author"></h4>
+
+</div>
+
+
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Packages</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>( tidyr )        <span class="co"># data wrangling</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>( dplyr )        <span class="co"># data wrangling </span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>( scales )       <span class="co"># re-scaling numbers</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>( mclust )</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># library( urbnthemes )   # setting the color scheme to Urban&#39;s</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># set_urbn_defaults(style = &quot;print&quot;)</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>( <span class="st">&quot;r-functions.R&quot;</span> )</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co"># stargazer table print type</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co"># run chunk for live RMD sessions</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>s.type <span class="ot">&lt;-</span> <span class="st">&quot;text&quot;</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co"># stargazer table print type</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="co"># resets to html when knitting</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>s.type <span class="ot">&lt;-</span> <span class="st">&quot;html&quot;</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="do">## Load Data</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="co"># local: </span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>core <span class="ot">&lt;-</span> <span class="fu">readRDS</span>( <span class="st">&quot;02-data-wrangled/core.rds&quot;</span> )</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="co"># from github: </span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="co"># URL &lt;- &quot;https://github.com/lecy/fiscal-health/raw/main/02-data-wrangled/core.rds&quot;</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="co"># core &lt;- readRDS(gzcon(url( URL )))</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="co"># Preview the data: </span></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a><span class="co"># table( core$NTEE1 ) %&gt;% kable()</span></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="co"># head(core) %&gt;% pander()</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>view_cluster_data <span class="ot">&lt;-</span> <span class="cf">function</span>( model.dat, group.ids, data.dictionary )</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  num.groups <span class="ot">&lt;-</span> <span class="fu">length</span>( <span class="fu">unique</span>( <span class="fu">as.character</span>( group.ids ) ) )</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  num.vars <span class="ot">&lt;-</span> <span class="fu">ncol</span>( model.dat )</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  df.ntile <span class="ot">&lt;-</span> <span class="fu">sapply</span>( model.dat, ntile, <span class="dv">100</span> )</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  df.ntile <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>( df.ntile )</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  df.ntile<span class="sc">$</span>cluster <span class="ot">&lt;-</span> <span class="fu">as.factor</span>( <span class="fu">paste0</span>(<span class="st">&quot;GROUP-&quot;</span>, group.ids ) )</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  stats <span class="ot">&lt;-</span> </span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    df.ntile <span class="sc">%&gt;%</span> </span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>( cluster ) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise_each</span>( <span class="fu">funs</span>(mean) )</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  group.size <span class="ot">&lt;-</span> <span class="fu">table</span>(group.ids)</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  df.stats <span class="ot">&lt;-</span> <span class="fu">data.frame</span>( <span class="fu">t</span>(stats), <span class="at">stringsAsFactors=</span>F )</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">names</span>(df.stats) <span class="ot">&lt;-</span> <span class="fu">paste0</span>( <span class="st">&quot;GROUP.&quot;</span>, <span class="dv">1</span><span class="sc">:</span>num.groups )</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>  df.stats <span class="ot">&lt;-</span> df.stats[<span class="sc">-</span><span class="dv">1</span>,]</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>( i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>num.groups )</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    z <span class="ot">&lt;-</span> df.stats[,i]</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>({</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>      <span class="fu">plot</span>( <span class="fu">rep</span>(<span class="dv">1</span>,num.vars), <span class="dv">1</span><span class="sc">:</span>num.vars, <span class="at">bty=</span><span class="st">&quot;n&quot;</span>, <span class="at">xlim=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">75</span>,<span class="dv">100</span>), </span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>            <span class="at">type=</span><span class="st">&quot;n&quot;</span>, <span class="at">xaxt=</span><span class="st">&quot;n&quot;</span>, <span class="at">yaxt=</span><span class="st">&quot;n&quot;</span>,</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>            <span class="at">xlab=</span><span class="st">&quot;Percentile&quot;</span>, </span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>            <span class="at">ylab=</span><span class="st">&quot;&quot;</span>, <span class="at">col.lab=</span><span class="st">&quot;gray40&quot;</span>,</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>            <span class="at">main=</span><span class="fu">paste</span>( <span class="st">&quot;GROUP&quot;</span>, i, <span class="st">&quot;: ( n=&quot;</span>, group.size[i],<span class="st">&quot;)&quot;</span> ) )</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>      <span class="fu">rect</span>( <span class="at">xleft=</span><span class="dv">0</span>, <span class="at">ybottom=</span><span class="dv">0</span>, <span class="at">xright=</span><span class="dv">20</span>, <span class="at">ytop=</span>(num.vars<span class="sc">+</span><span class="dv">1</span>), <span class="at">col=</span><span class="fu">gray</span>(<span class="fl">0.75</span>,<span class="fl">0.5</span>), <span class="at">border=</span><span class="st">&quot;gray80&quot;</span> )</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>      <span class="fu">rect</span>( <span class="at">xleft=</span><span class="dv">40</span>, <span class="at">ybottom=</span><span class="dv">0</span>, <span class="at">xright=</span><span class="dv">60</span>, <span class="at">ytop=</span>(num.vars<span class="sc">+</span><span class="dv">1</span>), <span class="at">col=</span><span class="fu">gray</span>(<span class="fl">0.75</span>,<span class="fl">0.5</span>), <span class="at">border=</span><span class="st">&quot;gray80&quot;</span> )</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>      <span class="fu">rect</span>( <span class="at">xleft=</span><span class="dv">80</span>, <span class="at">ybottom=</span><span class="dv">0</span>, <span class="at">xright=</span><span class="dv">100</span>, <span class="at">ytop=</span>(num.vars<span class="sc">+</span><span class="dv">1</span>), <span class="at">col=</span><span class="fu">gray</span>(<span class="fl">0.75</span>,<span class="fl">0.5</span>), <span class="at">border=</span><span class="st">&quot;gray80&quot;</span> )</span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>      <span class="fu">abline</span>( <span class="at">v=</span><span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">100</span>,<span class="dv">25</span>), <span class="at">lty=</span><span class="dv">3</span>, <span class="at">lwd=</span><span class="fl">1.5</span>, <span class="at">col=</span><span class="st">&quot;gray90&quot;</span> )</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>      <span class="fu">segments</span>( <span class="at">y0=</span><span class="dv">1</span><span class="sc">:</span>num.vars, <span class="at">x0=</span><span class="dv">0</span>, <span class="at">x1=</span><span class="dv">100</span>, <span class="at">col=</span><span class="st">&quot;gray70&quot;</span>, <span class="at">lwd=</span><span class="dv">2</span> )</span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>      <span class="fu">text</span>( <span class="sc">-</span><span class="fl">0.2</span>, <span class="dv">1</span><span class="sc">:</span>num.vars, data.dictionary<span class="sc">$</span>LABEL, <span class="at">cex=</span><span class="fl">1.2</span>, <span class="at">pos=</span><span class="dv">2</span> )</span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>      <span class="fu">points</span>( z, <span class="dv">1</span><span class="sc">:</span>num.vars, <span class="at">pch=</span><span class="dv">19</span>, <span class="at">col=</span><span class="st">&quot;firebrick&quot;</span>, <span class="at">cex=</span><span class="fl">1.5</span> )</span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>      <span class="fu">axis</span>( <span class="at">side=</span><span class="dv">1</span>, <span class="at">at=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">50</span>,<span class="dv">100</span>), <span class="at">col.axis=</span><span class="st">&quot;gray&quot;</span>, <span class="at">col=</span><span class="st">&quot;gray&quot;</span> )</span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>    }) <span class="co"># end print</span></span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>  }   <span class="co"># end loop</span></span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div id="core-data" class="section level1">
+<h1>CORE Data</h1>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> core<span class="sc">$</span>lndbldgsequipend <span class="sc">/</span> core<span class="sc">$</span>totassetsend</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>x1[ x1 <span class="sc">&gt;</span> <span class="dv">1</span> ] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>x2 <span class="ot">&lt;-</span> core<span class="sc">$</span>netincfndrsng <span class="sc">/</span> core<span class="sc">$</span>totrevenue</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>x3 <span class="ot">&lt;-</span> core<span class="sc">$</span>totprgmrevnue <span class="sc">/</span> core<span class="sc">$</span>totrevenue </span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>x3[ x3 <span class="sc">&lt;</span> <span class="dv">0</span> ] <span class="ot">&lt;-</span> <span class="dv">0</span> </span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>x3[ x3 <span class="sc">&gt;</span> <span class="dv">1</span> ] <span class="ot">&lt;-</span> <span class="dv">1</span> </span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>( x3, <span class="at">breaks=</span><span class="dv">25</span> )</span></code></pre></div>
+<p><img src="business-models_files/figure-html/unnamed-chunk-3-1.png" width="960" /></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>x4 <span class="ot">&lt;-</span> core<span class="sc">$</span>totassetsend <span class="sc">/</span> core<span class="sc">$</span>totrevenue </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>x4[ core<span class="sc">$</span>totrevenue <span class="sc">==</span> <span class="dv">0</span> ] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>x4[ x4 <span class="sc">&gt;</span> <span class="dv">10</span> ] <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>x4[ x4 <span class="sc">&lt;</span> <span class="sc">-</span><span class="dv">1</span> ] <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">1</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>x5 <span class="ot">&lt;-</span> <span class="fu">log</span>( core<span class="sc">$</span>totassetsend )</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>x5[ core<span class="sc">$</span>totassetsend <span class="sc">&lt;=</span> <span class="dv">0</span> ] <span class="ot">&lt;-</span> <span class="dv">5</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>x6 <span class="ot">&lt;-</span> ( core<span class="sc">$</span>totrevenue <span class="sc">-</span> core<span class="sc">$</span>totfuncexpns ) <span class="sc">/</span> core<span class="sc">$</span>totfuncexpns</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>x6[ core<span class="sc">$</span>totfuncexpns <span class="sc">==</span> <span class="dv">0</span> ] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>x6[ x6 <span class="sc">&gt;</span> <span class="dv">1</span>  ] <span class="ot">&lt;-</span>  <span class="dv">1</span> </span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>x6[ x6 <span class="sc">&lt;</span> <span class="sc">-</span><span class="dv">1</span> ] <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">1</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(x6, <span class="at">breaks=</span><span class="dv">25</span> )</span></code></pre></div>
+<p><img src="business-models_files/figure-html/unnamed-chunk-3-2.png" width="960" /></p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>rescale <span class="ot">&lt;-</span> <span class="cf">function</span>(x)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>   x[ <span class="fu">is.na</span>(x) ] <span class="ot">&lt;-</span> <span class="fu">median</span>(x, <span class="at">na.rm=</span>T )</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>   x<span class="fl">.05</span> <span class="ot">&lt;-</span> <span class="fu">quantile</span>( x, <span class="fl">0.05</span> )</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>   x<span class="fl">.95</span> <span class="ot">&lt;-</span> <span class="fu">quantile</span>( x, <span class="fl">0.95</span> )</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>   x[ x <span class="sc">&lt;</span> x<span class="fl">.05</span> ] <span class="ot">&lt;-</span> x<span class="fl">.05</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>   x[ x <span class="sc">&gt;</span> x<span class="fl">.95</span> ] <span class="ot">&lt;-</span> x<span class="fl">.95</span> </span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>   </span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>   x <span class="ot">&lt;-</span> scales<span class="sc">::</span><span class="fu">rescale</span>( x, <span class="at">to=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">100</span>) )</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>   </span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>   <span class="cf">if</span>( <span class="fu">abs</span>( <span class="fu">mean</span>(x) <span class="sc">-</span> <span class="fu">median</span>(x) ) <span class="sc">&gt;</span> <span class="dv">5</span> )</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>   { x <span class="ot">&lt;-</span> <span class="fu">log</span>(x) }</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>   x <span class="ot">&lt;-</span> <span class="fu">scale</span>(x)</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>   <span class="fu">return</span>(x)</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(x1,x3,x4,x5)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>d2 <span class="ot">&lt;-</span> <span class="fu">sapply</span>( d, rescale ) <span class="sc">%&gt;%</span> <span class="fu">as.data.frame</span>()</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>d3 <span class="ot">&lt;-</span> <span class="fu">sample_n</span>( d2, <span class="dv">1000</span> )</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>d1 <span class="ot">&lt;-</span> <span class="fu">sample_n</span>( d, <span class="dv">1000</span> )</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>d1 <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(d1)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">Mclust</span>( d1 )</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>( fit, <span class="at">what =</span> <span class="st">&quot;classification&quot;</span> )</span></code></pre></div>
+<p><img src="business-models_files/figure-html/unnamed-chunk-5-1.png" width="960" /></p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>( fit )</span></code></pre></div>
+<pre><code>## ---------------------------------------------------- 
+## Gaussian finite mixture model fitted by EM algorithm 
+## ---------------------------------------------------- 
+## 
+## Mclust VEV (ellipsoidal, equal shape) model with 7 components: 
+## 
+##  log-likelihood   n df       BIC       ICL
+##       -3900.919 956 86 -8392.036 -8613.657
+## 
+## Clustering table:
+##   1   2   3   4   5   6   7 
+##  87  92 203 159 238  66 111</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>cluster <span class="ot">&lt;-</span> <span class="fu">as.factor</span>( fit<span class="sc">$</span>classification )</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>group.ids <span class="ot">&lt;-</span> <span class="fu">as.character</span>( fit<span class="sc">$</span>classification )</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>labels <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Land Ratio&quot;</span>,<span class="st">&quot;Fundraising Ratio&quot;</span>,<span class="st">&quot;Assets Ratio&quot;</span>,<span class="st">&quot;Total Assets (logged)&quot;</span>)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>data.dictionary <span class="ot">&lt;-</span> <span class="fu">data.frame</span>( <span class="at">VARIABLE=</span><span class="fu">names</span>(d1), <span class="at">LABEL=</span>labels )</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>( <span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">2</span>) )</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="fu">view_cluster_data</span>( <span class="at">model.dat=</span>d1, </span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>                   <span class="at">group.ids=</span>group.ids, </span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>                   <span class="at">data.dictionary=</span>data.dictionary )</span></code></pre></div>
+<pre><code>## [1]   0  50 100</code></pre>
+<pre><code>## [1]   0  50 100</code></pre>
+<pre><code>## [1]   0  50 100</code></pre>
+<pre><code>## [1]   0  50 100</code></pre>
+<pre><code>## [1]   0  50 100</code></pre>
+<pre><code>## [1]   0  50 100</code></pre>
+<pre><code>## [1]   0  50 100</code></pre>
+<p><img src="business-models_files/figure-html/unnamed-chunk-6-1.png" width="768" /></p>
+</div>
+<div id="efile-data" class="section level1">
+<h1>EFILE DATA</h1>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>sum    <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;EFILE/F9-P01-T00-SUMMARY.csv&quot;</span>)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>rev    <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;EFILE/F9-P08-T00-REVENUE.csv&quot;</span>)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>exp    <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;EFILE/F9-P09-T00-EXPENSES.csv&quot;</span>)</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>assets <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;EFILE/F9-P10-T00-BALANCE-SHEET.csv&quot;</span>)</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>d2 <span class="ot">&lt;-</span> <span class="fu">merge</span>( rev, exp )</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>d3 <span class="ot">&lt;-</span> <span class="fu">merge</span>( d2, assets )</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>d4 <span class="ot">&lt;-</span> <span class="fu">merge</span>( d3, sum )</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">filter</span>( d4, TAX_YEAR <span class="sc">==</span> <span class="dv">2018</span> )</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>rescale <span class="ot">&lt;-</span> <span class="cf">function</span>(x)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>   x[ <span class="fu">is.na</span>(x) ] <span class="ot">&lt;-</span> <span class="fu">median</span>(x, <span class="at">na.rm=</span>T )</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>   x<span class="fl">.05</span> <span class="ot">&lt;-</span> <span class="fu">quantile</span>( x, <span class="fl">0.05</span> )</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>   x<span class="fl">.95</span> <span class="ot">&lt;-</span> <span class="fu">quantile</span>( x, <span class="fl">0.95</span> )</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>   x[ x <span class="sc">&lt;</span> x<span class="fl">.05</span> ] <span class="ot">&lt;-</span> x<span class="fl">.05</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>   x[ x <span class="sc">&gt;</span> x<span class="fl">.95</span> ] <span class="ot">&lt;-</span> x<span class="fl">.95</span> </span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>   </span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>   x <span class="ot">&lt;-</span> scales<span class="sc">::</span><span class="fu">rescale</span>( x, <span class="at">to=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">100</span>) )</span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>   </span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>   <span class="cf">if</span>( <span class="fu">abs</span>( <span class="fu">mean</span>(x) <span class="sc">-</span> <span class="fu">median</span>(x) ) <span class="sc">&gt;</span> <span class="dv">5</span> )</span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>   { x <span class="ot">&lt;-</span> <span class="fu">log</span>(x) }</span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>   x <span class="ot">&lt;-</span> <span class="fu">scale</span>(x)</span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>   <span class="fu">return</span>(x)</span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>tot.rev <span class="ot">&lt;-</span> d<span class="sc">$</span>F9_08_REV_TOT_TOT</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>rent <span class="ot">&lt;-</span> d<span class="sc">$</span>F9_08_REV_OTH_RENT_NET_TOT</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>volunteers    <span class="ot">&lt;-</span> d<span class="sc">$</span>F9_01_ACT_GVRN_VOL_TOT</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>num.emp       <span class="ot">&lt;-</span> d<span class="sc">$</span>F9_01_ACT_GVRN_EMPL_TOT</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>grants        <span class="ot">&lt;-</span> d<span class="sc">$</span>F9_01_REV_CONTR_TOT_CY</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>prog.rev      <span class="ot">&lt;-</span> d<span class="sc">$</span>F9_01_REV_PROG_TOT_CY</span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>tot.rev       <span class="ot">&lt;-</span> d<span class="sc">$</span>F9_01_REV_TOT_CY</span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>grants.paid   <span class="ot">&lt;-</span> d<span class="sc">$</span>F9_01_EXP_GRANT_SIMILAR_CY</span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>mem.benefits  <span class="ot">&lt;-</span> d<span class="sc">$</span>F9_01_EXP_BEN_PAID_MEMB_CY</span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a>salaries      <span class="ot">&lt;-</span> d<span class="sc">$</span>F9_01_EXP_SAL_ETC_CY</span>
+<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a>fundraise     <span class="ot">&lt;-</span> d<span class="sc">$</span>F9_01_EXP_FUNDR_TOT_CY</span>
+<span id="cb20-24"><a href="#cb20-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-25"><a href="#cb20-25" aria-hidden="true" tabindex="-1"></a>tot.exp       <span class="ot">&lt;-</span> d<span class="sc">$</span>F9_01_EXP_TOT_CY</span>
+<span id="cb20-26"><a href="#cb20-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-27"><a href="#cb20-27" aria-hidden="true" tabindex="-1"></a>depreciation  <span class="ot">&lt;-</span> d<span class="sc">$</span>F9_09_EXP_DEPREC_TOT</span>
+<span id="cb20-28"><a href="#cb20-28" aria-hidden="true" tabindex="-1"></a>depreciation[ <span class="fu">is.na</span>(depreciation) ] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb20-29"><a href="#cb20-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-30"><a href="#cb20-30" aria-hidden="true" tabindex="-1"></a>gov.grants <span class="ot">&lt;-</span> d<span class="sc">$</span>F9_08_REV_CONTR_GOVT_GRANT </span>
+<span id="cb20-31"><a href="#cb20-31" aria-hidden="true" tabindex="-1"></a>gov.grants[ <span class="fu">is.na</span>(gov.grants ) ] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb20-32"><a href="#cb20-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-33"><a href="#cb20-33" aria-hidden="true" tabindex="-1"></a>land.bldg    <span class="ot">&lt;-</span> d<span class="sc">$</span>F9_10_ASSET_LAND_BLDG_NET_EOY</span>
+<span id="cb20-34"><a href="#cb20-34" aria-hidden="true" tabindex="-1"></a>land.bldg[ <span class="fu">is.na</span>(land.bldg) ] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb20-35"><a href="#cb20-35" aria-hidden="true" tabindex="-1"></a>tot.assets   <span class="ot">&lt;-</span> d<span class="sc">$</span>F9_10_ASSET_TOT_EOY</span>
+<span id="cb20-36"><a href="#cb20-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-37"><a href="#cb20-37" aria-hidden="true" tabindex="-1"></a>land.r <span class="ot">&lt;-</span> land.bldg <span class="sc">/</span> tot.assets</span>
+<span id="cb20-38"><a href="#cb20-38" aria-hidden="true" tabindex="-1"></a>land.r[ land.r <span class="sc">&lt;</span> <span class="dv">0</span> ] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb20-39"><a href="#cb20-39" aria-hidden="true" tabindex="-1"></a>land.r[ land.r <span class="sc">&gt;</span> <span class="dv">1</span> ] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb20-40"><a href="#cb20-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-41"><a href="#cb20-41" aria-hidden="true" tabindex="-1"></a>grant.r <span class="ot">&lt;-</span> grants <span class="sc">/</span> tot.rev</span>
+<span id="cb20-42"><a href="#cb20-42" aria-hidden="true" tabindex="-1"></a>grant.r[ grant.r <span class="sc">&lt;</span> <span class="dv">0</span> ] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb20-43"><a href="#cb20-43" aria-hidden="true" tabindex="-1"></a>grant.r[ grant.r <span class="sc">&gt;</span> <span class="dv">1</span> ] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb20-44"><a href="#cb20-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-45"><a href="#cb20-45" aria-hidden="true" tabindex="-1"></a>prog.r <span class="ot">&lt;-</span> prog.rev <span class="sc">/</span> tot.rev</span>
+<span id="cb20-46"><a href="#cb20-46" aria-hidden="true" tabindex="-1"></a>prog.r[ prog.r <span class="sc">&lt;</span> <span class="dv">0</span> ] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb20-47"><a href="#cb20-47" aria-hidden="true" tabindex="-1"></a>prog.r[ prog.r <span class="sc">&gt;</span> <span class="dv">1</span> ] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb20-48"><a href="#cb20-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-49"><a href="#cb20-49" aria-hidden="true" tabindex="-1"></a>sal.r <span class="ot">&lt;-</span> salaries  <span class="sc">/</span>  tot.exp</span>
+<span id="cb20-50"><a href="#cb20-50" aria-hidden="true" tabindex="-1"></a>sal.r[ sal.r <span class="sc">&lt;</span> <span class="dv">0</span> ] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb20-51"><a href="#cb20-51" aria-hidden="true" tabindex="-1"></a>sal.r[ sal.r <span class="sc">&gt;</span> <span class="dv">1</span> ] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb20-52"><a href="#cb20-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-53"><a href="#cb20-53" aria-hidden="true" tabindex="-1"></a>gov.r <span class="ot">&lt;-</span> gov.grants <span class="sc">/</span> tot.rev </span>
+<span id="cb20-54"><a href="#cb20-54" aria-hidden="true" tabindex="-1"></a>gov.r[ gov.r <span class="sc">&lt;</span> <span class="dv">0</span> ] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb20-55"><a href="#cb20-55" aria-hidden="true" tabindex="-1"></a>gov.r[ gov.r <span class="sc">&gt;</span> <span class="dv">1</span> ] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb20-56"><a href="#cb20-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-57"><a href="#cb20-57" aria-hidden="true" tabindex="-1"></a>dep.r <span class="ot">&lt;-</span> depreciation <span class="sc">/</span> tot.exp</span>
+<span id="cb20-58"><a href="#cb20-58" aria-hidden="true" tabindex="-1"></a>dep.r[ dep.r <span class="sc">&lt;</span> <span class="dv">0</span> ] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb20-59"><a href="#cb20-59" aria-hidden="true" tabindex="-1"></a>dep.r[ dep.r <span class="sc">&gt;</span> <span class="fl">0.5</span> ] <span class="ot">&lt;-</span> <span class="fl">0.5</span></span>
+<span id="cb20-60"><a href="#cb20-60" aria-hidden="true" tabindex="-1"></a>dep.r <span class="ot">&lt;-</span> <span class="fu">log</span>( dep.r<span class="sc">*</span><span class="dv">100</span> <span class="sc">+</span> <span class="dv">1</span> )</span>
+<span id="cb20-61"><a href="#cb20-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-62"><a href="#cb20-62" aria-hidden="true" tabindex="-1"></a>tot.exp[ tot.exp <span class="sc">==</span> <span class="dv">0</span> ] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb20-63"><a href="#cb20-63" aria-hidden="true" tabindex="-1"></a>asset.r <span class="ot">&lt;-</span> tot.assets <span class="sc">/</span> tot.exp</span>
+<span id="cb20-64"><a href="#cb20-64" aria-hidden="true" tabindex="-1"></a>asset.r[ asset.r <span class="sc">&lt;</span> <span class="dv">0</span> ] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb20-65"><a href="#cb20-65" aria-hidden="true" tabindex="-1"></a>asset.r[ asset.r <span class="sc">&gt;</span> <span class="dv">10</span> ] <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb20-66"><a href="#cb20-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-67"><a href="#cb20-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-68"><a href="#cb20-68" aria-hidden="true" tabindex="-1"></a>dd <span class="ot">&lt;-</span> <span class="fu">data.frame</span>( sal.r, gov.r, dep.r, land.r, asset.r, <span class="at">id=</span><span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(sal.r) )</span>
+<span id="cb20-69"><a href="#cb20-69" aria-hidden="true" tabindex="-1"></a>dd <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(dd)</span>
+<span id="cb20-70"><a href="#cb20-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-71"><a href="#cb20-71" aria-hidden="true" tabindex="-1"></a>id <span class="ot">&lt;-</span> dd<span class="sc">$</span>id</span>
+<span id="cb20-72"><a href="#cb20-72" aria-hidden="true" tabindex="-1"></a>dd <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">select</span>( dd, <span class="sc">-</span>id )</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>model.dat <span class="ot">&lt;-</span> dd          <span class="co"># select variables for clustering</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>model.dat.scaled <span class="ot">&lt;-</span> <span class="fu">apply</span>( model.dat, <span class="dv">2</span>, scale )     <span class="co"># transform raw measures into z scores</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">Mclust</span>( model.dat.scaled )</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>( fit, <span class="at">what =</span> <span class="st">&quot;classification&quot;</span> )</span></code></pre></div>
+<p><img src="business-models_files/figure-html/unnamed-chunk-10-1.png" width="960" /></p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>( fit )</span></code></pre></div>
+<pre><code>## ---------------------------------------------------- 
+## Gaussian finite mixture model fitted by EM algorithm 
+## ---------------------------------------------------- 
+## 
+## Mclust EEV (ellipsoidal, equal volume and shape) model with 9 components: 
+## 
+##  log-likelihood    n  df       BIC       ICL
+##        -23723.6 4822 148 -48702.37 -50002.73
+## 
+## Clustering table:
+##    1    2    3    4    5    6    7    8    9 
+##  942  548  215 1168  515  401  109  681  243</code></pre>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>( fit, <span class="at">parameters =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>## ---------------------------------------------------- 
+## Gaussian finite mixture model fitted by EM algorithm 
+## ---------------------------------------------------- 
+## 
+## Mclust EEV (ellipsoidal, equal volume and shape) model with 9 components: 
+## 
+##  log-likelihood    n  df       BIC       ICL
+##        -23723.6 4822 148 -48702.37 -50002.73
+## 
+## Clustering table:
+##    1    2    3    4    5    6    7    8    9 
+##  942  548  215 1168  515  401  109  681  243 
+## 
+## Mixing probabilities:
+##          1          2          3          4          5          6          7 
+## 0.19112433 0.11222644 0.04436291 0.24035677 0.11211155 0.08769150 0.02312394 
+##          8          9 
+## 0.13950869 0.04949388 
+## 
+## Means:
+##               [,1]       [,2]         [,3]       [,4]       [,5]       [,6]
+## sal.r   -0.6062709  0.1185365 -0.006544014  0.5588587 -0.5363515  0.4569522
+## gov.r   -0.8503633 -0.6781987 -0.021390180  1.0996321  0.4795747  0.7450109
+## dep.r    1.1928919 -0.8867104  0.506037410 -0.2235865  1.0990004 -0.7081168
+## land.r   0.9152257 -1.1579796 -0.422279926  0.1248395  0.9174379 -1.0095456
+## asset.r  0.5286550  0.2191234  1.719484964 -0.8630613  0.3615746 -0.4292625
+##               [,7]       [,8]       [,9]
+## sal.r    0.2579558  0.3134134 -1.2343636
+## gov.r    0.1883545 -0.8422996 -0.6195213
+## dep.r   -1.1520473 -0.5397381 -1.1388051
+## land.r   0.7944659 -0.4290033 -0.5876835
+## asset.r  0.3720518 -0.6647795  1.7532714
+## 
+## Variances:
+## [,,1]
+##               sal.r        gov.r       dep.r       land.r      asset.r
+## sal.r    0.59808589  0.015969744 -0.21495787 -0.210336721 -0.176553918
+## gov.r    0.01596974  0.015298724 -0.01051089 -0.009514125 -0.003190751
+## dep.r   -0.21495787 -0.010510887  0.28711914  0.180428380  0.212189875
+## land.r  -0.21033672 -0.009514125  0.18042838  0.480649154  0.058706406
+## asset.r -0.17655392 -0.003190751  0.21218987  0.058706406  0.777328640
+## [,,2]
+##               sal.r        gov.r      dep.r      land.r      asset.r
+## sal.r   0.819525563  0.014986288 0.05379268 0.007767585  0.240758111
+## gov.r   0.014986288  0.156855783 0.06758242 0.005306496 -0.002782900
+## dep.r   0.053792675  0.067582415 0.29121562 0.034874690  0.057217900
+## land.r  0.007767585  0.005306496 0.03487469 0.019187446  0.008210005
+## asset.r 0.240758111 -0.002782900 0.05721790 0.008210005  0.871697137
+## [,,3]
+##                sal.r       gov.r       dep.r      land.r      asset.r
+## sal.r    0.620640829  0.11198562 -0.40031609 -0.11839650 -0.009516674
+## gov.r    0.111985620  0.58652715 -0.14041292  0.07380072 -0.020113871
+## dep.r   -0.400316093 -0.14041292  0.52110261  0.20465376  0.009332560
+## land.r  -0.118396495  0.07380072  0.20465376  0.41454313 -0.008283510
+## asset.r -0.009516674 -0.02011387  0.00933256 -0.00828351  0.015667831
+## [,,4]
+##               sal.r       gov.r      dep.r      land.r     asset.r
+## sal.r    0.60507121  0.02174734 -0.0692650 -0.01219969 -0.03871467
+## gov.r    0.02174734  0.51203206 -0.2295787 -0.24601482 -0.09353658
+## dep.r   -0.06926500 -0.22957872  0.3856903  0.34315642  0.10905280
+## land.r  -0.01219969 -0.24601482  0.3431564  0.60613944  0.09451831
+## asset.r -0.03871467 -0.09353658  0.1090528  0.09451831  0.04954856
+## [,,5]
+##              sal.r       gov.r       dep.r     land.r     asset.r
+## sal.r    0.7253954 -0.18346830 -0.25087571 -0.2208613 -0.10214213
+## gov.r   -0.1834683  0.45019612  0.03305767  0.0184264 -0.04448246
+## dep.r   -0.2508757  0.03305767  0.19654220  0.1957199  0.22763415
+## land.r  -0.2208613  0.01842640  0.19571994  0.2932987  0.20802109
+## asset.r -0.1021421 -0.04448246  0.22763415  0.2080211  0.49304909
+## [,,6]
+##               sal.r         gov.r       dep.r      land.r       asset.r
+## sal.r    0.86649350 -0.3220795570 -0.03234264 -0.02317596 -0.1234438158
+## gov.r   -0.32207956  0.5990682187 -0.09821715 -0.05940102 -0.0006298973
+## dep.r   -0.03234264 -0.0982171459  0.27463946  0.10515509  0.1823467511
+## land.r  -0.02317596 -0.0594010233  0.10515509  0.05914411  0.0639780049
+## asset.r -0.12344382 -0.0006298973  0.18234675  0.06397800  0.3591362593
+## [,,7]
+##               sal.r       gov.r        dep.r       land.r      asset.r
+## sal.r    0.62769710 -0.03862559  0.013121464 -0.010421024  0.186014659
+## gov.r   -0.03862559  0.64912178  0.018071947  0.015329015 -0.440812811
+## dep.r    0.01312146  0.01807195  0.015684663  0.003184062 -0.004195864
+## land.r  -0.01042102  0.01532901  0.003184062  0.313532608  0.009950636
+## asset.r  0.18601466 -0.44081281 -0.004195864  0.009950636  0.552445403
+## [,,8]
+##                 sal.r       gov.r         dep.r       land.r      asset.r
+## sal.r    1.0900593559 0.005705986 -0.0006189013 -0.015065930 -0.069834438
+## gov.r    0.0057059861 0.015168143  0.0099084958  0.006862348  0.005528590
+## dep.r   -0.0006189013 0.009908496  0.3531751194  0.124310614  0.074266030
+## land.r  -0.0150659300 0.006862348  0.1243106142  0.538393371  0.007073728
+## asset.r -0.0698344378 0.005528590  0.0742660298  0.007073728  0.161685563
+## [,,9]
+##               sal.r        gov.r        dep.r     land.r      asset.r
+## sal.r    0.31817339  0.020979706  0.068139855  0.1389655 -0.002453360
+## gov.r    0.02097971  0.604261508  0.002359406  0.0246677 -0.014007284
+## dep.r    0.06813985  0.002359406  0.153546500  0.0301985 -0.001246516
+## land.r   0.13896554  0.024667698  0.030198502  1.0674449 -0.001923000
+## asset.r -0.00245336 -0.014007284 -0.001246516 -0.0019230  0.015055278</code></pre>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>ave <span class="ot">&lt;-</span> fit<span class="sc">$</span>parameters<span class="sc">$</span>mean</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>ave <span class="ot">&lt;-</span> <span class="fu">round</span>(ave,<span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>group.ids <span class="ot">&lt;-</span> <span class="fu">as.character</span>( fit<span class="sc">$</span>classification )</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>labels <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Asset Ratio&quot;</span>, <span class="st">&quot;Land Ratio&quot;</span>,<span class="st">&quot;Depreciation Ratio&quot;</span>,<span class="st">&quot;Government Rev Ratio&quot;</span>,<span class="st">&quot;Salary Ratio&quot;</span>)</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>data.dictionary <span class="ot">&lt;-</span> <span class="fu">data.frame</span>( <span class="at">VARIABLE=</span><span class="fu">names</span>(dd), <span class="at">LABEL=</span>labels )</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>( <span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">2</span>) )</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="fu">view_cluster_data</span>( <span class="at">model.dat=</span>model.dat, </span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>                   <span class="at">group.ids=</span>group.ids, </span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>                   <span class="at">data.dictionary=</span>data.dictionary )</span></code></pre></div>
+<pre><code>## [1]   0  50 100</code></pre>
+<pre><code>## [1]   0  50 100</code></pre>
+<pre><code>## [1]   0  50 100</code></pre>
+<pre><code>## [1]   0  50 100</code></pre>
+<pre><code>## [1]   0  50 100</code></pre>
+<pre><code>## [1]   0  50 100</code></pre>
+<pre><code>## [1]   0  50 100</code></pre>
+<p><img src="business-models_files/figure-html/unnamed-chunk-12-1.png" width="768" /></p>
+<pre><code>## [1]   0  50 100</code></pre>
+<pre><code>## [1]   0  50 100</code></pre>
+<p><img src="business-models_files/figure-html/unnamed-chunk-12-2.png" width="768" /></p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>d.save <span class="ot">&lt;-</span> d[ id , ]</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>( d.save )</span></code></pre></div>
+<pre><code>## [1] 4822</code></pre>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>( group.ids )</span></code></pre></div>
+<pre><code>## [1] 4822</code></pre>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>d.save <span class="ot">&lt;-</span> <span class="fu">cbind</span>( d.save, group.ids)</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>( d.save, <span class="st">&quot;03-data-ratios/clustering-data.csv&quot;</span>)</span></code></pre></div>
+<br> <br>
+<hr>
+<p><br> <br></p>
+<style type="text/css">
+
+div#TOC{ margin-top: 42px; }
+</style>
+</div>
+
+
+<div class="footer">
+<div class="row"  align="center">
+
+
+  <br>
+  <br>
+  <br>
+  <hr>
+  <br>
+  <br>
+
+  Metrics generated by <a href=https:lecy.info target="_blank">Jesse Lecy</a> and <a href=https://dogood.umd.edu/our-community/faculty-staff/nathan-dietz target="_blank">Nathan Dietz</a> <br>
+  Content licensed under Creative Commons: <a href=https://creativecommons.org/licenses/by-nc-sa/4.0/ target="_blank"> (CC BY-NC-SA 4.0)</a><br>
+  Source code is available on <a href=https://github.com/Nonprofit-Open-Data-Collective/ target="_blank">GitHub</a><br>
+  <br>
+  The work is supported by the <br>
+  <a href="" target="_blank">National Center for Charitable Statistics</a><br>
+  at the Urban Institute
+
+  <br>
+  <br>
+  <hr>
+  <br>
+  <br>
+  <br>
+
+</div>
+</div>
+
+
+
+
+<style>
+
+blockquote {
+    padding: 11px 22px;
+    margin: 0 0 22px;
+    font-size: 18px;
+    border-left: 5px solid lightgray;
+}
+
+.footer {
+  color: white;
+  min-height: 450px !important;
+  background-color: #1696d2;
+  width:100%;
+}
+
+.footer a {
+  color: lightgray;
+  font-weight: bold;
+}
+
+.footer body{
+     font-family:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+     font-size:calc(1.5em + 0.25vw);
+     font-weight:300;line-height:1.65;
+     -webkit-font-smoothing:antialiased;
+     -moz-osx-font-smoothing:grayscale;
+     margin-left:20%;
+     margin-right:20%
+}
+
+footer.body{
+     font-family:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+     font-size:calc(1.5em + 0.25vw);
+     font-weight:300;line-height:1.65;
+     -webkit-font-smoothing:antialiased;
+     -moz-osx-font-smoothing:grayscale;
+     margin-left:20%;
+     margin-right:20%
+}
+
+
+
+
+.footer ul li {
+	font-family:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  font-size:calc(0.55em + 0.25vw) !important;
+  font-weight:300;
+  line-height:1.2 !important;
+  color: #FFF;
+	text-transform: uppercase;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.footerFloatOuter {
+	width: 25%;
+	float: left;
+}
+
+.footerFloatInner1 {
+	width: 20%;
+	float: left;
+	align: left;
+	margin-left: 0px;
+}
+
+.footerFloatInner2 {
+	width: 50%;
+	float: left;
+	text-align: left;
+}
+
+
+</style>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
