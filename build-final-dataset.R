@@ -76,6 +76,26 @@ d <- merge( d, bmf, by.x="ORG_EIN", by.y="EIN", all.x=TRUE )
 d <- unique( d )
 
 
+#####
+##### Add MSA 
+#####
+
+
+msa <- read.csv( "https://raw.githubusercontent.com/DS4PS/cpp-529-master/master/data/cbsatocountycrosswalk.csv",  stringsAsFactors=F, colClasses="character" )
+keep <- c( "countyname", "state", "fipscounty", "msa", 
+           "msaname", "cbsa", "cbsaname" )
+msa <-  msa[keep] %>% unique()
+
+
+
+msa$fipscounty <- as.numeric( msa$fipscounty )
+d$FIPS <- as.numeric( d$FIPS )
+
+d <- merge( d, msa, by.x="FIPS", by.y="fipscounty", all.x=TRUE )
+
+
+
+
 
 #####
 ##### SOI Extract Cases 
@@ -85,6 +105,8 @@ d <- unique( d )
 
 
 core <- readRDS(gzcon(url( "https://www.dropbox.com/s/3ooiwpnems88ykz/core.rds?dl=1" )))
+
+core <- dplyr::select( core, -NTMAJ12 )
 
 core <-
   core %>% 
@@ -118,7 +140,8 @@ core <-
           F9_08_REV_OTH_SALE_GAIN_NET_TOT = netgnls, 
           F9_08_REV_OTH_ROY_TOT = royaltsinc, 
           F9_08_REV_OTH_INV_NET_TOT = netincsales, 
-          F9_08_REV_MISC_TOT_TOT = miscrevtot11e  )
+          F9_08_REV_MISC_TOT_TOT = miscrevtot11e,
+          NTMAJ12 = NTMAJ12v1 )
 
 
 add.these <- setdiff( unique( core$ORG_EIN ), unique( d$ORG_EIN )  )
@@ -126,7 +149,7 @@ add.these <- setdiff( unique( core$ORG_EIN ), unique( d$ORG_EIN )  )
 core2 <- dplyr::filter( core, ORG_EIN %in% add.these )
 core2$TAX_YEAR <- as.numeric( core2$TAX_YEAR )
 core2$F9_00_TAX_PERIOD_END_DATE <- as.character( core2$F9_00_TAX_PERIOD_END_DATE )
-core2$FIPS <- as.character( core2$FIPS )
+# core2$FIPS <- as.character( core2$FIPS )
 
 
 d <- bind_rows( d, core2 )
@@ -137,7 +160,6 @@ d <- bind_rows( d, core2 )
 
 
 library( fiscal )
-
 d <- get_dar( d, debt="F9_10_LIAB_TOT_EOY", assets="F9_10_ASSET_TOT_EOY" )
 
 
@@ -145,4 +167,6 @@ write.csv( d, "05-data-rodeo/final-dataset.csv" )
 saveRDS( d, "05-data-rodeo/final-dataset.rds" )
 
 
+write.csv( d, "final-dataset.csv" )
+saveRDS( d, "final-dataset.rds" )
 
