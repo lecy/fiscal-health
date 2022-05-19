@@ -9,6 +9,11 @@ url.orgs <- "https://www.dropbox.com/s/fqk05x2ox3girq7/org-sample.csv?dl=1"
 orgs <- read.csv( url.orgs )
 orgs <- dplyr::select( orgs, orgname, ein )
 orgs$ein <- gsub( "O", "0", orgs$ein )
+orgs$ein <- gsub( "\n", "", orgs$ein )
+orgs$ein <- gsub( "\t", "", orgs$ein )
+orgs$ein <- gsub( "\\|", "", orgs$ein )
+orgs$ein <- trimws( orgs$ein )
+# grep( "[^0-9]", orgs$ein, value=TRUE )  # should be empty 
 orgs$ein <- as.numeric( orgs$ein )
 sample.ein <- unique( orgs$ein )
 
@@ -86,8 +91,6 @@ keep <- c( "countyname", "state", "fipscounty", "msa",
            "msaname", "cbsa", "cbsaname" )
 msa <-  msa[keep] %>% unique()
 
-
-
 msa$fipscounty <- as.numeric( msa$fipscounty )
 d$FIPS <- as.numeric( d$FIPS )
 
@@ -158,15 +161,22 @@ d <- bind_rows( d, core2 )
 
 
 
+d$NTEE1[ d$NTEE1 == "L" ] <- "Housing"
+d$NTEE1[ d$NTEE1 == "P" ] <- "Human Services"
+d$NTEE1[ d$NTEE1 == "S" ] <- "Community Development"
+d$NTMAJ12 <- factor( d$NTMAJ12 )
 
-library( fiscal )
-d <- get_dar( d, debt="F9_10_LIAB_TOT_EOY", assets="F9_10_ASSET_TOT_EOY" )
+d <- filter( d, NTEE1 %in% c( "Housing", "Human Services", "Community Development") )
+
+
+# library( fiscal )
+d <- fiscal::get_dar( d, debt="F9_10_LIAB_TOT_EOY", assets="F9_10_ASSET_TOT_EOY" )
 
 
 write.csv( d, "05-data-rodeo/final-dataset.csv" )
 saveRDS( d, "05-data-rodeo/final-dataset.rds" )
 
 
-write.csv( d, "final-dataset.csv" )
-saveRDS( d, "final-dataset.rds" )
+# write.csv( d, "final-dataset.csv" )
+# saveRDS( d, "final-dataset.rds" )
 
