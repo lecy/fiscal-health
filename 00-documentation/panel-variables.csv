@@ -1,0 +1,27 @@
+Description,990 Fields,EZ Fields ,E-File Variables,2019 SOI,2016 SOI,2013 SOI,2010 NCCS,2007 NCCS,2004 NCCS,2001 NCCS,2001 Digital Files
+Non-Interest Earning Cash EOY,"Part X, line 1B","Part I, line 22",F9_10_ASSET_CASH_SAVING_EOY,nonintcashend,nonintcashend,nonintcashend,CashEstimate,CashEstimate,CashEstimate,CashEstimate,CashEstimate
+"Program service revenue, EOY","Part 8, Line 2g(A)","Part 1, Line 2 ",F9_08_REV_PROG_TOT_TOT,totprgmrevnue,totprgmrevnue,totprgmrevnue,PROGREV,PROGREV,PROGREV,PROGREV,PROGREV
+"Total liabilities, EOY","Part X, line 26B","Pt ii, Line 26B",F9_10_LIAB_TOT_EOY,totliabend,totliabend,totliabend,LIAB_EOY,LIAB_EOY,LIAB_EOY,LIAB_EOY,LIAB_EOY
+Accounts Receivable,"Part X, line 4B",,F9_10_ASSET_ACC_NET_EOY,accntsrcvblend,accntsrcvblend,accntsrcvblend,NA,NA,NA,NA,p4g_arec
+Depreciation Expenses,"Part IX, line 22A",,F9_09_EXP_DEPREC_TOT,deprcatndepletn,deprcatndepletn,deprcatndepletn,DepRecEstimate,NA,NA,NA,DepRecEstimate
+Short Term Investments,"Part X, line 2B","Part I, line 22",F9_10_ASSET_SAVING_EOY,svngstempinvend,svngstempinvend,svngstempinvend,NA,NA,NA,NA,p4e_save
+" Total assets, EOY","Part X, line 16B","Part II, line 25B",F9_10_ASSET_TOT_EOY,totassetsend,totassetsend,totassetsend,ASS_EOY,ASS_EOY,ASS_EOY,ASS_EOY,ASS_EOY
+"Total Expenses, EOY","Part IX, line 25A","Part I, line 17",F9_01_EXP_TOT_CY,totfuncexpns,totfuncexpns,totfuncexpns,EXPS,EXPS,EXPS,EXPS,EXPS
+Unrestricted Net Assets,"Part X, Line 27B",,F9_10_NAFB_UNRESTRICT_EOY,unrstrctnetasstsend,unrstrctnetasstsend,unrstrctnetasstsend,UnaseoyEstimate,UnaseoyEstimate,UnaseoyEstimate,UnaseoyEstimate,UnaseoyEstimate
+Total Revenues,"Part VIII, Line 12A","Part I, Line 9",F9_01_REV_TOT_CY,totrevenue,totrevenue,totrevenue,TOTREV2,TOTREV2,TOTREV2,TOTREV2,TOTREV2
+Pledges and Grants Receivable EOY,"Part X, line 3B",,F9_10_ASSET_PLEDGE_NET_EOY,pldgegrntrcvblend,pldgegrntrcvblend,pldgegrntrcvblend,NA,NA,NA,NA,p4e_grec + p4e_prec
+Net Assets,,,F9_10_NAFB_TOT_EOY,totnetassetend,totnetassetend,totnetassetend,FUNDBAL,FUNDBAL,FUNDBAL,FUNDBAL,FUNDBAL
+Inventories,"Part X, Line 8b",,F9_10_ASSET_INV_SALE_EOY,invntriesalesend,invntriesalesend,invntriesalesend,NA,NA,NA,NA,NA
+Prepaid Expenses,"Part X, Line 9B",,F9_10_ASSET_EXP_PREPAID_EOY,prepaidexpnsend,prepaidexpnsend,prepaidexpnsend,NA,NA,NA,NA,NA
+Accounts Payable,"Part X, Line 17B",,F9_10_LIAB_ACC_PAYABLE_EOY,accntspayableend,accntspayableend,accntspayableend,NA,NA,NA,NA,NA
+Grants Payable,"Part X, Line 18B",,F9_10_LIAB_GRANT_PAYABLE_EOY,grntspayableend,grntspayableend,grntspayableend,NA,NA,NA,NA,NA
+Total Contributions,"Part VIII, Line 1h(A) ",,F9_08_REV_CONTR_TOT,totcntrbgfts,totcntrbgfts,totcntrbgfts,CONT,CONT,CONT,CONT,CONT
+Net Special Event Revenue,"Part VIII, Line 8c(A)",,F9_08_REV_OTH_FUNDR_NET_TOT,netincfndrsng,netincfndrsng,netincfndrsng,FUNDINC,FUNDINC,FUNDINC,FUNDINC,FUNDINC
+Royalties,"Part VIII, Line 5(A)",,F9_08_REV_OTH_ROY_TOT,royaltsinc,royaltsinc,royaltsinc,NA,NA,NA,NA,NA
+Inventory Sales,"Part VIII, Line 10(A)",,F9_08_REV_OTH_INV_NET_TOT,netincsales,netincsales,netincsales,GRPROF,GRPROF,GRPROF,GRPROF,GRPROF
+Other Revenue,"Part VIII, Line 11e(A",,F9_08_REV_MISC_TOT_TOT,miscrevtot11e,miscrevtot11e,miscrevtot11e,OTHINC,OTHINC,OTHINC,OTHINC,OTHINC
+Investment Income,"Part VIII, Line 3(A)",,F9_08_REV_OTH_INVEST_INCOME_TOT,invstmntinc,invstmntinc,invstmntinc,INVINC,INVINC,INVINC,INVINC,INVINC
+Dividends,"Part VIII, Line 4(A))",,F9_08_REV_OTH_INVEST_BOND_TOT,txexmptbndsproceeds ,txexmptbndsproceeds ,txexmptbndsproceeds ,SECINC,SECINC,SECINC,SECINC,SECINC
+Net rental income,"Part VIII, Line 6d(A)",,F9_08_REV_OTH_RENT_NET_TOT,netrntlinc ,netrntlinc ,netrntlinc ,NETRENT,NETRENT,NETRENT,NETRENT,NETRENT
+Gains/losses on sales of securities,"Part VIII, Line 7d(A))",,F9_08_REV_OTH_SALE_GAIN_NET_TOT,netgnls,netgnls,netgnls,SALESECN,SALESECN,SALESECN,SALESECN,SALESECN
+Gov grants ,F990-PC-PART-08-LINE-01E,,F9_08_REV_CONTR_GOVT_GRANT,NA,NA,NA,GovGtEstimate,GovGtEstimate,GovGtEstimate,GovGtEstimate,GovGtEstimate

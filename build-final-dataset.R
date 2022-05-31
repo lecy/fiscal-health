@@ -97,7 +97,7 @@ d$FIPS <- as.numeric( d$FIPS )
 d <- merge( d, msa, by.x="FIPS", by.y="fipscounty", all.x=TRUE )
 
 
-
+d$SOURCE <- "EFILE"
 
 
 #####
@@ -152,7 +152,10 @@ add.these <- setdiff( unique( core$ORG_EIN ), unique( d$ORG_EIN )  )
 core2 <- dplyr::filter( core, ORG_EIN %in% add.these )
 core2$TAX_YEAR <- as.numeric( core2$TAX_YEAR )
 core2$F9_00_TAX_PERIOD_END_DATE <- as.character( core2$F9_00_TAX_PERIOD_END_DATE )
-# core2$FIPS <- as.character( core2$FIPS )
+core2$FIPS <- as.character( core2$FIPS )
+
+core2$SOURCE <- "SOI"
+
 
 
 d <- bind_rows( d, core2 )
@@ -166,8 +169,16 @@ d$NTEE1[ d$NTEE1 == "P" ] <- "Human Services"
 d$NTEE1[ d$NTEE1 == "S" ] <- "Community Development"
 d$NTMAJ12 <- factor( d$NTMAJ12 )
 
+
+table( d$SOURCE )
+#  EFILE   SOI 
+#   5508   791 
+
 d <- filter( d, NTEE1 %in% c( "Housing", "Human Services", "Community Development") )
 
+table( d$SOURCE )
+#  EFILE   SOI 
+#   4967   791
 
 # library( fiscal )
 d <- fiscal::get_dar( d, debt="F9_10_LIAB_TOT_EOY", assets="F9_10_ASSET_TOT_EOY" )
