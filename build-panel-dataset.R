@@ -8,18 +8,24 @@ source( "https://www.dropbox.com/s/obub14z1st4z85o/crosswalk-functions.R?dl=1" )
 
 v2019.soi <- "https://www.dropbox.com/s/88y9sup4d3mwoo5/irs-990-pc-soi-extract-2019.csv?dl=1"
 d.2019.soi <- read.csv( v2019.soi )
+d.2019.soi <- dplyr::arrange( d.2019.soi, desc(tax_pd) )
+d.2019.soi <- d.2019.soi[ ! duplicated(d.2019.soi$EIN) , ]
 d.2019 <- X2019.SOI.RENAME( d.2019.soi )
 d.2019$SOURCE <- "SOI"
 d.2019$YEAR <- "2019"
 
 v2016.soi <- "https://www.dropbox.com/s/iuav0itdx8glqpt/irs-990-pc-soi-extract-2016.csv?dl=1"
 d.2016.soi <- read.csv( v2016.soi )
+d.2016.soi <- dplyr::arrange( d.2016.soi, desc(tax_pd) )
+d.2016.soi <- d.2016.soi[ ! duplicated(d.2016.soi$EIN) , ]
 d.2016 <- X2016.SOI.RENAME( d.2016.soi, ein="EIN" )
 d.2016$SOURCE <- "SOI"
 d.2016$YEAR <- "2016"
 
 v2013.soi <- "https://www.dropbox.com/s/glkyn5mlsx0d2c7/irs-990-pc-soi-extract-2013.csv?dl=1"
 d.2013.soi <- read.csv( v2013.soi )
+d.2013.soi <- dplyr::arrange( d.2013.soi, desc(tax_pd) )
+d.2013.soi <- d.2013.soi[ ! duplicated(d.2013.soi$EIN) , ]
 d.2013 <- X2013.SOI.RENAME( d.2013.soi, ein="EIN" )
 d.2013$SOURCE <- "SOI"
 d.2013$YEAR <- "2013"
@@ -64,7 +70,7 @@ d <- dplyr::bind_rows( d, d.2001 )
 ##### Organization Sample
 #####
 
-url.orgs <- "https://www.dropbox.com/s/fqk05x2ox3girq7/org-sample.csv?dl=1"
+url.orgs <- "https://www.dropbox.com/s/o11gud4t83tvn14/org-sample-full.csv?dl=1"
 orgs <- read.csv( url.orgs )
 orgs <- dplyr::select( orgs, orgname, ein )
 orgs$ein <- gsub( "O", "0", orgs$ein )
