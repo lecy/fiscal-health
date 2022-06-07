@@ -9,7 +9,7 @@ source( "https://www.dropbox.com/s/obub14z1st4z85o/crosswalk-functions.R?dl=1" )
 v2019.soi <- "https://www.dropbox.com/s/88y9sup4d3mwoo5/irs-990-pc-soi-extract-2019.csv?dl=1"
 d.2019.soi <- read.csv( v2019.soi )
 d.2019.soi <- dplyr::arrange( d.2019.soi, desc(tax_pd) )
-d.2019.soi <- d.2019.soi[ ! duplicated(d.2019.soi$EIN) , ]
+d.2019.soi <- d.2019.soi[ ! duplicated(d.2019.soi$ein) , ]
 d.2019 <- X2019.SOI.RENAME( d.2019.soi )
 d.2019$SOURCE <- "SOI"
 d.2019$YEAR <- "2019"
