@@ -36,6 +36,8 @@ navbar:
         href: metric-14-income-reliance-ratios.html  
       - text: "M15 Asset Revenue Ratio"
         href: metric-15-asset-revenues-ratio.html  
+      - text: "Combine All"
+        href: metric-99-combine-all.html
 output:
   html_document:
     theme: cosmo
