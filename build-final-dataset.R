@@ -152,7 +152,7 @@ add.these <- setdiff( unique( core$ORG_EIN ), unique( d$ORG_EIN )  )
 core2 <- dplyr::filter( core, ORG_EIN %in% add.these )
 core2$TAX_YEAR <- as.numeric( core2$TAX_YEAR )
 core2$F9_00_TAX_PERIOD_END_DATE <- as.character( core2$F9_00_TAX_PERIOD_END_DATE )
-core2$FIPS <- as.character( core2$FIPS )
+core2$FIPS <- as.numeric(as.character(( core2$FIPS ))
 
 core2$SOURCE <- "SOI"
 

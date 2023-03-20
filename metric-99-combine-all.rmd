@@ -140,20 +140,43 @@ corrplot( cor(dd, use="complete.obs"),
 
 
 
+### PCA
 
 ```{r}
 library(corpcor)
 library(GPArotation)
 library(psych)
 
-pc3 <- principal( dd, nfactors = 3, rotate = "varimax", scores = TRUE )
+pc3 <- principal( dd, nfactors=3, rotate = "varimax", scores = TRUE )
+pc4 <- principal( dd, nfactors=4, rotate = "varimax", scores = TRUE )
 # fa3 <- fa( dd, nfactors = 3, rotate = "varimax", scores = TRUE )
 # fa3 <- factanal( dd, factors=3, rotation = "varimax", scores = "regression" )
 
 print.psych( pc3, cut = 0.3, sort = TRUE )
+print.psych( pc4, cut = 0.3, sort = TRUE )
 # print.psych( fa3, cut = 0.3, sort = TRUE )
 ```
 
+
+```{r}
+cor( pc3$scores )
+```
+
+
+
+
+```{r}
+fa3 <- fa( dd, nfactors = 3, rotate = "varimax", scores="regression"  )
+fa4 <- fa( dd, nfactors = 4, rotate = "varimax", scores="regression" )
+
+# fa3 <- fa( dd, nfactors = 3, fm="wls", scores="regression" )
+print.psych( fa3, cut = 0.3 ) 
+print.psych( fa4, cut = 0.3 ) 
+```
+
+```{r}
+cor( fa3$scores )
+```
 
 
 ```{r, fig.width=10, fig.height=10}

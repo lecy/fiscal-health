@@ -1,0 +1,141 @@
+---
+title: 'Combine 2016-2021 990 Files'
+output: 
+  html_document:
+    theme: readable
+    df_print: paged
+    highlight: tango
+    toc: true
+    self_contained: true
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set( echo = TRUE, message=F, warning=F, fig.width=10 )
+```
+
+
+## Load Packages
+
+```{r}
+library( dplyr )
+library( pander )
+```
+
+
+```{r}
+orgs <- read.csv( "../01-data-raw/org-sample-wave-two-survey.csv" )
+orgs$EIN <- as.numeric( orgs$EIN )
+sample.ein <- orgs$EIN 
+```
+
+
+```{r}
+
+load_csv <- function( formtype="ez", year=2016, write=TRUE )
+{
+  filename <- paste0( "../01-data-raw/irs-990-", formtype, "-soi-extract-", year, ".csv"  )
+  df <- read.csv( filename )
+  
+  # capitalize ein
+  nm <- names(df)
+  nm[ nm=="ein" ] <- "EIN"
+  names(df) <- nm
+  
+  df$EIN <- as.numeric( df$EIN )
+  df <- dplyr::filter( df, EIN %in% sample.ein )
+  
+  if( write )
+  { 
+    fn.out <- paste0( "wave2-irs-990-", formtype, "-soi-extract-", year, ".csv"  )
+    write.csv( df, fn.out, row.names=F )
+  }
+  return( df )
+}
+
+
+d.ez.2016 <- load_csv( formtype="ez", year=2016, write=F )
+head( d.ez.2016 )
+
+```
+
+
+```{r}
+
+coverage <- list()
+v.names <- list()
+
+loop.count <- 1
+
+for( i in c("ez","pc") )
+{
+  
+  for( j in 2016:2021 )
+  {
+    d.temp <- load_csv( formtype=i, year=j, write=TRUE )
+    
+    ein <- d.temp$EIN
+    d.coverage <- data.frame( EIN=ein, FORM=i, YEAR=j )
+    coverage[[ loop.count ]] <- d.coverage
+    
+    vn <- names(d.temp)
+    df.names <- data.frame( VAR=vn, YEAR="X" )
+    names(df.names)[2] <- paste0( "YEAR.", j, ".", i )
+    v.names[[ loop.count ]] <- df.names
+    
+    loop.count <- loop.count + 1
+    
+  }
+  
+}
+
+
+
+```
+
+
+
+# Create Sample Coverage Table
+
+```{r}
+dat1 <- dplyr::bind_rows( coverage )
+table( dat1$YEAR ) %>% pander()
+table( dat1$FORM, dat1$YEAR ) %>% pander()
+
+
+dat2 <- reshape( dat1, 
+                 idvar = "EIN", timevar = "YEAR", 
+                 direction = "wide",
+                 v.names = "FORM", sep= "_" )
+
+dat2[ is.na(dat2) ] <- ""
+dat2 <- dplyr::arrange( dat2, EIN )
+dat2$TOT <- apply( dat2[2:7], MARGIN=1, function(x){ sum( x != "" ) } )
+
+head( dat2, 25 ) %>% pander()
+
+write.csv( dat2, "W2-SAMPLE-COVERAGE.csv", row.names=F )
+
+```
+
+
+# Create Variable Name Table
+
+
+```{r}
+
+dnames <- v.names[[1]]
+
+for( k in 2:length(v.names) )
+{
+  dnames.temp <- v.names[[k]]
+  dnames <- merge( dnames, dnames.temp, by="VAR", all=T ) 
+}
+
+dnames[ is.na(dnames) ] <- ""
+write.csv( dnames, "VARIABLE-NAME-CROSSWALK.csv", row.names=F )
+
+dnames %>% pander()
+```
+
+
