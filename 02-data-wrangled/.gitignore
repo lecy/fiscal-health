@@ -1,0 +1,11 @@
+# Ignore all large data files
+
+wave1*.csv
+wave1*.dat
+
+wave2*.csv
+wave2*.dat
+
+.Rhistory
+
+

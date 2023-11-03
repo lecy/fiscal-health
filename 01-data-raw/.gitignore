@@ -1,0 +1,10 @@
+# Ignore all large data files
+
+irs-990*.csv
+irs-990*.dat
+irs-990*.xls
+irs-990*.xlsx
+
+.Rhistory
+
+
